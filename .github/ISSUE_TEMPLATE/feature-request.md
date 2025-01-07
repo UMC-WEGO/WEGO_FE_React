@@ -2,7 +2,7 @@
 name: Feature request
 about: 기능 추가 요청 (이슈)
 title: ''
-labels: enhancement
+labels: "❇️ 기능"
 assignees: ''
 
 ---
