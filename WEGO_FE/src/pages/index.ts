@@ -19,3 +19,6 @@ export { default as NotStartedSchedulePage } from './schedule-not-started/NotSta
 export { default as ScrapPage } from './scrap/ScrapPage';
 export { default as SignupPage } from './signup/SignupPage';
 export { default as SignupCompletePage } from './signup-complete/SignupCompletePage';
+
+// 총 20 + 1개 페이지 라우팅 ( 25.01.07 페이지 추가 => 각 미션 인증 등록 기능은 진행중/완료 일정 페이지에서 처리)
+export { default as ScheduleMissionsVerificaionStatusPage } from './schedule-missions-verification-status/ScheduleMissionsVerificaionStatusPage';

@@ -31,7 +31,7 @@ const Router = [
 
       // 로그인 관련 라우팅
       { path: '/login', element: <LoginPage /> },
-      { path: '/signup', element: <SignupPage /> },
+      { path: '/signup/:step', element: <SignupPage /> },
       { path: '/signup/complete', element: <SignupCompletePage /> },
 
       // 스크랩
@@ -46,6 +46,11 @@ const Router = [
       { path: '/home/travel-select', element: <TravelSelectPage /> },
 
       // 일정 페이지 라우팅
+      { path: '/schedule', element: <EndSchedulePage /> },
+      {
+        path: '/schedule/:scheduleId/missions/status',
+        element: <EndSchedulePage />,
+      },
       {
         path: '/schedule/not-started/:scheduleId',
         element: <NotStartedSchedulePage />,
