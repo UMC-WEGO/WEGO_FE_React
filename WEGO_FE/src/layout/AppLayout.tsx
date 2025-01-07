@@ -6,7 +6,7 @@ import Navbar from '../components/navbar/Navbar';
 const RootLayout = () => {
   return (
     <S.AppContainer>
-      <Header />
+      {/* <Header /> */}
       <S.OutletContainer>
         <Outlet />
       </S.OutletContainer>
