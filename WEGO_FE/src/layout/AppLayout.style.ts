@@ -6,14 +6,16 @@ const AppContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border-radius: 25px;
   /* background-color: #a3a3a3; // 테스트 용도 */
+  border-radius: 25px;
+  border: 1px solid rgba(163, 163, 163, 0.5);
 `;
 
 const OutletContainer = styled.div`
   display: flex;
   max-width: var(--size-max-width);
   width: 100%;
+  height: 100%;
   justify-content: center;
 `;
 
