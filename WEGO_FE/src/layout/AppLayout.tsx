@@ -10,7 +10,7 @@ const RootLayout = () => {
       <S.OutletContainer>
         <Outlet />
       </S.OutletContainer>
-      <Navbar />
+      {/* <Navbar /> */}
     </S.AppContainer>
   );
 };
