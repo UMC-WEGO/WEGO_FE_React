@@ -1,6 +1,14 @@
 import PostItem from './PostItem';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit; /* 부모 요소의 색상 상속 */
+`;
 
 interface Post {
+  id: string;
   category: string;
   title: string;
   content: string;
@@ -16,16 +24,18 @@ interface PostListProps {
 const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (
   <div>
     {posts.map((post, index) => (
-      <PostItem
-        key={index}
-        rank={index + 1}
-        category={post.category}
-        title={post.title}
-        content={post.content}
-        time={post.time}
-        location={post.location}
-        showRank={showRank}
-      />
+      <StyledLink key={post.id} to={`/board/detail/${post.id}`}>
+        <PostItem
+          key={index}
+          rank={index + 1}
+          category={post.category}
+          title={post.title}
+          content={post.content}
+          time={post.time}
+          location={post.location}
+          showRank={showRank}
+        />
+      </StyledLink>
     ))}
   </div>
 );

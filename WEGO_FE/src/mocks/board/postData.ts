@@ -2,6 +2,7 @@
 // api 연결 후 삭제 !
 export const allPosts = [
   {
+    id: '1',
     category: '미션 제안',
     title: '이런 건 어떤가요 ??',
     content:
@@ -10,6 +11,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '2',
     category: '즉흥 자랑',
     title: '이런 건 어떤가요 ㅋㅋ',
     content: '순천 안온해변에서 갑자기 갯벌을 밟아보는 건 어떤가요? ㅋㅋ...',
@@ -17,6 +19,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '3',
     category: '현지 정보',
     title: '순천의 숨겨진 명소',
     content: '순천에 있는 숨겨진 명소를 소개합니다! 꼭 가보세요.',
@@ -24,6 +27,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '4',
     category: '여행 팁',
     title: '여행 가서 꼭 챙길 아이템',
     content: '여행 가기 전에 꼭 챙겨야 할 아이템 리스트입니다.',
@@ -31,6 +35,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '5',
     category: '미션 제안',
     title: '이런 미션은 어떨까요?',
     content: '여러분의 창의력을 발휘해 보세요!',
@@ -38,6 +43,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '6',
     category: '죽흥 자랑',
     title: '내가 만든 요리 자랑',
     content: '이번에 만든 요리를 자랑하고 싶어요! 맛있어 보이죠?',
@@ -45,6 +51,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '7',
     category: '현지 정보',
     title: '순천의 맛집 추천',
     content: '순천에서 꼭 가봐야 할 맛집 리스트입니다.',
@@ -52,6 +59,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '8',
     category: '여행 팁',
     title: '여행 중 유용한 앱',
     content: '여행 중에 유용하게 사용할 수 있는 앱을 소개합니다.',
@@ -59,6 +67,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '9',
     category: '즉흥 자랑',
     title: '내가 찍은 멋진 사진',
     content: '방금 찍은 사진입니다! 멋지죠?',
@@ -66,6 +75,7 @@ export const allPosts = [
     location: '순천',
   },
   {
+    id: '10',
     category: '미션 제안',
     title: '재미있는 미션을 만들어보세요!',
     content: '여러분의 상상력을 발휘해 보세요!',
@@ -73,6 +83,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '11',
     category: '여행 팁',
     title: '여행 예산 관리하기',
     content: '여행 예산을 효율적으로 관리하는 방법입니다.',
@@ -80,6 +91,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '12',
     category: '현지 정보',
     title: '제주도의 아름다운 해변',
     content: '제주도에는 아름다운 해변이 많이 있습니다. 추천해요!',
@@ -87,6 +99,7 @@ export const allPosts = [
     location: '제주',
   },
   {
+    id: '13',
     category: '여행 팁',
     title: '경주에서의 역사 탐방',
     content: '경주에서 역사적인 유적지를 탐방해 보세요!',
@@ -94,6 +107,7 @@ export const allPosts = [
     location: '경주',
   },
   {
+    id: '14',
     category: '즉흥 자랑',
     title: '부산의 해운대 사진',
     content: '부산 해운대의 멋진 풍경 사진을 공유합니다!',
@@ -101,6 +115,7 @@ export const allPosts = [
     location: '부산',
   },
   {
+    id: '15',
     category: '미션 제안',
     title: '전국의 숨은 맛집 소개',
     content: '여러분이 아는 숨은 맛집을 추천해 주세요!',
@@ -108,6 +123,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '16',
     category: '현지 정보',
     title: '서울의 야경 명소',
     content: '서울의 아름다운 야경을 감상할 수 있는 명소를 소개합니다.',
@@ -115,6 +131,7 @@ export const allPosts = [
     location: '서울',
   },
   {
+    id: '17',
     category: '여행 팁',
     title: '속초의 맛집 리스트',
     content: '속초에서 꼭 가봐야 할 맛집 리스트입니다.',
@@ -122,6 +139,7 @@ export const allPosts = [
     location: '속초',
   },
   {
+    id: '18',
     category: '즉흥 자랑',
     title: '전주 한옥마을 방문기',
     content: '전주 한옥마을에서의 즐거운 경험을 공유합니다.',
@@ -129,6 +147,7 @@ export const allPosts = [
     location: '전주',
   },
   {
+    id: '19',
     category: '여행 팁',
     title: '가을 여행지 추천',
     content: '가을에 가기 좋은 여행지를 추천합니다.',
@@ -136,6 +155,7 @@ export const allPosts = [
     location: '전국',
   },
   {
+    id: '20',
     category: '현지 정보',
     title: '강릉의 커피 맛집',
     content: '강릉에서 유명한 커피 맛집을 소개합니다.',
