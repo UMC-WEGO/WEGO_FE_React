@@ -112,6 +112,7 @@ const ContainerTitle = styled.div`
   font-weight: bold;
 `
 
+// --- --- ---
 // 계획된 여행 모듈   --->   ()
 const PlanedCard = styled.div`
   border: 1px solid red;
@@ -145,6 +146,57 @@ const PlanedCard_element = styled.div`
 
   font-size: 12px;
   line-height: 6px;
+`
+// --- --- ---
+const PopularPostArea = styled.div`
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 18px;
+`
+const PopularPostCard = styled.div`
+  border-bottom: 1px solid gray;
+  padding: 9px;
+  display: flex;
+
+  display: flex; 
+`
+const PopularPostColumn1 = styled.div`
+  /*순위*/
+  margin-right: 14px;
+`
+const PopularPostColumn2 = styled.div`
+  /*이미지*/
+  margin-right: 14px;
+
+  border: 1px solid violet;
+  width: 95px;
+  height: 95px;
+`
+const PopularPostColumn3 = styled.div`
+  /*내용물*/
+  margin-right: 14px;
+
+  display: flex;
+  flex-direction: column;
+`
+const PopularPostRow1 = styled.div`
+  /*태그*/
+  color: blue;
+  font-size: 9px;
+`
+const PopularPostRow2 = styled.div`
+  /*제목*/
+  margin-top: 9px;
+  font-size: 17px;
+  font-weight: bold;
+`
+const PopularPostRow3 = styled.div`
+  /*내용*/
+  margin-top: 9px;
+`
+const PopularPostRow4 = styled.div`
+  /*하단 요소*/
+  margin-top: 14px;
 `
 
 function HomePage() {
@@ -189,8 +241,28 @@ function HomePage() {
               <div>인기 게시물</div>
               <button>더보기</button>
             </ContainerTitle>
-            <h1>글 1</h1>
-            <h1>글 2</h1>
+            <PopularPostArea>
+              <PopularPostCard>
+                <PopularPostColumn1>1</PopularPostColumn1>
+                <PopularPostColumn2>img</PopularPostColumn2>
+                <PopularPostColumn3>
+                  <PopularPostRow1># 태그</PopularPostRow1>
+                  <PopularPostRow2>제목</PopularPostRow2>
+                  <PopularPostRow3>내용</PopularPostRow3>
+                  <PopularPostRow4>하단</PopularPostRow4>
+                </PopularPostColumn3>
+              </PopularPostCard>
+              <PopularPostCard>
+                <PopularPostColumn1>1</PopularPostColumn1>
+                <PopularPostColumn2>img</PopularPostColumn2>
+                <PopularPostColumn3>
+                  <PopularPostRow1># 태그</PopularPostRow1>
+                  <PopularPostRow2>제목</PopularPostRow2>
+                  <PopularPostRow3>내용</PopularPostRow3>
+                  <PopularPostRow4>하단</PopularPostRow4>
+                </PopularPostColumn3>
+              </PopularPostCard>
+            </PopularPostArea>
           </PopularPostContainer>
 
           <PopularMissionContainer>
