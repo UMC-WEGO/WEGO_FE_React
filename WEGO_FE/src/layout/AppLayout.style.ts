@@ -9,6 +9,7 @@ const AppContainer = styled.div`
   /* background-color: #a3a3a3; // 테스트 용도 */
   border-radius: 25px;
   border: 1px solid rgba(163, 163, 163, 0.5);
+  max-height: var(--size-max-height);
 `;
 
 const OutletContainer = styled.div`

@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
     --size-max-width: 420px;
     --size-min-width: 393px;
     --size-min-height: 852px;
+    --size-max-height: 852px;
     --size-navbar: 9vh;
   }
 
