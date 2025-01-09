@@ -24,6 +24,8 @@ const MyInput = styled.input<StyledProps>`
   border: 1px solid #696969;
   border-radius: 2px;
 
+  outline: none;
+
   /* Inside auto layout */
   flex: none;
   order: 0;
@@ -34,6 +36,10 @@ const MyInput = styled.input<StyledProps>`
 
   &:hover {
     outline: 1px solid rgba(0, 89, 255, 1);
+  }
+
+  &:focus {
+    outline: 1px solid rgba(0, 89, 255, 1); // 추후 props 받아서 처리
   }
 `;
 
