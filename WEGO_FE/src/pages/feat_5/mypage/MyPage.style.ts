@@ -20,7 +20,6 @@ export const Header = styled.header`
   height: 65px;
   width: 100%;
   justify-content: space-between;
-  border-bottom: 1px solid #ddd;
   position: relative;
 
   h1 {
@@ -59,6 +58,8 @@ export const ProfileContainer = styled.div`
   height: 143px;
   align-items: center;
   position: relative;
+  padding-left: 20px;
+  padding-right: 20px;
 `;
 
 export const ProfileMenu = styled.div`
@@ -66,12 +67,13 @@ export const ProfileMenu = styled.div`
   height: 36px;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid #ddd;
   top: 267px;
   gap: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
 
   button {
-    width: 185px;
+    width: 167px;
     height: 36px;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid #a5a5a5;
@@ -91,13 +93,9 @@ export const ProfileMenu = styled.div`
 
 export const TempContainer = styled.div`
   display: flex;
-  height: 130px;
-  border-bottom: 1px solid #ddd;
+  height: 100px;
   padding-left: 20px;
-
-  h1 {
-    font-size: 15px;
-  }
+  padding-right: 20px;
 `;
 
 export const MenuList = styled.div`
@@ -105,8 +103,8 @@ export const MenuList = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 19px;
-  margin-top: 20px;
-  padding-left: 20px;
+  margin-top: 36px;
+  padding-left: 32px;
 
   button {
     display: flex;
@@ -138,7 +136,7 @@ export const MenuList = styled.div`
 
 export const LogoutButton = styled.div`
   border: none;
-  padding-left: 20px;
+  padding-left: 32px;
   margin-top: 70px;
   cursor: pointer;
   font-size: 14px;

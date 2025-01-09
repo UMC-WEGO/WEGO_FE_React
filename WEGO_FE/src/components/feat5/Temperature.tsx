@@ -1,9 +1,66 @@
-import * as S from '../../pages/feat_5/mypage/MyPage.style';
+import * as S from './Temp.style';
+import { useState } from 'react';
+import grade1 from '../../images/feat5/score1.svg';
+import grade2 from '../../images/feat5/score2.svg';
+import grade3 from '../../images/feat5/score3.svg';
+import grade4 from '../../images/feat5/score4.svg';
+import grade5 from '../../images/feat5/score5.svg';
+import TempInfo from '../../images/feat5/Temp_info.svg';
+import TempBar from '../../images/feat5/Temp_bar.svg';
+import TempDes from '../../images/feat5/Temp_description.svg';
 
 function TempContainer() {
+  // 추후 온도값 수정
+  const tempValue: number = 70;
+
+  const [isClicked, setIsClicked] = useState<boolean>(false);
+  const toggleContent = () => {
+    setIsClicked(true);
+    setTimeout(() => {
+      setIsClicked(false);
+    }, 3000);
+  };
+
+  const getGrade = (value: number): { grade: string; imageUrl: string } => {
+    if (value <= 20) return { grade: '일반', imageUrl: grade1 };
+    if (value <= 40) return { grade: '새싹', imageUrl: grade2 };
+    if (value <= 60) return { grade: '탐험가', imageUrl: grade3 };
+    if (value <= 80) return { grade: '자유영혼', imageUrl: grade4 };
+    return { grade: '개척가', imageUrl: grade5 };
+  };
+  const progressBarWidth = (tempValue / 100) * 90;
+
   return (
     <S.TempContainer>
-      <h1>즉흥 온도</h1>
+      <S.TempHeader>
+        <S.TempValueLabelWrapper>
+          <S.TempValue>{tempValue}°C</S.TempValue>
+          <S.TempLabel>즉흥 온도</S.TempLabel>
+          <S.TempImage
+            src={TempInfo}
+            alt="온도정보 아이콘"
+            onClick={toggleContent}
+          />
+        </S.TempValueLabelWrapper>
+        <S.TempGrade>
+          <img
+            src={getGrade(tempValue).imageUrl}
+            alt={getGrade(tempValue).grade}
+          />
+          <span>{getGrade(tempValue).grade}</span>
+        </S.TempGrade>
+      </S.TempHeader>
+
+      {isClicked && (
+        <S.TempInfoMessage>
+          <img src={TempDes} alt="온도 설명" />
+        </S.TempInfoMessage>
+      )}
+
+      <S.ProgressBarSection>
+        <img src={TempBar} alt="온도 바" />
+        <S.ProgressBarBar progress={progressBarWidth} />
+      </S.ProgressBarSection>
     </S.TempContainer>
   );
 }

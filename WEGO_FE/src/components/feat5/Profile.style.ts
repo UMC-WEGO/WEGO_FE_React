@@ -16,7 +16,7 @@ export const ProfilePic = styled.img`
   height: 68px;
   border-radius: 50%;
   margin-left: 20px;
-  margin-right: 60px;
+  margin-right: 35px;
 `;
 
 export const InfoSection = styled.div`
@@ -24,7 +24,6 @@ export const InfoSection = styled.div`
   justify-content: space-around;
   gap: 39px;
   white-space: nowrap;
-  margin-right: 20px;
 `;
 
 export const InfoCard = styled.div`
@@ -66,7 +65,6 @@ export const UserInfo = styled.div`
   top: 210px;
   left: 20px;
   gap: 5px;
-  opacity: 0px;
 
   h3 {
     font-size: 16px;

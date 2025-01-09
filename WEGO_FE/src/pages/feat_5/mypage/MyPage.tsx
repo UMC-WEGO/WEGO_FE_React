@@ -1,6 +1,6 @@
 import * as S from './MyPage.style';
 import Group from '../../../images/feat5/Group.svg';
-import alarm from '../../../images/feat5/alarm.svg';
+import Alarm from '../../../images/feat5/alarm.svg';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../../../components/feat5/Profile';
 import ProfileMenu from '../../../components/feat5/ProfileMenu';
@@ -24,7 +24,7 @@ function MyPage() {
       <S.Header>
         <h1>마이페이지</h1>
         <img src={Group} alt="Group" className="group-img" />
-        <img src={alarm} alt="Alarm" className="alarm-img" />
+        <img src={Alarm} alt="Alarm" className="alarm-img" />
       </S.Header>
 
       <S.ProfileContainer>
@@ -32,7 +32,9 @@ function MyPage() {
       </S.ProfileContainer>
       <ProfileMenu handleNavigate={handleNavigate} />
 
-      <TempContainer />
+      <S.TempContainer>
+        <TempContainer />
+      </S.TempContainer>
 
       <MenuList handleNavigate={handleNavigate} />
 
