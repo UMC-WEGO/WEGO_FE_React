@@ -1,3 +1,4 @@
+///home
 import styled from 'styled-components';
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
