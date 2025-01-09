@@ -1,6 +1,5 @@
 //home/travel-select/
 import styled from "styled-components";
-import App from "../../../App";
 
 // 전체적인 레이아웃
 const AppContainer = styled.p`
