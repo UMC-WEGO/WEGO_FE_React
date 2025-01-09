@@ -1,5 +1,10 @@
 import * as S from './PostItem.style';
 import { LuDot } from 'react-icons/lu';
+import {
+  PiChatTextBold,
+  PiThumbsUpBold,
+  PiBookmarkSimpleBold,
+} from 'react-icons/pi';
 
 interface PostItemProps {
   category: string;
@@ -21,12 +26,25 @@ const PostItem: React.FC<PostItemProps> = ({
     <S.Content>
       <span># {category}</span>
       <h3>{title}</h3>
-      <h5>{content}</h5>
-      <h6>
-        {location}
-        <LuDot />
-        {time}
-      </h6>
+      <h4>{content}</h4>
+      <S.PostInfo>
+        <h5>
+          {location}
+          <LuDot />
+          {time}
+        </h5>
+        <h6>
+          <div>
+            <PiThumbsUpBold />0
+          </div>
+          <div>
+            <PiChatTextBold />0
+          </div>
+          <div>
+            <PiBookmarkSimpleBold />0
+          </div>
+        </h6>
+      </S.PostInfo>
     </S.Content>
   </S.PostContainer>
 );

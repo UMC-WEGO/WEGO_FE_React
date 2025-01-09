@@ -21,7 +21,7 @@ export const Content = styled.div`
 
   span {
     font-size: 12px;
-    color: #0059ff;
+    color: #669cff;
     margin-bottom: 5px;
   }
 
@@ -32,25 +32,53 @@ export const Content = styled.div`
     margin-bottom: 5px;
   }
 
-  h5 {
+  h4 {
     font-size: 12px;
+    font-weight: 400;
     color: #696969;
     margin-bottom: 15px;
 
+    height: 27px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
   }
+`;
 
-  h6 {
+export const PostInfo = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 258px;
+
+  h5 {
     display: flex;
+    align-items: center;
     font-size: 11px;
+    font-weight: 400;
     color: #696969;
 
     svg {
       width: 8px;
+    }
+  }
+
+  h6 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #696969;
+
+    div {
+      display: flex;
+      gap: 2px;
+    }
+
+    svg {
+      color: #bbb;
     }
   }
 `;
