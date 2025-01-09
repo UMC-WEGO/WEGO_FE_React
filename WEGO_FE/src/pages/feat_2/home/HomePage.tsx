@@ -1,5 +1,6 @@
 ///home
 import styled from 'styled-components';
+import * as S from './HomePage.style'
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 import trash_bin from '../../../images/feat2/trash_binpng.png';
 
@@ -229,6 +230,17 @@ const PopularMissionRow4 = styled.div`
   margin-top:22px;
 
 `
+// --- --- ---
+// --- --- ---
+const RandomBtn = styled.button`
+  color: white;
+  border-radius: 5px;
+  background-color: blue;
+
+  height: 45px;
+  width: 100%;
+`
+
 
 function HomePage() {
   return(
@@ -239,8 +251,10 @@ function HomePage() {
 
           <SelectorContainer>Selector</SelectorContainer>
 
-          <RandomBtnContainer>Random</RandomBtnContainer>
-
+          <RandomBtnContainer>
+            <RandomBtn>랜덤 돌리기</RandomBtn>
+          </RandomBtnContainer>
+          
           <PlanedContainer>
             <ContainerTitle>다가오는 여행</ContainerTitle>
             <PlanedCard>
