@@ -31,7 +31,7 @@
     "react-router-dom": "^7.1.1",
     "react-spinners": "^0.15.0",
     "redux": "^5.0.1",
-    "styled-components": "^6.1.13",
+    "styled-components": "^6.1.14",
     "styled-normalize": "^8.1.1",
     "wego-fe": "file:",
     "yup": "^1.6.1",
