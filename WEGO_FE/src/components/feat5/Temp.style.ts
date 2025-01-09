@@ -13,8 +13,8 @@ export const TempHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-left: 15px;
-  padding-right: 20px;
+  padding-left: 14px;
+  padding-right: 15px;
 `;
 
 export const TempValueLabelWrapper = styled.div`
@@ -74,13 +74,13 @@ export const TempImage = styled.img`
 
 export const TempInfoMessage = styled.div`
   position: absolute;
-  margin-left: 45px;
+  margin-left: 46px;
   margin-top: 25px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
-  animation: fadeInOut 3s forwards;
+  animation: fadeInOut 5s forwards;
 
   @keyframes fadeInOut {
     0% {
