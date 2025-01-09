@@ -29,15 +29,20 @@ export const Header = styled.div`
 export const TabSwitcher = styled.div`
   display: flex;
   justify-content: center;
+  padding: 0 25px;
 
   button {
-    padding: 10px 55px;
+    flex: 1;
+    padding: 10px 0;
     margin: 0;
     border: none;
     cursor: pointer;
     background-color: white;
     font-size: 17px;
     font-weight: 500;
+
+    border-bottom: 1px solid #ccc;
+    color: #ccc;
   }
 
   button.active {

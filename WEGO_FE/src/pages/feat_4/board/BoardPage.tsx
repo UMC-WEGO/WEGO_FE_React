@@ -34,7 +34,7 @@ function BoardPage() {
           onClick={() => setActiveTab('popular')}
           className={activeTab === 'popular' ? 'active' : ''}
         >
-          인기 게시판
+          인기
         </button>
       </S.TabSwitcher>
 
