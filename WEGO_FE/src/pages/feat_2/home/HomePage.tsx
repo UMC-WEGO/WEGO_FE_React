@@ -108,7 +108,7 @@ const ContainerTitle = styled.div`
 
   margin: 14px;
   margin-bottom: 14px;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
 `
 
@@ -147,6 +147,7 @@ const PlanedCard_element = styled.div`
   font-size: 12px;
   line-height: 6px;
 `
+// --- --- ---
 // --- --- ---
 const PopularPostArea = styled.div`
   border: 1px solid gray;
@@ -197,6 +198,36 @@ const PopularPostRow3 = styled.div`
 const PopularPostRow4 = styled.div`
   /*하단 요소*/
   margin-top: 14px;
+`
+// --- --- ---
+// --- --- ---
+const PopularMissionArea = styled.div`
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 22px;
+
+  display: flex;
+  flex-direction: column; 
+`
+const PopularMissionRow1 = styled.div`
+  /*제목*/
+  font-size: 18px;
+`
+const PopularMissionRow2 = styled.div`
+  /*이미지*/
+  margin-top: 22px;
+  border: 1px solid mediumpurple;
+
+  height: 158px;
+`
+const PopularMissionRow3 = styled.div`
+  /*내용*/
+  margin-top: 22px;
+`
+const PopularMissionRow4 = styled.div`
+  /*버튼*/
+  margin-top:22px;
+
 `
 
 function HomePage() {
@@ -267,6 +298,14 @@ function HomePage() {
 
           <PopularMissionContainer>
             <ContainerTitle>인기 미션</ContainerTitle>
+            <PopularMissionArea>
+              <PopularMissionRow1>순천</PopularMissionRow1>
+              <PopularMissionRow2>img</PopularMissionRow2>
+              <PopularMissionRow3>내용</PopularMissionRow3>
+              <PopularMissionRow4>
+                <button>미션 저장</button>
+              </PopularMissionRow4>
+            </PopularMissionArea>
           </PopularMissionContainer>
 
         </ScrollArea>
