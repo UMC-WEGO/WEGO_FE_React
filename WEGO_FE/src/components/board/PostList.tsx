@@ -18,7 +18,7 @@ interface Post {
 
 interface PostListProps {
   posts: Post[];
-  showRank?: boolean; // 순위 표시 여부 (인기 게시판)
+  showRank?: boolean | undefined; // 순위 표시 여부 (인기 게시판)
 }
 
 const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (

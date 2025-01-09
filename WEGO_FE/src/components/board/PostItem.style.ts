@@ -1,9 +1,5 @@
 import styled from 'styled-components';
 
-interface PostInfoProps {
-  showRank?: boolean; // 순위 표시 여부(인기게시판)
-}
-
 export const PostContainer = styled.div`
   display: flex;
   align-items: flex-start;
@@ -51,11 +47,9 @@ export const Content = styled.div`
   }
 `;
 
-export const PostInfo = styled.div<PostInfoProps>`
+export const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
-  width: ${props =>
-    props.showRank ? '240px' : '258px'}; /* 게시판에 따라 width 조정 */
 
   h5 {
     display: flex;
