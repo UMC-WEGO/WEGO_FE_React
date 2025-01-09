@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface PostInfoProps {
+  showRank?: boolean; // 순위 표시 여부(인기게시판)
+}
+
 export const PostContainer = styled.div`
   display: flex;
   align-items: flex-start;
@@ -47,10 +51,11 @@ export const Content = styled.div`
   }
 `;
 
-export const PostInfo = styled.div`
+export const PostInfo = styled.div<PostInfoProps>`
   display: flex;
   justify-content: space-between;
-  width: 258px;
+  width: ${props =>
+    props.showRank ? '240px' : '258px'}; /* 게시판에 따라 width 조정 */
 
   h5 {
     display: flex;
@@ -81,4 +86,15 @@ export const PostInfo = styled.div`
       color: #bbb;
     }
   }
+`;
+
+export const Rank = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #0059ff;
+  padding-right: 10px;
 `;

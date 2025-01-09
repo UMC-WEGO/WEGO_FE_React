@@ -7,27 +7,32 @@ import {
 } from 'react-icons/pi';
 
 interface PostItemProps {
+  rank: number;
   category: string;
   title: string;
   content: string;
   time: string;
   location: string;
+  showRank?: boolean;
 }
 
 const PostItem: React.FC<PostItemProps> = ({
+  rank,
   category,
   title,
   content,
   time,
   location,
+  showRank,
 }) => (
   <S.PostContainer>
+    {showRank && <S.Rank>{rank}</S.Rank>}
     <img src="https://buly.kr/9iFBNCv" alt="Post Image" />
     <S.Content>
       <span># {category}</span>
       <h3>{title}</h3>
       <h4>{content}</h4>
-      <S.PostInfo>
+      <S.PostInfo showRank={showRank}>
         <h5>
           {location}
           <LuDot />

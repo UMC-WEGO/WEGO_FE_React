@@ -6,7 +6,7 @@ function PopularBoard() {
   return (
     <S.Container>
       {/* 좋아요 순으로 정련된 게시물 목록 렌더링 */}
-      <PostList posts={allPosts} />
+      <PostList posts={allPosts} showRank={true} />
     </S.Container>
   );
 }
