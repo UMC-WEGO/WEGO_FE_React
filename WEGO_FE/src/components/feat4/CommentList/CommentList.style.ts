@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  margin: 15px 25px;
+  margin: 10px 25px;
 `;
 
 export const CommentBox = styled.div`

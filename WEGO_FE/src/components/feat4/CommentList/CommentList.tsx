@@ -1,4 +1,5 @@
 import * as S from './CommentList.style';
+import { useEffect, useRef } from 'react';
 
 interface Comment {
   username: string;
@@ -12,6 +13,15 @@ interface CommentListProps {
 }
 
 const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+  const commentEndRef = useRef<HTMLDivElement | null>(null);
+
+  // 댓글이 업데이트될 때마다 하단으로 스크롤
+  useEffect(() => {
+    if (commentEndRef.current) {
+      commentEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [comments]); // comments가 변경될 때마다 호출
+
   return (
     <div>
       {comments.map((comment: Comment, index: number) => (
@@ -31,6 +41,7 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
           </S.CommentBox>
         </S.Container>
       ))}
+      <div ref={commentEndRef} />
     </div>
   );
 };
