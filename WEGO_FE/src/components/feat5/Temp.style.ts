@@ -40,11 +40,11 @@ export const TempButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 3px;
+  margin-top: 5px;
 `;
 
 export const TempLabel = styled.div`
-  font-family: Pretendard;
   font-size: 12px;
   font-weight: 400;
   line-height: 12px;
@@ -83,7 +83,7 @@ export const TempImage = styled.img`
 export const TempInfoMessage = styled.div`
   position: absolute;
   margin-left: 5px;
-  margin-top: 25px;
+  margin-top: 40px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

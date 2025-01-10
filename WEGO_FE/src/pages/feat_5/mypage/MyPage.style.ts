@@ -8,34 +8,36 @@ export const Container = styled.div`
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   flex-direction: column;
-  font-family: Pretendard, sans-serif;
-  overflow-y: auto;
-  // max-height: 300px;
-  // padding-right: 10px;
 `;
 
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  height: 65px;
+  height: 20px;
+  margin: 10px;
   width: 100%;
   justify-content: space-between;
   position: relative;
+
   h1 {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 20px;
-    line-height: 20px;
     letter-spacing: -0.32px;
-    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
   }
 
   .group-img {
     display: flex;
     cursor: pointer;
     position: absolute;
-    right: 10px;
+    right: 25px;
     width: 24px;
     height: 24px;
     margin-right: 20px;
@@ -45,10 +47,10 @@ export const Header = styled.header`
     display: flex;
     cursor: pointer;
     position: absolute;
-    right: 32px;
+    right: 47px;
     width: 6px;
     height: 6px;
-    top: 22px;
+    top: 0px;
   }
 `;
 
@@ -57,8 +59,8 @@ export const ProfileContainer = styled.div`
   height: 143px;
   align-items: center;
   position: relative;
-  margin-top: 10px;
-  padding-left: 20px;
+  margin-top: 38px;
+  padding-left: 15px;
   padding-right: 20px;
 `;
 
@@ -73,7 +75,7 @@ export const ProfileMenu = styled.div`
   padding-right: 20px;
 
   button {
-    width: 167px;
+    width: 170px;
     height: 36px;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid #a5a5a5;
@@ -93,7 +95,7 @@ export const ProfileMenu = styled.div`
 
 export const TempContainer = styled.div`
   display: flex;
-  height: 100px;
+  height: 80px;
   padding-left: 20px;
   padding-right: 20px;
 `;
@@ -137,7 +139,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 40px;
+  margin-top: 50px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;

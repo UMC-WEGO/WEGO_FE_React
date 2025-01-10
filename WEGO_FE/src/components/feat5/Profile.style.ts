@@ -16,13 +16,13 @@ export const ProfilePic = styled.img`
   height: 68px;
   border-radius: 50%;
   margin-left: 20px;
-  margin-right: 35px;
+  margin-right: 45px;
 `;
 
 export const InfoSection = styled.div`
   display: flex;
   justify-content: space-around;
-  gap: 39px;
+  gap: 29px;
   white-space: nowrap;
 `;
 
@@ -77,7 +77,7 @@ export const UserInfo = styled.div`
 
   p {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 00;
     line-height: 14px;
     letter-spacing: -0.3199999928474426px;
     text-align: left;

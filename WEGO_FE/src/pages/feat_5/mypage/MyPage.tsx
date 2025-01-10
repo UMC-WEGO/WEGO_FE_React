@@ -39,8 +39,6 @@ function MyPage() {
       <MenuList handleNavigate={handleNavigate} />
 
       <S.LogoutButton onClick={handleLogout}>로그아웃</S.LogoutButton>
-
-      {/* 인기 미션 */}
     </S.Container>
   );
 }
