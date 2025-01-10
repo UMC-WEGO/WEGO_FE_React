@@ -34,7 +34,7 @@ function TempContainer() {
   };
 
   const tempValue: number = tempData.tempValue;
-  const progressBarWidth = (tempValue / 100) * 90;
+  const progressBarWidth = (tempValue / 100) * 93.5;
 
   return (
     <S.TempContainer>
