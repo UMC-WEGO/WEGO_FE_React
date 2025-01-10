@@ -32,7 +32,7 @@ const PostItem: React.FC<PostItemProps> = ({
       <span># {category}</span>
       <h3>{title}</h3>
       <h4>{content}</h4>
-      <S.PostInfo showRank={showRank}>
+      <S.PostInfo>
         <h5>
           {location}
           <LuDot />
