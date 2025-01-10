@@ -17,6 +17,12 @@ export const CommentHr = styled.hr`
   background-color: #eaeaea;
 `;
 
+export const Scroll = styled.div`
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 60px;
+`;
+
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
@@ -116,4 +122,12 @@ export const Response = styled.div`
   .active {
     color: #007bff;
   }
+`;
+
+export const InputBox = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  box-sizing: border-box;
 `;

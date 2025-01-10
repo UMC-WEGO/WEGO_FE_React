@@ -8,6 +8,8 @@ import {
   PiThumbsUpBold,
   PiBookmarkSimpleBold,
 } from 'react-icons/pi';
+import CommentList from '../../../components/feat4/CommentList/CommentList';
+import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
 
 function BoardDetailPage() {
   const navigate = useNavigate();
@@ -24,6 +26,27 @@ function BoardDetailPage() {
     scrap: false,
   });
 
+  const [comments, setComments] = useState([
+    {
+      username: '위고',
+      text: '댓글 테스트',
+      time: '3일 전',
+      profileImage: 'https://buly.kr/G3CTK8F',
+    },
+    {
+      username: '위고',
+      text: '댓글 테스트',
+      time: '2일 전',
+      profileImage: 'https://buly.kr/G3CTK8F',
+    },
+    {
+      username: '위고',
+      text: '댓글댓글',
+      time: '1일 전',
+      profileImage: 'https://buly.kr/G3CTK8F',
+    },
+  ]);
+
   const handleBack = () => {
     navigate(-1); // 이전 페이지
   };
@@ -35,6 +58,17 @@ function BoardDetailPage() {
     }));
   };
 
+  // 댓글 예시
+  const addComment = (text: string) => {
+    const newComment = {
+      username: '위고 사용자',
+      text,
+      time: '방금 전',
+      profileImage: 'https://buly.kr/G3CTK8F',
+    };
+    setComments([...comments, newComment]);
+  };
+
   // 게시글 존재하는지 확인
   if (!post) {
     return <div>게시글을 찾을 수 없습니다.</div>;
@@ -42,56 +76,63 @@ function BoardDetailPage() {
 
   return (
     <S.Container>
-      <S.Header>
-        <span onClick={handleBack}>
-          <TbArrowLeft />
-        </span>
-        <div>
-          <span>
-            <TbShare2 />
+      <S.Scroll>
+        <S.Header>
+          <span onClick={handleBack}>
+            <TbArrowLeft />
           </span>
-          <span>
-            <TbDotsVertical />
-          </span>
-        </div>
-      </S.Header>
-
-      <S.Content>
-        <p> # {post.category}</p>
-        <S.Profile>
-          <img src="https://buly.kr/CsipNnM" alt="Profile" />
           <div>
-            <span>위고 닉네임</span>
-            <p>{post.time}</p>
+            <span>
+              <TbShare2 />
+            </span>
+            <span>
+              <TbDotsVertical />
+            </span>
           </div>
-        </S.Profile>
-        <h1>{post.title}</h1>
-        <img src="https://buly.kr/AaoydRw" alt="Post Image" />
-        <h6>{post.content}</h6>
-      </S.Content>
+        </S.Header>
 
-      <hr />
-      <S.Response>
-        <span onClick={() => handleClick('like')}>
-          <PiThumbsUpBold
-            className={`icon ${activeIcons.like ? 'active' : ''}`}
-          />
-          <p>공감 5</p>
-        </span>
-        <span onClick={() => handleClick('comment')}>
-          <PiChatTextBold
-            className={`icon ${activeIcons.comment ? 'active' : ''}`}
-          />
-          <p>댓글 3</p>
-        </span>
-        <span onClick={() => handleClick('scrap')}>
-          <PiBookmarkSimpleBold
-            className={`icon ${activeIcons.scrap ? 'active' : ''}`}
-          />
-          <p>스크랩 2</p>
-        </span>
-      </S.Response>
-      <S.CommentHr />
+        <S.Content>
+          <p> # {post.category}</p>
+          <S.Profile>
+            <img src="https://buly.kr/CsipNnM" alt="Profile" />
+            <div>
+              <span>위고 닉네임</span>
+              <p>{post.time}</p>
+            </div>
+          </S.Profile>
+          <h1>{post.title}</h1>
+          <img src="https://buly.kr/AaoydRw" alt="Post Image" />
+          <h6>{post.content}</h6>
+        </S.Content>
+
+        <hr />
+        <S.Response>
+          <span onClick={() => handleClick('like')}>
+            <PiThumbsUpBold
+              className={`icon ${activeIcons.like ? 'active' : ''}`}
+            />
+            <p>공감 5</p>
+          </span>
+          <span onClick={() => handleClick('comment')}>
+            <PiChatTextBold
+              className={`icon ${activeIcons.comment ? 'active' : ''}`}
+            />
+            <p>댓글 3</p>
+          </span>
+          <span onClick={() => handleClick('scrap')}>
+            <PiBookmarkSimpleBold
+              className={`icon ${activeIcons.scrap ? 'active' : ''}`}
+            />
+            <p>스크랩 2</p>
+          </span>
+        </S.Response>
+        <S.CommentHr />
+        <CommentList comments={comments} />
+      </S.Scroll>
+
+      <S.InputBox>
+        <CommentInput onAddComment={addComment} />
+      </S.InputBox>
     </S.Container>
   );
 }
