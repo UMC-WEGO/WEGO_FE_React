@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const PopularPostCardBox = styled.div`
+const PostCardBox = styled.div`
   border-bottom: 1px solid gray;
   padding: 9px;
   display: flex;
@@ -46,10 +46,10 @@ const PopularPostRow4 = styled.div`
   margin-top: 14px;
 `
 
-const PopularPostCard = () => {
+const PostCard = () => {
     return(
         <>
-            <PopularPostCardBox>
+            <PostCardBox>
                 <PopularPostColumn1>1</PopularPostColumn1>
                 <PopularPostColumn2>img</PopularPostColumn2>
                 <PopularPostColumn3>
@@ -58,9 +58,9 @@ const PopularPostCard = () => {
                   <PopularPostRow3>내용</PopularPostRow3>
                   <PopularPostRow4>하단</PopularPostRow4>
                 </PopularPostColumn3>
-              </PopularPostCardBox>
+              </PostCardBox>
         </>
     )
 }
 
-export default PopularPostCard;
+export default PostCard;
