@@ -18,6 +18,7 @@ export const PostContainer = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
+  width: 258px;
 
   span {
     font-size: 12px;
@@ -50,6 +51,7 @@ export const Content = styled.div`
 export const PostInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  width: 100%;
 
   h5 {
     display: flex;
