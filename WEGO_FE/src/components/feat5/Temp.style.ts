@@ -13,7 +13,7 @@ export const TempHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding-left: 14px;
+  padding-left: 15px;
   padding-right: 15px;
 `;
 
@@ -33,6 +33,14 @@ export const TempValue = styled.div`
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: #0059ff;
+`;
+
+export const TempButton = styled.button`
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 2px;
 `;
 
 export const TempLabel = styled.div`
@@ -74,7 +82,7 @@ export const TempImage = styled.img`
 
 export const TempInfoMessage = styled.div`
   position: absolute;
-  margin-left: 46px;
+  margin-left: 5px;
   margin-top: 25px;
   top: 50%;
   left: 50%;

@@ -21,7 +21,6 @@ export const Header = styled.header`
   width: 100%;
   justify-content: space-between;
   position: relative;
-
   h1 {
     position: absolute;
     left: 50%;
@@ -58,6 +57,7 @@ export const ProfileContainer = styled.div`
   height: 143px;
   align-items: center;
   position: relative;
+  margin-top: 10px;
   padding-left: 20px;
   padding-right: 20px;
 `;

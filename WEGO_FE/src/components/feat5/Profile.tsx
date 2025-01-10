@@ -1,15 +1,5 @@
 import * as S from './Profile.style';
-import profile_circle from '../../images/feat5/profile_circle.svg';
-
-// 추후 수정
-const user = {
-  username: 'tndbskrd',
-  useremail: 'yunsookang0326@naver.com',
-  profilePic: profile_circle,
-  points: '1,400',
-  trips: 3,
-  missionsCompleted: 8,
-};
+import { user } from '../../mocks/feat5/UserData';
 
 function Profile() {
   return (
