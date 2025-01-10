@@ -14,7 +14,6 @@ export const Header = styled.header`
   display: flex;
   align-items: center;
   height: 20px;
-  margin: 10px;
   width: 100%;
   justify-content: space-between;
   position: relative;
@@ -37,17 +36,17 @@ export const Header = styled.header`
     display: flex;
     cursor: pointer;
     position: absolute;
-    right: 25px;
+    right: 20px;
     width: 24px;
     height: 24px;
-    margin-right: 20px;
+    margin-right: 10px;
   }
 
   .alarm-img {
     display: flex;
     cursor: pointer;
     position: absolute;
-    right: 47px;
+    right: 32px;
     width: 6px;
     height: 6px;
     top: 0px;
@@ -139,7 +138,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 50px;
+  margin-top: 60px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
