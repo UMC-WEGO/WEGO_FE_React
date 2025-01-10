@@ -15,6 +15,11 @@ export const Header = styled.div`
   padding: 0 25px;
   height: 50px;
 
+  img {
+    width: 90px;
+    height: 20px;
+  }
+
   div {
     display: flex;
     font-size: 24px;

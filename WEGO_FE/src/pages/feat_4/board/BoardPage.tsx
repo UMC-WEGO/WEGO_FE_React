@@ -4,6 +4,7 @@ import { PiBellBold } from 'react-icons/pi';
 import { useState } from 'react';
 import FreeBoard from '../../../components/feat4/FreeBoard';
 import PopularBoard from '../../../components/feat4/PopularBoard';
+import logoImg from '../../../images/feat1/logo.svg';
 
 function BoardPage() {
   const [activeTab, setActiveTab] = useState('instant'); // 'instant' 또는 'popular'
@@ -11,7 +12,7 @@ function BoardPage() {
   return (
     <S.Container>
       <S.Header>
-        <p>WEGO!</p>
+        <img src={logoImg} alt="Icon" />
         <div>
           <span>
             <CgProfile />
