@@ -47,7 +47,7 @@ export const TabSwitcher = styled.div`
 
   button.active {
     border-bottom: 1px solid #0059ff;
-    color: #0059ff; /* 활성화된 버튼의 배경색 */
+    color: #0059ff;
   }
 `;
 

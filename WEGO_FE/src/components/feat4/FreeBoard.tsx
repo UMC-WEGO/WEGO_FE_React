@@ -24,7 +24,7 @@ function FreeBoard() {
 
   return (
     <S.Container>
-      <div>
+      <div style={{ paddingLeft: '10px' }}>
         {categories.map(category => (
           <S.CategoryButton
             key={category}
