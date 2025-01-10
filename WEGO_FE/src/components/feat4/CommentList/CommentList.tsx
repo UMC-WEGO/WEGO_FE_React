@@ -1,5 +1,5 @@
 import * as S from './CommentList.style';
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 interface Comment {
   username: string;
@@ -14,13 +14,15 @@ interface CommentListProps {
 
 const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   const commentEndRef = useRef<HTMLDivElement | null>(null);
+  const [prevCommentsLength, setPrevCommentsLength] = useState(comments.length);
 
-  // 댓글이 업데이트될 때마다 하단으로 스크롤
+  // 댓글이 추가될 때만 하단 스크롤(첫 렌더링 제외)
   useEffect(() => {
-    if (commentEndRef.current) {
-      commentEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (comments.length > prevCommentsLength) {
+      commentEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [comments]); // comments가 변경될 때마다 호출
+    setPrevCommentsLength(comments.length);
+  }, [comments, prevCommentsLength]);
 
   return (
     <div>
