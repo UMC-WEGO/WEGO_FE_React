@@ -57,10 +57,11 @@ const LogoContainer = styled.div`
 // 여행 조건 선택 영역
 const SelectorContainer = styled.div`
   margin: 5px;
-
-  padding: 22px;
   margin-top: 27px;
-  height: 210px;
+  height: 201px;
+
+  display: flex;
+  justify-content: center;
 
   border: 1px solid blueviolet;
 `
