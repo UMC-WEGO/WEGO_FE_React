@@ -6,6 +6,7 @@ import calender_icon from "../../images/feat2/calendar_icon.png";
 import people_icon from "../../images/feat2/group_people_icon.png";
 import pin_icon from "../../images/feat2/map_pin_icon.png";
 import Dropdown from "./Dropdown";
+
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
   width: 363px;
@@ -49,6 +50,7 @@ const IconImg = styled.img`
     margin-right: 17px;
 `
 
+// 교통수단, 시간대 옵션
 type Option = {
   label: string;
   icon: string;

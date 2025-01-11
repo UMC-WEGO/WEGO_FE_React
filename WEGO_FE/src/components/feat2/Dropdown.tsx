@@ -50,10 +50,10 @@ interface DropdownProps {
 }
 
 const Dropdown = ({ 
-    value,                    // dropdown 기본값
-    iconStream,               // icon 이미지 경로
-    option }: DropdownProps   // dropdown 선택 요소 리스트
-) => {
+    value,             // dropdown 기본값
+    iconStream,        // icon 이미지 경로
+    option             // dropdown 선택 요소 리스트
+}: DropdownProps) => {
     const [isOpenFlag, setIsOpenFlag] = useState(false);          // dropdown 클릭여부 확인
     const [selectedOption, setSelectedOption] = useState(value);  // 선택한 값
   

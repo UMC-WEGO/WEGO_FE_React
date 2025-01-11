@@ -127,6 +127,14 @@ const PopularPostArea = styled.div`
 // --- --- ---
 // --- --- ---
 
+const samplePlan = {
+  destination: "청주",
+  D_Days: 3,
+  period: "2024-01-01 ~ 12-31",
+  party_num: 12,
+  transport: "버스"
+}
+
 function HomePage() {
   return(
     <>
@@ -144,7 +152,7 @@ function HomePage() {
           
           <PlanedContainer>          
             <ContainerTitle>다가오는 여행</ContainerTitle>
-            <PlanedCard/>
+            <PlanedCard props={samplePlan}/>
           </PlanedContainer>
 
           <PopularPostContainer>
