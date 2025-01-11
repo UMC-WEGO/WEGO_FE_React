@@ -1,12 +1,12 @@
 ///home
 import styled from 'styled-components';
-import * as S from './HomePage.style'
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
 import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularPostCard from '../../../components/feat2/PostCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import Button from '../../../components/feat1/button/Button';
+import DestinationFilter from '../../../components/feat2/DestinationFilter';
 
 /*
 속성값이 겹치는 컨테이너 (LOGO, Selector 등)를 하나의 컴포넌트로 만들고
@@ -125,38 +125,6 @@ const PopularPostArea = styled.div`
 `
 // --- --- ---
 // --- --- ---
-const RandomBtn = styled.button`
-  color: white;
-  border-radius: 5px;
-  background-color: blue;
-
-  height: 45px;
-  width: 100%;
-`
-// --- --- ---
-// --- --- ---
-const BottomSheetItem = styled.label`
-  padding: 12px;
-  border-bottom: 1px solid gray;
-`
-const ToggleItem = styled.select`
-  padding: 12px;
-  border-bottom: 1px solid gary;
-`
-const SelectorRow1 = styled.div`
-  border-bottom: 1px solid gray;
-  display: flex;
-`
-const SelectorRow2 = styled.div`
-  border-bottom: 1px solid gray;
-`
-const SelectorRow3 = styled.div`
-  border-bottom: 1px solid gray;
-`
-const SelectorRow4 = styled.div`
-  border-bottom: 1px solid gray;
-`
-
 
 function HomePage() {
   return(
@@ -166,31 +134,10 @@ function HomePage() {
           <LogoContainer><img src={WEGO_Logo}/></LogoContainer>
 
           <SelectorContainer>
-            <SelectorRow1>
-              <BottomSheetItem>날짜</BottomSheetItem>
-              <BottomSheetItem>인원</BottomSheetItem>
-            </SelectorRow1>
-            <SelectorRow2>
-              <ToggleItem>
-                <option value="car">자가용</option>
-                <option value="bus">버스</option>
-                <option value="KTX">기차(KTX)</option>
-              </ToggleItem>
-            </SelectorRow2>
-            <SelectorRow3>
-              <ToggleItem>
-                <option value="1">1시간 이내</option>
-                <option value="2">2시간 이내</option>
-                <option value="3">3시간 이내</option>
-              </ToggleItem>
-            </SelectorRow3>
-            <SelectorRow4>
-              <BottomSheetItem>지역</BottomSheetItem>
-            </SelectorRow4>
+            <DestinationFilter/>
           </SelectorContainer>
 
           <RandomBtnContainer>
-            {/* <RandomBtn>랜덤 돌리기</RandomBtn>   */}
             <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/>
           </RandomBtnContainer>
           
@@ -212,6 +159,7 @@ function HomePage() {
           <PopularMissionContainer>
             <ContainerTitle>인기 미션</ContainerTitle>
             <PopularMissionCard/>
+            <Button type='button' color='--color-main-blue' content='미션저장' width='109px' height='40px'/>
           </PopularMissionContainer>
 
         </ScrollArea>
