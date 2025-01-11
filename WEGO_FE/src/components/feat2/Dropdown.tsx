@@ -1,9 +1,6 @@
 import styled from "styled-components"
 import { useState } from "react";
 
-import car_icon from "../../images/feat2/car_icon.png";
-
-
 const IconImg = styled.img`
     width: 14px;
     height: 15px;
@@ -41,43 +38,56 @@ const DropdownListItem = styled.li`
   align-items: center;
 `
 
-const Dropdown = () => {
-  const [isOpenFlag, setIsOpenFlag] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("교통수단")
+type Option = {
+  label: string;
+  icon: string;
+};
 
-  const toggleDropdown = () => setIsOpenFlag(!isOpenFlag);
-  const selectOption = (option:string) => {
-    setSelectedOption(option);
-    setIsOpenFlag(false);
-  };
+interface DropdownProps {
+  value?: string; 
+  iconStream?: string; 
+  option: Option[];
+}
 
-  const option = [
-    {label: "자가용", icon: car_icon},
-    {label: "버스", icon: car_icon},
-    {label: "기차(KTX)", icon: car_icon}
-  ];
-
-  return(
-    <DropdownContainer>
-      <DropdownHeader onClick={toggleDropdown} tabIndex={0}>
-        <div>
-          <IconImg src={car_icon}/>
-          {selectedOption}
-        </div>
-        <span>{isOpenFlag ? "▲" : "▼"}</span>
-      </DropdownHeader>
-      {isOpenFlag && (
-        <DropdownList>
-          {option.map((option, index) => (
-            <DropdownListItem key={index} onClick={() => selectOption(option.label)} tabIndex={0}>
-              <IconImg src={car_icon}/>
-              {option.label}
-            </DropdownListItem>
-          ))}
-        </DropdownList>
-      )}
-    </DropdownContainer>
-  );
+const Dropdown = ({ 
+    value,                    // dropdown 기본값
+    iconStream,               // icon 이미지 경로
+    option }: DropdownProps   // dropdown 선택 요소 리스트
+) => {
+    const [isOpenFlag, setIsOpenFlag] = useState(false);          // dropdown 클릭여부 확인
+    const [selectedOption, setSelectedOption] = useState(value);  // 선택한 값
+  
+    const toggleDropdown = () => setIsOpenFlag(!isOpenFlag);      // dropdown 활성/불활성 전환
+  
+    const selectOption = (label: string) => {
+      setSelectedOption(label);
+      setIsOpenFlag(false);
+    };
+  
+    return (
+      <DropdownContainer>
+        <DropdownHeader onClick={toggleDropdown}>
+          <div>
+            <IconImg src={iconStream} />
+            {selectedOption || value}    {/* value: 기본값, selectedOption: 선택한 값 */}           
+          </div>
+          <span>{isOpenFlag ? "▲" : "▼"}</span>
+        </DropdownHeader>
+        {isOpenFlag && (
+          <DropdownList>
+            {option.map((item, index) => (
+              <DropdownListItem
+                key={index}
+                onClick={() => selectOption(item.label)}
+              >
+                <IconImg src={item.icon} />
+                {item.label}
+              </DropdownListItem>
+            ))}
+          </DropdownList>
+        )}
+      </DropdownContainer>
+    );
 };
 
 export default Dropdown;
