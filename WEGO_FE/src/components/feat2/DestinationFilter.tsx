@@ -5,6 +5,7 @@ import people_icon from "../../images/feat2/group_people_icon.png";
 import car_icon from "../../images/feat2/car_icon.png";
 import clock_icon from "../../images/feat2/alarm_icon.png";
 import pin_icon from "../../images/feat2/map_pin_icon.png";
+import Dropdown from "./Dropdown";
 // 여행 조건 선택하는 부분
 
 const FilterBox = styled.div`
@@ -23,11 +24,16 @@ const BottomSheetItem = styled.label`
 
 `
 
-const ToggleItem = styled.select`
+const DropdownSelect = styled.select`
   border: none;
 
   width: 100%;
   height: 100%;
+`
+
+const DropdownItem = styled.div`
+  width: 345px;
+  height: 50px;
 `
 
 const SelectorRow = styled.div`
@@ -56,44 +62,103 @@ const IconImg = styled.img`
     margin-right: 17px;
 `
 
+// --- --- --- dropdown
+// const DropdownContainer = styled.div`
+//   width: 100%;
+//   height: 100%;
+// `
+
+// const DropdownHeader = styled.div`
+//   width: 100%;
+//   height: 100%;
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+// `
+
+// const DropdownList = styled.ul`
+//   background-color: white;
+//   border: 1px solid black;
+
+//   width: 293px;
+
+//   position: absolute;
+// `
+
+// const DropdownListItem = styled.li`
+//   height: 50px;
+
+//   display: flex;
+//   align-items: center;
+// `
+
+// const Dropdown = () => {
+//   const [isOpenFlag, setIsOpenFlag] = useState(false);
+//   const [selectedOption, setSelectedOption] = useState("교통수단")
+
+//   const toggleDropdown = () => setIsOpenFlag(!isOpenFlag);
+//   const selectOption = (option:string) => {
+//     setSelectedOption(option);
+//     setIsOpenFlag(false);
+//   };
+
+//   const option = [
+//     {label: "자가용", icon: car_icon},
+//     {label: "버스", icon: car_icon},
+//     {label: "기차(KTX)", icon: car_icon}
+//   ];
+
+//   return(
+//     <DropdownContainer>
+//       <DropdownHeader onClick={toggleDropdown} tabIndex={0}>
+//         <div>
+//           <IconImg src={car_icon}/>
+//           {selectedOption}
+//         </div>
+//         <span>{isOpenFlag ? "▲" : "▼"}</span>
+//       </DropdownHeader>
+//       {isOpenFlag && (
+//         <DropdownList>
+//           {option.map((option, index) => (
+//             <DropdownListItem key={index} onClick={() => selectOption(option.label)} tabIndex={0}>
+//               <IconImg src={car_icon}/>
+//               {option.label}
+//             </DropdownListItem>
+//           ))}
+//         </DropdownList>
+//       )}
+//     </DropdownContainer>
+//   );
+// };
 
 const DestinationFilter = () => {
-    return(
-        <>
-          <FilterBox>
-            <SelectorRow>
-              <Label>
-                <IconImg src={calender_icon}/>
-                <div>날짜 선택</div>
-              </Label>
-              <Label>
-                <IconImg src={people_icon}/>
-                <div>인원 수</div>
-              </Label>
-            </SelectorRow>
-            <SelectorRow>
-              <IconImg src={car_icon}/>
-              <ToggleItem>
-                <option value="1">1시간 이내</option>
-                <option value="2">2시간 이내</option>
-                <option value="3">3시간 이내</option>
-              </ToggleItem>
-            </SelectorRow>
-            <SelectorRow>
-              <IconImg src={clock_icon}/>
-              <ToggleItem>
-                <option value="1">1시간 이내</option>
-                <option value="2">2시간 이내</option>
-                <option value="3">3시간 이내</option>
-              </ToggleItem>
-            </SelectorRow>
-            <SelectorRow>
-              <IconImg src={pin_icon}/>
-              <BottomSheetItem>지역</BottomSheetItem>
-            </SelectorRow>
-          </FilterBox>
-        </>
-    )
+  return(
+    <>
+      <FilterBox>
+        <SelectorRow>
+          <Label>
+            <IconImg src={calender_icon}/>
+            <div>날짜 선택</div>
+          </Label>
+          <Label>
+            <IconImg src={people_icon}/>
+            <div>인원 수</div>
+          </Label>
+        </SelectorRow>
+        <SelectorRow>
+          <Dropdown/>
+        </SelectorRow>
+        <SelectorRow>
+          <Dropdown/>
+        </SelectorRow>
+        <SelectorRow>
+          <IconImg src={pin_icon}/>
+          <BottomSheetItem>출발지 선택</BottomSheetItem>
+        </SelectorRow>
+      </FilterBox>
+    </>
+  )
 }
 
 export default DestinationFilter;
