@@ -1,4 +1,5 @@
 import styled from "styled-components"
+// 미션 내용 카드
 
 const PopularMissionCardBox = styled.div`
   border: 1px solid gray;
@@ -35,9 +36,6 @@ const PopularMissionCard = () => {
               <PopularMissionRow1>순천</PopularMissionRow1>
               <PopularMissionRow2>img</PopularMissionRow2>
               <PopularMissionRow3>내용</PopularMissionRow3>
-              <PopularMissionRow4>
-                <button>미션 저장</button>
-              </PopularMissionRow4>
             </PopularMissionCardBox>
         </>
     )

@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import trash_bin_img from "../../images/feat2/trash_binpng.png";
+// 계획된 여행을 보여주는 카드
+// "다가오는 여행"
 
 const PlanedCardBox = styled.div`
   border: 1px solid red;
@@ -35,13 +37,17 @@ const PlanedCard_element = styled.div`
   line-height: 6px;
 `
 
+const DeleteBtn = styled.button`
+  background-color: white;
+`
+
 const PlanedCard = () => {
     return(
         <>
             <PlanedCardBox>
               <PlanedCard_row1>
                 <div>어디 여행, D-5</div>
-                <button><img src={trash_bin_img}/></button>
+                <DeleteBtn><img src={trash_bin_img}/></DeleteBtn>
               </PlanedCard_row1>
               <PlanedCard_row2>
                 <PlanedCard_element>2024.11.26 ~ 11.27</PlanedCard_element>

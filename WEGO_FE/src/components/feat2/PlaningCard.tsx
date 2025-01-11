@@ -1,4 +1,6 @@
 import styled from "styled-components";
+// 홈 화면에서 여행 조건을 선택하는 부분입니다
+// 날짜, 인원, 이동수단, 이동시간, 여행지역 선택
 
 const PlaningCardBox = styled.div`
   width: 363px;

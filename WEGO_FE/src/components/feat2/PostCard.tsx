@@ -1,4 +1,5 @@
 import styled from "styled-components"
+// 게시물 카드
 
 const PostCardBox = styled.div`
   border-bottom: 1px solid gray;

@@ -1,4 +1,6 @@
 import styled from "styled-components";
+// 여행지를 선택하는 버튼
+// 여행지 선택 화면에서 추천된 선택지 버튼
 
 const DestinationBtnBox = styled.div`
   width: 115px;

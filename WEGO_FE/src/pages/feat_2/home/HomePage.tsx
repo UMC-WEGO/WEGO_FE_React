@@ -6,6 +6,7 @@ import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularPostCard from '../../../components/feat2/PostCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
+import Button from '../../../components/feat1/button/Button';
 
 /*
 속성값이 겹치는 컨테이너 (LOGO, Selector 등)를 하나의 컴포넌트로 만들고
@@ -39,7 +40,7 @@ const NavbarArea = styled.div`
   margin-top: auto;
 
   width: 100%;
-  height: 90px;
+  height: 130px;
 `
 
 // --- --- --- 
@@ -189,7 +190,8 @@ function HomePage() {
           </SelectorContainer>
 
           <RandomBtnContainer>
-            <RandomBtn>랜덤 돌리기</RandomBtn>
+            {/* <RandomBtn>랜덤 돌리기</RandomBtn>   */}
+            <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/>
           </RandomBtnContainer>
           
           <PlanedContainer>          
