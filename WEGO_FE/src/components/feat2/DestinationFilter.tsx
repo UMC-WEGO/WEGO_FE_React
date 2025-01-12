@@ -83,10 +83,10 @@ const DestinationFilter = () => {
           </Label>
         </SelectorRow>
         <SelectorRow>
-          <Dropdown value="교통수단" option={Item_transport} iconStream={clock_icon}/>
+          <Dropdown value="교통수단" option={Item_transport} iconStream={car_icon}/>
         </SelectorRow>
         <SelectorRow>
-          <Dropdown value="시간대" option={Item_time} iconStream={car_icon}/>
+          <Dropdown value="시간대" option={Item_time} iconStream={clock_icon}/>
         </SelectorRow>
         <SelectorRow>
           <IconImg src={pin_icon}/>

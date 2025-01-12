@@ -13,18 +13,20 @@ const DropdownContainer = styled.div`
   height: 100%;
 `
 
-const DropdownHeader = styled.div`
+const DropdownHeader = styled.div<{ isOpen: boolean }>`
   width: 100%;
   height: 100%;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  border: 1px solid ${(props) => (props.isOpen ? 'rgba(0, 89, 255, 1)' : 'none')};
 `
 
 const DropdownList = styled.ul`
   background-color: white;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 89, 255, 1);
 
   width: 293px;
 
@@ -66,7 +68,7 @@ const Dropdown = ({
   
     return (
       <DropdownContainer>
-        <DropdownHeader onClick={toggleDropdown}>
+        <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
           <div>
             <IconImg src={iconStream} />
             {selectedOption || value}    {/* value: 기본값, selectedOption: 선택한 값 */}           
