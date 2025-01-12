@@ -127,6 +127,16 @@ const PopularPostArea = styled.div`
 `
 // --- --- ---
 // --- --- ---
+const MoreBtn = styled.button`
+  width: 47px;
+  height: 18px;
+
+  color: rgba(165, 165, 165, 1);
+  font-size: 11px;
+  font-weight: 600;
+
+  background-color: white;
+`
 
 type PlanedCardType = {
   planId: number;       // 여행 ID
@@ -135,6 +145,19 @@ type PlanedCardType = {
   period: string;       // 여행 기간
   party_num: number;    // 여행 인원수
   transport: string;    // 이동 수단
+}
+
+type PostCardType ={
+  ranking?: number;     // 인기순위 (인기 게시물에서)
+  img_src?: string;      // 이미지 경로
+  tag: string[];        // 상단에 들어가는 여행 태그
+  title: string;        // 글 제목
+  content: string;      // 글 내용
+  destination: string;  // 여행지
+  timestamp: Date;      // 게시 시간
+  like: number;         // 좋아요 수
+  comments: number;     // 댓글 수
+  script: number;       // 저장된 수
 }
 
 // 테스트용 임시 여행 데이터
@@ -165,6 +188,46 @@ const samplePlan: PlanedCardType[] = [
   }
 ];
 
+// 테스트용 임시 인기 미션 데이터
+const samplePopular: PostCardType[] = [
+  {
+    ranking: 1,
+    img_src: " ",
+    tag: ["#태그", "#태그", "#미션제안"],
+    title: "이런건",
+    content: "어떠신가요",
+    destination: "순천시",
+    timestamp: new Date(),
+    like: 12,
+    comments: 12,
+    script: 12
+  },
+  {
+    ranking: 2,
+    img_src: " ",
+    tag: ["#북유럽여행", "#밀레시안",],
+    title: "흰부엉이",
+    content: "\"안녕하세요? 밀레시안씨죠?\"",
+    destination: "에린",
+    timestamp: new Date(),
+    like: -2147,
+    comments: -2147,
+    script: -2147
+  },
+  {
+    ranking: 3,
+    img_src: " ",
+    tag: ["#황금함대"],
+    title: "파일런",
+    content: "왜 파일런의 범위가 대칭이 아냐?",
+    destination: "아이어",
+    timestamp: new Date(),
+    like: -2147,
+    comments: -2147,
+    script: -2147
+  },
+]
+
 function HomePage() {
   // 다가오는 여행 상태 관리
   const [cardList, setCardList] = useState(samplePlan);
@@ -172,7 +235,6 @@ function HomePage() {
     const updatePlanList = cardList.filter((_, i) => i !== flag);  // 해당 카드 삭제
     setCardList(updatePlanList);               //상태 업데이트
   }
-
   return(
     <>
       <AppContainer>
@@ -197,10 +259,12 @@ function HomePage() {
           <PopularPostContainer>
             <ContainerTitle>
               <div>인기 게시물</div>
-              <button>더보기</button>
+              <MoreBtn>더보기 {">"}</MoreBtn>
             </ContainerTitle>
             <PopularPostArea>
-              <PopularPostCard/>
+              {samplePopular.map((popular) => (
+                <PopularPostCard props={popular}/>
+              ))}
             </PopularPostArea>
           </PopularPostContainer>
 
