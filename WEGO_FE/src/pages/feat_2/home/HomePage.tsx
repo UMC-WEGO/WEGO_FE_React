@@ -1,5 +1,6 @@
 ///home
 import styled from 'styled-components';
+import { useState } from 'react';
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
 import PlanedCard from '../../../components/feat2/PlanedCard';
@@ -127,15 +128,51 @@ const PopularPostArea = styled.div`
 // --- --- ---
 // --- --- ---
 
-const samplePlan = {
-  destination: "청주",
-  D_Days: 3,
-  period: "2024-01-01 ~ 12-31",
-  party_num: 12,
-  transport: "버스"
+type PlanedCardType = {
+  planId: number;       // 여행 ID
+  destination: string;  // 여행 목적지
+  D_Days: number;       // 남은 날짜
+  period: string;       // 여행 기간
+  party_num: number;    // 여행 인원수
+  transport: string;    // 이동 수단
 }
 
+// 테스트용 임시 여행 데이터
+const samplePlan: PlanedCardType[] = [
+  {
+    planId: 1,
+    destination: "청주",
+    D_Days: 3,
+    period: "2024-01-01 ~ 12-31",
+    party_num: 12,
+    transport: "버스"
+  },
+  {
+    planId: 2,
+    destination: "양양",
+    D_Days: 9,
+    period: "2024-01-01 ~ 12-31",
+    party_num: 12,
+    transport: "버스"
+  },
+  {
+    planId: 3,
+    destination: "김포",
+    D_Days: 15,
+    period: "2024-01-01 ~ 12-31",
+    party_num: 12,
+    transport: "버스"
+  }
+];
+
 function HomePage() {
+  // 다가오는 여행 상태 관리
+  const [cardList, setCardList] = useState(samplePlan);
+  const handleDelete = (flag: number) => {     //flag: 해당 카드가 표시 될건지 안될건지
+    const updatePlanList = cardList.filter((_, i) => i !== flag);  // 해당 카드 삭제
+    setCardList(updatePlanList);               //상태 업데이트
+  }
+
   return(
     <>
       <AppContainer>
@@ -152,7 +189,9 @@ function HomePage() {
           
           <PlanedContainer>          
             <ContainerTitle>다가오는 여행</ContainerTitle>
-            <PlanedCard props={samplePlan}/>
+            {cardList.map((plan, flag) => (
+              <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)} />
+            ))}
           </PlanedContainer>
 
           <PopularPostContainer>

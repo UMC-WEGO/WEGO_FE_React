@@ -4,37 +4,54 @@ import trash_bin_img from "../../images/feat2/trash_binpng.png";
 // "다가오는 여행"
 
 const PlanedCardBox = styled.div`
-  border: 1px solid red;
+  border: 1px solid violet;
   border-radius: 15px;
   margin-bottom: 9px;
 
   height: 108px;
 
   display: flex;
-  flex-direction: column;
 `
+
+const PlanedCardHug = styled.div`
+  border: 1px solid blueviolet;
+
+  width: 327px;
+  height: 65px;
+  margin: auto;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
 const PlanedCard_row1 = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin: 22px;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 25px;
+  font-weight: 600;
 `
 const PlanedCard_row2 = styled.div`
   display: flex;
+  gap: 10px;
 
-  margin-left: 22px;
-  height: 22px;
+  height: 25px;
 `
 const PlanedCard_element = styled.div`
-  padding: 9px;
-  margin-right: 9px;
-  background-color: skyblue;
+  color: #0059FF;
+  font-size: 12px;
+  font-weight: 700;
+
+  height: 100%;
   border-radius: 8px;
 
-  font-size: 12px;
-  line-height: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 9px;
+  padding-right: 9px;
+
+  background-color: rgba(0, 89, 255, 0.1);
 `
 
 const DeleteBtn = styled.button`
@@ -51,23 +68,26 @@ type PlanedCardType = {
 
 interface PlanedCardProps {
   props: PlanedCardType;
+  onClickDelete: () => void;
 }
 
-const PlanedCard = ({ props }: PlanedCardProps) => {
+const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
     return(
-        <>
-            <PlanedCardBox>
-              <PlanedCard_row1>
-                <div>{props.destination}, D-{props.D_Days}</div>
-                <DeleteBtn><img src={trash_bin_img}/></DeleteBtn>
-              </PlanedCard_row1>
-              <PlanedCard_row2>
-                <PlanedCard_element>{props.period}</PlanedCard_element>
-                <PlanedCard_element>{props.party_num}</PlanedCard_element>
-                <PlanedCard_element>{props.transport}</PlanedCard_element>
-              </PlanedCard_row2>
-            </PlanedCardBox>
-        </>
+      <>
+        <PlanedCardBox>
+          <PlanedCardHug>
+            <PlanedCard_row1>
+              <div>{props.destination} 여행, D-{props.D_Days}</div>
+              <DeleteBtn onClick={onClickDelete}><img src={trash_bin_img}/></DeleteBtn>
+            </PlanedCard_row1>
+            <PlanedCard_row2>
+              <PlanedCard_element>{props.period}</PlanedCard_element>
+              <PlanedCard_element>{props.party_num}명</PlanedCard_element>
+              <PlanedCard_element>{props.transport}</PlanedCard_element>
+            </PlanedCard_row2>
+          </PlanedCardHug>
+        </PlanedCardBox>
+      </>
     )
 }
 
