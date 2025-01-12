@@ -10,7 +10,7 @@ const SignUpPageLayout = styled.div`
   align-items: center;
   /* background-color: green; */
 `;
-const ViewContainer = styled.div`
+const ViewContainer = styled.form`
   width: 95%;
   height: 100%;
   /* background-color: bisque; */
@@ -27,7 +27,7 @@ const LogoSection = styled.section`
   justify-content: center;
   align-items: center;
 `;
-const MainSection = styled.form`
+const MainSection = styled.div`
   height: 45%;
   display: flex;
   flex-direction: column;
