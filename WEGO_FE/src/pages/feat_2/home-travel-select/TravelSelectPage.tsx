@@ -114,6 +114,59 @@ const SelectionComplete = styled.button`
   border-radius: 5px;
 `
 
+type PostCardType ={
+  ranking?: number;     // 인기순위 (인기 게시물에서)
+  img_src?: string;      // 이미지 경로
+  tag: string[];        // 상단에 들어가는 여행 태그
+  title: string;        // 글 제목
+  content: string;      // 글 내용
+  destination: string;  // 여행지
+  timestamp: Date;      // 게시 시간
+  like: number;         // 좋아요 수
+  comments: number;     // 댓글 수
+  script: number;       // 저장된 수
+}
+
+// 테스트용 임시 인기 미션 데이터
+const samplePopular: PostCardType[] = [
+  {
+    ranking: 1,
+    img_src: " ",
+    tag: ["#태그", "#태그", "#미션제안"],
+    title: "제목",
+    content: "내용",
+    destination: "여행지",
+    timestamp: new Date(),
+    like: 0,
+    comments: 0,
+    script: 0
+  },
+  {
+    ranking: 2,
+    img_src: " ",
+    tag: ["#미션 제안"],
+    title: "이런 건 어떤가요 ㅋㅋ",
+    content: "순천 안온해변에서 갑자기......",
+    destination: "순천시",
+    timestamp: new Date(),
+    like: 60,
+    comments: 23,
+    script: 43
+  },
+  {
+    ranking: 3,
+    img_src: " ",
+    tag: ["#태그"],
+    title: "제목____________",
+    content: "내용________________________________",
+    destination: "어디어디",
+    timestamp: new Date(),
+    like: 1,
+    comments: 1,
+    script: 1
+  },
+]
+
 function TravelSelectPage() {
   return(
     <>
@@ -140,8 +193,9 @@ function TravelSelectPage() {
               <button>더보기</button>
             </Title>
             <PostArea>
-              <PostCard/>
-              <PostCard/>              
+              {samplePopular.map((popular) => (
+                <PostCard props={popular}/>
+              ))}              
             </PostArea>
 
           </PostContainer>

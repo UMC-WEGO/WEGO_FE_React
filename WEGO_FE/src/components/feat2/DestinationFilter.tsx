@@ -16,7 +16,7 @@ const FilterBox = styled.div`
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid green;
+  border: 1px solid rebeccapurple;
   background-color: #fff;
 `
 

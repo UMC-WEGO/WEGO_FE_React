@@ -194,37 +194,37 @@ const samplePopular: PostCardType[] = [
     ranking: 1,
     img_src: " ",
     tag: ["#태그", "#태그", "#미션제안"],
-    title: "이런건",
-    content: "어떠신가요",
-    destination: "순천시",
+    title: "제목",
+    content: "내용",
+    destination: "여행지",
     timestamp: new Date(),
-    like: 12,
-    comments: 12,
-    script: 12
+    like: 0,
+    comments: 0,
+    script: 0
   },
   {
     ranking: 2,
     img_src: " ",
-    tag: ["#북유럽여행", "#밀레시안",],
-    title: "흰부엉이",
-    content: "\"안녕하세요? 밀레시안씨죠?\"",
-    destination: "에린",
+    tag: ["#미션 제안"],
+    title: "이런 건 어떤가요 ㅋㅋ",
+    content: "순천 안온해변에서 갑자기......",
+    destination: "순천시",
     timestamp: new Date(),
-    like: -2147,
-    comments: -2147,
-    script: -2147
+    like: 60,
+    comments: 23,
+    script: 43
   },
   {
     ranking: 3,
     img_src: " ",
-    tag: ["#황금함대"],
-    title: "파일런",
-    content: "왜 파일런의 범위가 대칭이 아냐?",
-    destination: "아이어",
+    tag: ["#태그"],
+    title: "제목____________",
+    content: "내용________________________________",
+    destination: "어디어디",
     timestamp: new Date(),
-    like: -2147,
-    comments: -2147,
-    script: -2147
+    like: 1,
+    comments: 1,
+    script: 1
   },
 ]
 
