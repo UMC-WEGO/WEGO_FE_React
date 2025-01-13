@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface TopicButtonProps {
+  active?: boolean;
+}
+
 export const Container = styled.div`
   width: 100%;
   display: flex;
@@ -126,4 +130,8 @@ export const UploadBox = styled.label`
   input {
     display: none;
   }
+`;
+
+export const TopicButton = styled.div<TopicButtonProps>`
+  color: ${props => (props.active ? '#0059ff' : '#696969')};
 `;

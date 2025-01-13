@@ -1,28 +1,56 @@
 import * as S from './BoardWritePage.style';
 import { LuDot, LuMapPin } from 'react-icons/lu';
-import { FaCaretDown } from 'react-icons/fa';
+import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
+import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
 
 function BoardWritePage() {
+  const [isActive, setIsActive] = useState(false); // 클릭 상태
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [selectedTopic, setSelectedTopic] = useState('전체'); // 주제 상태
   const navigate = useNavigate();
+
+  const handleSelectButtonClick = () => {
+    setIsModalOpen(true);
+    setIsActive(prev => !prev);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setIsActive(false);
+  };
 
   const handleBack = () => {
     navigate(-1); // 이전 페이지
   };
+
+  const handleTopicSelect = (topic: string) => {
+    setSelectedTopic(topic); // 선택된 주제 업데이트
+    setIsModalOpen(false);
+    setIsActive(false);
+  };
+
   return (
     <S.Container>
       <S.Header>
         <button className="cancel" onClick={handleBack}>
           취소
         </button>
-        <div>
+        <S.TopicButton active={isActive} onClick={handleSelectButtonClick}>
           주제
           <LuDot />
-          전체&nbsp;
-          <FaCaretDown />
-        </div>
+          {selectedTopic}&nbsp;
+          {isActive ? <FaCaretUp /> : <FaCaretDown />}
+        </S.TopicButton>
         <button className="complete">완료</button>
       </S.Header>
+
+      <TopicModal
+        isOpen={isModalOpen}
+        onClose={handleModalClose}
+        onTopicSelect={handleTopicSelect}
+      />
 
       <S.Content>
         <input placeholder="제목" />
