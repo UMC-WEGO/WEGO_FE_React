@@ -2,8 +2,8 @@ import * as S from './BoardPage.style';
 import { CgProfile, CgMathPlus } from 'react-icons/cg';
 import { PiBellBold } from 'react-icons/pi';
 import { useState } from 'react';
-import FreeBoard from '../../../components/board/FreeBoard';
-import PopularBoard from '../../../components/board/PopularBoard';
+import FreeBoard from '../../../components/feat4/FreeBoard';
+import PopularBoard from '../../../components/feat4/PopularBoard';
 
 function BoardPage() {
   const [activeTab, setActiveTab] = useState('instant'); // 'instant' 또는 'popular'
