@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface TopicButtonProps {
-  active?: boolean;
+  $active?: boolean;
 }
 
 export const Container = styled.div`
@@ -133,5 +133,10 @@ export const UploadBox = styled.label`
 `;
 
 export const TopicButton = styled.div<TopicButtonProps>`
-  color: ${props => (props.active ? '#0059ff' : '#696969')};
+  color: ${({ $active }) => ($active ? '#0059ff' : '#696969')}; // $active 사용
+  cursor: pointer;
+
+  &:hover {
+    color: #0059ff;
+  }
 `;

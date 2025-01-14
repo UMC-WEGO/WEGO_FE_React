@@ -37,7 +37,7 @@ function BoardWritePage() {
         <button className="cancel" onClick={handleBack}>
           취소
         </button>
-        <S.TopicButton active={isActive} onClick={handleSelectButtonClick}>
+        <S.TopicButton $active={isActive} onClick={handleSelectButtonClick}>
           주제
           <LuDot />
           {selectedTopic}&nbsp;
