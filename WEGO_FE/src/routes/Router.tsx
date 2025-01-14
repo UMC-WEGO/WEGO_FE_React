@@ -20,6 +20,7 @@ import {
   SignupPage,
   SignupCompletePage,
   ErrorPage,
+  RegionSelectPage,
 } from '../pages/index';
 
 const Router = [
@@ -68,6 +69,10 @@ const Router = [
       {
         path: '/board/author/profile/:authorId',
         element: <BoardAuthorProfilePage />,
+      },
+      {
+        path: '/board/region-select',
+        element: <RegionSelectPage />,
       },
 
       // 마이페이지 관련 라우팅

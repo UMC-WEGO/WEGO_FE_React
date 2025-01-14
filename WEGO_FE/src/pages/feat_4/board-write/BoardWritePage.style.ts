@@ -47,7 +47,7 @@ export const CompleteButton = styled.button<{ $isActive: boolean }>`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 15px 25px;
+  padding: 15px 25px 0;
   gap: 10px;
 
   input {
@@ -86,7 +86,7 @@ export const Region = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0px 25px;
-  padding: 0 3px 10px;
+  padding: 15px 3px 10px;
 
   font-size: 16px;
   font-weight: 600;
@@ -115,12 +115,22 @@ export const Photo = styled.div`
   }
 `;
 
+export const ScrollContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+
+  overflow-x: auto;
+  white-space: nowrap;
+`;
+
 export const UploadBox = styled.label`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  flex-shrink: 0; // 축소 방지
 
   width: 85px;
   height: 85px;
@@ -130,8 +140,33 @@ export const UploadBox = styled.label`
   font-size: 12px;
   cursor: pointer;
 
+  box-sizing: border-box;
+
+  p {
+    color: #bbb;
+  }
+
+  span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 13px;
+    height: 13px;
+    background-color: #bbb;
+    border-radius: 50%;
+    color: #fff;
+  }
+
   input {
     display: none;
+  }
+
+  img {
+    width: 85px;
+    height: 85px;
+    object-fit: cover;
+    border-radius: 7px;
+    border: none;
   }
 `;
 
