@@ -53,15 +53,25 @@ const DestinationTime = styled.div<{ selectedFlag: boolean }>`
   color: white;
 `
 
-const DestinationBtn = () => {
+type DestinationBtnType = {
+  location: string;
+  city: string;
+  time: string;
+};
+
+interface DestinationBtnProps {
+  props: DestinationBtnType;
+}
+
+const DestinationBtn = ({props}: DestinationBtnProps) => {
   const [selected, setSelected] = useState(false);
 
   return(
       <>
         <DestinationBtnBox selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>
-          <DestinationLocation selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>경상북도</DestinationLocation>
-          <DestinationCity>대구</DestinationCity>
-          <DestinationTime selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>1시간 30분</DestinationTime>
+          <DestinationLocation selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>{props.location}</DestinationLocation>
+          <DestinationCity>{props.city}</DestinationCity>
+          <DestinationTime selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>{props.time}</DestinationTime>
         </DestinationBtnBox>
       </>
     )

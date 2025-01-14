@@ -114,7 +114,13 @@ const SelectionComplete = styled.button`
   border-radius: 5px;
 `
 
-type PostCardType ={
+type DestinationPropsType = {
+  location: string;
+  city: string;
+  time: string;
+};
+
+type PostCardPropsType ={
   ranking?: number;     // 인기순위 (인기 게시물에서)
   img_src?: string;      // 이미지 경로
   tag: string[];        // 상단에 들어가는 여행 태그
@@ -125,10 +131,29 @@ type PostCardType ={
   like: number;         // 좋아요 수
   comments: number;     // 댓글 수
   script: number;       // 저장된 수
-}
+};
+
+// 테스트용 임시 목적지 버튼 데이터
+const sampleDestination: DestinationPropsType[] = [
+  {
+    location: "경상북도",
+    city: "대구",
+    time: "1시간 44분"
+  },
+  {
+    location: "충청남도",
+    city: "천안",
+    time: "1시간 11분"
+  },
+  {
+    location: "충청북도",
+    city: "충주",
+    time: "1시간 30분"
+  }
+]
 
 // 테스트용 임시 인기 미션 데이터
-const samplePopular: PostCardType[] = [
+const samplePopular: PostCardPropsType[] = [
   {
     ranking: 1,
     img_src: " ",
@@ -164,7 +189,7 @@ const samplePopular: PostCardType[] = [
     like: 1,
     comments: 1,
     script: 1
-  },
+  }
 ]
 
 function TravelSelectPage() {
@@ -182,9 +207,10 @@ function TravelSelectPage() {
           </PlanContainer>
 
           <DestinationContainer>
-            <DestinationBtn/>
-            <DestinationBtn/>
-            <DestinationBtn/>
+            {/* 3개만 출력 */}
+            {sampleDestination.slice(0,3).map((destinationData) => (
+              <DestinationBtn props={destinationData}/>
+            ))}
           </DestinationContainer>
 
           <PostContainer>
