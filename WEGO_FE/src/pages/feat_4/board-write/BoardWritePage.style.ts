@@ -30,16 +30,18 @@ export const Header = styled.div`
     color: #696969;
   }
 
-  .complete {
-    color: #d9d9d9;
-  }
-
   div {
     display: flex;
     align-items: center;
     font-size: 18px;
     cursor: pointer;
   }
+`;
+
+export const CompleteButton = styled.button<{ $isActive: boolean }>`
+  cursor: ${({ $isActive }) => ($isActive ? 'pointer' : 'not-allowed')};
+
+  color: ${({ $isActive }) => ($isActive ? '#0059ff' : '#696969')};
 `;
 
 export const Content = styled.div`
@@ -72,6 +74,7 @@ export const Content = styled.div`
     outline: none;
     border-bottom: 1px solid #d9d9d9;
     color: #000;
+    resize: none;
 
     &::placeholder {
       color: #ccc;

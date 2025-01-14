@@ -6,30 +6,40 @@ import { useState } from 'react';
 import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
 
 function BoardWritePage() {
-  const [isActive, setIsActive] = useState(false); // 클릭 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
-  const [selectedTopic, setSelectedTopic] = useState('전체'); // 주제 상태
+  const [selectedTopic, setSelectedTopic] = useState('전체'); // 선택된 주제
+  const [title, setTitle] = useState(''); // 제목 상태
+  const [content, setContent] = useState(''); // 내용 상태
   const navigate = useNavigate();
 
+  // 주제 선택 버튼 -> 모달 열기
   const handleSelectButtonClick = () => {
     setIsModalOpen(true);
-    setIsActive(prev => !prev);
   };
 
+  // 모달 닫기
   const handleModalClose = () => {
     setIsModalOpen(false);
-    setIsActive(false);
   };
 
+  // 이전 페이지
   const handleBack = () => {
-    navigate(-1); // 이전 페이지
+    navigate(-1);
   };
 
+  // 주제 선택
   const handleTopicSelect = (topic: string) => {
-    setSelectedTopic(topic); // 선택된 주제 업데이트
+    setSelectedTopic(topic); // 선택된 주제
     setIsModalOpen(false);
-    setIsActive(false);
   };
+
+  // 완료 버튼 클릭
+  const handleComplete = () => {
+    console.log('완료:', { title, content, selectedTopic });
+  };
+
+  // 완료 버튼 활성화
+  const isCompleteEnabled = title.trim() !== '' && content.trim() !== '';
 
   return (
     <S.Container>
@@ -37,13 +47,19 @@ function BoardWritePage() {
         <button className="cancel" onClick={handleBack}>
           취소
         </button>
-        <S.TopicButton $active={isActive} onClick={handleSelectButtonClick}>
+        <S.TopicButton $active={isModalOpen} onClick={handleSelectButtonClick}>
           주제
           <LuDot />
           {selectedTopic}&nbsp;
-          {isActive ? <FaCaretUp /> : <FaCaretDown />}
+          {isModalOpen ? <FaCaretUp /> : <FaCaretDown />}
         </S.TopicButton>
-        <button className="complete">완료</button>
+        <S.CompleteButton
+          $isActive={isCompleteEnabled}
+          onClick={handleComplete}
+          disabled={!isCompleteEnabled}
+        >
+          완료
+        </S.CompleteButton>
       </S.Header>
 
       <TopicModal
@@ -53,8 +69,16 @@ function BoardWritePage() {
       />
 
       <S.Content>
-        <input placeholder="제목" />
-        <textarea placeholder="위고의 즉흥여행러들과 이야기를 나눠보세요!" />
+        <input
+          placeholder="제목"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="위고의 즉흥여행러들과 이야기를 나눠보세요!"
+          value={content}
+          onChange={e => setContent(e.target.value)}
+        />
       </S.Content>
 
       <S.Region>
