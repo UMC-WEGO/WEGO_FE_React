@@ -66,6 +66,7 @@ export const TempGrade = styled.div`
   flex-grow: 0;
   flex-direction: row-reverse;
   line-height: 1.5;
+
   img {
     width: 20px;
     height: 20px;
@@ -83,6 +84,7 @@ export const TempImage = styled.img`
 export const TempInfoMessage = styled.div`
   position: absolute;
   margin-top: 40px;
+  margin-left: 3.5px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

@@ -17,6 +17,7 @@ export const ProfilePic = styled.img`
   border-radius: 50%;
   margin-left: 20px;
   margin-right: 45px;
+  border: 1px solid #a5a5a5;
 `;
 
 export const InfoSection = styled.div`

@@ -1,6 +1,7 @@
-import * as S from './Temp.style';
+import * as S from './Temp.style.ts';
 import { useState } from 'react';
-import { tempData } from '../../mocks/feat5/TempData.ts';
+import { useParams } from 'react-router-dom';
+import { users } from '../../mocks/feat5/UserData.ts';
 import grade1 from '../../images/feat5/score1.svg';
 import grade2 from '../../images/feat5/score2.svg';
 import grade3 from '../../images/feat5/score3.svg';
@@ -17,7 +18,11 @@ interface GradeInfo {
 
 function TempContainer() {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-
+  const { userId } = useParams();
+  const user = users.find(user => user.userId === userId);
+  if (!user) {
+    return <div>찾을 수 없는 사용자</div>;
+  }
   const toggleContent = (): void => {
     setIsClicked(true);
     setTimeout(() => {
@@ -33,7 +38,7 @@ function TempContainer() {
     return { grade: '개척가', imageUrl: grade5 };
   };
 
-  const tempValue: number = tempData.tempValue;
+  const tempValue: number = user.tempValue;
   const progressBarWidth = (tempValue / 100) * 93.5;
 
   return (
