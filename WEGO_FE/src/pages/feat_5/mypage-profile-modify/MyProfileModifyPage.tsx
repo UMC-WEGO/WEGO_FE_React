@@ -1,6 +1,6 @@
 import * as S from './MyProfileModifyPage.style';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { users } from '../../../mocks/feat5/UserData';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import Profile_cam from '../../../images/feat5/Profile_cam.svg';
@@ -14,6 +14,15 @@ function MyProfileModifyPage() {
   const [username, setUsername] = useState(user?.username || '');
   const [useremail, setUseremail] = useState(user?.useremail || '');
   const [profilePic, setProfilePic] = useState(user?.profilePic || '');
+  const [isModified, setIsModified] = useState(false);
+
+  useEffect(() => {
+    setIsModified(
+      username !== user?.username ||
+        useremail !== user?.useremail ||
+        profilePic !== user?.profilePic,
+    );
+  }, [username, useremail, profilePic, user]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -47,7 +56,7 @@ function MyProfileModifyPage() {
         </button>
         <h1>프로필 수정</h1>
         <button className="text-btn" onClick={handleSave}>
-          <h1>완료</h1>
+          <h1 className={isModified ? 'modified' : ''}>완료</h1>
         </button>
       </S.Header>
 

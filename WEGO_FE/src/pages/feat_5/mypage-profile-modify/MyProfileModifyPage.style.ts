@@ -62,6 +62,11 @@ export const Header = styled.header`
     text-align: right;
     color: #d9d9d9;
     margin: 0;
+    transition: color 0.3s ease;
+  }
+
+  .text-btn h1.modified {
+    color: #0059ff;
   }
 `;
 
