@@ -5,8 +5,10 @@ import Button from '../../../components/feat1/button/Button';
 
 import { IoMdEye } from 'react-icons/io';
 import { IoMdEyeOff } from 'react-icons/io';
+import { useNavigate } from 'react-router';
 
 function PasswordView() {
+  const navigate = useNavigate();
   const nextText = '다음';
   const [istNextReady, setIsNextReady] = useState();
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
@@ -54,6 +56,9 @@ function PasswordView() {
           type={'submit'}
           color={istNextReady ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
+          onClickHandler={() => {
+            navigate('/signup/terms');
+          }}
         ></Button>
       </S.SignUpInputsBox>
     </S.MainSection>
