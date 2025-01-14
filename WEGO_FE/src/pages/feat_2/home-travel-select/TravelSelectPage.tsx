@@ -15,8 +15,6 @@ const AppContainer = styled.p`
 
   width: 100%;
   margin-top: 42px;
-
-  border: 1px solid purple;
 `
 
 // 스크롤 되는 영역
@@ -24,8 +22,6 @@ const ScrollArea = styled.div`
   overflow-y: auto;
 
   width: 95%;
-
-  border: 1px solid violet;
 `
 
 // 툴바 영역 (뒤로가기, 공유 버튼 영역)
@@ -36,8 +32,6 @@ const ToolBarContainer = styled.div`
 
   display: flex;
   justify-content: space-between;
-
-  border: 1px solid darkviolet;
 `
 
 // "여행지를 선정하세요" 영역
@@ -49,8 +43,6 @@ const PlanContainer = styled.div`
 
   display: flex;
   justify-content: center;
-  
-  border: 1px solid darkviolet;
 `
 
 // 여행지 선택 버튼 영역
@@ -62,8 +54,6 @@ const DestinationContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 10px;
-
-  border: 1px solid darkviolet;
 `
 
 // 즉흥 게시판 영역
@@ -72,8 +62,6 @@ const PostContainer = styled.div`
 
   margin-top: 32px;
   height: 297px;
-
-  border: 1px solid darkviolet;
 `
 const PostArea = styled.div`
   border: 1px solid gray;
@@ -98,8 +86,6 @@ const SubmitBtnContainer = styled.div`
   margin-top: 32px;
   margin-bottom: 36px;
   height: 50px;
-
-  border: 1px solid darkviolet;
 `
 // --- --- ---
 // --- --- ---
@@ -219,7 +205,7 @@ function TravelSelectPage() {
               <button>더보기</button>
             </Title>
             <PostArea>
-              {samplePopular.map((popular) => (
+              {samplePopular.slice(0, 2).map((popular) => (
                 <PostCard props={popular}/>
               ))}              
             </PostArea>

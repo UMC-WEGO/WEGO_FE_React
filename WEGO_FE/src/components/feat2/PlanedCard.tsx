@@ -5,7 +5,7 @@ import BlueTag from "./BlueTag";
 // "다가오는 여행"
 
 const PlanedCardBox = styled.div`
-  border: 1px solid violet;
+  border: 1px solid rgba(234, 234, 234, 1);
   border-radius: 15px;
   margin-bottom: 9px;
 
@@ -15,8 +15,6 @@ const PlanedCardBox = styled.div`
 `
 
 const PlanedCardHug = styled.div`
-  border: 1px solid blueviolet;
-
   width: 327px;
   height: 65px;
   margin: auto;
@@ -38,21 +36,6 @@ const PlanedCard_row2 = styled.div`
   gap: 10px;
 
   height: 25px;
-`
-const PlanedCard_element = styled.div`
-  color: #0059FF;
-  font-size: 12px;
-  font-weight: 700;
-
-  height: 100%;
-  border-radius: 8px;
-
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 9px;
-  padding-right: 9px;
-
-  background-color: rgba(0, 89, 255, 0.1);
 `
 
 const DeleteBtn = styled.button`

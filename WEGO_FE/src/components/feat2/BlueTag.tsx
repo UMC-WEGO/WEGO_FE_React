@@ -6,7 +6,6 @@ const Item = styled.div`
     padding-right: 14px;
     padding-left: 14px;
 
-    border: 1px solid violet;
     border-radius: 13px;
 
     font-size: 12px;
