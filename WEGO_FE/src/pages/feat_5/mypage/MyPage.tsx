@@ -18,8 +18,6 @@ function MyPage() {
       <S.Container>
         <S.Header>
           <h1>마이페이지</h1>
-          <img src={Group} alt="Group" className="group-img" />
-          <img src={Alarm} alt="Alarm" className="alarm-img" />
         </S.Header>
         <S.ProfileContainer>
           <Profile></Profile>
