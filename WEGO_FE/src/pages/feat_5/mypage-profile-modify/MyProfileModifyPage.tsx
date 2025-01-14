@@ -18,9 +18,11 @@ function MyProfileModifyPage() {
 
   useEffect(() => {
     setIsModified(
-      username !== user?.username ||
-        useremail !== user?.useremail ||
-        profilePic !== user?.profilePic,
+      username.trim() !== '' &&
+        useremail.trim() !== '' &&
+        (username !== user?.username ||
+          useremail !== user?.useremail ||
+          profilePic !== user?.profilePic),
     );
   }, [username, useremail, profilePic, user]);
 
@@ -55,8 +57,12 @@ function MyProfileModifyPage() {
           <img src={Arrow} alt="Arrow" className="arrow-img" />
         </button>
         <h1>프로필 수정</h1>
-        <button className="text-btn" onClick={handleSave}>
-          <h1 className={isModified ? 'modified' : ''}>완료</h1>
+        <button
+          className={`text-btn ${isModified ? 'active' : ''}`}
+          onClick={handleSave}
+          disabled={!isModified}
+        >
+          <h1>완료</h1>
         </button>
       </S.Header>
 

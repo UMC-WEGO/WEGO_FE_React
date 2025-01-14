@@ -65,8 +65,13 @@ export const Header = styled.header`
     transition: color 0.3s ease;
   }
 
-  .text-btn h1.modified {
+  .text-btn.active h1 {
     color: #0059ff;
+    cursor: pointer;
+  }
+
+  .text-btn:disabled {
+    cursor: not-allowed;
   }
 `;
 
