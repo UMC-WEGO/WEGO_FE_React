@@ -8,8 +8,6 @@ export const Container = styled.div`
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
 `;
 
 export const Header = styled.header`
@@ -18,7 +16,6 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
-  border-bottom: 1px solid #ddd;
   position: relative;
 
   h1 {
@@ -74,15 +71,22 @@ export const ProfileContainer = styled.div`
   justify-content: center;
   width: 100%;
   position: relative;
-  border-bottom: 1px solid #ddd;
 `;
 
-export const ProfilePic = styled.img`
-  width: 109px;
-  height: 100px;
+export const ProfilePicButton = styled.button`
+  background: none;
+  padding: 0;
   border-radius: 50%;
   margin-top: 43px;
-  position: relative;
+  cursor: pointer;
+  border: 1px solid #a5a5a5;
+
+  img {
+    width: 100px;
+    height: 100px;
+    display: block;
+    border-radius: 50%;
+  }
 `;
 
 export const CameraButton = styled.button`
@@ -93,10 +97,31 @@ export const CameraButton = styled.button`
   cursor: pointer;
   border: none;
 
-  .camera-icon {
+  img {
     width: 36px;
     height: 36px;
   }
 `;
 
-export const InputContainer = styled.div``;
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 38px;
+  gap: 27px;
+`;
+
+export const InputContainer = styled.div`
+  height: 66px;
+  gap: 14px;
+
+  h1 {
+    margin: 0px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+`;

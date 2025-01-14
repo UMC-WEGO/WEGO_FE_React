@@ -37,9 +37,9 @@ export const users = [
     username: '담곰이',
     useremail: 'pizzaaa@naver.com',
     profilePic: profile_circle,
-    points: '900',
-    trips: 2,
-    missionsCompleted: 4,
-    tempValue: 11,
+    points: '7.000',
+    trips: 12,
+    missionsCompleted: 24,
+    tempValue: 90,
   },
 ];

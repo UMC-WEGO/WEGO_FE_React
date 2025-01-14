@@ -1,4 +1,4 @@
-import * as S from './Temp.style';
+import * as S from './Temp.style.ts';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { users } from '../../mocks/feat5/UserData.ts';
