@@ -74,11 +74,10 @@ export const ProfileMenu = styled.div`
   padding-right: 20px;
 
   button {
-    width: 170px;
+    width: 167px;
     height: 36px;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid #a5a5a5;
-    width: Fixed (167px) px;
     gap: 10px;
     font-size: 14px;
     font-weight: 500;
