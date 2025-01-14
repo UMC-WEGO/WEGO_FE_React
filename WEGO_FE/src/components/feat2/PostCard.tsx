@@ -75,6 +75,7 @@ type PostCardType ={
 }
 
 interface PostCardProps {
+  showRank?: boolean | undefined;
   props: PostCardType;
 }
 
