@@ -1,41 +1,134 @@
-import styled from "styled-components"
+import styled from "styled-components";
+
+import chevron from "../../images/feat2/chevron-forward-outline.png";
+import pin from "../../images/feat2/map_pin_icon.png";
 // 미션 내용 카드
 
 const PopularMissionCardBox = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
-  padding: 22px;
+
+  height: 390px;
+  widht: 373px;
 
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
+  align-items: center;
 `
 const PopularMissionRow1 = styled.div`
   //제목
   font-size: 18px;
+  font-weight: 700;
+
+  height: 18px;
+
+  display: flex;
+  gap: 5px;
+
+  margin-top: 15px;
 `
 const PopularMissionRow2 = styled.div`
   //이미지
-  margin-top: 22px;
-  border: 1px solid mediumpurple;
+  display: flex;
+  gap: 10px;
 
-  height: 158px;
+  margin-top: 15px;
 `
 const PopularMissionRow3 = styled.div`
   //내용
-  margin-top: 22px;
+  text-align: center;
+  height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 20px;
 `
 const PopularMissionRow4 = styled.div`
   //버튼
-  margin-top:22px;
 `
 
-const PopularMissionCard = () => {
+const MissionSaveBtn = styled.button`
+  width: 109px;
+  height: 41px;
+
+  background-color: blue;
+  border-radius: 5px;
+
+  padding: 10px;
+
+  font-weight: 600;
+  font-size: 16px;
+  color: white;
+`
+
+const NextMission = styled.button`
+  background-color: white;
+`
+
+const PrevMission = styled.button`
+  background-color: white;
+  transform: rotate(180deg);
+`
+
+const MissionImg = styled.div`
+  width: 313px;
+  height: 160px;
+
+  border: 1px solid rgba(164, 164, 164, 1);
+  border-radius: 10px;
+`
+
+const Icon = styled.img`
+  width: 20px;
+  height: 20px;
+`
+
+const MissionTitle = styled.div`
+  font-size: 18px;
+  font-weight: 700;
+`
+
+const MissionContent = styled.div`
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(138, 138, 138, 1);
+
+  margin-top: 20px;
+`
+
+type MissionPropsType = {
+  destination: string;
+  img_src?: string;
+  title: string;
+  content: string;
+};
+
+interface MissionProps {
+  props: MissionPropsType;
+}
+
+const PopularMissionCard = ({props}: MissionProps) => {
     return(
         <>
             <PopularMissionCardBox>
-              <PopularMissionRow1>순천</PopularMissionRow1>
-              <PopularMissionRow2>img</PopularMissionRow2>
-              <PopularMissionRow3>내용</PopularMissionRow3>
+              <PopularMissionRow1>
+                <Icon src={pin}/>
+                <div>{props.destination}</div>
+              </PopularMissionRow1>
+              <PopularMissionRow2>
+                <PrevMission><Icon src={chevron}/></PrevMission>
+                <MissionImg/>
+                <NextMission><Icon src={chevron}/></NextMission>
+              </PopularMissionRow2>
+              <PopularMissionRow3>
+                <MissionTitle>{props.title}</MissionTitle>
+                <MissionContent>{props.content}</MissionContent>
+              </PopularMissionRow3>
+              <PopularMissionRow4>
+                <MissionSaveBtn>미션 저장</MissionSaveBtn>
+              </PopularMissionRow4>
             </PopularMissionCardBox>
         </>
     )

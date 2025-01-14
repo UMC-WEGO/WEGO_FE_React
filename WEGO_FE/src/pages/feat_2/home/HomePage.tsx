@@ -88,6 +88,7 @@ const PopularMissionContainer = styled.div`
   margin: 5px;
 
   margin-top: 27px;
+  margin-bottom: 40px;
   height: 400px;
 `
 // --- --- ---
@@ -100,7 +101,7 @@ const ContainerTitle = styled.div`
   margin: 14px;
   margin-bottom: 14px;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
 `
 // --- --- ---
 // --- --- ---
@@ -143,6 +144,20 @@ type PostCardType ={
   comments: number;     // 댓글 수
   script: number;       // 저장된 수
 }
+
+type MissionPropsType = {
+  destination: string;
+  img_src?: string;
+  title: string;
+  content: string;
+};
+
+// 테스트용 임시 인기 미션 데이터
+const sampleMission: MissionPropsType = {
+  destination: "순천시",
+  title: "갯벌",
+  content: "갑자기"
+};
 
 // 테스트용 임시 여행 데이터
 const samplePlan: PlanedCardType[] = [
@@ -254,8 +269,7 @@ function HomePage() {
 
           <PopularMissionContainer>
             <ContainerTitle>인기 미션</ContainerTitle>
-            <PopularMissionCard/>
-            <Button type='button' color='--color-main-blue' content='미션저장' width='109px' height='40px'/>
+            <PopularMissionCard props={sampleMission}/>
           </PopularMissionContainer>
 
         </ScrollArea>
