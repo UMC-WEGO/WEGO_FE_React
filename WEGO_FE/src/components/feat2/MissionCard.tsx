@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 import chevron from "../../images/feat2/chevron-forward-outline.png";
 import pin from "../../images/feat2/map_pin_icon.png";
@@ -106,32 +107,51 @@ type MissionPropsType = {
 };
 
 interface MissionProps {
-  props: MissionPropsType;
+  props: MissionPropsType[];
 }
 
 const PopularMissionCard = ({props}: MissionProps) => {
-    return(
-        <>
-            <PopularMissionCardBox>
-              <PopularMissionRow1>
-                <Icon src={pin}/>
-                <div>{props.destination}</div>
-              </PopularMissionRow1>
-              <PopularMissionRow2>
-                <PrevMission><Icon src={chevron}/></PrevMission>
-                <MissionImg/>
-                <NextMission><Icon src={chevron}/></NextMission>
-              </PopularMissionRow2>
-              <PopularMissionRow3>
-                <MissionTitle>{props.title}</MissionTitle>
-                <MissionContent>{props.content}</MissionContent>
-              </PopularMissionRow3>
-              <PopularMissionRow4>
-                <MissionSaveBtn>미션 저장</MissionSaveBtn>
-              </PopularMissionRow4>
-            </PopularMissionCardBox>
-        </>
-    )
+  // 현재 표시할 미션 데이터
+  const [nowMissionIndex, setNowMissionIndex] = useState(0);
+  const nowShowMission = props[nowMissionIndex];
+
+  const changeNextMission = () => {
+    if(nowMissionIndex < props.length - 1){
+      setNowMissionIndex(nowMissionIndex + 1);
+    }
+  }
+
+  const changePrevMission = () => {
+    if(nowMissionIndex > 0){
+      setNowMissionIndex(nowMissionIndex - 1);
+    }
+  }
+
+  return(
+    <>
+      <PopularMissionCardBox>
+        <PopularMissionRow1>
+          <Icon src={pin}/>
+          <div>{nowShowMission.destination}</div>
+        </PopularMissionRow1>
+
+        <PopularMissionRow2>
+          <PrevMission onClick={changePrevMission}><Icon src={chevron}/></PrevMission>
+          <MissionImg/>
+          <NextMission onClick={changeNextMission}><Icon src={chevron}/></NextMission>
+        </PopularMissionRow2>
+
+        <PopularMissionRow3>
+          <MissionTitle>{nowShowMission.title}</MissionTitle>
+          <MissionContent>{nowShowMission.content}</MissionContent>
+        </PopularMissionRow3>
+
+        <PopularMissionRow4>
+          <MissionSaveBtn>미션 저장</MissionSaveBtn>
+        </PopularMissionRow4>
+      </PopularMissionCardBox>
+    </>
+  )
 }
 
 export default PopularMissionCard;

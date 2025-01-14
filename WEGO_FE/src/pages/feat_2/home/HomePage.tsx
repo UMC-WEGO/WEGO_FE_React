@@ -153,11 +153,23 @@ type MissionPropsType = {
 };
 
 // 테스트용 임시 인기 미션 데이터
-const sampleMission: MissionPropsType = {
-  destination: "순천시",
-  title: "갯벌",
-  content: "갑자기"
-};
+const sampleMission: MissionPropsType[] = [
+  {
+    destination: "순천시",
+    title: "갯벌",
+    content: "갑자기"
+  },
+  {
+    destination: "서울시",
+    title: "한강",
+    content: "자전거"
+  },
+  {
+    destination: "평양시",
+    title: "냉면",
+    content: "잘 모르겠다"
+  }
+];
 
 // 테스트용 임시 여행 데이터
 const samplePlan: PlanedCardType[] = [
