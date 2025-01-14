@@ -6,7 +6,7 @@ function Profile() {
   const { userId } = useParams();
   const user = users.find(user => user.userId === userId);
   if (!user) {
-    return <div>찾을 수 없는 사용자</div>;
+    return <div>찾을 수 없는 사용자입니다.</div>;
   }
 
   return (

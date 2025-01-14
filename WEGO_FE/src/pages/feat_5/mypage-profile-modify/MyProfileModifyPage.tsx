@@ -3,9 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { users } from '../../../mocks/feat5/UserData';
 import Arrow from '../../../images/feat5/Arrow.svg';
-import Profile_cam from '../../../images/feat5/Profile_cam.svg';
-import ProfilePicButton from '../../../components/feat5/modify/ProfilePicButton';
 import InputFieldWrapper from '../../../components/feat5/modify/InputWrapper';
+import ProfilePicUpload from '../../../components/feat5/modify/ProfilePicUpload';
 
 function MyProfileModifyPage() {
   const navigate = useNavigate();
@@ -66,27 +65,11 @@ function MyProfileModifyPage() {
         </button>
       </S.Header>
 
-      <S.ProfileContainer>
-        {user ? (
-          <>
-            <ProfilePicButton
-              profilePic={profilePic}
-              onClick={handleProfilePictureClick}
-            />
-            <S.CameraButton onClick={handleProfilePictureClick}>
-              <img src={Profile_cam} alt="Camera" />
-            </S.CameraButton>
-            <input
-              type="file"
-              accept="image/*"
-              style={{ display: 'none' }}
-              onChange={handleFileChange}
-            />
-          </>
-        ) : (
-          <div>찾을 수 없는 사용자</div>
-        )}
-      </S.ProfileContainer>
+      <ProfilePicUpload
+        profilePic={profilePic}
+        handleProfilePictureClick={handleProfilePictureClick}
+        handleFileChange={handleFileChange}
+      />
 
       <S.InputWrapper>
         <InputFieldWrapper
