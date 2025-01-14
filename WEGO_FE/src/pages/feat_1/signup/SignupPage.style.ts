@@ -22,12 +22,14 @@ const ViewContainer = styled.form`
 
 // 섹션 분리
 const LogoSection = styled.section`
+  width: 340px;
   height: 18%;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 const MainSection = styled.div`
+  width: 340px;
   height: 45%;
   display: flex;
   flex-direction: column;
