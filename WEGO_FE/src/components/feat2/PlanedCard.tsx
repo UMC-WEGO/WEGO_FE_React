@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import trash_bin_img from "../../images/feat2/trash_binpng.png";
+import BlueTag from "./BlueTag";
 // 계획된 여행을 보여주는 카드
 // "다가오는 여행"
 
@@ -59,11 +60,11 @@ const DeleteBtn = styled.button`
 `
 
 type PlanedCardType = {
-  destination: string;  // 여행 목적지
-  D_Days: number;       // 남은 날짜
-  period: string;       // 여행 기간
-  party_num: number;    // 여행 인원수
-  transport: string;    // 이동 수단
+  destination: string;         // 여행 목적지
+  D_Days: number;              // 남은 날짜
+  period: string;              // 여행 기간
+  party_num: string | number;  // 여행 인원수
+  transport: string;           // 이동 수단
 }
 
 interface PlanedCardProps {
@@ -81,9 +82,9 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
               <DeleteBtn onClick={onClickDelete}><img src={trash_bin_img}/></DeleteBtn>
             </PlanedCard_row1>
             <PlanedCard_row2>
-              <PlanedCard_element>{props.period}</PlanedCard_element>
-              <PlanedCard_element>{props.party_num}명</PlanedCard_element>
-              <PlanedCard_element>{props.transport}</PlanedCard_element>
+              <BlueTag TagContent={props.period}/>
+              <BlueTag TagContent={`${props.party_num}명`}/>
+              <BlueTag TagContent={props.transport}/>
             </PlanedCard_row2>
           </PlanedCardHug>
         </PlanedCardBox>

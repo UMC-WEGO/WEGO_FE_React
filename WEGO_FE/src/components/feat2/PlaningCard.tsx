@@ -57,7 +57,7 @@ const PlaningCard = () => {
               <PlaningCardRow2>2024.11.26 ~ 2024.11.27</PlaningCardRow2>
               <PlaningCardRow3>
                 <div>출발지</div>
-                <BlueTag/>
+                <BlueTag TagContent="부산"/>
               </PlaningCardRow3>
               <PlaningCardRow4>
                 <div>이동수단</div>

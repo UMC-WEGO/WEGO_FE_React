@@ -16,11 +16,14 @@ const Item = styled.div`
     color: rgba(0, 89, 255, 1);
 `
 
-const BlueTag = () => {
-    return(
-        <Item>부산</Item>        
-    )
-
+interface BlueTagProps {
+    TagContent: string;
 }
+
+const BlueTag = ({ TagContent }: BlueTagProps) => {
+    return (
+        <Item>{TagContent}</Item>        
+    );
+};
 
 export default BlueTag;
