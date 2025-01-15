@@ -8,6 +8,8 @@ export const Container = styled.div`
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 `;
 
 export const Header = styled.header`
@@ -17,6 +19,7 @@ export const Header = styled.header`
   width: 100%;
   height: 20px;
   position: relative;
+  border-bottom: 1px solid #ddd;
 
   h1 {
     font-size: 20px;
@@ -41,11 +44,17 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: 1px;
+    left: 10px;
   }
 
   .arrow-img {
     width: 20px;
     height: 20px;
   }
+`;
+
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
 `;
