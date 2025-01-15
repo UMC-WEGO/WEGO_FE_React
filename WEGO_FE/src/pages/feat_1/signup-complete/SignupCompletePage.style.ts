@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import * as S from '../signup/SignupPage.style';
+
 const Re_MainSection = styled(S.MainSection)`
   justify-content: center;
   align-items: center;
@@ -19,6 +21,8 @@ const SmallText = styled.p`
   letter-spacing: -0.32px;
 
   color: #8a8a8a;
+
+  margin-bottom: 50px;
 `;
 
 const BoldText = styled.p`
@@ -33,5 +37,7 @@ const BoldText = styled.p`
   text-align: center;
 
   color: #000000;
+
+  margin-bottom: 20px;
 `;
 export { Re_MainSection, SmallText, BoldText };

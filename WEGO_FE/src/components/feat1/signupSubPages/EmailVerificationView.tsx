@@ -3,11 +3,28 @@ import * as S from '../../../pages/feat_1/signup/SignupPage.style';
 import Input from '../../../components/feat1/input/Input';
 import Button from '../../../components/feat1/button/Button';
 import { useNavigate } from 'react-router';
+import {
+  TReturnsOfUseForm,
+  TSignUpFormData,
+} from '../../../types/SignUpFormData';
 
-function EmailVerificationView() {
+function EmailVerificationView({
+  returnsOfUseForm,
+}: {
+  returnsOfUseForm: TReturnsOfUseForm<TSignUpFormData>;
+}) {
   const navigate = useNavigate();
   const nextText = '인증 완료';
-  const [istNextReady, setIsNextReady] = useState();
+  const [istNextReady, setIsNextReady] = useState(); // 인증 처리 후에 true
+
+  const { register, formState, watch } = returnsOfUseForm;
+  const inputValue = watch('verificationCode', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+
+  const verifyEmailAuth = () => {
+    // 입력값의 코드를 통한 이메일 인증 처리
+    // inputValue로 접근
+  };
+
   return (
     <S.MainSection>
       <S.SignUpTextBox>
@@ -21,6 +38,7 @@ function EmailVerificationView() {
           color={istNextReady ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
           onClickHandler={() => navigate('/signup/password')}
+          disabled={!istNextReady}
         ></Button>
       </S.SignUpInputsBox>
     </S.MainSection>

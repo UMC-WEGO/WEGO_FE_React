@@ -4,8 +4,10 @@ import * as SS from './SignupCompletePage.style';
 import CloseX from '../../../components/feat1/closeX/CloseX';
 import styled from 'styled-components';
 import Button from '../../../components/feat1/button/Button';
+import { useNavigate } from 'react-router';
 
 function SignupCompletePage() {
+  const navigate = useNavigate();
   return (
     <S.SignUpPageLayout>
       {/* 여기에서 viewContainer는 form 태그로 생성 */}
@@ -16,7 +18,12 @@ function SignupCompletePage() {
             지금 위고와 <br></br> 즉흥여행을 시작하세요!
           </SS.BoldText>
           <SS.SmallText>랜덤 여행지부터 즉흥 미션까지</SS.SmallText>
-          <Button content="시작하기" color="--color-main-blue" />
+          <Button
+            content="시작하기"
+            color="--color-main-blue"
+            onClickHandler={() => navigate('/')}
+            disabled={false}
+          />
         </SS.Re_MainSection>
       </S.ViewContainer>
     </S.SignUpPageLayout>

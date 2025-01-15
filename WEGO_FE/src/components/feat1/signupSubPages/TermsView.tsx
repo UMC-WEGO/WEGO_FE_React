@@ -46,9 +46,17 @@ const TermDetailArrow = styled.img`
   right: 25px;
 `;
 
-function TermsView() {
+function TermsView({
+  returnsOfUseForm,
+}: {
+  returnsOfUseForm: TReturnsOfUseForm;
+}) {
   const navigate = useNavigate();
   const nextText = '다음';
+
+  const { register, formState } = returnsOfUseForm;
+  const { errors } = formState;
+
   const [istNextReady, setIsNextReady] = useState(false);
   // 전체 동의 버튼 상태 (개별적으로 다 동의 버튼 눌러도 활성화됨)
   const [isAllAgreeButtonChecked, setIsAllAgreeButtonChecked] = useState(false);
@@ -76,7 +84,6 @@ function TermsView() {
 
     // 넘어갈 수 있게 됨
     setIsNextReady(true);
-    console.log(123);
   };
 
   const handleClickAllItemAgreeReverse = () => {
@@ -90,11 +97,36 @@ function TermsView() {
     setIsMarketingInfoReceiveAgree(false);
 
     setIsNextReady(false);
-    console.log(12321);
+  };
+
+  const handleNextButtonOn = () => {
+    setIsNextReady(true);
+  };
+
+  const handleNextButtonOff = () => {
+    setIsNextReady(false);
+  };
+
+  const handleAllAgreeOff = () => {
+    setIsAllAgreeButtonChecked(false);
   };
 
   useEffect(() => {
-    // 개별적으로 모두 동의한 경우를 추적해서 allItemAgree 함수 실행
+    // 기본적으로는 다음버튼, 전체동의 상태 off
+    handleNextButtonOff();
+    handleAllAgreeOff();
+
+    // 개별적으로 필수 항목에 모두 동의한 경우를 추적해서 handleNextButtonOn 함수 실행
+    if (
+      isServiceTermAgree &&
+      isPrivateInfoAgree &&
+      isPrivateInfoProvideAgree &&
+      isMoreThan14
+    ) {
+      handleNextButtonOn();
+    }
+
+    // 개별적으로 모든 항목에 동의한 경우를 추적해서 handleClickAllItemAgree 함수 실행
     if (
       isServiceTermAgree &&
       isPrivateInfoAgree &&
@@ -212,6 +244,7 @@ function TermsView() {
           content={nextText}
           disabled={!istNextReady} // 준비가 안되면 사용불가
           onClickHandler={() => {
+            // 여기에 register 상태 termsAgree true로 전달
             navigate('/signup/nickname');
           }}
         ></Button>
