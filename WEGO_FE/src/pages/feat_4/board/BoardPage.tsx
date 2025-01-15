@@ -15,12 +15,17 @@ function BoardPage() {
     navigate(`/board/write`);
   };
 
+  const handleProfileButtonClick = () => {
+    const tempAuthorId = '12345'; // 임시 아이디 값
+    navigate(`/board/author/profile/${tempAuthorId}`);
+  };
+
   return (
     <S.Container>
       <S.Header>
         <img src={logoImg} alt="Icon" />
         <div>
-          <span>
+          <span onClick={handleProfileButtonClick}>
             <CgProfile />
           </span>
           <span>
