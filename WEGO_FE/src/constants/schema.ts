@@ -9,21 +9,21 @@ const SignUpSchema = yup.object().shape({
     .string()
     .min(8, '비밀번호는 8자 이상이어야 합니다.')
     // .max(16, '비밀번호는 16자 이하여야 합니다.')
-    .required(),
+    .required('비밀번호를 반드시 입력해주세요.'),
   passwordCheck: yup
     .string()
     .oneOf([yup.ref('password')], '비밀번호가 다릅니다.')
-    .required(),
+    .required('비밀번호 확인을 반드시 입력해주세요.'),
   termsAgree: yup
     .boolean()
     .oneOf([true], '필수 약관에 동의하여야 합니다')
-    .required(),
+    .required('필수 약관에 동의해주세요.'),
   nickname: yup
     .string()
     .min(2, '닉네임은 2글자 이상이어야 합니다.')
     .max(10, '닉네임은 10글자 이하여야 합니다.')
     .matches(REGEX.nickname, '닉네임은 특수문자를 사용할 수 없습니다.')
-    .required(),
+    .required('닉네임을 반드시 입력해주세요.'),
 });
 
 const LoginSchema = yup.object().shape({

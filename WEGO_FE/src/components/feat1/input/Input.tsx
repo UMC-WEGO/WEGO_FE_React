@@ -5,6 +5,7 @@ import {
   inputHeightTable,
 } from '../../../constants/SharedComponentSizeTable';
 import { FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import { type } from './../../../pages/feat_1/signup/SignupPage';
 
 type TInputProps<T extends FieldValues> = {
   // FieldValues는모든 문자열 키에 대해 값이 any 타입인 객체로,
@@ -15,6 +16,7 @@ type TInputProps<T extends FieldValues> = {
   register?: UseFormRegister<T>;
   signUpInputType?: Path<T>; // Path<T>는 타입 T의 키들만을 유니언 타입으로 반환하는 타입
   isError?: boolean;
+  type?: string;
 };
 
 interface StyledProps {
@@ -37,7 +39,6 @@ const MyInput = styled.input<StyledProps>`
   border: 1px solid #696969;
   border-radius: 2px;
 
-  outline: none;
   outline: ${props => (props.$isError ? '1px solid #DC0000' : 'none')};
 
   /* Inside auto layout */
@@ -49,11 +50,13 @@ const MyInput = styled.input<StyledProps>`
   font-size: 14px;
 
   &:hover {
-    outline: 1px solid rgba(0, 89, 255, 1);
+    outline: ${props =>
+      props.$isError ? '1px solid #DC0000' : '1px solid rgba(0, 89, 255, 1)'};
   }
 
   &:focus {
-    outline: 1px solid rgba(0, 89, 255, 1); // 추후 props 받아서 처리
+    outline: ${props =>
+      props.$isError ? '1px solid #DC0000' : '1px solid rgba(0, 89, 255, 1)'};
   }
 `;
 
@@ -66,6 +69,7 @@ function Input<T extends FieldValues>({
   register,
   signUpInputType,
   isError,
+  type,
 }: TInputProps<T>) {
   console.log('input signuptype:', signUpInputType);
   console.log('register:', register);
@@ -76,9 +80,11 @@ function Input<T extends FieldValues>({
     <MyInput
       $width={width}
       $height={height}
+      $isError={isError}
       placeholder={placeholder}
       // register, signUpInputType이 있을 때만 사용 (옵셔널 prop 로직 처리는 이렇게)
       {...(register && signUpInputType ? register(signUpInputType) : {})}
+      type={type == 'password' ? 'password' : 'text'}
     ></MyInput>
   );
 }
