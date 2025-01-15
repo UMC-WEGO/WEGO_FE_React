@@ -2,16 +2,23 @@ import * as S from './BoardPage.style';
 import { CgProfile, CgMathPlus } from 'react-icons/cg';
 import { PiBellBold } from 'react-icons/pi';
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import FreeBoard from '../../../components/feat4/FreeBoard';
 import PopularBoard from '../../../components/feat4/PopularBoard';
+import logoImg from '../../../images/feat1/logo.svg';
 
 function BoardPage() {
   const [activeTab, setActiveTab] = useState('instant'); // 'instant' 또는 'popular'
+  const navigate = useNavigate();
+
+  const handleWriteButtonClick = () => {
+    navigate(`/board/write`);
+  };
 
   return (
     <S.Container>
       <S.Header>
-        <p>WEGO!</p>
+        <img src={logoImg} alt="Icon" />
         <div>
           <span>
             <CgProfile />
@@ -41,7 +48,7 @@ function BoardPage() {
       {/* 조건부 렌더링으로 게시판 전환 */}
       {activeTab === 'instant' ? <FreeBoard /> : <PopularBoard />}
 
-      <S.WriteButton>
+      <S.WriteButton onClick={handleWriteButtonClick}>
         <CgMathPlus /> 글쓰기
       </S.WriteButton>
     </S.Container>
