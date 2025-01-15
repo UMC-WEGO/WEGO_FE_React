@@ -21,6 +21,7 @@ import {
   SignupCompletePage,
   ErrorPage,
   RegionSelectPage,
+  AlertsPage,
 } from '../pages/index';
 
 const Router = [
@@ -73,6 +74,10 @@ const Router = [
       {
         path: '/board/region-select',
         element: <RegionSelectPage />,
+      },
+      {
+        path: '/board/alert',
+        element: <AlertsPage />,
       },
 
       // 마이페이지 관련 라우팅
