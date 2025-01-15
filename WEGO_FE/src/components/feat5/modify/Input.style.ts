@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<{ error: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -11,7 +11,7 @@ export const InputContainer = styled.div`
   height: 36px;
   margin: 11px 0px;
   opacity: 1;
-  border: 1px solid #a5a5a5;
+  border: 1px solid ${({ error }) => (error ? '#DC0000' : '#a5a5a5')};
 `;
 
 export const StyledInput = styled.input`
