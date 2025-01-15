@@ -2,6 +2,7 @@ import React from 'react';
 import * as S from '../signup/SignupPage.style';
 import CloseX from '../../../components/feat1/closeX/CloseX';
 import styled from 'styled-components';
+import Button from '../../../components/feat1/button/Button';
 
 const Re_MainSection = styled(S.MainSection)`
   justify-content: center;
@@ -46,9 +47,11 @@ function SignupCompletePage() {
       <S.ViewContainer>
         <CloseX></CloseX>
         <Re_MainSection>
-          <SmallText>환영합니다!</SmallText>
-          <br></br>
-          <BoldText>(회원가입 환영 메시지)</BoldText>
+          <BoldText>
+            지금 위고와 <br></br> 즉흥여행을 시작하세요!
+          </BoldText>
+          <SmallText>랜덤 여행지부터 즉흥 미션까지</SmallText>
+          <Button content="시작하기" color="--color-main-blue" />
         </Re_MainSection>
       </S.ViewContainer>
     </S.SignUpPageLayout>
