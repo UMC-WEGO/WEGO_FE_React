@@ -8,8 +8,6 @@ export const Container = styled.div`
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
 `;
 
 export const Header = styled.header`
@@ -18,9 +16,9 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
+  margin-bottom: 5px;
   position: relative;
   border-bottom: 1px solid #ddd;
-
   h1 {
     font-size: 20px;
     font-weight: 600;
@@ -56,5 +54,23 @@ export const Header = styled.header`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  position: relative;
+`;
+
+export const PostWrapper = styled.div`
+  position: relative;
+`;
+
+export const Button = styled.div`
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  background-color: transparent;
+  cursor: pointer;
+  z-index: 10;
+
+  img {
+    width: 16px;
+    height: 16px;
+  }
 `;
