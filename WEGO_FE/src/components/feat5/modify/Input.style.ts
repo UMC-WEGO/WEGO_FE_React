@@ -28,4 +28,15 @@ export const StyledInput = styled.input`
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
+
+  &::placeholder {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #a5a5a5;
+  }
 `;
