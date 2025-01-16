@@ -241,14 +241,26 @@ const samplePopular: PostCardType[] = [
 ]
 
 function HomePage() {
+  // 여행날짜
+  const [departureDay, setDepartureDay] = useState(0);
+  // 인원수
+  const [crewNumber, setCrewNumber] = useState(0);
+  // 교통수단
+  const [transport, setTransport] = useState("");
+  // 시간대
+  const [timeAway, setTimeAway] = useState("");
+  // 출발지
+  const [departureLocation, setDepartureLocation] = useState("");
+
   // 다가오는 여행 상태 관리
   const [cardList, setCardList] = useState(samplePlan);
   const handleDelete = (flag: number) => {     //flag: 해당 카드가 표시 될건지 안될건지
     const updatePlanList = cardList.filter((_, i) => i !== flag);  // 해당 카드 삭제
     setCardList(updatePlanList);               //상태 업데이트
   }
+
   return(
-    <>
+    <>    
       <AppContainer>
         <ScrollArea>
           <LogoContainer><img src={WEGO_Logo}/></LogoContainer>

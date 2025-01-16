@@ -1,5 +1,6 @@
 //home/travel-select/
 import styled from "styled-components";
+import { useState } from "react";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
 import share_img from "../../../images/feat2/share_icon.png"
@@ -179,6 +180,11 @@ const samplePopular: PostCardPropsType[] = [
 ]
 
 function TravelSelectPage() {
+  // 확정된 여행지
+  const [fixedDeparture, setFixedDeparture] = useState("");
+  // 이동시간
+  const [fixedTime, setFixedTime] = useState("")
+
   return(
     <>
       <AppContainer>

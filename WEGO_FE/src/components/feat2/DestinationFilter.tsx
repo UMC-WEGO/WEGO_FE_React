@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 import car_icon from "../../images/feat2/car_icon.png";
 import clock_icon from "../../images/feat2/alarm_icon.png";
@@ -6,6 +7,7 @@ import calender_icon from "../../images/feat2/calendar_icon.png";
 import people_icon from "../../images/feat2/group_people_icon.png";
 import pin_icon from "../../images/feat2/map_pin_icon.png";
 import Dropdown from "./Dropdown";
+import Bottomsheet from "./BottomSheet";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -69,17 +71,28 @@ const Item_transport: Option[] = [
 ]
 
 const DestinationFilter = () => {
+  const [isBottomActive, setIsBottomActive] = useState(false);
+  const ToggleBottomSheet = () => {
+    setIsBottomActive(!isBottomActive);
+  }
+
   return(
     <>
       <FilterBox>
         <SelectorRow>
           <Label>
             <IconImg src={calender_icon}/>
-            <div>날짜 선택</div>
+            <div>
+              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+            </div>
           </Label>
           <Label>
             <IconImg src={people_icon}/>
-            <div>인원 수</div>
+            <div>
+              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+            </div>
           </Label>
         </SelectorRow>
         <SelectorRow>
@@ -90,7 +103,12 @@ const DestinationFilter = () => {
         </SelectorRow>
         <SelectorRow>
           <IconImg src={pin_icon}/>
-          <BottomSheetItem>출발지 선택</BottomSheetItem>
+          <BottomSheetItem>
+            <div>
+              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+            </div>
+          </BottomSheetItem>
         </SelectorRow>
       </FilterBox>
     </>

@@ -1,78 +1,88 @@
-// https://velog.io/@boris0716/%EB%A6%AC%EC%95%A1%ED%8A%B8%EC%97%90%EC%84%9C-Bottom-Sheet-%EB%A7%8C%EB%93%A4%EA%B8%B0-%EC%9E%91%EC%84%B1%EC%A4%91
+//https://velog.io/@sangpok/React-Bottom-Sheet
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import useBottomSheet from "../../hooks/feat2/useBottomSheet";
 
-export const MIN_Y = 60;
-export const MAX_Y = window.innerHeight;
-const BOTTOM_SHEET_HEIGHT = window.innerHeight - MIN_Y;
-
-const Wrapper = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-
+const BackgroundOverlay = styled(motion.div)`
   position: fixed;
-  z-index: 1;
-  top: calc(100% - 90px); /*시트가 얼마나 올라갈지 설정*/
-
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-  box-shadow: 0px 0px 10px rgab(0, 0, 0, 0.6);
-  height: ${BOTTOM_SHEET_HEIGHT}px;
-
-  background: linear-gradient(359.26deg, #3C41C7 0.02%, #3742B2 83.23%, #3642AE 98.76%);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  transition: transform 650ms ease-out  /*애니메이션 속력*/
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 10;
 `
 
-const BottomSheetContent = styled.div`
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+const SheetCard = styled(motion.div)`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh; // 전체 화면을 차지하게 하기 위해 height 설정
+  background: white;
+  border-radius: 12px 12px 0 0; // 모서리 둥글게
+  padding: 12px 16px 24px;
+  will-change: transform;
+  z-index: 20; // 배경 위에 표시되도록
 `
 
-const Header = () => {
-  const Wrapper = styled.div`
-    height: 24px;
-    border-top-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    position: relative;
-    padding-top: 12px;
-    padding-bottom: 4px;
-  `;
+const BottomHeader = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;  
+`
 
-  const Handle = styled.div`
-    height: 4px;
-    width: 40px;
-    border-radius: 2px;
-    background-color: #DEE2E6;
-    margin: auto;
-  `;
+const HandleBar = styled.div`
+  width: 40px;
+  height: 6px;
+  background-color: #ccc;
+  border-radius: 3px;
+`
 
-  return(
-    <Wrapper>
-      <Handle/>
-    </Wrapper>
-  );
-};
+const ContentArea = styled.div`
+  padding-top: 20px;
+  max-height: calc(100vh - 100px); // 헤더를 제외한 나머지 영역에 스크롤 가능
+  overflow-y: auto;
+`
 
-const Content = () => {
-  return(
-    <div>내용내용</div>
-  );
-};
+const Content = styled.div`
+  font-size: 16px;
+  color: #333;
+`
 
-const BottomSheet = () => {
-  const { sheet, content } = useBottomSheet();
+interface BottomsheetProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-  return(
-    <Wrapper ref={sheet}>
-      <Header/>
-      <BottomSheetContent ref={content}>
-        <Content/>
-      </BottomSheetContent>
-    </Wrapper>
-  );
-};
+const Bottomsheet: React.FC<BottomsheetProps>  = ({ isOpen, onClose }) => {
+  return (
+    <>
+      {isOpen && (
+        <>
+          <BackgroundOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <SheetCard
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+          >
+            <BottomHeader>
+              <HandleBar />
+            </BottomHeader>
+            <ContentArea>
+              <Content>
+                내용내용 내용내용 내용내용 내용내용 내용내용 내용내용
+              </Content>
+            </ContentArea>
+          </SheetCard>
+        </>
+      )}
+    </>
+  )
+}
 
-export default BottomSheet;
+export default Bottomsheet;
