@@ -45,6 +45,7 @@ const NavbarArea = styled.div`
 const LogoContainer = styled.div`
   margin: 5px;
 
+  margin-left: 20px;
   margin-top: 36px;
   height: 18px;
 `

@@ -8,7 +8,7 @@ import BlueTag from "./BlueTag";
 const PlaningCardBox = styled.div`
   width: 363px;
   height: 146px;
-  border: 1px solid violet;
+  border: 1px solid gray;
   border-radius: 15px;
   padding: 15px;
 

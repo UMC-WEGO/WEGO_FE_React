@@ -31,7 +31,7 @@ const PopularMissionRow1 = styled.div`
 const PopularMissionRow2 = styled.div`
   //이미지
   display: flex;
-  gap: 10px;
+  gap: 5px;
 
   margin-top: 15px;
 `
