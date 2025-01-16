@@ -52,9 +52,10 @@ const Content = styled.div`
 interface BottomsheetProps {
   isOpen: boolean;
   onClose: () => void;
+  children?: React.ReactNode;
 }
 
-const Bottomsheet: React.FC<BottomsheetProps>  = ({ isOpen, onClose }) => {
+const Bottomsheet: React.FC<BottomsheetProps>  = ({ isOpen, onClose}) => {
   return (
     <>
       {isOpen && (
@@ -63,7 +64,6 @@ const Bottomsheet: React.FC<BottomsheetProps>  = ({ isOpen, onClose }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
           />
           <SheetCard
             initial={{ y: "100%" }}
@@ -75,7 +75,8 @@ const Bottomsheet: React.FC<BottomsheetProps>  = ({ isOpen, onClose }) => {
             </BottomHeader>
             <ContentArea>
               <Content>
-                내용내용 내용내용 내용내용 내용내용 내용내용 내용내용
+                <button>버어트으은</button>
+                <button>붜어투우운</button>
               </Content>
             </ContentArea>
           </SheetCard>

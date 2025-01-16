@@ -89,28 +89,30 @@ const TimestampFormat = (timestamp: Date) => {
   );
 }
 
-const PostCard = ({props}: PostCardProps) => {
-    return(
-        <>
-            <PostCardBox>
-                <PopularPostColumn1>{props.ranking}</PopularPostColumn1>
-                <PopularPostColumn2>img</PopularPostColumn2>
-                <PopularPostColumn3>
-                  <PopularPostRow1>
-                    {props.tag.map((tag, index) => (
-                      <span key={index}>{tag} </span>
-                    ))}
-                  </PopularPostRow1>
-                  <PopularPostRow2>{props.title}</PopularPostRow2>
-                  <PopularPostRow3>{props.content}</PopularPostRow3>
-                  <PopularPostRow4>
-                    <span>{props.destination} • {TimestampFormat(props.timestamp)}</span>
-                    <span>{props.like}, {props.comments}, {props.script}</span>
-                  </PopularPostRow4>
-                </PopularPostColumn3>
-              </PostCardBox>
-        </>
-    )
+const PostCard = ({props, showRank}: PostCardProps) => {
+  return(
+    <>
+      <PostCardBox>
+        {showRank && 
+          <PopularPostColumn1>{props.ranking}</PopularPostColumn1>
+        }
+        <PopularPostColumn2>img</PopularPostColumn2>
+        <PopularPostColumn3>
+          <PopularPostRow1>
+            {props.tag.map((tag, index) => (
+              <span key={index}>{tag} </span>
+            ))}
+          </PopularPostRow1>
+          <PopularPostRow2>{props.title}</PopularPostRow2>
+          <PopularPostRow3>{props.content}</PopularPostRow3>
+          <PopularPostRow4>
+            <span>{props.destination} • {TimestampFormat(props.timestamp)}</span>
+            <span>{props.like}, {props.comments}, {props.script}</span>
+          </PopularPostRow4>
+        </PopularPostColumn3>
+      </PostCardBox>
+    </>
+  )
 }
 
 export default PostCard;

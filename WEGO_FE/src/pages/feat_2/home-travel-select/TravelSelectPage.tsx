@@ -180,6 +180,8 @@ const samplePopular: PostCardPropsType[] = [
 ]
 
 function TravelSelectPage() {
+  // 선택이 되었는지?
+  const [isSelected, setIsSelected] = useState(false);
   // 확정된 여행지
   const [fixedDeparture, setFixedDeparture] = useState("");
   // 이동시간

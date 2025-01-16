@@ -52,6 +52,10 @@ const IconImg = styled.img`
     margin-right: 17px;
 `
 
+const BottomSheetBtn = styled.button`
+  background-color: white;
+`
+
 // 교통수단, 시간대 옵션
 type Option = {
   label: string;
@@ -83,14 +87,14 @@ const DestinationFilter = () => {
           <Label>
             <IconImg src={calender_icon}/>
             <div>
-              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <BottomSheetBtn onClick={ ToggleBottomSheet }>날짜 선택</BottomSheetBtn>
               <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
             </div>
           </Label>
           <Label>
             <IconImg src={people_icon}/>
             <div>
-              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <BottomSheetBtn onClick={ ToggleBottomSheet }>인원 수</BottomSheetBtn>
               <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
             </div>
           </Label>
@@ -105,7 +109,7 @@ const DestinationFilter = () => {
           <IconImg src={pin_icon}/>
           <BottomSheetItem>
             <div>
-              <button onClick={ ToggleBottomSheet }>바텀시트 열기</button>
+              <BottomSheetBtn onClick={ ToggleBottomSheet }>출발지 선택</BottomSheetBtn>
               <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
             </div>
           </BottomSheetItem>

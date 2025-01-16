@@ -9,11 +9,6 @@ import PopularMissionCard from '../../../components/feat2/MissionCard';
 import Button from '../../../components/feat1/button/Button';
 import DestinationFilter from '../../../components/feat2/DestinationFilter';
 
-/*
-속성값이 겹치는 컨테이너 (LOGO, Selector 등)를 하나의 컴포넌트로 만들고
-속성값을 따로 받는건 어떰???
-*/
-
 // 홈 화면 전체적인 레이아웃
 const AppContainer = styled.p`
   display: flex;
@@ -287,7 +282,7 @@ function HomePage() {
             </ContainerTitle>
             <PopularPostArea>
               {samplePopular.map((popular) => (
-                <PopularPostCard props={popular}/>
+                <PopularPostCard props={popular} showRank={true}/>
               ))}
             </PopularPostArea>
           </PopularPostContainer>
