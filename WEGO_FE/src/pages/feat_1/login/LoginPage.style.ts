@@ -122,6 +122,7 @@ const SubButtonsBox = styled.div<StyledProps>`
 const OAuth2TopBox = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 15px;
 `;
