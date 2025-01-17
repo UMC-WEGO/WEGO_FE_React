@@ -42,7 +42,7 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: 1px;
+    left: -1px;
   }
 
   .arrow-img {
@@ -70,7 +70,7 @@ export const Content = styled.div`
   }
 
   overflow-y: scroll;
-  margin-top: 10px;
+  margin-top: 20px;
 
   div {
     margin-bottom: 30px;
