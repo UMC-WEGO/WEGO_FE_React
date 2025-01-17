@@ -11,7 +11,12 @@ const TravelTitleBox = ({ title, dday, tags }) => {
       </S.TitleWrapBox>
       <S.TravelTagWrap>
         {tags.map((tag, idx) => (
-          <TravelTag key={idx} txt={tag} />
+          <TravelTag
+            key={idx}
+            color={'white'}
+            bgcolor={'#26262633'}
+            txt={tag}
+          />
         ))}
       </S.TravelTagWrap>
     </S.ContainerBox>

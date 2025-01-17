@@ -15,7 +15,12 @@ const TravelScheduleBox = ({ title, dday, tags }) => {
           </S.TitleWrap>
           <S.TravelTagWrap>
             {tags.map((tag, idx) => (
-              <TravelTag key={idx} text={tag} />
+              <TravelTag
+                key={idx}
+                color={'blue'}
+                bgcolor={'#0059FF1A'}
+                txt={tag}
+              />
             ))}
             {/* <TravelTag text="2024.11.26~11.27" />
             <TravelTag text="7명" />

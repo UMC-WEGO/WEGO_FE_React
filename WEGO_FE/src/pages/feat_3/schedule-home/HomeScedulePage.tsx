@@ -2,10 +2,12 @@ import React from 'react';
 import * as S from './HomeScedulePage.styled';
 import Navbar from '../../../components/navbar/Navbar';
 import TravelScheduleBox from '../../../components/feat3/travelScheduleBox/TravelScheduleBox';
+import HeaderBatteryBar from '../../../components/feat3/HeaderBatteryBar';
 
 const HomeScedulePage = () => {
   return (
     <S.Container>
+      <HeaderBatteryBar />
       <S.ExportIconWrap>
         <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
       </S.ExportIconWrap>
