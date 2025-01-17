@@ -21,6 +21,7 @@ import {
   SignupCompletePage,
   ErrorPage,
   RegionSelectPage,
+  ScheduleMissionsVerificaionStatusPage,
 } from '../pages/index';
 
 const Router = [
@@ -50,7 +51,7 @@ const Router = [
       { path: '/schedule', element: <EndSchedulePage /> },
       {
         path: '/schedule/:scheduleId/missions/status',
-        element: <EndSchedulePage />,
+        element: <ScheduleMissionsVerificaionStatusPage />,
       },
       {
         path: '/schedule/not-started/:scheduleId',
