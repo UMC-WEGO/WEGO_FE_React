@@ -1,4 +1,5 @@
 import AppLayout from '../layout/AppLayout';
+import HomeScedulePage from '../pages/feat_3/schedule-home/HomeScedulePage';
 import {
   BoardPage,
   BoardAuthorProfilePage,
@@ -47,13 +48,13 @@ const Router = [
       { path: '/home/travel-select', element: <TravelSelectPage /> },
 
       // 일정 페이지 라우팅
-      { path: '/schedule', element: <EndSchedulePage /> },
+      { path: '/schedule', element: <HomeScedulePage /> },
       {
         path: '/schedule/:scheduleId/missions/status',
         element: <EndSchedulePage />,
       },
       {
-        path: '/schedule/not-started/:scheduleId',
+        path: '/schedule/not-started/:scheduleId', //피그마 여행전
         element: <NotStartedSchedulePage />,
       },
       {

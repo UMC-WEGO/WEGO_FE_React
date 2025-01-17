@@ -81,6 +81,7 @@ export const ProfileContainer = styled.div`
   justify-content: center;
   width: 100%;
   position: relative;
+  margin-bottom: 38px;
 `;
 
 export const ProfilePicButton = styled.button`
@@ -116,14 +117,12 @@ export const CameraButton = styled.button`
 export const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 38px;
-  gap: 27px;
+  margin-top: 19px;
 `;
 
 export const InputContainer = styled.div`
   height: 66px;
-  gap: 14px;
-
+  margin: 0px;
   h1 {
     margin: 0px;
     font-size: 16px;
@@ -134,4 +133,17 @@ export const InputContainer = styled.div`
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
   }
+`;
+
+export const ErrorMessage = styled.div`
+  height: 11px;
+  color: #dc0000;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 11px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin-top: 0;
 `;

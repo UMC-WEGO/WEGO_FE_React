@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const InputContainer = styled.div`
+export const InputContainer = styled.div<{ error: boolean }>`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -11,7 +11,7 @@ export const InputContainer = styled.div`
   height: 36px;
   margin: 11px 0px;
   opacity: 1;
-  border: 1px solid #a5a5a5;
+  border: 1px solid ${({ error }) => (error ? '#DC0000' : '#a5a5a5')};
 `;
 
 export const StyledInput = styled.input`
@@ -28,4 +28,15 @@ export const StyledInput = styled.input`
   text-align: left;
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
+
+  &::placeholder {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #a5a5a5;
+  }
 `;

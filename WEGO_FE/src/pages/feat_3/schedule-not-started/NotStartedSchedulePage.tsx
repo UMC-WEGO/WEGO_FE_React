@@ -1,7 +1,12 @@
 import React from 'react';
+import HeaderTravelScedule from '../../../components/feat3/headerTravelScedule/HeaderTravelScedule';
 
-function NotStartedSchedulePage() {
-  return <div>아직 시작되지 않은 일정 상세 페이지입니다</div>;
+function NotStartedSchedulePage({ title, dday, tags }) {
+  return (
+    <>
+      <HeaderTravelScedule />
+    </>
+  );
 }
 
 export default NotStartedSchedulePage;

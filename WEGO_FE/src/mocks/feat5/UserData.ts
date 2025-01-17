@@ -4,8 +4,8 @@ import profile_circle from '../../images/feat5/profile_circle.svg';
 export const users = [
   {
     userId: ':userId',
-    username: 'tndbskrd',
-    useremail: 'yunsookang0326@naver.com',
+    username: '감자칩칩',
+    useremail: 'gamza1234@naver.com',
     profilePic: profile_circle,
     points: '1,400',
     trips: 3,
