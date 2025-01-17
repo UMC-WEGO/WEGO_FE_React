@@ -8,6 +8,7 @@ import PopularPostCard from '../../../components/feat2/PostCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import Button from '../../../components/feat1/button/Button';
 import DestinationFilter from '../../../components/feat2/DestinationFilter';
+import Navbar from '../../../components/navbar/Navbar'
 
 // 홈 화면 전체적인 레이아웃
 const AppContainer = styled.p`
@@ -28,11 +29,11 @@ const ScrollArea = styled.div`
 
 // 하단 탭 내비게이터 영역
 const NavbarArea = styled.div`
-  background-color: rebeccapurple;
+  background-color: white;
   margin-top: auto;
 
   width: 100%;
-  height: 190px;
+  height: 200px;
 `
 
 // --- --- --- 
@@ -293,7 +294,9 @@ function HomePage() {
           </PopularMissionContainer>
 
         </ScrollArea>
-        <NavbarArea>Navbar</NavbarArea>
+        <NavbarArea>
+          <Navbar/>
+        </NavbarArea>
       </AppContainer>
     </>
   )
