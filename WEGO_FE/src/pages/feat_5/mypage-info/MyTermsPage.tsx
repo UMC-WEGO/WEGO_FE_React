@@ -7,13 +7,13 @@ function MyTermsPage() {
   const navigate = useNavigate();
   return (
     <S.Container>
-      <S.Header>
-        <button className="arrow-btn" onClick={() => navigate(-1)}>
-          <img src={Arrow} alt="Arrow" className="arrow-img" />
-        </button>
-        <h1>이용약관</h1>
-      </S.Header>
       <S.Content>
+        <S.Header>
+          <button className="arrow-btn" onClick={() => navigate(-1)}>
+            <img src={Arrow} alt="Arrow" className="arrow-img" />
+          </button>
+          <h1>이용약관</h1>
+        </S.Header>
         <img src={Terms} alt="Terms" />
         <div></div>
       </S.Content>

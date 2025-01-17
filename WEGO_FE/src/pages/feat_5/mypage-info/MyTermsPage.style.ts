@@ -16,7 +16,7 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
   position: relative;
 
   h1 {
@@ -42,7 +42,7 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: -1px;
+    left: 0px;
   }
 
   .arrow-img {
@@ -70,7 +70,6 @@ export const Content = styled.div`
   }
 
   overflow-y: scroll;
-  margin-top: 20px;
 
   div {
     margin-bottom: 30px;
