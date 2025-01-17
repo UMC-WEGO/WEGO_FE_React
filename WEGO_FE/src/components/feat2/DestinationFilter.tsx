@@ -22,10 +22,6 @@ const FilterBox = styled.div`
   background-color: #fff;
 `
 
-const BottomSheetItem = styled.label`
-
-`
-
 const SelectorRow = styled.div`
   flex: 1;
 
@@ -41,6 +37,8 @@ const SelectorRow = styled.div`
 
 const Label = styled.label`
     flex: 1;
+    height: 21px;
+    align-items: center;
 
     display: flex;
 `
@@ -75,44 +73,83 @@ const Item_transport: Option[] = [
 ]
 
 const DestinationFilter = () => {
-  const [isBottomActive, setIsBottomActive] = useState(false);
-  const ToggleBottomSheet = () => {
-    setIsBottomActive(!isBottomActive);
+  const [isDateBottomActive, setIsDateBottomActive] = useState(false);
+  const [isPeopleBottomActive, setIsPeopleBottomActive] = useState(false);
+  const [isDepartureBottomActive, setIsDepartureBottomActive] = useState(false);
+
+  const toggleDateBottom = () => {
+    setIsDateBottomActive(!isDateBottomActive);
   }
+  const togglePeopleBottom = () => {
+    setIsPeopleBottomActive(!isPeopleBottomActive);
+  }
+  const toggleDepartureBottom = () => {
+    setIsDepartureBottomActive(!isDepartureBottomActive);
+  }
+
+  // 바텀시트 샘플 데이터 
+  const SampleContent1 = () => {
+    return <h1>content1</h1>;
+  };
+  
+  const SampleContent2 = () => {
+    return <h1>content2</h1>;
+  };
+  
+  const SampleContent3 = () => {
+    return <h1>content3</h1>;
+  };
 
   return(
     <>
       <FilterBox>
+        {/* 첫번째 열 : 날짜 & 인원수 */}
         <SelectorRow>
           <Label>
             <IconImg src={calender_icon}/>
             <div>
-              <BottomSheetBtn onClick={ ToggleBottomSheet }>날짜 선택</BottomSheetBtn>
-              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+              <BottomSheetBtn onClick={ toggleDateBottom }>날짜 선택</BottomSheetBtn>
+              <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
+                <SampleContent1/>
+              </Bottomsheet>
             </div>
           </Label>
           <Label>
             <IconImg src={people_icon}/>
             <div>
-              <BottomSheetBtn onClick={ ToggleBottomSheet }>인원 수</BottomSheetBtn>
-              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+            <BottomSheetBtn onClick={ togglePeopleBottom }>인원 수</BottomSheetBtn>
+              <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="39vh">
+                <SampleContent2/>
+              </Bottomsheet>
             </div>
           </Label>
         </SelectorRow>
+
+        {/* 두번째 열 : 교통수단 */}
         <SelectorRow>
-          <Dropdown value="교통수단" option={Item_transport} iconStream={car_icon}/>
+          <Label>
+            <Dropdown value="교통수단" option={Item_transport} iconStream={car_icon}/>
+          </Label>
         </SelectorRow>
+
+        {/* 세번째 열 : 시간대 */}
         <SelectorRow>
-          <Dropdown value="시간대" option={Item_time} iconStream={clock_icon}/>
+          <Label>
+            <Dropdown value="시간대" option={Item_time} iconStream={clock_icon}/>
+          </Label>
         </SelectorRow>
+
+        {/* 네번째 열 : 출발지 */}
         <SelectorRow>
-          <IconImg src={pin_icon}/>
-          <BottomSheetItem>
+          <Label>
+            <IconImg src={pin_icon}/>
             <div>
-              <BottomSheetBtn onClick={ ToggleBottomSheet }>출발지 선택</BottomSheetBtn>
-              <Bottomsheet isOpen={isBottomActive} onClose={ToggleBottomSheet}/>
+            <BottomSheetBtn onClick={ toggleDepartureBottom }>날짜 선택</BottomSheetBtn>
+              <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh">
+                <SampleContent3/>
+              </Bottomsheet>
             </div>
-          </BottomSheetItem>
+          </Label>
         </SelectorRow>
       </FilterBox>
     </>

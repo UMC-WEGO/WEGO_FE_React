@@ -50,7 +50,7 @@ const PlanContainer = styled.div`
 const DestinationContainer = styled.div`
   margin: 5px;
   margin-top: 27px;
-  height: 119px;
+  height: 146px;
 
   display: flex;
   justify-content: center;
@@ -180,8 +180,8 @@ const samplePopular: PostCardPropsType[] = [
 ]
 
 function TravelSelectPage() {
-  // 선택이 되었는지?
-  const [isSelected, setIsSelected] = useState(false);
+  // (몇 개) 선택이 되었는지?   ->   1개 선택되면 버튼 활성화 되도록
+  const [isSelected, setIsSelected] = useState(1);
   // 확정된 여행지
   const [fixedDeparture, setFixedDeparture] = useState("");
   // 이동시간
@@ -217,7 +217,6 @@ function TravelSelectPage() {
                 <PostCard props={popular}/>
               ))}              
             </PostArea>
-
           </PostContainer>
 
           <SubmitBtnContainer>
