@@ -137,7 +137,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 60px;
+  margin-top: 100px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
