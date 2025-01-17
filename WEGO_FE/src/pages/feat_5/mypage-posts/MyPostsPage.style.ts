@@ -55,6 +55,24 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  overflow: hidden; /* 기본 스크롤 숨기기 */
+
+  /* 스크롤을 할 수 있는 컨테이너 */
+  &::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent; /* 스크롤바 트랙 배경색 */
+  }
+
+  /* 기본 스크롤바 숨기기 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 스크롤 활성화 */
+  overflow-y: scroll; /* 세로 스크롤 활성화 */
 `;
 
 export const PostWrapper = styled.div`

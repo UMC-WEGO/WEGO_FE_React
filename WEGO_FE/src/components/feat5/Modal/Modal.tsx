@@ -50,19 +50,30 @@ const Modal: React.FC<ModalProps> = ({
       <S.ModalContent onClick={e => e.stopPropagation()}>
         {/* 메인 모달 */}
         <S.ButtonContainer>
-          <button onClick={handleEdit}>수정</button>
-          <button onClick={handleDeleteClick}>삭제</button>
+          <button className="edit-btn" onClick={handleEdit}>
+            수정
+          </button>
+          <button className="delete-btn" onClick={handleDeleteClick}>
+            삭제
+          </button>
         </S.ButtonContainer>
 
         {/* 삭제 확인 모달 */}
         {isConfirmOpen && (
           <S.ConfirmOverlay onClick={handleDelete}>
             <S.ConfirmContent onClick={e => e.stopPropagation()}>
-              <p>정말 삭제하시겠습니까?</p>
-              <S.ButtonContainer>
-                <button onClick={handleCancelDelete}>취소</button>
-                <button onClick={handleDelete}>삭제</button>
-              </S.ButtonContainer>
+              <S.TextContainer>
+                <p>작성한 글을 삭제하시겠습니까?</p>
+                <p>취소를 누르면 이전 화면으로 이동합니다.</p>
+              </S.TextContainer>
+              <S.DButtonContainer>
+                <button className="cancel-btn" onClick={handleCancelDelete}>
+                  취소
+                </button>
+                <button className="delete-btn" onClick={handleDelete}>
+                  삭제
+                </button>
+              </S.DButtonContainer>
             </S.ConfirmContent>
           </S.ConfirmOverlay>
         )}
