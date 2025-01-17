@@ -5,6 +5,7 @@ import { users } from '../../../mocks/feat5/UserData';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import InputFieldWrapper from '../../../components/feat5/modify/InputWrapper';
 import ProfilePicUpload from '../../../components/feat5/modify/ProfilePicUpload';
+import { validateInputs } from '../../../utils/feat5/validation';
 
 function MyProfileModifyPage() {
   const navigate = useNavigate();
@@ -14,16 +15,25 @@ function MyProfileModifyPage() {
   const [useremail, setUseremail] = useState(user?.useremail || '');
   const [profilePic, setProfilePic] = useState(user?.profilePic || '');
   const [isModified, setIsModified] = useState(false);
+  const [error, setError] = useState<{ username: string; useremail: string }>({
+    username: '',
+    useremail: '',
+  });
 
   useEffect(() => {
+    const errors = validateInputs(username, useremail, users, userId);
+    setError({
+      username: errors.username || '',
+      useremail: errors.useremail || '',
+    });
     setIsModified(
-      username.trim() !== '' &&
-        useremail.trim() !== '' &&
-        (username !== user?.username ||
-          useremail !== user?.useremail ||
+      !errors.username &&
+        !errors.useremail &&
+        (username.trim() !== user?.username ||
+          useremail.trim() !== user?.useremail ||
           profilePic !== user?.profilePic),
     );
-  }, [username, useremail, profilePic, user]);
+  }, [username, useremail, profilePic, user, userId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -31,6 +41,7 @@ function MyProfileModifyPage() {
       setProfilePic(newProfilePic);
     }
   };
+
   const handleProfilePictureClick = () => {
     const fileInput = document.querySelector(
       'input[type="file"]',
@@ -39,6 +50,7 @@ function MyProfileModifyPage() {
       fileInput.click();
     }
   };
+
   const handleSave = () => {
     // UserData 업데이트(로컬 데이터만 변경)
     if (user) {
@@ -77,12 +89,14 @@ function MyProfileModifyPage() {
           value={username}
           onChange={e => setUsername(e.target.value)}
           placeholder="닉네임을 입력하세요."
+          error={error.username}
         />
         <InputFieldWrapper
           label="이메일"
           value={useremail}
           onChange={e => setUseremail(e.target.value)}
           placeholder="이메일을 입력하세요."
+          error={error.useremail}
         />
       </S.InputWrapper>
     </S.Container>

@@ -4,10 +4,25 @@ import {
   inputWidthTable,
   inputHeightTable,
 } from '../../../constants/SharedComponentSizeTable';
+import { FieldValues, UseFormRegister, Path } from 'react-hook-form';
+import { type } from './../../../pages/feat_1/signup/SignupPage';
+
+type TInputProps<T extends FieldValues> = {
+  // FieldValues는모든 문자열 키에 대해 값이 any 타입인 객체로,
+  // 폼 데이터의 필드 이름과 값들의 형태를 동적으로 처리할 수 있게 함
+  width?: string;
+  height?: string;
+  placeholder: string;
+  register?: UseFormRegister<T>;
+  signUpInputType?: Path<T>; // Path<T>는 타입 T의 키들만을 유니언 타입으로 반환하는 타입
+  isError?: boolean;
+  type?: string;
+};
 
 interface StyledProps {
   $width?: string; // width 스타일드prop 타입정의
   $height?: string; // height도 정의
+  $isError?: boolean;
 }
 
 const MyInput = styled.input<StyledProps>`
@@ -24,6 +39,8 @@ const MyInput = styled.input<StyledProps>`
   border: 1px solid #696969;
   border-radius: 2px;
 
+  outline: ${props => (props.$isError ? '1px solid #DC0000' : 'none')};
+
   /* Inside auto layout */
   flex: none;
   order: 0;
@@ -33,24 +50,41 @@ const MyInput = styled.input<StyledProps>`
   font-size: 14px;
 
   &:hover {
-    outline: 1px solid rgba(0, 89, 255, 1);
+    outline: ${props =>
+      props.$isError ? '1px solid #DC0000' : '1px solid rgba(0, 89, 255, 1)'};
+  }
+
+  &:focus {
+    outline: ${props =>
+      props.$isError ? '1px solid #DC0000' : '1px solid rgba(0, 89, 255, 1)'};
   }
 `;
 
-function Input({
+// keyof T는 T 타입에 포함된 모든 키들('email' | 'password' | 'passwordCheck' | 'nickname')을
+// 유니언 타입으로 나타내며, register는 이 값들을 사용할 수 있음
+function Input<T extends FieldValues>({
   width = inputWidthTable.defaultValue,
   height = inputHeightTable.defaultValue,
   placeholder,
-}: {
-  width?: string;
-  height?: string;
-  placeholder: string;
-}) {
+  register,
+  signUpInputType,
+  isError,
+  type,
+}: TInputProps<T>) {
+  console.log('input signuptype:', signUpInputType);
+  console.log('register:', register);
+  console.log({
+    ...(register && signUpInputType ? register(signUpInputType) : {}),
+  });
   return (
     <MyInput
       $width={width}
       $height={height}
+      $isError={isError}
       placeholder={placeholder}
+      // register, signUpInputType이 있을 때만 사용 (옵셔널 prop 로직 처리는 이렇게)
+      {...(register && signUpInputType ? register(signUpInputType) : {})}
+      type={type == 'password' ? 'password' : 'text'}
     ></MyInput>
   );
 }
