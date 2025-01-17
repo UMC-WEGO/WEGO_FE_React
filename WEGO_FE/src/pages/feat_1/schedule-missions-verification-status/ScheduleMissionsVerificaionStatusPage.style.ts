@@ -25,7 +25,7 @@ const TopSection = styled.section`
 const MainSection = styled.section`
   width: 100%;
   height: 60%;
-  padding: 20px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -34,6 +34,8 @@ const MainSection = styled.section`
 const MainTextBoxTop = styled.p`
   width: 150px;
   height: 21px;
+
+  margin-top: 5px;
 
   font-family: 'Pretendard-semiBold';
   font-style: normal;
@@ -51,6 +53,7 @@ const MainTextBoxTop = styled.p`
   align-self: stretch;
   flex-grow: 0;
 `;
+
 const MainTextBoxSub = styled.p`
   /* Auto layout */
   display: flex;
@@ -59,6 +62,7 @@ const MainTextBoxSub = styled.p`
   padding: 0px;
   gap: 7px;
   margin-top: 5px;
+  margin-bottom: 15px;
 
   width: 130px;
   height: 12px;
@@ -66,14 +70,23 @@ const MainTextBoxSub = styled.p`
   font-size: 12px;
   /* Inside auto layout */
   flex: none;
-  order: 1;
-  flex-grow: 0;
+
   span {
     margin-left: -3px;
     color: var(--color-main-blue);
   }
 `;
-const MainMissionsBox = styled.div``;
+
+const MainMissionsBoxWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+const MainMissionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
 
 export {
   ScheduleMisstionsNextPageLayout,
@@ -82,5 +95,6 @@ export {
   MainSection,
   MainTextBoxTop,
   MainTextBoxSub,
+  MainMissionsBoxWrapper,
   MainMissionsBox,
 };

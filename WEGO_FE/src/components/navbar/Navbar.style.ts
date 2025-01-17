@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Navbar = styled.div`
+const NavbarLayout = styled.div`
   max-width: var(--size-max-width);
   width: 100%;
   height: var(--size-navbar);
@@ -21,4 +21,18 @@ const Navbar = styled.div`
   align-items: center;
 `;
 
-export { Navbar };
+const NavbarBox = styled.div`
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+  img {
+    width: 50px;
+    height: 60px;
+  }
+`;
+
+export { NavbarLayout, NavbarBox };

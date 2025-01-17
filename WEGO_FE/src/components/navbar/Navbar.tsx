@@ -8,15 +8,15 @@ import scheduleIcon from '../../images/feat1/Nav_schedule_icon.svg';
 
 function Navbar() {
   return (
-    <S.Navbar>
-      <div>
+    <S.NavbarLayout>
+      <S.NavbarBox>
         <img src={scheduleIcon} alt="" />
         <img src={boardIcon} alt="" />
         <img src={homeIcon} alt="" />
         <img src={scrapIcon} alt="" />
         <img src={myIcon} alt="" />
-      </div>
-    </S.Navbar>
+      </S.NavbarBox>
+    </S.NavbarLayout>
   );
 }
 
