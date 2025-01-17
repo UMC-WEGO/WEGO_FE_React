@@ -70,5 +70,9 @@ export const Content = styled.div`
   }
 
   overflow-y: scroll;
-  margin-top: 20px;
+  margin-top: 10px;
+
+  div {
+    margin-bottom: 30px;
+  }
 `;

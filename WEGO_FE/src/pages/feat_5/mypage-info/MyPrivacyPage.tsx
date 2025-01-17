@@ -15,6 +15,7 @@ function MyPrivacyPage() {
       </S.Header>
       <S.Content>
         <img src={Privacy} alt="Privacy" />
+        <div></div>
       </S.Content>
     </S.Container>
   );
