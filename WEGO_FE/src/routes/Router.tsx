@@ -54,7 +54,7 @@ const Router = [
         element: <EndSchedulePage />,
       },
       {
-        path: '/schedule/not-started/:scheduleId',
+        path: '/schedule/not-started/:scheduleId', //피그마 여행전
         element: <NotStartedSchedulePage />,
       },
       {

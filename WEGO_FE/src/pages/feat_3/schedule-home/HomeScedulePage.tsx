@@ -25,7 +25,7 @@ const HomeScedulePage = () => {
       <S.LastTravelContainer>
         <S.LastTravelInnerBox>
           <S.TitleText isTitle={false}>지난 여행</S.TitleText>
-          <img src="/src/images/feat3/LeftArrow.svg" alt="왼쪽화살표" />
+          <img src="/src/images/feat3/RightArrow.svg" alt="왼쪽화살표" />
         </S.LastTravelInnerBox>
       </S.LastTravelContainer>
 
