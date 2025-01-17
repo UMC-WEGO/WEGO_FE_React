@@ -6,6 +6,7 @@ interface InputFieldWrapperProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
+  error?: string;
 }
 
 const InputFieldWrapper: React.FC<InputFieldWrapperProps> = ({
@@ -13,12 +14,21 @@ const InputFieldWrapper: React.FC<InputFieldWrapperProps> = ({
   value,
   onChange,
   placeholder,
+  error,
 }) => {
   return (
-    <S.InputContainer>
-      <h1>{label}</h1>
-      <InputField placeholder={placeholder} value={value} onChange={onChange} />
-    </S.InputContainer>
+    <S.InputWrapper>
+      <label>{label}</label>
+      <S.InputContainer>
+        <InputField
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          error={!!error}
+        />
+        {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
+      </S.InputContainer>
+    </S.InputWrapper>
   );
 };
 
