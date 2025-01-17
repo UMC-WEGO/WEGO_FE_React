@@ -21,8 +21,6 @@ const AppContainer = styled.p`
 // 스크롤 되는 영역
 const ScrollArea = styled.div`
   overflow-y: auto;
-
-  width: 95%;
 `
 
 // 툴바 영역 (뒤로가기, 공유 버튼 영역)
@@ -61,7 +59,7 @@ const DestinationContainer = styled.div`
 const PostContainer = styled.div`
   margin: 5px;
 
-  margin-top: 32px;
+  width: 363px;
   height: 297px;
 `
 const PostArea = styled.div`
@@ -88,15 +86,26 @@ const SubmitBtnContainer = styled.div`
   margin-bottom: 36px;
   height: 50px;
 `
+
+const Seemore = styled.button`
+  background-color: white;
+  color: rgba(165, 165, 165, 1);
+  font-size: 11px;
+  font-weight: 600;
+`
+
 // --- --- ---
 // --- --- ---
 // 여기로 갈래요 버튼
 const SelectionComplete = styled.button`
-  background-color: blue;
+  background-color: rgba(0, 89, 255, 1);
   color: white;
   padding: 10px;
   width: 363px;
   height: 50px;
+
+  font-size: 16px;
+  font-weight: 600;
   
   border-radius: 5px;
 `
@@ -210,7 +219,7 @@ function TravelSelectPage() {
           <PostContainer>
             <Title>
               <div>즉흥 게시판</div>
-              <button>더보기</button>
+              <Seemore>더보기 {">"}</Seemore>
             </Title>
             <PostArea>
               {samplePopular.slice(0, 2).map((popular) => (

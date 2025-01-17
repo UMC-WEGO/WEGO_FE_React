@@ -8,6 +8,7 @@ import people_icon from "../../images/feat2/group_people_icon.png";
 import pin_icon from "../../images/feat2/map_pin_icon.png";
 import Dropdown from "./Dropdown";
 import Bottomsheet from "./BottomSheet";
+import CrewSelector from "./CrewSelector";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -118,8 +119,8 @@ const DestinationFilter = () => {
             <IconImg src={people_icon}/>
             <div>
             <BottomSheetBtn onClick={ togglePeopleBottom }>인원 수</BottomSheetBtn>
-              <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="39vh">
-                <SampleContent2/>
+              <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="41vh">
+                <CrewSelector/>
               </Bottomsheet>
             </div>
           </Label>
