@@ -83,8 +83,8 @@ export const TempImage = styled.img`
 
 export const TempInfoMessage = styled.div`
   position: absolute;
-  margin-top: 40px;
-  margin-left: 3.5px;
+  margin-top: 30px;
+  margin-left: -12px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

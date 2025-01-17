@@ -6,7 +6,7 @@ import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
 import { allPosts as initialPosts } from '../../../mocks/board/postData';
 import { users } from '../../../mocks/feat5/UserData';
-import Modal from '../../../components/feat5/Modal/modal';
+import Modal from '../../../components/feat5/Modal/Modal';
 
 function MyPostsPage() {
   const navigate = useNavigate();
