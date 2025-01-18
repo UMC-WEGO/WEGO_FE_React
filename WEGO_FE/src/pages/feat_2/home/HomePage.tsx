@@ -7,8 +7,7 @@ import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularPostCard from '../../../components/feat2/PostCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
-import Button from '../../../components/feat1/button/Button';
-import DestinationFilter from '../../../components/feat2/DestinationFilter';
+import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 import Navbar from '../../../components/navbar/Navbar'
 
 // 홈 화면 전체적인 레이아웃

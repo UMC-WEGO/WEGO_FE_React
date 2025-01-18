@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useState } from "react";
 
 const SearchCard = styled.div`
   display: flex;
@@ -50,6 +51,7 @@ const LocationTitle = styled.div`
 `
 
 const location = [
+  { name: "최근출발", elements: ["부산", "마산"]},
   { name: "경기도", elements: ["부산", "마산"] },
   { name: "강원도", elements: ["부산", "마산"] },
   { name: "전라도", elements: ["부산", "마산"] },
@@ -58,14 +60,27 @@ const location = [
   { name: "제주도", elements: ["부산", "마산"] },
 ]
 
-const SearchDestination = () => {
+const BottomSheetBtn = styled.button`
+  border: 1px solid violet;
+
+  background-color: white;
+  width: 200px;
+`
+
+interface SelectedDepartureProps {
+  departureLocation: string;
+  setDepartureLocation: any;
+}
+
+const SelectDeparture = ({ departureLocation, setDepartureLocation }: SelectedDepartureProps) => {
   return (
     <SearchCard>
       {/* 뒤로가기 및 검색바 */}
       <SearchHeader>
         <div>{"<-"}</div>
-        <button>출발지를 선택하세요</button>
-        <button>Q</button>
+        <div>
+          <BottomSheetBtn><span>출발지를 선택하세요</span><span>Q</span></BottomSheetBtn>
+        </div>
       </SearchHeader>
 
       {/* 안내 */}
@@ -74,20 +89,15 @@ const SearchDestination = () => {
       </NotionRow>
 
       {/* 최근 출발 */}
-      <SearchRow>
-        <LocationTitle>최근 출발</LocationTitle>
-        <LabelBox>
-          <Element>부산</Element>
-          <Element>마산</Element>
-        </LabelBox>  
-      </SearchRow>
-
       {location.map((location) => (
         <SearchRow key={location.name}>
           <LocationTitle>{location.name}</LocationTitle>
           <LabelBox>
             {location.elements.map((element) => (
-              <Element key={element}>{element}</Element>
+              <Element 
+                key={element}
+                onClick={() => setDepartureLocation(element)}
+              >{element}</Element>
             ))}
           </LabelBox>
         </SearchRow>
@@ -97,4 +107,4 @@ const SearchDestination = () => {
   )
 }
 
-export default SearchDestination;
+export default SelectDeparture;

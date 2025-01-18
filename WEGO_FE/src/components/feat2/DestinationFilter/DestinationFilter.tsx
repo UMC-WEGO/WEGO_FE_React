@@ -1,16 +1,16 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-import car_icon from "../../images/feat2/car_icon.png";
-import clock_icon from "../../images/feat2/alarm_icon.png";
-import calender_icon from "../../images/feat2/calendar_icon.png";
-import people_icon from "../../images/feat2/group_people_icon.png";
-import pin_icon from "../../images/feat2/map_pin_icon.png";
-import Dropdown from "./Dropdown";
-import Bottomsheet from "./BottomSheet";
+import car_icon from "../../../images/feat2/car_icon.png";
+import clock_icon from "../../../images/feat2/alarm_icon.png";
+import calender_icon from "../../../images/feat2/calendar_icon.png";
+import people_icon from "../../../images/feat2/group_people_icon.png";
+import pin_icon from "../../../images/feat2/map_pin_icon.png";
+import Dropdown from "../Dropdown";
+import Bottomsheet from "../BottomSheet";
 import CrewSelector from "./CrewSelector";
-import SearchDestination from "./SearchDestination";
 import Calendar from "./Calendar";
+import SelectDeparture from "./SelectDeparture";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -149,7 +149,7 @@ const DestinationFilter = () => {
             <div>
             <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
               <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
-                <SearchDestination/>
+                <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation}/>
               </Bottomsheet>
             </div>
           </Label>
