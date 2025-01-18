@@ -10,6 +10,7 @@ import Dropdown from "./Dropdown";
 import Bottomsheet from "./BottomSheet";
 import CrewSelector from "./CrewSelector";
 import SearchDestination from "./SearchDestination";
+import Calendar from "./Calendar";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -75,38 +76,46 @@ const Item_transport: Option[] = [
 ]
 
 const DestinationFilter = () => {
+  // 필터 값
+  const [departureDay, setDepartureDay] = useState("날짜 선택")
+  const [numAdult, setNumAdult] = useState(0)
+  const [numChild, setNumChild] = useState(0);
+  const [transport, setTransport] = useState("이동 수단");
+  const [timeAway, setTimeAway] = useState("시간대")
+  const [departureLocation, setDepartureLocation] = useState("출발지 선택");
+
+  // 바텀시트 활성화 상태 관리
   const [isDateBottomActive, setIsDateBottomActive] = useState(false);
   const [isPeopleBottomActive, setIsPeopleBottomActive] = useState(false);
   const [isDepartureBottomActive, setIsDepartureBottomActive] = useState(false);
 
-  const toggleDateBottom = () => {
-    setIsDateBottomActive(!isDateBottomActive);
-  }
-  const togglePeopleBottom = () => {
-    setIsPeopleBottomActive(!isPeopleBottomActive);
-  }
-  const toggleDepartureBottom = () => {
-    setIsDepartureBottomActive(!isDepartureBottomActive);
-  }
+  // 바텀시트 활성 상태 변경
+  const toggleDateBottom = () => { setIsDateBottomActive(!isDateBottomActive); }
+  const togglePeopleBottom = () => { setIsPeopleBottomActive(!isPeopleBottomActive); }
+  const toggleDepartureBottom = () => { setIsDepartureBottomActive(!isDepartureBottomActive); }
 
   return(
     <>
       <FilterBox>
         {/* 첫번째 열 : 날짜 & 인원수 */}
         <SelectorRow>
+          {/* 날짜 */}
           <Label>
             <IconImg src={calender_icon}/>
             <div>
-              <BottomSheetBtn onClick={ toggleDateBottom }>날짜 선택</BottomSheetBtn>
+              <BottomSheetBtn onClick={ toggleDateBottom }>{departureDay}</BottomSheetBtn>
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
-                <div>ㅁㅁㅁ</div>
+                <Calendar/>
               </Bottomsheet>
             </div>
           </Label>
+          {/* 인원수 */}
           <Label>
             <IconImg src={people_icon}/>
             <div>
-            <BottomSheetBtn onClick={ togglePeopleBottom }>인원 수</BottomSheetBtn>
+              <BottomSheetBtn onClick={ togglePeopleBottom }>
+                {numAdult === 0 && numChild === 0 ? "인원수" : `성인: ${numAdult}명, 아동: ${numChild}명`}            
+              </BottomSheetBtn>
               <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="41vh">
                 <CrewSelector/>
               </Bottomsheet>
@@ -117,14 +126,14 @@ const DestinationFilter = () => {
         {/* 두번째 열 : 교통수단 */}
         <SelectorRow>
           <Label>
-            <Dropdown value="교통수단" option={Item_transport} iconStream={car_icon}/>
+            <Dropdown value={transport} setValue={setTransport} option={Item_transport} iconStream={car_icon}/>
           </Label>
         </SelectorRow>
 
         {/* 세번째 열 : 시간대 */}
         <SelectorRow>
           <Label>
-            <Dropdown value="시간대" option={Item_time} iconStream={clock_icon}/>
+            <Dropdown value={timeAway} setValue={setTimeAway} option={Item_time} iconStream={clock_icon}/>
           </Label>
         </SelectorRow>
 
@@ -133,14 +142,26 @@ const DestinationFilter = () => {
           <Label>
             <IconImg src={pin_icon}/>
             <div>
-            <BottomSheetBtn onClick={ toggleDepartureBottom }>출발지 선택</BottomSheetBtn>
+            <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
               <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
                 <SearchDestination/>
               </Bottomsheet>
             </div>
           </Label>
         </SelectorRow>
+
+        {/* 상태 확인용 어쩌고 저쩌고 */}
+        <div>
+          <span>날짜 : {departureDay} {" / "}</span>
+          <span>인원 : 성인 {numAdult}명 & 아동 {numChild}명</span>
+        </div>
+        <div>
+          <span>이동수단: {transport} {" / "}</span>
+          <span>시간대 : {timeAway}</span> 
+        </div>
       </FilterBox>
+
+
     </>
   )
 }

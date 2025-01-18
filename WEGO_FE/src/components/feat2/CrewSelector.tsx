@@ -1,14 +1,12 @@
 import { useState } from "react";
 import styled from "styled-components";
-import ToggleBtn from "./ToggleBtn";
 
 const ContentBox = styled.div`
-  border: 1px solid mediumpurple;
-
   display: flex;
   flex-direction: column;
 
   height: 120px;
+  gap: 10px;
 
   margin-left: 40px;
   margin-right: 40px;
@@ -21,7 +19,24 @@ const CrewRow = styled.div`
   width: 100%;
 
   display: flex;
+  place-items: center;
   justify-content: space-between;
+`
+
+const AlterNumBtn = styled.button`
+  border: 1px solid rgba(151, 166, 194, 1);
+  border-radius: 20px;
+
+  width: 40px;
+  height: 40px;
+  
+  background-color: rgba(223, 236, 255, 1);
+
+  // 비활성ㅎ 상태   
+  &:disabled {
+    border: 1px solid rgba(230, 230, 245, 1);
+    background-color: white;
+  }
 `
 
 const CrewSelector = () => {
@@ -31,30 +46,30 @@ const CrewSelector = () => {
   
   // 인원수 증감
   const UpAdult = () => { setNumAdult(numAdult + 1); }
-  const DownAdult = () => { setNumAdult(numAdult - 1); }
-  const UpChild = () => { setNumChild(numChild + 1); }
-  const DownChild = () => { setNumChild(numChild - 1); }
+  const DownAdult = () => { setNumAdult(numAdult - 1);   }
+  const UpChild = () => { setNumChild(numChild + 1);   }
+  const DownChild = () => { setNumChild(numChild - 1);  }
 
   // 인원수 감소 버튼 활성화 상태 (음수 방지)
-  const [isActiveAdult, setIsActiveAdult] = useState(false);
-  const [isActiveChild, setIsActiveChild] = useState(false);
-
   return (
     <ContentBox>
       <CrewRow>
-        <span>성인</span>
+        <span style={{fontSize: "20px", fontWeight: "600"}}>성인</span>
         <span>
-            <button onClick={ DownAdult }> - </button>
-            {numAdult}
-            <button onClick={ UpAdult }> + </button>
+            <AlterNumBtn onClick={ DownAdult } disabled={numAdult <= 0}> - </AlterNumBtn>
+            <span style={{margin: "13px"}}>{numAdult}</span>
+            <AlterNumBtn onClick={ UpAdult }> + </AlterNumBtn>
         </span>
       </CrewRow>
       <CrewRow>
-        <span>아동</span>
         <span>
-            <button onClick={ DownChild }> - </button>
-            {numChild}
-            <button onClick={ UpChild }> + </button>
+            <div style={{fontSize: "20px", fontWeight: "600"}}>아동</div>
+            <div style={{fontSize: "10px", fontWeight: "500", color: "rgba(138, 138, 138, 1)"}}>총 아동 {"("}만 0세 ~ 17세{")"} 수</div>
+        </span>
+        <span>
+            <AlterNumBtn onClick={ DownChild } disabled={numChild <= 0}> - </AlterNumBtn>
+            <span style={{margin: "13px"}}>{numChild}</span>
+            <AlterNumBtn onClick={ UpChild }> + </AlterNumBtn>
         </span>
       </CrewRow>
     </ContentBox>

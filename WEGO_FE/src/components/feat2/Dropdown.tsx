@@ -47,22 +47,24 @@ type Option = {
 
 interface DropdownProps {
   value?: string; 
+  setValue?: any;
   iconStream?: string; 
   option: Option[];
+  setTransport?: any;
 }
 
 const Dropdown = ({ 
     value,             // dropdown 기본값
+    setValue,          // 부모 상태 수정하도록
     iconStream,        // icon 이미지 경로
     option             // dropdown 선택 요소 리스트
 }: DropdownProps) => {
     const [isOpenFlag, setIsOpenFlag] = useState(false);          // dropdown 클릭여부 확인
-    const [selectedOption, setSelectedOption] = useState(value);  // 선택한 값
   
     const toggleDropdown = () => setIsOpenFlag(!isOpenFlag);      // dropdown 활성/불활성 전환
   
     const selectOption = (label: string) => {
-      setSelectedOption(label);
+      setValue(label);
       setIsOpenFlag(false);
     };
   
@@ -71,7 +73,7 @@ const Dropdown = ({
         <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
           <div>
             <IconImg src={iconStream} />
-            {selectedOption || value}    {/* value: 기본값, selectedOption: 선택한 값 */}           
+            {value}    {/* value: 기본값, selectedOption: 선택한 값 */}           
           </div>
           <span>{isOpenFlag ? "▲" : "▼"}</span>
         </DropdownHeader>

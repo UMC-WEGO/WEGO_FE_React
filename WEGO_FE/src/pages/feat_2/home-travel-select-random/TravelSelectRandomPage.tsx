@@ -1,7 +1,7 @@
 //home/travel-select/random
 import styled from "styled-components";
 import { Link } from "react-router";
-import { FadeLoader, RotateLoader } from "react-spinners";
+import { FadeLoader } from "react-spinners";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
 
