@@ -39,11 +39,14 @@ const AlterNumBtn = styled.button`
   }
 `
 
-const CrewSelector = () => {
-  // 인원수 상태 관리
-  const [numAdult, setNumAdult] = useState(0)
-  const [numChild, setNumChild] = useState(0)
-  
+interface CrewSelectorProps {
+  numAdult: number;
+  setNumAdult: any;
+  numChild: number;
+  setNumChild: any;
+}
+
+const CrewSelector = ({ numAdult, setNumAdult, numChild, setNumChild }: CrewSelectorProps) => {
   // 인원수 증감
   const UpAdult = () => { setNumAdult(numAdult + 1); }
   const DownAdult = () => { setNumAdult(numAdult - 1);   }

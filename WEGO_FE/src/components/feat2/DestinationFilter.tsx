@@ -117,7 +117,12 @@ const DestinationFilter = () => {
                 {numAdult === 0 && numChild === 0 ? "인원수" : `성인: ${numAdult}명, 아동: ${numChild}명`}            
               </BottomSheetBtn>
               <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="41vh">
-                <CrewSelector/>
+                <CrewSelector
+                  numAdult={numAdult}
+                  setNumAdult={setNumAdult}
+                  numChild={numChild}
+                  setNumChild={setNumChild}
+                />
               </Bottomsheet>
             </div>
           </Label>
