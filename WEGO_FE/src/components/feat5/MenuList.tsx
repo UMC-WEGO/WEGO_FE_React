@@ -1,7 +1,6 @@
 import * as S from '../../pages/feat_5/mypage/MyPage.style';
 import List1 from '../../images/feat5/List1.svg';
 import List2 from '../../images/feat5/List2.svg';
-import List3 from '../../images/feat5/List3.svg';
 import List4 from '../../images/feat5/List4.svg';
 import List5 from '../../images/feat5/List5.svg';
 import List6 from '../../images/feat5/List6.svg';
@@ -20,10 +19,6 @@ function MenuList({ handleNavigate }: MenuListProps) {
       <button onClick={() => handleNavigate('posts')}>
         <img src={List2} alt="내가 쓴 글" />
         내가 쓴 글
-      </button>
-      <button onClick={() => handleNavigate('settings')}>
-        <img src={List3} alt="설정" />
-        설정
       </button>
       <button onClick={() => handleNavigate('question')}>
         <img src={List4} alt="자주 묻는 질문" />

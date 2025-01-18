@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
@@ -42,7 +41,7 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: 1px;
+    left: -1px;
   }
 
   .arrow-img {
@@ -55,37 +54,23 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  margin-top: 29px;
+  border-top: 1px solid #eaeaea;
 
-  &::-webkit-scrollbar {
-    width: 8px;
+  h2 {
+    margin-top: 20px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    border-bottom: 1px solid #eaeaea;
   }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  overflow-y: scroll;
-`;
-
-export const PostWrapper = styled.div`
-  position: relative;
-`;
-
-export const Button = styled.div`
-  position: absolute;
-  top: 14px;
-  right: 15px;
-  background-color: transparent;
-  cursor: pointer;
-  z-index: 10;
 
   img {
-    width: 16px;
-    height: 16px;
+    margin-top: 20px;
   }
 `;
