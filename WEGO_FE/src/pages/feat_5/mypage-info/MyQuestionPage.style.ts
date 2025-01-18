@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
@@ -18,7 +17,6 @@ export const Header = styled.header`
   height: 20px;
   margin-bottom: 5px;
   position: relative;
-  border-bottom: 1px solid #ddd;
   h1 {
     font-size: 20px;
     font-weight: 600;
@@ -55,4 +53,68 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: 29px;
+  border-top: 1px solid #eaeaea;
+
+  h1 {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 13px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #a5a5a5;
+  }
+`;
+
+export const QuestionList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+`;
+
+export const QuestionItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 0px;
+  cursor: pointer;
+  border-bottom: 1px solid #eaeaea;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+
+    .qId {
+      color: #0059ff;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 16px;
+      letter-spacing: -0.3199999928474426px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+    }
+
+    .title {
+      color: #262626;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 15px;
+      letter-spacing: -0.3199999928474426px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      margin-left: 16px;
+    }
+  }
+
+  &.last-item {
+    border-bottom: none;
+
+    .title {
+      margin-left: 10.5px;
+    }
+  }
 `;
