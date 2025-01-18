@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
   margin-right: 20px;
@@ -55,4 +54,23 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  margin-top: 29px;
+  border-top: 1px solid #eaeaea;
+
+  h2 {
+    margin-top: 20px;
+    height: 35px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    border-bottom: 1px solid #eaeaea;
+  }
+
+  img {
+    margin-top: 20px;
+  }
 `;

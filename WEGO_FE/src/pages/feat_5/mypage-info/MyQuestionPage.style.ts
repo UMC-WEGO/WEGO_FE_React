@@ -71,19 +71,19 @@ export const Content = styled.div`
 export const QuestionList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
   margin-top: 18px;
 `;
 
 export const QuestionItem = styled.div`
   display: flex;
   align-items: center;
-  padding: 10px 0px;
+  padding: 8px 0px;
   cursor: pointer;
   border-bottom: 1px solid #eaeaea;
 
   p {
-    margin: 0;
+    margin-bottom: 8px;
     font-size: 16px;
 
     .qId {
