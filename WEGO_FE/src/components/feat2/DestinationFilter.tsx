@@ -9,6 +9,7 @@ import pin_icon from "../../images/feat2/map_pin_icon.png";
 import Dropdown from "./Dropdown";
 import Bottomsheet from "./BottomSheet";
 import CrewSelector from "./CrewSelector";
+import SearchDestination from "./SearchDestination";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -88,19 +89,6 @@ const DestinationFilter = () => {
     setIsDepartureBottomActive(!isDepartureBottomActive);
   }
 
-  // 바텀시트 샘플 데이터 
-  const SampleContent1 = () => {
-    return <h1>content1</h1>;
-  };
-  
-  const SampleContent2 = () => {
-    return <h1>content2</h1>;
-  };
-  
-  const SampleContent3 = () => {
-    return <h1>content3</h1>;
-  };
-
   return(
     <>
       <FilterBox>
@@ -111,7 +99,7 @@ const DestinationFilter = () => {
             <div>
               <BottomSheetBtn onClick={ toggleDateBottom }>날짜 선택</BottomSheetBtn>
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
-                <SampleContent1/>
+                <div>ㅁㅁㅁ</div>
               </Bottomsheet>
             </div>
           </Label>
@@ -145,9 +133,9 @@ const DestinationFilter = () => {
           <Label>
             <IconImg src={pin_icon}/>
             <div>
-            <BottomSheetBtn onClick={ toggleDepartureBottom }>날짜 선택</BottomSheetBtn>
-              <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh">
-                <SampleContent3/>
+            <BottomSheetBtn onClick={ toggleDepartureBottom }>출발지 선택</BottomSheetBtn>
+              <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
+                <SearchDestination/>
               </Bottomsheet>
             </div>
           </Label>

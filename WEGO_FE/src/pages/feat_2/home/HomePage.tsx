@@ -1,6 +1,7 @@
 ///home
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Link } from 'react-router';
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
 import PlanedCard from '../../../components/feat2/PlanedCard';
@@ -154,17 +155,27 @@ const sampleMission: MissionPropsType[] = [
   {
     destination: "순천시",
     title: "갯벌",
-    content: "갑자기"
+    content: "갯벌에서 100m 달리기"
+  },
+  {
+    destination: "밀양시",
+    title: "특산품",
+    content: "사과 과수원"
   },
   {
     destination: "서울시",
     title: "한강",
-    content: "자전거"
+    content: "오리보트 타기"
   },
   {
     destination: "평양시",
     title: "냉면",
-    content: "잘 모르겠다"
+    content: "냉면집 5개 돌고오기"
+  },
+  {
+    destination: "부산시",
+    title: "신고식",
+    content: "드럼통 20개 옮기기"
   }
 ];
 
@@ -266,7 +277,8 @@ function HomePage() {
           </SelectorContainer>
 
           <RandomBtnContainer>
-            <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/>
+            <Link to='/home/travel-select/random'>랜덤 돌리기</Link>
+            {/* <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/> */}
           </RandomBtnContainer>
           
           <PlanedContainer>          

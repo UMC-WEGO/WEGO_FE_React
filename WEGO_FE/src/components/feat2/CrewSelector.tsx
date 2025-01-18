@@ -35,7 +35,7 @@ const CrewSelector = () => {
   const UpChild = () => { setNumChild(numChild + 1); }
   const DownChild = () => { setNumChild(numChild - 1); }
 
-  // 인원수 감소 버튼 활성화 상태
+  // 인원수 감소 버튼 활성화 상태 (음수 방지)
   const [isActiveAdult, setIsActiveAdult] = useState(false);
   const [isActiveChild, setIsActiveChild] = useState(false);
 

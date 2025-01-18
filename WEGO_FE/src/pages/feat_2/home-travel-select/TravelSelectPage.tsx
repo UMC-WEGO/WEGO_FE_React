@@ -1,6 +1,7 @@
 //home/travel-select/
 import styled from "styled-components";
 import { useState } from "react";
+import { Link } from "react-router";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
 import share_img from "../../../images/feat2/share_icon.png"
@@ -201,7 +202,9 @@ function TravelSelectPage() {
       <AppContainer>
         <ScrollArea>
           <ToolBarContainer>
-            <img src={back_arrow_img}/>
+            <Link to='/home'>
+              <img src={back_arrow_img}/>
+            </Link>
             <img src={share_img}/>
           </ToolBarContainer>
 
