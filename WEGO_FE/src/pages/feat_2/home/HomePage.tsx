@@ -121,6 +121,23 @@ const MoreBtn = styled.button`
   background-color: white;
 `
 
+const RandomBtn = styled(Link)`
+  background-color: rgba(0, 89, 255, 1);
+  height: 50px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  text-decoration: none; 
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+
+  border-radius: 5px;
+`
+
 type PlanedCardType = {
   planId: number;       // 여행 ID
   destination: string;  // 여행 목적지
@@ -277,7 +294,7 @@ function HomePage() {
           </SelectorContainer>
 
           <RandomBtnContainer>
-            <Link to='/home/travel-select/random'>랜덤 돌리기</Link>
+            <RandomBtn to='/home/travel-select/random'>랜덤 돌리기</RandomBtn>
             {/* <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/> */}
           </RandomBtnContainer>
           

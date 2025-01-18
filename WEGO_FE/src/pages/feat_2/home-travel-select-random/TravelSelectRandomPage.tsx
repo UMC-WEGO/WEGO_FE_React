@@ -32,6 +32,7 @@ const LoadingSpinnerBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 20px;
 
   margin: 132px;
@@ -48,7 +49,7 @@ function TravelSelectRandomPage() {
           <img src={back_arrow_img}/>
         </Link>  
       </LoadingHeader>
-      <LoadingContent> 랜덤 여행지를 <br/> 고르는 중이에요... </LoadingContent>
+      <LoadingContent> <span style={{color : "rgba(0, 89, 255, 1)"}}>랜덤 여행지</span>를 <br/> 고르는 중이에요... </LoadingContent>
       <LoadingSpinnerBox>
         <FadeLoader/>
         <div>잠시만 기다려주세요<br/>열심히 고르는 중입니다</div>
