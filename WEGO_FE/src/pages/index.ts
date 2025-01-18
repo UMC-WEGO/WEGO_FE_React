@@ -24,6 +24,8 @@ export { default as RegionSelectPage } from './feat_4/region/RegionSelectPage';
 // 총 20 + 1개 페이지 라우팅 ( 25.01.07 페이지 추가 => 각 미션 인증 등록 기능은 진행중/완료 일정 페이지에서 처리)
 // 총 21 + 1개 페이지 라우팅 ( 25.01.14 페이지 추가 => 지역 선택 페이지 )
 export { default as ScheduleMissionsVerificaionStatusPage } from './feat_1/schedule-missions-verification-status/ScheduleMissionsVerificaionStatusPage';
+
+// 총 28 + 1개 페이지 라우팅 ( 25.01.18 페이지 추가 => 마이페이지 세부 사항 페이지 )
 export { default as MyPointsPage } from './feat_5/mypage-points/MyPointsPage';
 export { default as CouponPage } from './feat_5/mypage-points/CouponPage';
 export { default as MyPointsCompletePage } from './feat_5/mypage-points/MyPointsCompletePage';
