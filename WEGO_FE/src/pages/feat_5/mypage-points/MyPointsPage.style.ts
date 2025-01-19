@@ -5,8 +5,6 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 59px;
   border-top: 1px solid #ddd;
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
   flex-direction: column;
   margin-left: 13px;
   margin-right: 13px;
@@ -100,5 +98,24 @@ export const PointContent = styled.div`
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #a5a5a5;
+  }
+`;
+
+export const PointsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 45px;
+
+  .point-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 16.5px;
+    }
   }
 `;
