@@ -15,37 +15,37 @@ import p_30000 from '../../images/feat5/p_30000.svg';
 export const allPoints = [
   {
     pointId: '2000',
-    price: '2000',
+    price: '2,000',
     btn: b_2000,
     pointContent: p_2000,
   },
   {
     pointId: '3000',
-    price: '3000',
+    price: '3,000',
     btn: b_3000,
     pointContent: p_3000,
   },
   {
     pointId: '5000',
-    price: '5000',
+    price: '5,000',
     btn: b_5000,
     pointContent: p_5000,
   },
   {
     pointId: '10000',
-    price: '10000',
+    price: '10,000',
     btn: b_10000,
     pointContent: p_10000,
   },
   {
     pointId: '20000',
-    price: '20000',
+    price: '20,000',
     btn: b_20000,
     pointContent: p_20000,
   },
   {
     pointId: '30000',
-    price: '30000',
+    price: '30,000',
     btn: b_30000,
     pointContent: p_30000,
   },
