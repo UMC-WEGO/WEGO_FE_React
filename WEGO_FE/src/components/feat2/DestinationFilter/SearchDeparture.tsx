@@ -23,40 +23,30 @@ const NotionRow = styled.div`
   padding: 15px;
 `
 
-const Element = styled.button<{ isSelected: boolean }>`
+const Element = styled.button`
   width: 100%;
   height: 37px;
   margin: 20px;
 
   display: flex;
   align-items: center;
-
-  background-color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 0.1)" : "none")};
-  color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 1)" : "black")};
 `
 
 const SearchedCard = styled.div`
 
 `
 
-const SearchBar = styled.input`
-  width: 360px;
-  font-size: 16px;
-  font-weight: 500px;
-`
+const location = [
+  { name: "최근출발", elements: []},
+  { name: "수도권", elements: ["서울 강북", "서울 강남", "의정부시", "고양시", "용인시", "하남시", "성남시", "남양주시"] },
+  { name: "강원도", elements: ["강릉시", "속초시", "춘천시", "정선군", "양양군", "평창군"] },
+  { name: "전라도", elements: ["전주시", "군산시", "남원시", "부안군", "여수시", "순천시", "담양군", "목포시"] },
+  { name: "경상도", elements: ["경주시", "포항시", "안동시", "문경시", "창원시", "통영시", "거제시", "김해시"] },
+  { name: "충청도", elements: ["단양군", "청주시", "충주시", "제천시", "천안시", "보령시", "공주시", "아산시"] },
+  { name: "제주도", elements: ["제주시"] },
+]
 
-type LocationType = {
-  name: string;
-  elements: string[];
-}
-
-interface SearchDepartrueProps {
-  departureLocation: string;
-  setDepartureLocation: any;
-  location: LocationType[];
-}
-
-const SearchDeparture = ({ departureLocation, setDepartureLocation, location }: SearchDepartrueProps) => {
+const SearchDeparture = () => {
   const [inputTerm, setInputTerm] = useState("");
   const filterdLocation = location.map((category) => ({
     ...category,
@@ -71,7 +61,7 @@ const SearchDeparture = ({ departureLocation, setDepartureLocation, location }: 
       <SearchHeader>
         <div>{"<-"}</div>
         <div>
-          <SearchBar 
+          <input 
             type="text" 
             placeholder="출발지를 선택하세요"
             value={inputTerm}
@@ -90,11 +80,7 @@ const SearchDeparture = ({ departureLocation, setDepartureLocation, location }: 
           filterdLocation.map((category) => (
             <div key={category.name}>
               {category.elements.map((element) => (
-                <Element
-                  key={element}
-                  onClick={() => setDepartureLocation(element)}
-                  isSelected = { departureLocation === element }
-                >
+                <Element key={element}>
                   <img src={MapPin_Icon} style={{padding: "7.4px 8.63px 7.4px 8.63px", backgroundColor: "rgba(246, 246, 246, 1)", borderRadius: "18.5px"}}/>
                   <div>{element} ({category.name})</div>
                 </Element>
