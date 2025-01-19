@@ -34,6 +34,7 @@ const TermsAllCheckBox = styled.div`
 const TermItemCheckBox = styled.div`
   width: 100%;
   height: 20px;
+  display: flex;
 `;
 const TermItemAgreeIcon = styled.img`
   position: relative;

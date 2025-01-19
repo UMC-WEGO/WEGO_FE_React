@@ -4,7 +4,7 @@ const NavbarLayout = styled.div`
   max-width: var(--size-max-width);
   width: 100%;
   /* height: var(--size-navbar); */
-  height: 90px;
+  height: clamp(60px, 9vh, 90px);
   /* position: fixed; */
   /* bottom: 5%; */
   border-top: 1px solid rgba(165, 165, 165, 1);
@@ -15,7 +15,7 @@ const NavbarLayout = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute;
-  bottom: 0vh;
+  bottom: 0;
 `;
 
 const NavbarBox = styled.div`
@@ -28,7 +28,7 @@ const NavbarBox = styled.div`
   gap: 20px;
   img {
     width: 50px;
-    height: 60px;
+    height: 50px;
   }
 `;
 
