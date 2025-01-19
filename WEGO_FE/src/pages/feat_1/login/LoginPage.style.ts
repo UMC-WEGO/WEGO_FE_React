@@ -101,7 +101,7 @@ const PasswordOpenToggleButton = styled.button`
   position: absolute;
   background-color: transparent;
   right: 15px;
-  bottom: 13px;
+  bottom: 16px;
   /* top: 10px; */
 `;
 const SubButtonsBox = styled.div<StyledProps>`
