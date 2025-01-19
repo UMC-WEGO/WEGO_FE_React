@@ -4,6 +4,8 @@ import * as S from './ScrapBoard.style';
 import { useState } from 'react';
 import PostList from '../../feat4/PostList';
 import { allPosts } from '../../../mocks/board/postData';
+import bookmark from '../../../images/feat1/Bookmark.svg';
+import ScrapPostList from '../scrapPostList/ScrapPostList';
 
 function ScrapBoard() {
   const scrapPosts = allPosts;
@@ -41,7 +43,8 @@ function ScrapBoard() {
       <S.PostListContainer>
         {/* <p>선택된 카테고리: {selectedCategory}</p> */}
         {/* 여기에 선택된 카테고리에 맞는 게시물 목록 렌더링 */}
-        <PostList posts={filteredPosts} />
+        {/* <PostList posts={filteredPosts} /> 혜윤이 버전*/}
+        <ScrapPostList posts={filteredPosts} />
       </S.PostListContainer>
     </S.Container>
   );

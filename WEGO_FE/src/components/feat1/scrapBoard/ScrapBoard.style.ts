@@ -5,6 +5,7 @@ interface CategoryButtonProps {
 }
 
 export const Container = styled.div`
+  height: 80%;
   padding: 10px;
 `;
 
@@ -25,17 +26,6 @@ export const CategoryButton = styled.button<CategoryButtonProps>`
 `;
 
 export const PostListContainer = styled.div`
-  max-height: 600px; /* 높이 설정 */
+  height: clamp(470px, 97%, 1000px); // 어렵다... 이거 나중에 다시 생각
   overflow-y: auto;
-
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-  ::-webkit-scrollbar-thumb {
-    background-color: #007bff;
-    border-radius: 4px;
-  }
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
 `;
