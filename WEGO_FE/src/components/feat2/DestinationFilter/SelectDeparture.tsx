@@ -92,7 +92,7 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, }: SelectedD
             <span>출발지를 선택하세요</span><span>Q</span>
           </BottomSheetBtn>
           <Bottomsheet isOpen={ isSearchBottomActive } onClose={ toggleSearchBottom } height="100%">
-            <SearchDeparture/>
+            <SearchDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation} location={location}/>
           </Bottomsheet>
         </div>
       </SearchHeader>
