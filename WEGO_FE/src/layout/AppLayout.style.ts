@@ -10,6 +10,7 @@ const AppContainer = styled.div`
   border-radius: 25px;
   border: 1px solid rgba(163, 163, 163, 0.5);
   max-height: var(--size-max-height);
+  position: relative;
 `;
 
 const OutletContainer = styled.div`
