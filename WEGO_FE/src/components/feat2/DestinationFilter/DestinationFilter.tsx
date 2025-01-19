@@ -75,14 +75,37 @@ const Item_transport: Option[] = [
   { label: "기차(KTX)", icon: car_icon }
 ]
 
-const DestinationFilter = () => {
-  // 필터 값
-  const [departureDay, setDepartureDay] = useState("날짜 선택")
-  const [numAdult, setNumAdult] = useState(0)
-  const [numChild, setNumChild] = useState(0);
-  const [transport, setTransport] = useState("이동 수단");
-  const [timeAway, setTimeAway] = useState("시간대")
-  const [departureLocation, setDepartureLocation] = useState("출발지 선택");
+interface DestinationFilterProps {
+  departureDay: string;
+  numAdult: number;
+  numChild: number;
+  transport: string;
+  timeAway: string;
+  departureLocation: string;
+
+  setDeparture: any;
+  setNumAdult: any;
+  setNumChild: any;
+  setTransport: any;
+  setTimeAway: any;
+  setDepartureLocation: any;
+}
+
+const DestinationFilter = ({
+  departureDay,
+  numAdult,
+  numChild,
+  transport,
+  timeAway,
+  departureLocation,
+
+  setDeparture,
+  setNumAdult,
+  setNumChild,
+  setTransport,
+  setTimeAway,
+  setDepartureLocation, 
+}: DestinationFilterProps) => {
 
   // 바텀시트 활성화 상태 관리
   const [isDateBottomActive, setIsDateBottomActive] = useState(false);
@@ -114,9 +137,9 @@ const DestinationFilter = () => {
             <IconImg src={people_icon}/>
             <div>
               <BottomSheetBtn onClick={ togglePeopleBottom }>
-                {numAdult === 0 && numChild === 0 ? "인원수" : `성인: ${numAdult}명, 아동: ${numChild}명`}            
+                {numAdult === 0 && numChild === 0 ? "인원수" : `성인 ${numAdult}명 아동 ${numChild}명`}            
               </BottomSheetBtn>
-              <Bottomsheet isOpen={isPeopleBottomActive} onClose={ togglePeopleBottom } height="41vh">
+              <Bottomsheet isOpen={ isPeopleBottomActive } onClose={ togglePeopleBottom } height="41vh">
                 <CrewSelector
                   numAdult={numAdult}
                   setNumAdult={setNumAdult}
@@ -147,26 +170,14 @@ const DestinationFilter = () => {
           <Label>
             <IconImg src={pin_icon}/>
             <div>
-            <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
+              <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
               <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
                 <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation}/>
               </Bottomsheet>
             </div>
           </Label>
         </SelectorRow>
-
-        {/* 상태 확인용 어쩌고 저쩌고 */}
-        <div>
-          <span>날짜 : {departureDay} {" / "}</span>
-          <span>인원 : 성인 {numAdult}명 & 아동 {numChild}명</span>
-        </div>
-        <div>
-          <span>이동수단: {transport} {" / "}</span>
-          <span>시간대 : {timeAway}</span> 
-        </div>
       </FilterBox>
-
-
     </>
   )
 }

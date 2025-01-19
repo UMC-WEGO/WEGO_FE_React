@@ -264,16 +264,13 @@ const samplePopular: PostCardType[] = [
 ]
 
 function HomePage() {
-  // 여행날짜
-  const [departureDay, setDepartureDay] = useState(0);
-  // 인원수
-  const [crewNumber, setCrewNumber] = useState(0);
-  // 교통수단
-  const [transport, setTransport] = useState("");
-  // 시간대
-  const [timeAway, setTimeAway] = useState("");
-  // 출발지
-  const [departureLocation, setDepartureLocation] = useState("");
+  // 필터 값
+  const [departureDay, setDepartureDay] = useState("날짜 선택")
+  const [numAdult, setNumAdult] = useState(0)
+  const [numChild, setNumChild] = useState(0);
+  const [transport, setTransport] = useState("이동 수단");
+  const [timeAway, setTimeAway] = useState("시간대")
+  const [departureLocation, setDepartureLocation] = useState("출발지 선택");
 
   // 다가오는 여행 상태 관리
   const [cardList, setCardList] = useState(samplePlan);
@@ -289,10 +286,23 @@ function HomePage() {
           <LogoContainer><img src={WEGO_Logo}/></LogoContainer>
 
           <SelectorContainer>
-            <DestinationFilter/>
-          </SelectorContainer>
+            <DestinationFilter
+              departureDay={departureDay}
+              numAdult={numAdult}
+              numChild={numChild}
+              transport={transport}
+              timeAway={timeAway}
+              departureLocation={departureLocation}
 
-          <RandomBtnContainer>
+              setDeparture={setDepartureDay}
+              setNumAdult={setNumAdult}
+              setNumChild={setNumChild}
+              setTransport={setTransport}
+              setTimeAway={setTimeAway}
+              setDepartureLocation={setDepartureLocation}
+            />
+          </SelectorContainer>
+            <RandomBtnContainer>
             <RandomBtn to='/home/travel-select/random'>랜덤 돌리기</RandomBtn>
             {/* <Button type='button' color='--color-main-blue' content='랜덤 돌리기' width='100%'/> */}
           </RandomBtnContainer>

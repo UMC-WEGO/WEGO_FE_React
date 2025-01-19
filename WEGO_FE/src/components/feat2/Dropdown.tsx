@@ -10,7 +10,7 @@ const IconImg = styled.img`
 
 const DropdownContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 50px;
 `
 
 const DropdownHeader = styled.div<{ isOpen: boolean }>`
@@ -26,7 +26,7 @@ const DropdownHeader = styled.div<{ isOpen: boolean }>`
 
 const DropdownList = styled.ul`
   background-color: white;
-  border: 1px solid rgba(0, 89, 255, 1);
+  border: 1px solid rgba(234, 234, 234, 1);
 
   width: 293px;
 
@@ -38,6 +38,10 @@ const DropdownListItem = styled.li`
 
   display: flex;
   align-items: center;
+
+  &:hover {
+    border: 1px solid rgba(0, 89, 255, 1);
+  }
 `
 
 type Option = {
@@ -70,13 +74,16 @@ const Dropdown = ({
   
     return (
       <DropdownContainer>
+        {/* 드롭다운 헤터 (보이는 부분) */}
         <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
           <div>
             <IconImg src={iconStream} />
-            {value}    {/* value: 기본값, selectedOption: 선택한 값 */}           
+            <span>{value}</span>    {/* value: 기본값, selectedOption: 선택한 값 */}           
           </div>
           <span>{isOpenFlag ? "▲" : "▼"}</span>
         </DropdownHeader>
+
+        {/* 드롭다운 요소 리스트 */}
         {isOpenFlag && (
           <DropdownList>
             {option.map((item, index) => (
