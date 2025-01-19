@@ -333,7 +333,7 @@ function HomePage() {
 
         </ScrollArea>
         <NavbarArea>
-          <Navbar/>
+          {/* <Navbar/> */}
         </NavbarArea>
       </AppContainer>
     </>

@@ -2,6 +2,8 @@ import styled from "styled-components"
 import { useState, useEffect } from "react"
 import { CategoryButton } from "../../feat4/FreeBoard.style"
 
+import MapPin_Icon from '../../../images/feat2/map_pin_icon.png';
+
 const SearchCard = styled.div`
   display: flex;
   flex-direction: column;
@@ -19,6 +21,19 @@ const NotionRow = styled.div`
   color: rgba(0, 89, 255, 1);
 
   padding: 15px;
+`
+
+const Element = styled.button`
+  width: 100%;
+  height: 37px;
+  margin: 20px;
+
+  display: flex;
+  align-items: center;
+`
+
+const SearchedCard = styled.div`
+
 `
 
 const location = [
@@ -65,7 +80,10 @@ const SearchDeparture = () => {
           filterdLocation.map((category) => (
             <div key={category.name}>
               {category.elements.map((element) => (
-                <div key={element}>{element}</div>
+                <Element key={element}>
+                  <img src={MapPin_Icon} style={{padding: "7.4px 8.63px 7.4px 8.63px", backgroundColor: "rgba(246, 246, 246, 1)", borderRadius: "18.5px"}}/>
+                  <div>{element} ({category.name})</div>
+                </Element>
               ))}
             </div>
           ))
