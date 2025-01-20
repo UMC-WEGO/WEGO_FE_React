@@ -43,7 +43,9 @@ function CouponPage() {
 
   const confirmPurchase = () => {
     if (user) {
-      users[userIndex].points = (points - price).toString();
+      const updatedPoints = points - price;
+      users[userIndex].points = updatedPoints.toLocaleString();
+
       navigate(`./complete`);
     }
 
