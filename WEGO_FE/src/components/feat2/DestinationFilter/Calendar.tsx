@@ -103,19 +103,19 @@ const CalendarBody = ({ nowMonthCalendar, selectedDate, onChangeDay }: BodyProps
 }
 
 interface CalendarProps {
-  selectedDate: Date;
-  selectedMonth: number;
-  selectedYear: number;
-  setSelectedDate: any;
+  departureDate: Date;
+  departureMonth: number;
+  departureYear: number;
+  setDepartureDate: any;
 }
 
-const Calendar = ({selectedDate, setSelectedDate, selectedMonth, selectedYear}: CalendarProps) => {
+const Calendar = ({ departureDate, setDepartureDate, departureMonth, departureYear}: CalendarProps) => {
   // 달력 첫 날
-  const startDay = new Date(selectedYear, selectedMonth - 1, 1);
+  const startDay = new Date(departureYear, departureMonth - 1, 1);
   startDay.setDate(1 - startDay.getDay()); // 달력 첫날: 이전 달의 마지막 일요일
 
   // 달력 마지막 날
-  const endDay = new Date(selectedYear, selectedMonth, 0);
+  const endDay = new Date(departureYear, departureMonth, 0);
   endDay.setDate(endDay.getDate() + (6 - endDay.getDay())); // 달력 마지막 날: 해당 주의 토요일
 
   // 해당 달 달력
@@ -123,31 +123,26 @@ const Calendar = ({selectedDate, setSelectedDate, selectedMonth, selectedYear}: 
 
   // 달력 전환
   const handlePrevMonth = () => {
-    setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1));
+    setDepartureDate(new Date(departureDate.getFullYear(), departureDate.getMonth() - 1, 1));
   }
   const handleNextMonth = () => {
-    setSelectedDate(new Date(selectedDate.getFullYear(), selectedDate.getMonth() + 1, 1));
+    setDepartureDate(new Date(departureDate.getFullYear(), departureDate.getMonth() + 1, 1));
   }
 
   return (
     <>
       <CalendarHead
-        year={selectedYear}
-        month={selectedMonth}
+        year={departureYear}
+        month={departureMonth}
         onPrevMonth={handlePrevMonth}
         onNextMonth={handleNextMonth}
       />
       <CalendarBody
         nowMonthCalendar={nowMonthCalendar}
-        selectedDate={selectedDate}
-        onChangeDay={setSelectedDate}
+        selectedDate={departureDate}
+        onChangeDay={setDepartureDate}
       />
-
-      <h1>
-        Selected Date: {selectedYear}.{selectedMonth}.{selectedDate.getDate()}
-      </h1>
     </>
-
   )
 }
 

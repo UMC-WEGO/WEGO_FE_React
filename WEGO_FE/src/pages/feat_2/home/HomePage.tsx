@@ -270,10 +270,10 @@ function HomePage() {
   const [transport, setTransport] = useState("이동 수단");
   const [timeAway, setTimeAway] = useState("시간대")
   const [departureLocation, setDepartureLocation] = useState("출발지 선택");
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const selectedMonth = selectedDate.getMonth() + 1; // 선택된 월
-  const selectedYear = selectedDate.getFullYear();   // 선택된 연도
 
+  const [departureDate, setDepartureDate] = useState(new Date());
+  const departureMonth = departureDate.getMonth() + 1; // 선택된 월
+  const departureYear = departureDate.getFullYear();   // 선택된 연도
 
   // 다가오는 여행 상태 관리
   const [cardList, setCardList] = useState(samplePlan);
@@ -290,22 +290,27 @@ function HomePage() {
 
           <SelectorContainer>
             <DestinationFilter
+//               
+// 
+//            departureDate 안에 년/월/일 다 들어있는데
+//            굳이 년/월 을 따로 쓸 필요 있나?
+//
+//               
+              departureDate={departureDate}
+              departureMonth={departureMonth}
+              departureYear={departureYear}
               numAdult={numAdult}
               numChild={numChild}
               transport={transport}
               timeAway={timeAway}
               departureLocation={departureLocation}
 
+              setDepartureDate={setDepartureDate}
               setNumAdult={setNumAdult}
               setNumChild={setNumChild}
               setTransport={setTransport}
               setTimeAway={setTimeAway}
               setDepartureLocation={setDepartureLocation}
-
-              selectedDate={selectedDate}
-              selectedMonth={selectedMonth}
-              selectedYear={selectedYear}
-              setSelectedDate={setSelectedDate}
             />
           </SelectorContainer>
             <RandomBtnContainer>

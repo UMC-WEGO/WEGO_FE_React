@@ -88,10 +88,10 @@ interface DestinationFilterProps {
   setTimeAway: any;
   setDepartureLocation: any;
 
-  selectedDate: Date;
-  selectedMonth: number;
-  selectedYear: number;
-  setSelectedDate: any;
+  departureDate: Date;
+  departureMonth: number;
+  departureYear: number;
+  setDepartureDate: any;
 }
 
 const DestinationFilter = ({
@@ -107,10 +107,10 @@ const DestinationFilter = ({
   setTimeAway,
   setDepartureLocation, 
 
-  selectedDate, 
-  setSelectedDate, 
-  selectedMonth, 
-  selectedYear
+  departureDate, 
+  setDepartureDate, 
+  departureMonth, 
+  departureYear
 }: DestinationFilterProps) => {
 
   // 바텀시트 활성화 상태 관리
@@ -132,13 +132,17 @@ const DestinationFilter = ({
           <Label>
             <IconImg src={calender_icon}/>
             <div>
-              <BottomSheetBtn onClick={ toggleDateBottom }>{selectedDate.getDate()}</BottomSheetBtn>
+              <BottomSheetBtn onClick={ toggleDateBottom }>
+                {departureYear}.
+                {String(departureDate.getMonth() + 1).padStart(2, "0")}.
+                {String(departureDate.getDate()).padStart(2, "0")}
+              </BottomSheetBtn>
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
                 <Calendar
-                  selectedDate={selectedDate}
-                  selectedMonth={selectedMonth}
-                  selectedYear={selectedYear}
-                  setSelectedDate={setSelectedDate}
+                  departureDate={departureDate}
+                  departureMonth={departureMonth}
+                  departureYear={departureYear}
+                  setDepartureDate={setDepartureDate}
                 />
               </Bottomsheet>
             </div>
