@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 0px;
   margin-right: 0px;
@@ -55,19 +54,6 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
   overflow-y: scroll;
 
   div {

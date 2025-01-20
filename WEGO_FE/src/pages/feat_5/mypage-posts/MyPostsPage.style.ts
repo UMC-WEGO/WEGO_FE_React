@@ -4,10 +4,9 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 2px;
 `;
 
 export const Header = styled.header`
@@ -55,19 +54,6 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
 
   overflow-y: scroll;
 `;

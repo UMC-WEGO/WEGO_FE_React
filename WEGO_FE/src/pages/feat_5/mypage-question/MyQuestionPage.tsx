@@ -21,12 +21,13 @@ function MyQuestionPage() {
       <S.Content>
         <h1>사용자들이 자주 묻는 질문을 확인해보세요</h1>
         <S.QuestionList>
-          {/* qId 10인 경우 따로 디자인 */}
           {allQnA.map(({ qId, title }) => (
             <S.QuestionItem
               key={qId}
               onClick={() => handleQuestionClick(qId)}
-              className={qId === '10' ? 'last-item' : ''}
+              className={
+                qId === '1' ? 'first-item' : qId === '10' ? 'last-item' : ''
+              }
             >
               <p>
                 <span className="qId">{qId}</span>{' '}

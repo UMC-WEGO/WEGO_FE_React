@@ -5,7 +5,6 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 59px;
   margin-bottom: 90px;
-  border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   flex-direction: column;
 `;
@@ -103,7 +102,7 @@ export const MenuList = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 19px;
-  margin-top: 36px;
+  margin-top: 45px;
   padding-left: 32px;
 
   button {
@@ -137,7 +136,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 100px;
+  margin-top: 80px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
