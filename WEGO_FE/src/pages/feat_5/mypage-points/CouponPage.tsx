@@ -1,4 +1,5 @@
 import * as S from './CouponPage.style';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import p_warning from '../../../images/feat5/p_warning.svg';
@@ -8,17 +9,45 @@ import { allPoints } from '../../../mocks/feat5/PointsData';
 function CouponPage() {
   const navigate = useNavigate();
   const { userId, pointId } = useParams();
-  const user = users.find(user => user.userId === userId);
-  const points = user ? user.points : '0';
+  const userIndex = users.findIndex(user => user.userId === userId);
+  const user = userIndex !== -1 ? users[userIndex] : null;
+  const points = user ? Number(user.points.replace(',', '')) : 0;
+
   const selectedPoint = allPoints.find(item => item.pointId === pointId);
-  const price = selectedPoint ? selectedPoint.price : '0';
+
+  const price = selectedPoint
+    ? Number(selectedPoint.price.replace(',', ''))
+    : 0;
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [isConfirmModal, setIsConfirmModal] = useState(false);
 
   const handlePurchase = () => {
     if (points < price) {
-      alert('포인트가 부족합니다. 구매할 수 없습니다.');
+      setModalMessage('현재 구매 불가한 쿠폰입니다.');
+      setIsConfirmModal(false);
     } else {
-      alert('진짜 구매하시겠습니까?');
+      setModalMessage('네이버페이 쿠폰을 구매하시겠습니까?');
+      setIsConfirmModal(true);
     }
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    if (!isConfirmModal) {
+      navigate(-1);
+    }
+  };
+
+  const confirmPurchase = () => {
+    if (user) {
+      users[userIndex].points = (points - price).toString();
+      navigate(`./complete`);
+    }
+
+    closeModal();
   };
 
   return (
@@ -43,8 +72,8 @@ function CouponPage() {
 
         <S.PointContent>
           <h1>네이버페이</h1>
-          <h2>네이버페이 포인트 {price}원</h2>
-          <h3>{price}P</h3>
+          <h2>네이버페이 포인트 {price.toLocaleString()}원</h2>{' '}
+          <h3>{price.toLocaleString()}P</h3>
         </S.PointContent>
 
         <S.WarningContent>
@@ -55,6 +84,32 @@ function CouponPage() {
           <button onClick={handlePurchase}>구매하기</button>
         </S.Purchase>
       </S.Content>
+
+      {modalVisible && (
+        <S.PointModal>
+          <S.ModalContent>
+            <S.TextContainer>
+              <p>{modalMessage}</p>
+            </S.TextContainer>
+            <S.DButtonContainer>
+              {isConfirmModal ? (
+                <>
+                  <button className="cancel-btn" onClick={closeModal}>
+                    취소
+                  </button>
+                  <button className="confirm-btn" onClick={confirmPurchase}>
+                    확인
+                  </button>
+                </>
+              ) : (
+                <button className="confirm-btn" onClick={closeModal}>
+                  확인
+                </button>
+              )}
+            </S.DButtonContainer>
+          </S.ModalContent>
+        </S.PointModal>
+      )}
     </S.Container>
   );
 }

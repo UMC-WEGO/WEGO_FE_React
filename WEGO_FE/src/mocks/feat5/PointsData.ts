@@ -33,19 +33,19 @@ export const allPoints = [
   },
   {
     pointId: '10000',
-    price: '10,000',
+    price: '9,000',
     btn: b_10000,
     pointContent: p_10000,
   },
   {
     pointId: '20000',
-    price: '20,000',
+    price: '17,000',
     btn: b_20000,
     pointContent: p_20000,
   },
   {
     pointId: '30000',
-    price: '30,000',
+    price: '25,000',
     btn: b_30000,
     pointContent: p_30000,
   },

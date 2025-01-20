@@ -97,7 +97,6 @@ export const PointContent = styled.div`
   margin-top: 0px;
 
   h1 {
-    font-family: Pretendard;
     font-size: 14px;
     font-weight: 500;
     line-height: 14px;
@@ -110,7 +109,6 @@ export const PointContent = styled.div`
   }
 
   h2 {
-    font-family: Pretendard;
     font-size: 20px;
     font-weight: 500;
     line-height: 20px;
@@ -123,7 +121,6 @@ export const PointContent = styled.div`
   }
 
   h3 {
-    font-family: Pretendard;
     font-size: 32px;
     font-weight: 600;
     line-height: 32px;
@@ -166,5 +163,107 @@ export const Purchase = styled.div`
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+  }
+`;
+
+export const PointModal = styled.div`
+  position: fixed;
+  width: 420px;
+  height: 837px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+`;
+
+export const ModalContent = styled.div`
+  width: 273px;
+  height: 104.5px;
+  margin: 0px;
+  gap: 0px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+`;
+
+export const TextContainer = styled.div`
+  width: 270px;
+  height: 60px;
+  padding: 19px 16px;
+  padding-top: 20px;
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.40799999237060547px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+`;
+
+export const DButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 269.5px;
+  height: 45px;
+  border-top: 1px solid #ddd;
+  position: relative;
+
+  .cancel-btn,
+  .confirm-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.40799999237060547px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    z-index: 2;
+    width: 50%;
+    height: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .cancel-btn {
+    color: black;
+    border-right: 1px solid #ddd;
+  }
+
+  .confirm-btn {
+    color: #0a7aff;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 40px;
+    background-color: #ddd;
+    z-index: 1;
   }
 `;
