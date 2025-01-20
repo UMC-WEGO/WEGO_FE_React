@@ -63,18 +63,18 @@ type Option = {
   icon: string;
 };
 
-// const Item_time: Option[] = [
-//   { label: "1시간 이내", icon: clock_icon },
-//   { label: "1시간 ~ 2시간", icon: clock_icon },
-//   { label: "2시간 ~ 3시간", icon: clock_icon },
-//   { label: "3시간 이상", icon: clock_icon }
-// ];
+const Item_time: Option[] = [
+  { label: "1시간 이내", icon: clock_icon },
+  { label: "1시간 ~ 2시간", icon: clock_icon },
+  { label: "2시간 ~ 3시간", icon: clock_icon },
+  { label: "3시간 이상", icon: clock_icon }
+];
 
-// const Item_transport: Option[] = [
-//   { label: "자동차", icon: car_icon },
-//   { label: "버스", icon: car_icon },
-//   { label: "기차(KTX)", icon: car_icon }
-// ]
+const Item_transport: Option[] = [
+  { label: "자동차", icon: car_icon },
+  { label: "버스", icon: car_icon },
+  { label: "기차(KTX)", icon: car_icon }
+]
 
 interface DestinationFilterProps {
   numAdult: number;
@@ -95,9 +95,6 @@ interface DestinationFilterProps {
   setDepartureDate: any;
 
   location: {name: string; elements: string[]}[];
-
-  option_time: {  label: string; icon: string;};
-  option_transport: {  label: string; icon: string;};
 }
 
 const DestinationFilter = ({
@@ -118,10 +115,7 @@ const DestinationFilter = ({
   departureMonth, 
   departureYear,
 
-  location,
-
-  option_time,
-  option_transport
+  location
 }: DestinationFilterProps) => {
 
   // 바텀시트 활성화 상태 관리
@@ -180,14 +174,14 @@ const DestinationFilter = ({
         {/* 두번째 열 : 교통수단 */}
         <SelectorRow>
           <Label>
-            <Dropdown value={transport} setValue={setTransport} option={option_transport} iconStream={car_icon}/>
+            <Dropdown value={transport} setValue={setTransport} option={Item_transport} iconStream={car_icon}/>
           </Label>
         </SelectorRow>
 
         {/* 세번째 열 : 시간대 */}
         <SelectorRow>
           <Label>
-            <Dropdown value={timeAway} setValue={setTimeAway} option={option_time} iconStream={clock_icon}/>
+            <Dropdown value={timeAway} setValue={setTimeAway} option={Item_time} iconStream={clock_icon}/>
           </Label>
         </SelectorRow>
 
