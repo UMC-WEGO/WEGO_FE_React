@@ -1,6 +1,18 @@
 import styled from "styled-components";
 import { useState } from "react";
 
+const WeekBox = styled.div`
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  text-align: center;
+  font-weight: bold;
+`
+
+const MonthDisplay = styled.div`
+
+`
+
 const CalendarBox = styled.div`
   display: grid;
   grid-template-row: repeat(6, 1fr);      // 6주
@@ -20,6 +32,7 @@ const YEAR = NOW.getFullYear();
 const MONTH = NOW.getMonth() + 1;
 
 // 달력 만들기
+const weekDay: string[] = ["일", "월", "화", "수", "목", "금", "토"];
 const groupDatesByWeek = (startDay: Date, endDay: Date) => {
   const nowMonthCalendar: Date[][] = [];
   let currentWeek: Date[] = []; // 현재 처리 중인 주
@@ -49,37 +62,54 @@ interface HeadProps {
   month: number;
 }
 
-const CalendarHead = () => {
+const CalendarHead = ({year, month, onPrevMonth, onNextMonth}: HeadProps) => {
   return (
-    <h1>Head</h1>
+    <>
+      <MonthDisplay>
+        <button onClick={onPrevMonth}>{"<-"}</button>
+        <span>{year}.{String(month).padStart(2, "0")}</span>
+        <button onClick={onNextMonth}>{"->"}</button>
+      </MonthDisplay>
+    </>
   )
 }
 
 interface BodyProps {
   nowMonthCalendar: Date[][];
+  selectedDate: Date;
+  onChangeDay: (date: Date) => void;
 }
 
-const CalendarBody = ({ nowMonthCalendar }: BodyProps) => {
+const CalendarBody = ({ nowMonthCalendar, selectedDate, onChangeDay }: BodyProps) => {
   return (
-    <CalendarBox>
-      {nowMonthCalendar.map((week, index) => 
-        week.map((date) => (
-          <DayBtn>
-            {date.getDate()}
-          </DayBtn>
-        ))
-      )}
-    </CalendarBox>
+    <>
+      <WeekBox>
+        {weekDay.map((weekDay, index) => (
+          <div key={index}>{weekDay}</div>
+        ))}
+      </WeekBox>
+      <CalendarBox>
+        {nowMonthCalendar.map((week, index) => 
+          week.map((date) => (
+            <DayBtn key={date.toISOString()} onClick={() => onChangeDay(date)}>
+              {date.getDate()}
+            </DayBtn>
+          ))
+        )}
+      </CalendarBox>    
+    </>
+
   )
 }
 
-// 현재 날짜
-const Calendar = () => {
-  // 선택한 날짜
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const selectedMonth = selectedDate.getMonth() + 1; // 선택된 월
-  const selectedYear = selectedDate.getFullYear();   // 선택된 연도
+interface CalendarProps {
+  selectedDate: Date;
+  selectedMonth: number;
+  selectedYear: number;
+  setSelectedDate: any;
+}
 
+const Calendar = ({selectedDate, setSelectedDate, selectedMonth, selectedYear}: CalendarProps) => {
   // 달력 첫 날
   const startDay = new Date(selectedYear, selectedMonth - 1, 1);
   startDay.setDate(1 - startDay.getDay()); // 달력 첫날: 이전 달의 마지막 일요일
@@ -101,9 +131,23 @@ const Calendar = () => {
 
   return (
     <>
-      <CalendarHead/>
-      <CalendarBody nowMonthCalendar={nowMonthCalendar}/>
+      <CalendarHead
+        year={selectedYear}
+        month={selectedMonth}
+        onPrevMonth={handlePrevMonth}
+        onNextMonth={handleNextMonth}
+      />
+      <CalendarBody
+        nowMonthCalendar={nowMonthCalendar}
+        selectedDate={selectedDate}
+        onChangeDay={setSelectedDate}
+      />
+
+      <h1>
+        Selected Date: {selectedYear}.{selectedMonth}.{selectedDate.getDate()}
+      </h1>
     </>
+
   )
 }
 

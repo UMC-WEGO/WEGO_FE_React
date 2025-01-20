@@ -76,35 +76,41 @@ const Item_transport: Option[] = [
 ]
 
 interface DestinationFilterProps {
-  departureDay: string;
   numAdult: number;
   numChild: number;
   transport: string;
   timeAway: string;
   departureLocation: string;
 
-  setDeparture: any;
   setNumAdult: any;
   setNumChild: any;
   setTransport: any;
   setTimeAway: any;
   setDepartureLocation: any;
+
+  selectedDate: Date;
+  selectedMonth: number;
+  selectedYear: number;
+  setSelectedDate: any;
 }
 
 const DestinationFilter = ({
-  departureDay,
   numAdult,
   numChild,
   transport,
   timeAway,
   departureLocation,
 
-  setDeparture,
   setNumAdult,
   setNumChild,
   setTransport,
   setTimeAway,
   setDepartureLocation, 
+
+  selectedDate, 
+  setSelectedDate, 
+  selectedMonth, 
+  selectedYear
 }: DestinationFilterProps) => {
 
   // 바텀시트 활성화 상태 관리
@@ -126,9 +132,14 @@ const DestinationFilter = ({
           <Label>
             <IconImg src={calender_icon}/>
             <div>
-              <BottomSheetBtn onClick={ toggleDateBottom }>{departureDay}</BottomSheetBtn>
+              <BottomSheetBtn onClick={ toggleDateBottom }>{selectedDate.getDate()}</BottomSheetBtn>
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
-                <Calendar/>
+                <Calendar
+                  selectedDate={selectedDate}
+                  selectedMonth={selectedMonth}
+                  selectedYear={selectedYear}
+                  setSelectedDate={setSelectedDate}
+                />
               </Bottomsheet>
             </div>
           </Label>

@@ -265,12 +265,15 @@ const samplePopular: PostCardType[] = [
 
 function HomePage() {
   // 필터 값
-  const [departureDay, setDepartureDay] = useState("날짜 선택")
   const [numAdult, setNumAdult] = useState(0)
   const [numChild, setNumChild] = useState(0);
   const [transport, setTransport] = useState("이동 수단");
   const [timeAway, setTimeAway] = useState("시간대")
   const [departureLocation, setDepartureLocation] = useState("출발지 선택");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const selectedMonth = selectedDate.getMonth() + 1; // 선택된 월
+  const selectedYear = selectedDate.getFullYear();   // 선택된 연도
+
 
   // 다가오는 여행 상태 관리
   const [cardList, setCardList] = useState(samplePlan);
@@ -287,19 +290,22 @@ function HomePage() {
 
           <SelectorContainer>
             <DestinationFilter
-              departureDay={departureDay}
               numAdult={numAdult}
               numChild={numChild}
               transport={transport}
               timeAway={timeAway}
               departureLocation={departureLocation}
 
-              setDeparture={setDepartureDay}
               setNumAdult={setNumAdult}
               setNumChild={setNumChild}
               setTransport={setTransport}
               setTimeAway={setTimeAway}
               setDepartureLocation={setDepartureLocation}
+
+              selectedDate={selectedDate}
+              selectedMonth={selectedMonth}
+              selectedYear={selectedYear}
+              setSelectedDate={setSelectedDate}
             />
           </SelectorContainer>
             <RandomBtnContainer>
