@@ -110,11 +110,20 @@ export const QuestionItem = styled.div`
     }
   }
 
+  &.first-item {
+    .qId {
+      margin-left: 0.5px;
+    }
+    .title {
+      margin-left: 17.5px;
+    }
+  }
+
   &.last-item {
     border-bottom: none;
 
     .title {
-      margin-left: 10.5px;
+      margin-left: 10px;
     }
   }
 `;

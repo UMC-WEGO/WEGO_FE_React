@@ -1,4 +1,4 @@
-import * as S from './MyQAPage.style';
+import * as S from './MyQnAPage.style';
 import { useNavigate, useParams } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import { allQnA } from '../../../mocks/feat5/QnAData';
