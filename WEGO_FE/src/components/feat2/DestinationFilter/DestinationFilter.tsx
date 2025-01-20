@@ -64,9 +64,10 @@ type Option = {
 };
 
 const Item_time: Option[] = [
-  { label: "1시간 미만", icon: clock_icon },
-  { label: "2시간 미만", icon: clock_icon },
-  { label: "3시간 미만", icon: clock_icon }
+  { label: "1시간 이내", icon: clock_icon },
+  { label: "1시간 ~ 2시간", icon: clock_icon },
+  { label: "2시간 ~ 3시간", icon: clock_icon },
+  { label: "3시간 이후", icon: clock_icon }
 ];
 
 const Item_transport: Option[] = [
