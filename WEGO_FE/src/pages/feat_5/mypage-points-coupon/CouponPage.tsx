@@ -72,7 +72,7 @@ function CouponPage() {
 
         <S.PointContent>
           <h1>네이버페이</h1>
-          <h2>네이버페이 포인트 {price.toLocaleString()}원</h2>{' '}
+          <h2>네이버페이 포인트 {Number(pointId).toLocaleString()}원</h2>{' '}
           <h3>{price.toLocaleString()}P</h3>
         </S.PointContent>
 
