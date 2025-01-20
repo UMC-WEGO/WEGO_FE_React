@@ -8,7 +8,7 @@ function MyPointsCompletePage() {
     <S.Container>
       <S.Content>
         <S.Header>
-          <button className="x-btn" onClick={() => navigate(-1)}>
+          <button className="x-btn" onClick={() => navigate(-2)}>
             <img src={X} alt="x" className="x-img" />
           </button>
         </S.Header>
