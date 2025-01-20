@@ -36,17 +36,11 @@ const SearchedCard = styled.div`
 
 `
 
-const location = [
-  { name: "최근출발", elements: []},
-  { name: "수도권", elements: ["서울 강북", "서울 강남", "의정부시", "고양시", "용인시", "하남시", "성남시", "남양주시"] },
-  { name: "강원도", elements: ["강릉시", "속초시", "춘천시", "정선군", "양양군", "평창군"] },
-  { name: "전라도", elements: ["전주시", "군산시", "남원시", "부안군", "여수시", "순천시", "담양군", "목포시"] },
-  { name: "경상도", elements: ["경주시", "포항시", "안동시", "문경시", "창원시", "통영시", "거제시", "김해시"] },
-  { name: "충청도", elements: ["단양군", "청주시", "충주시", "제천시", "천안시", "보령시", "공주시", "아산시"] },
-  { name: "제주도", elements: ["제주시"] },
-]
+interface DestinationProps {
+  location: { name: string; elements: string[] }[];
+}
 
-const SearchDeparture = () => {
+const SearchDeparture = ({ location }: DestinationProps) => {
   const [inputTerm, setInputTerm] = useState("");
   const filterdLocation = location.map((category) => ({
     ...category,

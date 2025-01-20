@@ -44,16 +44,16 @@ const DropdownListItem = styled.li`
   }
 `
 
-type Option = {
-  label: string;
-  icon: string;
-};
+// type Option = {
+//   label: string;
+//   icon: string;
+// };
 
 interface DropdownProps {
   value?: string; 
   setValue?: any;
   iconStream?: string; 
-  option: Option[];
+  option: {label: string; icon: string;}[];
   setTransport?: any;
 }
 
