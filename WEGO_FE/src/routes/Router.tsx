@@ -29,6 +29,7 @@ import {
   SignupCompletePage,
   ErrorPage,
   RegionSelectPage,
+  ScheduleMissionsVerificaionStatusPage,
 } from '../pages/index';
 
 const Router = [
@@ -58,7 +59,7 @@ const Router = [
       { path: '/schedule', element: <HomeScedulePage /> },
       {
         path: '/schedule/:scheduleId/missions/status',
-        element: <EndSchedulePage />,
+        element: <ScheduleMissionsVerificaionStatusPage />,
       },
       {
         path: '/schedule/not-started/:scheduleId', //피그마 여행전
