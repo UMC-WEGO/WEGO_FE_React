@@ -1,16 +1,32 @@
 import styled from "styled-components";
 import { useState } from "react";
 
+const StyedCalendar = styled.div`
+  margin: 20px;
+`
+
 const WeekBox = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 5px;
+
   text-align: center;
-  font-weight: bold;
+  font-size: 12px;
+  font-weight: 500;
+
+  margin: 11px 0 11px 0;
+  padding: 8px 12px 8px 12px;
 `
 
 const MonthDisplay = styled.div`
+  display: flex;
+  justify-content: space-between;
 
+  border-bottom: 1px solid rgba(234, 234, 234, 1);
+  padding: 16px 12px 16px 12px;
+
+  font-size: 20px;
+  font-weight: 600;
 `
 
 const CalendarBox = styled.div`
@@ -18,6 +34,8 @@ const CalendarBox = styled.div`
   grid-template-row: repeat(6, 1fr);      // 6주
   grid-template-columns: repeat(7, 1fr);  // 7일
   gap: 5px;
+
+  padding: 4px 12px 4px 12px;
 `
 
 const DayBtn = styled.button`
@@ -67,7 +85,7 @@ const CalendarHead = ({year, month, onPrevMonth, onNextMonth}: HeadProps) => {
     <>
       <MonthDisplay>
         <button onClick={onPrevMonth}>{"<-"}</button>
-        <span>{year}.{String(month).padStart(2, "0")}</span>
+        <div>{year}.{String(month).padStart(2, "0")}</div>
         <button onClick={onNextMonth}>{"->"}</button>
       </MonthDisplay>
     </>
@@ -98,7 +116,6 @@ const CalendarBody = ({ nowMonthCalendar, selectedDate, onChangeDay }: BodyProps
         )}
       </CalendarBox>    
     </>
-
   )
 }
 
@@ -130,7 +147,7 @@ const Calendar = ({ departureDate, setDepartureDate, departureMonth, departureYe
   }
 
   return (
-    <>
+    <StyedCalendar>
       <CalendarHead
         year={departureYear}
         month={departureMonth}
@@ -142,7 +159,7 @@ const Calendar = ({ departureDate, setDepartureDate, departureMonth, departureYe
         selectedDate={departureDate}
         onChangeDay={setDepartureDate}
       />
-    </>
+    </StyedCalendar>
   )
 }
 
