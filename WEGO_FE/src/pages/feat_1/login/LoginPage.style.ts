@@ -101,7 +101,7 @@ const PasswordOpenToggleButton = styled.button`
   position: absolute;
   background-color: transparent;
   right: 15px;
-  bottom: 13px;
+  bottom: 16px;
   /* top: 10px; */
 `;
 const SubButtonsBox = styled.div<StyledProps>`
@@ -122,6 +122,7 @@ const SubButtonsBox = styled.div<StyledProps>`
 const OAuth2TopBox = styled.div`
   width: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 15px;
 `;

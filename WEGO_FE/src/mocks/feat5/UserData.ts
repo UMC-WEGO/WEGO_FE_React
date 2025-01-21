@@ -4,8 +4,8 @@ import profile_circle from '../../images/feat5/profile_circle.svg';
 export const users = [
   {
     userId: ':userId',
-    username: 'tndbskrd',
-    useremail: 'yunsookang0326@naver.com',
+    username: '감자칩칩',
+    useremail: 'gamza1234@naver.com',
     profilePic: profile_circle,
     points: '1,400',
     trips: 3,
@@ -37,9 +37,19 @@ export const users = [
     username: '담곰이',
     useremail: 'pizzaaa@naver.com',
     profilePic: profile_circle,
-    points: '7.000',
+    points: '7,000',
     trips: 12,
     missionsCompleted: 24,
     tempValue: 90,
+  },
+  {
+    userId: '4',
+    username: 'wego',
+    useremail: 'zxcvbvc@naver.com',
+    profilePic: profile_circle,
+    points: '5,500',
+    trips: 5,
+    missionsCompleted: 15,
+    tempValue: 50,
   },
 ];

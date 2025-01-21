@@ -26,3 +26,12 @@ export { default as AlertsPage } from './feat_4/alert/AlertsPage';
 // 총 21 + 1개 페이지 라우팅 ( 25.01.14 페이지 추가 => 지역 선택 페이지 )
 // 총 22 + 1개 페이지 라우팅 ( 25.01.15 페이지 추가 => 게시글 알림 페이지 )
 export { default as ScheduleMissionsVerificaionStatusPage } from './feat_1/schedule-missions-verification-status/ScheduleMissionsVerificaionStatusPage';
+
+// 총 28 + 1개 페이지 라우팅 ( 25.01.18 페이지 추가 => 마이페이지 세부 사항 페이지 )
+export { default as MyPointsPage } from './feat_5/mypage-points/MyPointsPage';
+export { default as CouponPage } from './feat_5/mypage-points-coupon/CouponPage';
+export { default as MyPointsCompletePage } from './feat_5/mypage-points-complete/MyPointsCompletePage';
+export { default as MyQuestionPage } from './feat_5/mypage-questions/MyQuestionPage';
+export { default as MyQAPage } from './feat_5/mypage-qna/MyQnAPage';
+export { default as MyTermsPage } from './feat_5/mypage-terms/MyTermsPage';
+export { default as MyPrivacyPage } from './feat_5/mypage-privacy/MyPrivacyPage';

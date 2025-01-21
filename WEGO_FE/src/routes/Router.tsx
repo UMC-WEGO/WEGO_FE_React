@@ -1,4 +1,5 @@
 import AppLayout from '../layout/AppLayout';
+import HomeScedulePage from '../pages/feat_3/schedule-home/HomeScedulePage';
 import {
   BoardPage,
   BoardAuthorProfilePage,
@@ -13,6 +14,13 @@ import {
   MyPostsPage,
   MyProfileModifyPage,
   MySchedulesPage,
+  MyPointsPage,
+  CouponPage,
+  MyPointsCompletePage,
+  MyQuestionPage,
+  MyQAPage,
+  MyTermsPage,
+  MyPrivacyPage,
   CurrentSchedulePage,
   EndSchedulePage,
   NotStartedSchedulePage,
@@ -22,6 +30,7 @@ import {
   ErrorPage,
   RegionSelectPage,
   AlertsPage,
+  ScheduleMissionsVerificaionStatusPage,
 } from '../pages/index';
 
 const Router = [
@@ -48,13 +57,13 @@ const Router = [
       { path: '/home/travel-select', element: <TravelSelectPage /> },
 
       // 일정 페이지 라우팅
-      { path: '/schedule', element: <EndSchedulePage /> },
+      { path: '/schedule', element: <HomeScedulePage /> },
       {
         path: '/schedule/:scheduleId/missions/status',
-        element: <EndSchedulePage />,
+        element: <ScheduleMissionsVerificaionStatusPage />,
       },
       {
-        path: '/schedule/not-started/:scheduleId',
+        path: '/schedule/not-started/:scheduleId', //피그마 여행전
         element: <NotStartedSchedulePage />,
       },
       {
@@ -89,6 +98,16 @@ const Router = [
       { path: '/mypage/:userId/schedules', element: <MySchedulesPage /> },
       { path: '/mypage/:userId/posts', element: <MyPostsPage /> },
       { path: '/mypage/:userId/missions', element: <MyMissionsPage /> },
+      { path: '/mypage/:userId/question', element: <MyQuestionPage /> },
+      { path: '/mypage/:userId/question/:qId', element: <MyQAPage /> },
+      { path: '/mypage/:userId/points', element: <MyPointsPage /> },
+      { path: '/mypage/:userId/points/:pointId', element: <CouponPage /> },
+      {
+        path: '/mypage/:userId/points/:pointId/complete',
+        element: <MyPointsCompletePage />,
+      },
+      { path: '/mypage/:userId/terms', element: <MyTermsPage /> },
+      { path: '/mypage/:userId/privacy', element: <MyPrivacyPage /> },
     ],
     errorElement: <ErrorPage />,
   },

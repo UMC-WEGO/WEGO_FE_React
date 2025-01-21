@@ -1,7 +1,8 @@
 import React from 'react';
-
+import TravelScheduleBox from '../../../components/feat3/travelScheduleBox/TravelScheduleBox';
+// 일정 여행 보여주는 시작 화면
 function EndSchedulePage() {
-  return <div>지난 일정 상세 페이지입니다</div>;
+  return <div>여행완료 상세페이지</div>;
 }
 
 export default EndSchedulePage;

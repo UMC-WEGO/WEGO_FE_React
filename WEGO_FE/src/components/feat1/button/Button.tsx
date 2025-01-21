@@ -12,6 +12,7 @@ interface TButtonProps {
   color: string;
   type?: 'button' | 'submit' | 'reset'; // 'button', 'submit', 'reset' 만 허용
   disabled?: boolean;
+  onClickHandler?: () => void;
 }
 
 interface TStyledProps {
@@ -35,6 +36,7 @@ function Button({
   color,
   type = 'submit',
   disabled = true,
+  onClickHandler = () => {},
 }: TButtonProps) {
   return (
     <MyButton
@@ -43,6 +45,7 @@ function Button({
       color={color}
       type={type}
       disabled={disabled}
+      onClick={() => onClickHandler()}
     >
       {content}
     </MyButton>
