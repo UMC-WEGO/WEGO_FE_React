@@ -2664,7 +2664,7 @@ vite@^6.0.5:
     redux "^5.0.1"
     styled-components "^6.1.14"
     styled-normalize "^8.1.1"
-    wego-fe "file:../../../../Library/Caches/Yarn/v6/npm-wego-fe-0.0.0-765ff721-f4c5-408f-bc70-27d45f0f1042-1737119492152/node_modules/wego-fe"
+    wego-fe "file:../../../../AppData/Local/Yarn/Cache/v6/npm-wego-fe-0.0.0-ec9b9fb0-33b7-4d2c-aa96-a9c67ce0c10e-1737118404127/node_modules/wego-fe"
     yup "^1.6.1"
     zustand "^5.0.2"
 

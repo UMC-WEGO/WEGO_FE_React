@@ -1,6 +1,6 @@
 import * as S from './PopularBoard.style';
-import PostList from './PostList';
-import { allPosts } from '../../mocks/board/postData';
+import PostList from '../PostList';
+import { allPosts } from '../../../mocks/board/postData';
 
 function PopularBoard() {
   return (

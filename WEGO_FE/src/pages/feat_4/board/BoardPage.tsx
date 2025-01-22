@@ -3,8 +3,8 @@ import { CgProfile, CgMathPlus } from 'react-icons/cg';
 import { PiBellBold } from 'react-icons/pi';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-import FreeBoard from '../../../components/feat4/FreeBoard';
-import PopularBoard from '../../../components/feat4/PopularBoard';
+import FreeBoard from '../../../components/feat4/FreeBoard/FreeBoard';
+import PopularBoard from '../../../components/feat4/PopularBoard/PopularBoard';
 import logoImg from '../../../images/feat1/logo.svg';
 
 function BoardPage() {
@@ -20,6 +20,10 @@ function BoardPage() {
     navigate(`/board/author/profile/${tempAuthorId}`);
   };
 
+  const handleAlertButtonClick = () => {
+    navigate(`/board/alert`);
+  };
+
   return (
     <S.Container>
       <S.Header>
@@ -28,7 +32,7 @@ function BoardPage() {
           <span onClick={handleProfileButtonClick}>
             <CgProfile />
           </span>
-          <span>
+          <span onClick={handleAlertButtonClick}>
             <PiBellBold />
           </span>
         </div>

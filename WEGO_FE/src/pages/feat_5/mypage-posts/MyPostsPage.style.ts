@@ -4,10 +4,9 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 2px;
 `;
 
 export const Header = styled.header`
@@ -18,7 +17,7 @@ export const Header = styled.header`
   height: 20px;
   margin-bottom: 5px;
   position: relative;
-  border-bottom: 1px solid #ddd;
+
   h1 {
     font-size: 20px;
     font-weight: 600;
@@ -42,7 +41,7 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: 10px;
+    left: 1px;
   }
 
   .arrow-img {
@@ -55,24 +54,8 @@ export const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden; /* 기본 스크롤 숨기기 */
 
-  /* 스크롤을 할 수 있는 컨테이너 */
-  &::-webkit-scrollbar {
-    width: 8px; /* 스크롤바의 너비 */
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent; /* 스크롤바 트랙 배경색 */
-  }
-
-  /* 기본 스크롤바 숨기기 */
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  /* 스크롤 활성화 */
-  overflow-y: scroll; /* 세로 스크롤 활성화 */
+  overflow-y: scroll;
 `;
 
 export const PostWrapper = styled.div`

@@ -8,6 +8,7 @@ const BackArrowLayout = styled.div`
   left: 10px;
 `;
 
+// props 추가해서 위치 조정가능하게,  12px 10px을 디폴트로 두기 
 function BackArrow() {
   return (
     <BackArrowLayout>

@@ -14,6 +14,13 @@ import {
   MyPostsPage,
   MyProfileModifyPage,
   MySchedulesPage,
+  MyPointsPage,
+  CouponPage,
+  MyPointsCompletePage,
+  MyQuestionPage,
+  MyQAPage,
+  MyTermsPage,
+  MyPrivacyPage,
   CurrentSchedulePage,
   EndSchedulePage,
   NotStartedSchedulePage,
@@ -22,6 +29,8 @@ import {
   SignupCompletePage,
   ErrorPage,
   RegionSelectPage,
+  AlertsPage,
+  ScheduleMissionsVerificaionStatusPage,
 } from '../pages/index';
 
 const Router = [
@@ -51,7 +60,7 @@ const Router = [
       { path: '/schedule', element: <HomeScedulePage /> },
       {
         path: '/schedule/:scheduleId/missions/status',
-        element: <EndSchedulePage />,
+        element: <ScheduleMissionsVerificaionStatusPage />,
       },
       {
         path: '/schedule/not-started/:scheduleId', //피그마 여행전
@@ -75,6 +84,10 @@ const Router = [
         path: '/board/region-select',
         element: <RegionSelectPage />,
       },
+      {
+        path: '/board/alert',
+        element: <AlertsPage />,
+      },
 
       // 마이페이지 관련 라우팅
       { path: '/mypage/:userId', element: <MyPage /> },
@@ -85,6 +98,16 @@ const Router = [
       { path: '/mypage/:userId/schedules', element: <MySchedulesPage /> },
       { path: '/mypage/:userId/posts', element: <MyPostsPage /> },
       { path: '/mypage/:userId/missions', element: <MyMissionsPage /> },
+      { path: '/mypage/:userId/question', element: <MyQuestionPage /> },
+      { path: '/mypage/:userId/question/:qId', element: <MyQAPage /> },
+      { path: '/mypage/:userId/points', element: <MyPointsPage /> },
+      { path: '/mypage/:userId/points/:pointId', element: <CouponPage /> },
+      {
+        path: '/mypage/:userId/points/:pointId/complete',
+        element: <MyPointsCompletePage />,
+      },
+      { path: '/mypage/:userId/terms', element: <MyTermsPage /> },
+      { path: '/mypage/:userId/privacy', element: <MyPrivacyPage /> },
     ],
     errorElement: <ErrorPage />,
   },
