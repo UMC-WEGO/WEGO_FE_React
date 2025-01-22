@@ -7,9 +7,14 @@ const SignUpSchema = yup.object().shape({
     .required('이메일을 반드시 입력해주세요.'),
   password: yup
     .string()
-    .min(8, '비밀번호는 8자 이상이어야 합니다.')
-    // .max(16, '비밀번호는 16자 이하여야 합니다.')
-    .required('비밀번호를 반드시 입력해주세요.'),
+    .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+    .max(20, '비밀번호는 최대 20자까지 가능합니다.')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      '비밀번호에는 특수문자가 포함되어야 합니다.',
+    )
+    .matches(/\d/, '비밀번호에는 숫자가 포함되어야 합니다.')
+    .required('비밀번호는 필수 입력 항목입니다.'),
   passwordCheck: yup
     .string()
     .oneOf([yup.ref('password')], '비밀번호가 다릅니다.')
@@ -29,9 +34,14 @@ const SignUpSchema = yup.object().shape({
 const PasswordSchema = yup.object().shape({
   password: yup
     .string()
-    .min(8, '비밀번호는 8자 이상이어야 합니다.')
-    // .max(16, '비밀번호는 16자 이하여야 합니다.')
-    .required('비밀번호를 반드시 입력해주세요.'),
+    .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+    .max(20, '비밀번호는 최대 20자까지 가능합니다.')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      '비밀번호에는 특수문자가 포함되어야 합니다.',
+    )
+    .matches(/\d/, '비밀번호에는 숫자가 포함되어야 합니다.')
+    .required('비밀번호는 필수 입력 항목입니다.'),
   passwordCheck: yup
     .string()
     .oneOf([yup.ref('password')], '비밀번호가 다릅니다.')
@@ -52,9 +62,14 @@ const LoginSchema = yup.object().shape({
     .required('이메일을 반드시 입력해주세요.'),
   password: yup
     .string()
-    .min(8, '비밀번호는 8자 이상이어야 합니다.')
-    // .max(16, '비밀번호는 16자 이하여야 합니다.')
-    .required(),
+    .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')
+    .max(20, '비밀번호는 최대 20자까지 가능합니다.')
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      '비밀번호에는 특수문자가 포함되어야 합니다.',
+    )
+    .matches(/\d/, '비밀번호에는 숫자가 포함되어야 합니다.')
+    .required('비밀번호는 필수 입력 항목입니다.'),
 });
 
 export { SignUpSchema, LoginSchema, EmailSchema, PasswordSchema };
