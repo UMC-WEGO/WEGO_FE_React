@@ -78,8 +78,19 @@ const VerifyButton = styled.button`
   width: 100px;
   height: 40px;
 
-  background: #0059ff;
+  background: var(${props => props.$color});
   border-radius: 40px;
+`;
+const SignUpErrorText = styled.p`
+  font-family: 'Pretendard-500';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 11px;
+  /* identical to box height, or 100% */
+  letter-spacing: -0.32px;
+
+  color: #dc0000;
 `;
 
 export {
@@ -91,4 +102,5 @@ export {
   PasswordInputsBox,
   PasswordInputWrapper,
   VerifyButton,
+  SignUpErrorText,
 };
