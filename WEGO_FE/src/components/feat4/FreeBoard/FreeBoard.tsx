@@ -1,7 +1,7 @@
 import * as S from './FreeBoard.style';
 import { useState } from 'react';
-import PostList from './PostList';
-import { allPosts } from '../../mocks/board/postData';
+import PostList from '../PostList';
+import { allPosts } from '../../../mocks/board/postData';
 
 function FreeBoard() {
   const categories: string[] = [

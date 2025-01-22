@@ -4,24 +4,21 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  margin-bottom: 90px;
-  border-bottom: 1px solid #ddd;
   flex-direction: column;
+  margin-left: 0px;
+  margin-right: 0px;
 `;
 
 export const Header = styled.header`
   display: flex;
   align-items: center;
-  height: 20px;
+  justify-content: center;
   width: 100%;
-  justify-content: space-between;
+  height: 20px;
+  margin-bottom: 20px;
   position: relative;
 
   h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    letter-spacing: -0.32px;
     font-size: 20px;
     font-weight: 600;
     line-height: 20px;
@@ -29,128 +26,133 @@ export const Header = styled.header`
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
+    margin: 0px;
   }
 
-  .group-img {
-    display: flex;
-    cursor: pointer;
+  .arrow-btn {
     position: absolute;
-    right: 20px;
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+    background: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    height: 20px;
   }
 
-  .alarm-img {
-    display: flex;
-    cursor: pointer;
-    position: absolute;
-    right: 32px;
-    width: 6px;
-    height: 6px;
-    top: 0px;
+  .arrow-btn {
+    left: 20px;
+  }
+
+  .arrow-img {
+    width: 20px;
+    height: 20px;
   }
 `;
 
-export const ProfileContainer = styled.div`
+export const Content = styled.div`
   display: flex;
-  height: 143px;
-  align-items: center;
+  flex-direction: column;
   position: relative;
-  margin-top: 38px;
-  padding-left: 15px;
-  padding-right: 20px;
+  overflow-y: scroll;
+
+  div {
+    margin-bottom: 20px;
+  }
 `;
 
-export const ProfileMenu = styled.div`
+export const PayContent = styled.div`
   display: flex;
-  height: 36px;
   justify-content: center;
   align-items: center;
-  top: 267px;
-  gap: 12px;
-  padding-left: 20px;
-  padding-right: 20px;
+  flex-direction: column;
+  position: relative;
+  background: #f6f6f6;
 
-  button {
-    width: 167px;
-    height: 36px;
-    border-radius: 6px 6px 6px 6px;
-    border: 1px solid #a5a5a5;
-    gap: 10px;
+  img {
+    width: 100%;
+    height: 300px;
+  }
+`;
+
+export const PointContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: 6px;
+  margin-top: 0px;
+
+  h1 {
     font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #a5a5a5;
+    margin-bottom: 13px;
+  }
+
+  h2 {
+    font-size: 20px;
     font-weight: 500;
     line-height: 20px;
     letter-spacing: -0.3199999928474426px;
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    background-color: white;
-    cursor: pointer;
+    color: #262626;
+    margin-bottom: 24px;
   }
-`;
 
-export const TempContainer = styled.div`
-  display: flex;
-  height: 80px;
-  padding-left: 20px;
-  padding-right: 20px;
-`;
-
-export const MenuList = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 19px;
-  margin-top: 45px;
-  padding-left: 32px;
-
-  button {
-    display: flex;
-    align-items: center;
-    gap: 13px;
-    font-size: 15px;
-    border: none;
-    background: none;
-    color: inherit;
-    cursor: pointer;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 14px;
+  h3 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 32px;
     letter-spacing: -0.3199999928474426px;
-    text-align: left;
+    text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-
-    img {
-      width: 19.46px;
-      height: 19.87px;
-      top: 0.07px;
-      left: 0.27px;
-      gap: 0px;
-    }
+    color: #000000;
   }
 `;
 
-export const LogoutButton = styled.div`
-  border: none;
-  padding-left: 32px;
-  margin-top: 80px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: -0.3199999928474426px;
-  text-align: left;
-  text-decoration-line: underline;
-  text-decoration-style: solid;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: auto;
-  color: #a5a5a5;
+export const WarningContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-left: 21px;
+  margin-right: 21px;
+  padding-top: 25px;
+  border-top: 1px solid #eaeaea;
 `;
 
-export const LogoutModal = styled.div`
+export const Purchase = styled.div`
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 30px;
+
+  button {
+    background: #0059ff;
+    width: 388px;
+    height: 50px;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 5px;
+    color: white;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+`;
+
+export const PointModal = styled.div`
   position: fixed;
   width: 420px;
   height: 837px;
@@ -168,7 +170,7 @@ export const LogoutModal = styled.div`
 `;
 
 export const ModalContent = styled.div`
-  width: 270px;
+  width: 273px;
   height: 104.5px;
   margin: 0px;
   gap: 0px;
@@ -206,7 +208,7 @@ export const DButtonContainer = styled.div`
   position: relative;
 
   .cancel-btn,
-  .logout-btn {
+  .confirm-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -235,7 +237,7 @@ export const DButtonContainer = styled.div`
     border-right: 1px solid #ddd;
   }
 
-  .logout-btn {
+  .confirm-btn {
     color: #0a7aff;
   }
 

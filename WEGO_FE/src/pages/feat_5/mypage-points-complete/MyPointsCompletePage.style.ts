@@ -5,8 +5,8 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 59px;
   flex-direction: column;
-  margin-left: 13px;
-  margin-right: 13px;
+  margin-left: 15px;
+  margin-right: 15px;
 `;
 
 export const Header = styled.header`
@@ -15,21 +15,10 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 96px;
   position: relative;
 
-  h1 {
-    font-size: 20px;
-    font-weight: 600;
-    line-height: 20px;
-    letter-spacing: -0.3199999928474426px;
-    text-align: center;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    margin: 0px;
-  }
-
-  .arrow-btn {
+  .x-btn {
     position: absolute;
     background: none;
     cursor: pointer;
@@ -40,13 +29,13 @@ export const Header = styled.header`
     height: 20px;
   }
 
-  .arrow-btn {
-    left: 7px;
+  .x-btn {
+    left: 373px;
   }
 
-  .arrow-img {
-    width: 20px;
-    height: 20px;
+  .x-img {
+    width: 24px;
+    height: 24px;
   }
 `;
 
@@ -60,61 +49,53 @@ export const PointContent = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-left: 6px;
+  margin-left: 27px;
 
   h1 {
-    font-family: Pretendard;
-    font-size: 18px;
+    font-size: 35px;
     font-weight: 600;
-    line-height: 18px;
-    letter-spacing: -0.3199999928474426px;
-    text-align: left;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
-    margin-bottom: 10px;
-  }
-
-  h2 {
-    font-family: Pretendard;
-    font-size: 36px;
-    font-weight: 600;
-    line-height: 36px;
+    line-height: 35px;
     letter-spacing: -0.3199999928474426px;
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #0059ff;
-    margin-bottom: 20px;
+    margin-bottom: 19px;
   }
 
-  h3 {
-    font-family: Pretendard;
-    font-size: 15px;
+  h2 {
+    font-size: 18px;
     font-weight: 500;
-    line-height: 16px;
+    line-height: 18px;
     letter-spacing: -0.3199999928474426px;
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    color: #a5a5a5;
+    color: #262626;
+    margin-bottom: 19px;
   }
 `;
 
-export const PointsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  margin-top: 45px;
+export const GoHome = styled.div`
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 438px;
 
-  .point-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-
-    img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 16.5px;
-    }
+  button {
+    background: #0059ff;
+    width: 388px;
+    height: 50px;
+    padding: 10px;
+    gap: 10px;
+    border-radius: 5px;
+    color: white;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 21px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
   }
 `;

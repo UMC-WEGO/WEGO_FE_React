@@ -45,12 +45,12 @@ function BoardAuthorProfilePage() {
         </div>
       </S.Info>
       <hr />
-      <S.Post>
+      <S.PostBox>
         <p>작성글</p>
-        <div>
+        <S.Post>
           <PostList posts={allPosts} />
-        </div>
-      </S.Post>
+        </S.Post>
+      </S.PostBox>
     </S.Container>
   );
 }
