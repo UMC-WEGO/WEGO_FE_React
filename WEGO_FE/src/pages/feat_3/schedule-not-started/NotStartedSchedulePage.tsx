@@ -3,6 +3,7 @@ import * as S from './NotStartedSchedulePage.style';
 import HeaderTravelScedule from '../../../components/feat3/headerTravelScedule/HeaderTravelScedule';
 import InstanceBoard from '../../../components/feat3/InstanceBoard/InstanceBoard';
 import SavedMission from '../../../components/feat3/saved-mission/SavedMission';
+import RecommendMission from '../../../components/feat3/recommendMission/RecommendMission';
 
 function NotStartedSchedulePage({ title, dday, tags }) {
   return (
@@ -10,6 +11,7 @@ function NotStartedSchedulePage({ title, dday, tags }) {
       <HeaderTravelScedule />
       <InstanceBoard />
       <SavedMission />
+      <RecommendMission />
     </S.Container>
   );
 }

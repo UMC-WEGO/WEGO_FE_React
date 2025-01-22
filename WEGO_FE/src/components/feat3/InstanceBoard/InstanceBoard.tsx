@@ -8,7 +8,7 @@ const InstanceBoard = () => {
   return (
     <S.Container>
       <S.TitleBoxWrap>
-        <S.Ttile>즉흥 게시판</S.Ttile>
+        <S.Title>즉흥 게시판</S.Title>
         <S.MoreInfor>
           더보기
           <img src="/src/images/feat3/RightArrow_gray.svg" alt="" />

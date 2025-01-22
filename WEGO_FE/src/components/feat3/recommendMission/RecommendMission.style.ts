@@ -1,20 +1,21 @@
 import styled from 'styled-components';
-import GlobalStyle from '../../../styles/GlobalStyles';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 131px;
+  height: fit-content;
   padding: 24px 20px;
 `;
 
 const TitleBoxWrap = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   padding: 0px 16px;
+  gap: 10px;
 `;
+
 const Title = styled.p`
   width: fit-content;
   height: fit-content;
@@ -24,11 +25,13 @@ const Title = styled.p`
   line-height: 18px;
   text-align: left;
 `;
+
 const MoreInfor = styled.a`
   display: flex;
   flex-direction: row;
   width: fit-content;
   height: fit-content;
+  font-size: 12px;
   color: #a5a5a5;
   gap: 5px;
 `;
