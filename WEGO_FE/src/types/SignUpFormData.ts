@@ -31,3 +31,12 @@ export type TReturnsOfUseForm<TFieldValues extends FieldValues> = {
   setValue: UseFormSetValue<TFieldValues>; // 특정 필드의 값 설정
   formState: FormState<TFieldValues>; // 폼 상태 정보
 };
+
+// api 리퀘스트 데이터 형태 - zustand로 관리
+export type TSignupApiReqData = {
+  email: string;
+  password: string;
+  nickname: string;
+  marketing_consent: boolean;
+  info_consent: boolean;
+};
