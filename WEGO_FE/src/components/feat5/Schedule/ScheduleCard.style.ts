@@ -235,7 +235,7 @@ export const MContent = styled.div`
   background: #f2f2f7;
 `;
 
-export const TextContainer = styled.div`
+export const MTextContainer = styled.div`
   width: 270px;
   height: 60px;
   padding: 10px 16px;
@@ -251,7 +251,7 @@ export const TextContainer = styled.div`
   }
 `;
 
-export const DButtonContainer = styled.div`
+export const MButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 269.5px;
@@ -267,7 +267,7 @@ export const DButtonContainer = styled.div`
     align-items: center;
     background: #f2f2f7;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 17px;
     font-weight: 500;
@@ -364,5 +364,89 @@ export const CloseButton = styled.button`
   img {
     width: 25px;
     height: 25.24px;
+  }
+`;
+
+export const DContent = styled.div`
+  width: 270px;
+  height: 104.5px;
+  margin: 0px;
+  gap: 0px;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f2f2f7;
+`;
+
+export const DTextContainer = styled.div`
+  width: 270px;
+  height: 60px;
+  padding: 19px 16px;
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.40799999237060547px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+`;
+
+export const DButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 269.5px;
+  height: 45px;
+  border-top: 1px solid #ddd;
+  position: relative;
+
+  .cancel-btn,
+  .confirm-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f2f2f7;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 500;
+    line-height: 22px;
+    letter-spacing: -0.40799999237060547px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    z-index: 2;
+    width: 50%;
+    height: 100%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .cancel-btn {
+    color: black;
+    border-right: 1px solid #ddd;
+  }
+
+  .confirm-btn {
+    color: #0a7aff;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 1px;
+    height: 40px;
+    background-color: #ddd;
+    z-index: 1;
   }
 `;

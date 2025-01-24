@@ -42,7 +42,21 @@ function ScheduleCard({
   const [selectedMissionName, setSelectedMissionName] = useState<string | null>(
     null,
   );
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalVisible(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setIsDeleteModalVisible(false);
+    handleDelete();
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalVisible(false);
+  };
 
   const handleCompleteMission = () => {
     setIsModalVisible(true);
@@ -91,7 +105,7 @@ function ScheduleCard({
       <S.HeaderContainer>
         <S.TitleContainer>
           <S.Title>{schedule.title}</S.Title>
-          <S.DeleteButton onClick={handleDelete}>
+          <S.DeleteButton onClick={handleDeleteClick}>
             <img src={scheduleDeleteBtn} alt="삭제" />
           </S.DeleteButton>
         </S.TitleContainer>
@@ -101,6 +115,24 @@ function ScheduleCard({
           <S.Tag>{schedule.tag}</S.Tag>
         </S.TagContainer>
       </S.HeaderContainer>
+
+      {isDeleteModalVisible && (
+        <S.PointModal>
+          <S.DContent>
+            <S.DTextContainer>
+              <p>여행 일정을 삭제하시겠습니까?</p>
+            </S.DTextContainer>
+            <S.DButtonContainer>
+              <button className="cancel-btn" onClick={handleCancelDelete}>
+                취소
+              </button>
+              <button className="confirm-btn" onClick={handleConfirmDelete}>
+                삭제
+              </button>
+            </S.DButtonContainer>
+          </S.DContent>
+        </S.PointModal>
+      )}
 
       <S.MissionContainer>
         <S.MissionTextContainer>
@@ -147,18 +179,18 @@ function ScheduleCard({
         {isModalVisible && (
           <S.PointModal>
             <S.MContent>
-              <S.TextContainer>
+              <S.MTextContainer>
                 <p>이번 여행의 미션을</p>
                 <p>모두 마치시겠습니까?</p>
-              </S.TextContainer>
-              <S.DButtonContainer>
+              </S.MTextContainer>
+              <S.MButtonContainer>
                 <button className="cancel-btn" onClick={handleCancelCompletion}>
                   취소
                 </button>
                 <button className="confirm-btn" onClick={handleCompletion}>
                   완료
                 </button>
-              </S.DButtonContainer>
+              </S.MButtonContainer>
             </S.MContent>
           </S.PointModal>
         )}
