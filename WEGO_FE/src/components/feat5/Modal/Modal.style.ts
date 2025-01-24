@@ -22,7 +22,7 @@ export const ModalContent = styled.div`
   height: 203px;
   padding: 59px 44px 59px 44px;
   border-radius: 25px;
-  background: #f9f9f9;
+  background: #ffffff;
   font-size: 16px;
   margin-top: 638px;
   box-sizing: border-box;
@@ -42,7 +42,7 @@ export const ButtonContainer = styled.div`
     cursor: pointer;
 
     &.edit-btn {
-      background-color: #f9f9f9;
+      background-color: #ffffff;
       font-size: 16px;
       font-weight: 600;
       line-height: 16px;
@@ -54,7 +54,7 @@ export const ButtonContainer = styled.div`
     }
 
     &.delete-btn {
-      background-color: #f9f9f9;
+      background-color: #ffffff;
       font-size: 16px;
       font-weight: 600;
       line-height: 16px;
@@ -89,6 +89,7 @@ export const ConfirmContent = styled(ModalContent)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background: #f2f2f7;
 `;
 
 export const TextContainer = styled.div`
@@ -119,7 +120,7 @@ export const DButtonContainer = styled.div`
   position: relative;
 
   .cancel-btn {
-    background-color: #f9f9f9;
+    background-color: #f2f2f7;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -138,7 +139,7 @@ export const DButtonContainer = styled.div`
   }
 
   .delete-btn {
-    background-color: #f9f9f9;
+    background-color: #f2f2f7;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -164,7 +165,7 @@ export const DButtonContainer = styled.div`
     transform: translate(-50%, -50%);
     width: 1px;
     height: 40px;
-    background-color: #ddd;
+    background-color: #f2f2f7;
     z-index: 1;
   }
 `;
