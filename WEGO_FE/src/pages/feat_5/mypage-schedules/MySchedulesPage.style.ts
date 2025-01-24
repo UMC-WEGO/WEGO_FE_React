@@ -60,6 +60,8 @@ export const Content = styled.div<ContentProps>`
   position: relative;
   margin-right: ${props => (props.noScroll ? '15px' : '0px')};
   overflow-y: ${props => (props.noScroll ? 'hidden' : 'auto')};
+  padding-bottom: 30px;
+  overflow-anchor: none;
 `;
 
 export const NoScheduleMessage = styled.div`

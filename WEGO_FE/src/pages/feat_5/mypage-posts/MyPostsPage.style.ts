@@ -19,7 +19,7 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   position: relative;
 
   h1 {
@@ -54,13 +54,13 @@ export const Header = styled.header`
   }
 `;
 
-export const Content = styled.div.attrs<ContentProps>(props => ({
-  noScroll: props.noScroll,
-}))<ContentProps>`
+export const Content = styled.div<ContentProps>`
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-y: ${props => (props.noScroll ? 'hidden' : 'auto')};
+  padding-bottom: 30px;
+  overflow-anchor: none;
 `;
 
 export const PostWrapper = styled.div`
