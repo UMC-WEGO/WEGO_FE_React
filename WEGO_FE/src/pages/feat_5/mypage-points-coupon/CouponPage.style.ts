@@ -214,7 +214,7 @@ export const DButtonContainer = styled.div`
     align-items: center;
     background-color: #f2f2f7;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 17px;
     font-weight: 500;
