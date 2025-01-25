@@ -5,6 +5,7 @@ const SignUpSchema = yup.object().shape({
     .string()
     .matches(REGEX.email, '이메일 형식이 올바르지 않습니다.') // 첫 매개변수: 패턴, 두번째 배개변수: 오류문자열
     .required('이메일을 반드시 입력해주세요.'),
+  verificationCode: yup.string().required('이메일 인증 코드를 입력해주세요.'),
   password: yup
     .string()
     .min(8, '비밀번호는 최소 8자 이상이어야 합니다.')

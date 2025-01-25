@@ -10,7 +10,7 @@ import {
 
 export type TSignUpFormData = {
   email: string;
-  verificationCode?: string; // 인증 코드
+  verificationCode: string; // 인증 코드
   password: string;
   passwordCheck: string;
   termsAgree: boolean;
@@ -39,4 +39,17 @@ export type TSignupApiReqData = {
   nickname: string;
   marketing_consent: boolean;
   info_consent: boolean;
+};
+export type TEmailVerifySendApiReqData = {
+  email: string;
+};
+export type TEmailVerifyResponseApiReqData = {
+  email: string;
+  code: string;
+};
+export type TNicknameDupCheckApiReqData = {
+  nickname: string;
+};
+export type TEmailDupCheckApiReqData = {
+  email: string;
 };

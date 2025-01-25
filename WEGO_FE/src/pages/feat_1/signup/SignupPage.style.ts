@@ -10,7 +10,7 @@ const SignUpPageLayout = styled.div`
   align-items: center;
   /* background-color: green; */
 `;
-const ViewContainer = styled.form`
+const ViewContainer = styled.div`
   width: 95%;
   height: 100%;
   /* background-color: bisque; */
