@@ -9,6 +9,7 @@ import {
   TSignUpFormData,
   TReturnsOfUseForm,
 } from '../../../types/SignUpFormData';
+import { emailVerifySendApi } from '../../../apis/feat1/signupApis';
 
 function EmailView({
   returnsOfUseForm,
@@ -23,9 +24,21 @@ function EmailView({
   const { errors } = formState;
 
   const inputValue = watch('email', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const apiReqData = {
+    email: inputValue,
+  };
+
+  // zustand
+  const { setReqData } = useSignUpStore();
+  const updateEmail = (email: string) => {
+    const data = {
+      email: email,
+    };
+    setReqData(data);
+  };
 
   return (
-    <S.MainSection>
+    <S.MainSection onSubmit={e => e.preventDefault()}>
       <S.SignUpTextBox>
         이메일을<br></br>인증해주세요.
       </S.SignUpTextBox>
@@ -47,7 +60,11 @@ function EmailView({
           } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
           disabled={Boolean(errors.email)}
-          onClickHandler={() => navigate('/signup/emailVerification')}
+          onClickHandler={() => {
+            updateEmail(inputValue);
+            emailVerifySendApi(apiReqData);
+            navigate('/signup/emailVerification');
+          }}
         ></Button>
       </SS.SignUpInputsBox>
     </S.MainSection>

@@ -11,6 +11,8 @@ import termItemNonCheckedIcon from '../../../images/feat1/terms_item_nonChecked.
 
 import styled from 'styled-components';
 import { Navigate, useNavigate } from 'react-router';
+import { TReturnsOfUseForm } from '../../../types/SignUpFormData';
+import { useSignUpStore } from '../../../store/signup/useSignUpStore';
 const TermsInputsBox = styled(S.SignUpInputsBox)`
   width: 100%;
   align-items: flex-start;
@@ -110,6 +112,16 @@ function TermsView({
 
   const handleAllAgreeOff = () => {
     setIsAllAgreeButtonChecked(false);
+  };
+
+  // zustand
+  const { setReqData } = useSignUpStore();
+  const updateTerms = (marketing_consent: boolean, info_consent: boolean) => {
+    const data = {
+      marketing_consent: marketing_consent,
+      info_consent: info_consent,
+    };
+    setReqData(data);
   };
 
   useEffect(() => {
@@ -246,6 +258,7 @@ function TermsView({
           disabled={!istNextReady} // 준비가 안되면 사용불가
           onClickHandler={() => {
             // 여기에 register 상태 termsAgree true로 전달
+            updateTerms(isMarketingAgree, isMarketingInfoReceiveAgree);
             navigate('/signup/nickname');
           }}
         ></Button>

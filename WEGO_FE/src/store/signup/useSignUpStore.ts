@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import { TSignupApiReqData } from '../../types/SignUpFormData';
 
+// TSignUpFormData => useForm에서 실제 회원가입 각 스텝별로의 입력값을 관리할 상태 타입
+// TSignupApiReqData => 실제로 회원가입 api에서 쓸 데이터 타입만 정의
 const initVal: TSignupApiReqData = {
   email: '',
   password: '',

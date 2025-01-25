@@ -10,6 +10,8 @@ import {
   TReturnsOfUseForm,
 } from '../../../types/SignUpFormData';
 import { useNavigate } from 'react-router';
+import { useSignUpStore } from '../../../store/signup/useSignUpStore';
+import { signupApi } from '../../../apis/feat1/signupApis';
 
 const NicknameInputWrapper = styled.div`
   position: relative;
@@ -54,6 +56,15 @@ function NickNameView({
   // console.log(register('nickname'));
   const inputValue = watch('nickname', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
 
+  // zustand
+  const { reqData, setReqData } = useSignUpStore();
+  const updateNickname = (nickname: string) => {
+    const data = {
+      nickname: nickname,
+    };
+    setReqData(data);
+  };
+
   return (
     <S.MainSection>
       <S.SignUpTextBox>
@@ -76,7 +87,11 @@ function NickNameView({
           color={!errors.nickname ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
           disabled={Boolean(errors.nickname)}
-          onClickHandler={() => navigate('/signup/complete')}
+          onClickHandler={() => {
+            updateNickname(inputValue);
+            signupApi({ ...reqData, nickname: inputValue });
+            navigate('/signup/complete');
+          }}
         ></Button>
       </S.SignUpInputsBox>
     </S.MainSection>

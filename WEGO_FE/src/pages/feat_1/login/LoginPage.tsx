@@ -34,7 +34,10 @@ function LoginPage() {
           <S.LoginInputsBox>
             <Input placeholder="아이디(이메일)를 입력하세요" />
             <S.InputWrapper>
-              <Input placeholder="비밀번호를 입력하세요" />
+              <Input
+                placeholder="비밀번호를 입력하세요"
+                type={isPasswordOpen ? 'text' : 'password'}
+              />
               <S.PasswordOpenToggleButton
                 type="button"
                 onClick={handleClickPasswordOpenButton}
@@ -47,15 +50,18 @@ function LoginPage() {
               </S.PasswordOpenToggleButton>
             </S.InputWrapper>
             <S.SubButtonsBox>
-              <button type="button" borderOn={true}>
-                비밀번호 찾기
-              </button>
+              <button type="button">비밀번호 찾기</button>
               <button type="button">회원가입</button>
             </S.SubButtonsBox>
             <Button
               type={'submit'}
               color={'--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
               content={LoginButtonText}
+              disabled={false}
+              onClickHandler={() => {
+                // login api
+                console.log(123);
+              }}
             ></Button>
           </S.LoginInputsBox>
         </S.MainSection>
