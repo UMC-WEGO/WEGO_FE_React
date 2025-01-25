@@ -123,7 +123,7 @@ function ScheduleCard({
               : '442px'
             : isInReview // 인증 요청된 미션이 하나도 없는 경우
               ? '150px'
-              : '220px',
+              : '225px',
       }}
     >
       <S.HeaderContainer>
