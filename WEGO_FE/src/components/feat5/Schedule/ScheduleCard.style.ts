@@ -91,10 +91,10 @@ export const MissionTextContainer = styled.div`
 export const PointsContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const CertifiedMissionText = styled.span`
-  margin-right: 191px;
   font-size: 17px;
   font-weight: 600;
   line-height: 17px;
@@ -103,6 +103,7 @@ export const CertifiedMissionText = styled.span`
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: #262626;
+  flex-grow: 1;
 `;
 
 export const NextText = styled.div`
@@ -125,6 +126,7 @@ export const Points = styled.span`
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   color: #0059ff;
+  text-align: right;
 `;
 
 export const MissionSection = styled.div`

@@ -9,6 +9,7 @@ interface Mission {
   name: string;
   imageUrl: string;
   mission_write: string;
+  points: number;
 }
 
 interface Schedule {
@@ -17,7 +18,7 @@ interface Schedule {
   dateRange: string;
   people: number;
   tag: string;
-  points: string;
+  points: number;
   isMissionCompleted: boolean;
   missions?: Mission[];
 }
@@ -32,6 +33,7 @@ function ScheduleCard({
   onDelete: (scheduleId: number) => void;
 }) {
   const navigate = useNavigate();
+  const [isInReview, setIsInReview] = useState(false);
   const [isCompleted, setIsCompleted] = useState<boolean>(
     schedule.isMissionCompleted,
   );
@@ -45,10 +47,18 @@ function ScheduleCard({
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
+  // 여행 포인트 (각 미션의 포인트 합)
+  const totalPoints =
+    schedule.missions?.reduce((total, mission) => total + mission.points, 0) ||
+    0;
+
+  schedule.points = totalPoints;
+
   const handleDeleteClick = () => {
     setIsDeleteModalVisible(true);
   };
 
+  // 여행 삭제 모달
   const handleConfirmDelete = () => {
     setIsDeleteModalVisible(false);
     handleDelete();
@@ -58,27 +68,11 @@ function ScheduleCard({
     setIsDeleteModalVisible(false);
   };
 
-  const handleCompleteMission = () => {
-    setIsModalVisible(true);
+  const handleDelete = () => {
+    onDelete(schedule.id);
   };
 
-  const handleConfirmMission = () => {
-    setIsCompleted(true);
-    onMissionComplete(schedule.id);
-    setIsModalVisible(false);
-    navigate(`/schedule/${schedule.id}/missions/status`);
-  };
-
-  const handleCompletion = () => {
-    setIsCompleted(true);
-    onMissionComplete(schedule.id);
-    setIsModalVisible(false);
-  };
-
-  const handleCancelCompletion = () => {
-    setIsModalVisible(false);
-  };
-
+  // 상세 보기
   const handleImageClick = (
     imageUrl: string,
     missionName: string,
@@ -89,19 +83,49 @@ function ScheduleCard({
     setSelectedMissionName(missionName);
   };
 
+  // 버튼
+  const handleCompleteMission = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleConfirmMission = () => {
+    setIsCompleted(true);
+    onMissionComplete(schedule.id);
+    setIsModalVisible(false);
+    navigate(`/schedule/${schedule.id}/missions/status`); // 한 여행의 미션 인증 페이지로
+  };
+
+  // 여행 완료 모달
+  const handleCompletion = () => {
+    setIsInReview(true);
+    setIsModalVisible(false);
+    onMissionComplete(schedule.id);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const handleCloseModal = () => {
     setSelectedImage(null);
     setSelectedMissionWrite(null);
     setSelectedMissionName(null);
   };
 
-  const handleDelete = () => {
-    onDelete(schedule.id);
-  };
-
   // height
   return (
-    <S.Card style={{ height: isCompleted ? 'auto' : '436px' }}>
+    <S.Card
+      style={{
+        height:
+          schedule.missions && schedule.missions.length > 0
+            ? isCompleted || isInReview
+              ? 'auto'
+              : '442px'
+            : isInReview // 인증 요청된 미션이 하나도 없는 경우
+              ? '150px'
+              : '220px',
+      }}
+    >
       <S.HeaderContainer>
         <S.TitleContainer>
           <S.Title>{schedule.title}</S.Title>
@@ -134,37 +158,55 @@ function ScheduleCard({
         </S.PointModal>
       )}
 
+      {/* 포인트 적립 시, user의 point 값 올라야 함(추후 수정) */}
+      {/* 인증 요청한 미션이 없는 경우, 버튼만 보이게 */}
       <S.MissionContainer>
-        <S.MissionTextContainer>
-          <S.PointsContainer>
-            <S.CertifiedMissionText>인증된 미션</S.CertifiedMissionText>
-            <S.Points>{schedule.points}</S.Points>
-          </S.PointsContainer>
-          <S.NextText>지난 여행에서 수행한 미션들이에요.</S.NextText>
-        </S.MissionTextContainer>
+        {schedule.missions && schedule.missions.length > 0 && (
+          <S.MissionTextContainer>
+            <S.PointsContainer>
+              <S.CertifiedMissionText>
+                {isCompleted
+                  ? '인증된 미션'
+                  : isInReview
+                    ? '인증 요청된 미션'
+                    : '인증 요청된 미션'}
+              </S.CertifiedMissionText>
+              <S.Points>
+                {isCompleted
+                  ? `+${totalPoints} 포인트 적립`
+                  : isInReview
+                    ? '미션 검수 중'
+                    : ''}
+              </S.Points>
+            </S.PointsContainer>
+            <S.NextText>지난 여행에서 수행한 미션들이에요.</S.NextText>
+          </S.MissionTextContainer>
+        )}
 
-        <S.MissionSection>
-          <S.MissionImages>
-            {schedule.missions?.map(mission => (
-              <S.MissionItem
-                key={mission.id}
-                onClick={() =>
-                  handleImageClick(
-                    mission.imageUrl,
-                    mission.name,
-                    mission.mission_write,
-                  )
-                }
-              >
-                <img src={mission.imageUrl} alt={mission.name} />
-                <S.MissionName>{mission.name}</S.MissionName>
-              </S.MissionItem>
-            ))}
-          </S.MissionImages>
-        </S.MissionSection>
+        {schedule.missions && schedule.missions.length > 0 && (
+          <S.MissionSection>
+            <S.MissionImages>
+              {schedule.missions?.map(mission => (
+                <S.MissionItem
+                  key={mission.id}
+                  onClick={() =>
+                    handleImageClick(
+                      mission.imageUrl,
+                      mission.name,
+                      mission.mission_write,
+                    )
+                  }
+                >
+                  <img src={mission.imageUrl} alt={mission.name} />
+                  <S.MissionName>{mission.name}</S.MissionName>
+                </S.MissionItem>
+              ))}
+            </S.MissionImages>
+          </S.MissionSection>
+        )}
 
         <S.ButtonContainer>
-          {!isCompleted && (
+          {!isCompleted && !isInReview && (
             <>
               <S.CompleteButton onClick={handleCompleteMission}>
                 완료
@@ -184,7 +226,7 @@ function ScheduleCard({
                 <p>모두 마치시겠습니까?</p>
               </S.MTextContainer>
               <S.MButtonContainer>
-                <button className="cancel-btn" onClick={handleCancelCompletion}>
+                <button className="cancel-btn" onClick={handleCancel}>
                   취소
                 </button>
                 <button className="confirm-btn" onClick={handleCompletion}>

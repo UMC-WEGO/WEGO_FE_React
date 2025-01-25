@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import * as S from './modal.style';
+import * as S from './Modal.style';
 import { useState } from 'react';
 
 interface ModalProps {
@@ -48,7 +48,6 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <S.ModalOverlay onClick={onCancel}>
       <S.ModalContent onClick={e => e.stopPropagation()}>
-        {/* 메인 모달 */}
         <S.ButtonContainer>
           <button className="edit-btn" onClick={handleEdit}>
             수정
@@ -58,7 +57,6 @@ const Modal: React.FC<ModalProps> = ({
           </button>
         </S.ButtonContainer>
 
-        {/* 삭제 확인 모달 */}
         {isConfirmOpen && (
           <S.ConfirmOverlay onClick={handleDelete}>
             <S.ConfirmContent onClick={e => e.stopPropagation()}>
