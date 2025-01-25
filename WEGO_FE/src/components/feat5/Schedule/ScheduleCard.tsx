@@ -33,10 +33,12 @@ function ScheduleCard({
   onDelete: (scheduleId: number) => void;
 }) {
   const navigate = useNavigate();
-  const [isInReview, setIsInReview] = useState(false);
+
+  const [isInReview, setIsInReview] = useState(false); // isInReview: 백엔드 미션 승인
   const [isCompleted, setIsCompleted] = useState<boolean>(
     schedule.isMissionCompleted,
   );
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedMissionWrite, setSelectedMissionWrite] = useState<
     string | null
@@ -44,6 +46,7 @@ function ScheduleCard({
   const [selectedMissionName, setSelectedMissionName] = useState<string | null>(
     null,
   );
+
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
@@ -51,7 +54,6 @@ function ScheduleCard({
   const totalPoints =
     schedule.missions?.reduce((total, mission) => total + mission.points, 0) ||
     0;
-
   schedule.points = totalPoints;
 
   const handleDeleteClick = () => {
@@ -158,7 +160,7 @@ function ScheduleCard({
         </S.PointModal>
       )}
 
-      {/* 포인트 적립 시, user의 point 값 올라야 함(추후 수정) */}
+      {/* 포인트 적립 시, user의 point 값 올라야 함 */}
       {/* 인증 요청한 미션이 없는 경우, 버튼만 보이게 */}
       <S.MissionContainer>
         {schedule.missions && schedule.missions.length > 0 && (
