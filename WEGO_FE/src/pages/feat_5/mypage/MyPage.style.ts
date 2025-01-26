@@ -177,7 +177,7 @@ export const ModalContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f9f9f9;
+  background: #f2f2f7;
 `;
 
 export const TextContainer = styled.div`
@@ -210,9 +210,9 @@ export const DButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: #f2f2f7;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 17px;
     font-weight: 500;

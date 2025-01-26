@@ -1,6 +1,6 @@
 import * as S from './Profile.style';
 import { useParams } from 'react-router-dom';
-import { users } from '../../mocks/feat5/UserData';
+import { users } from '../../../mocks/feat5/UserData';
 
 function Profile() {
   const { userId } = useParams();

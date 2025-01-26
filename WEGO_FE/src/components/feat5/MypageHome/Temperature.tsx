@@ -1,15 +1,15 @@
-import * as S from './Temp.style.ts';
+import * as S from './Temperature.style.ts';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { users } from '../../mocks/feat5/UserData.ts';
-import grade1 from '../../images/feat5/score1.svg';
-import grade2 from '../../images/feat5/score2.svg';
-import grade3 from '../../images/feat5/score3.svg';
-import grade4 from '../../images/feat5/score4.svg';
-import grade5 from '../../images/feat5/score5.svg';
-import TempInfo from '../../images/feat5/Temp_info.svg';
-import TempBar from '../../images/feat5/Temp_bar.svg';
-import TempDes from '../../images/feat5/Temp_description.svg';
+import { users } from '../../../mocks/feat5/UserData.ts';
+import grade1 from '../../../images/feat5/score1.svg';
+import grade2 from '../../../images/feat5/score2.svg';
+import grade3 from '../../../images/feat5/score3.svg';
+import grade4 from '../../../images/feat5/score4.svg';
+import grade5 from '../../../images/feat5/score5.svg';
+import TempInfo from '../../../images/feat5/Temp_info.svg';
+import TempBar from '../../../images/feat5/Temp_bar.svg';
+import TempDes from '../../../images/feat5/Temp_description.svg';
 
 interface GradeInfo {
   grade: string;

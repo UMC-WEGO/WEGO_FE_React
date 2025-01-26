@@ -1,9 +1,9 @@
-import * as S from './MyQuestionPage.style';
+import * as S from './MyQuestionsPage.style';
 import { useNavigate } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import { allQnA } from '../../../mocks/feat5/QnAData';
 
-function MyQuestionPage() {
+function MyQuestionsPage() {
   const navigate = useNavigate();
 
   const handleQuestionClick = (qId: string) => {
@@ -41,4 +41,4 @@ function MyQuestionPage() {
   );
 }
 
-export default MyQuestionPage;
+export default MyQuestionsPage;
