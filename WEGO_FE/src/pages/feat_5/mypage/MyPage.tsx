@@ -1,24 +1,50 @@
 import * as S from './MyPage.style';
 import Group from '../../../images/feat5/Group.svg';
 import Alarm from '../../../images/feat5/alarm.svg';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Profile from '../../../components/feat5/MypageHome/Profile';
 import ProfileMenu from '../../../components/feat5/MypageHome/ProfileMenu';
 import TempContainer from '../../../components/feat5/MypageHome/Temperature';
 import MenuList from '../../../components/feat5/MypageHome/MenuList';
-import { users } from '../../../mocks/feat5/UserData';
+import { userinfoApis } from '../../../apis/feat5/userinfoApis';
+import { UserInfoData } from '../../../types/feat5/UserInfoData';
 
 function MyPage() {
   const navigate = useNavigate();
-  const { userId } = useParams<{ userId: string }>();
+  const [userData, setUserData] = useState<UserInfoData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const user = users.find(user => user.userId === userId);
+
+  // API
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await userinfoApis();
+        setUserData(response.data);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.log('API Error:', err.message);
+          setError(err.message || 'error');
+        } else {
+          console.log('Unknown Error:', err);
+          setError('error');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  // 로딩, 에러처리
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
 
   const handleNavigate = (path: string) => {
-    if (userId) {
-      navigate(`/mypage/${userId}/${path}`);
-    }
+    navigate(`/mypage/${path}`);
   };
 
   const handleCancel = () => {
@@ -33,15 +59,13 @@ function MyPage() {
     setShowLogoutModal(!showLogoutModal);
   };
 
-  if (!user) {
+  if (!userData) {
     return (
       <S.Container>
         <S.Header>
           <h1>마이페이지</h1>
         </S.Header>
-        <S.ProfileContainer>
-          <Profile></Profile>
-        </S.ProfileContainer>
+        <p>사용자 정보를 찾을 수 없습니다.</p>
       </S.Container>
     );
   }
@@ -55,12 +79,12 @@ function MyPage() {
       </S.Header>
 
       <S.ProfileContainer>
-        <Profile></Profile>
+        <Profile userData={userData} />
       </S.ProfileContainer>
       <ProfileMenu handleNavigate={handleNavigate} />
 
       <S.TempContainer>
-        <TempContainer />
+        <TempContainer temperature={userData.temperature} />{' '}
       </S.TempContainer>
 
       <MenuList handleNavigate={handleNavigate} />
