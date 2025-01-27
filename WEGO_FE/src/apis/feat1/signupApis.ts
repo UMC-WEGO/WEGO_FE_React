@@ -7,6 +7,7 @@ import {
   TSignupApiReqData,
 } from '../../types/SignUpFormData';
 
+
 export const signupApi = async (data: TSignupApiReqData) => {
   try {
     console.log(data);
@@ -37,20 +38,26 @@ export const emailVerifyResponseApi = async (
   }
 };
 
-export const emailDupCheckApi = async (data: TEmailDupCheckApiReqData) => {
+export const emailDupCheckApi = async (
+  data: TEmailDupCheckApiReqData | TNicknameDupCheckApiReqData,
+) => {
   try {
     const apiRes = await defaultInstance.post('/auth/email-check', data);
+    console.log(apiRes, '이메일 중복검사');
+    return apiRes.data;
   } catch (error) {
-    alert('이메일 중복 검사 중 오류가 발생하였습니다. 다시 시도해 주세요');
+    // console.log(error);
+    return error.response.data;
   }
 };
 
 export const nicknameDupCheckApi = async (
-  data: TNicknameDupCheckApiReqData,
+  data: TNicknameDupCheckApiReqData | TEmailDupCheckApiReqData,
 ) => {
   try {
     const apiRes = await defaultInstance.post('/auth/nickname-check', data);
+    return apiRes.data;
   } catch (error) {
-    alert('닉네임 중복 검사 중 오류가 발생하였습니다. 다시 시도해 주세요');
+    return error.response.data;
   }
 };

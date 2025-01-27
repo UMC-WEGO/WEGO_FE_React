@@ -9,7 +9,11 @@ import {
   TSignUpFormData,
   TReturnsOfUseForm,
 } from '../../../types/SignUpFormData';
-import { emailVerifySendApi } from '../../../apis/feat1/signupApis';
+import {
+  emailDupCheckApi,
+  emailVerifySendApi,
+} from '../../../apis/feat1/signupApis';
+import useDupCheck from '../../../hooks/feat1/signup_dupCheck/useDupCheck';
 
 function EmailView({
   returnsOfUseForm,
@@ -37,6 +41,13 @@ function EmailView({
     setReqData(data);
   };
 
+  // email 중복검사 로직 => input에 onchange 핸들러 prop을 정의하고 debouncedCheck를 전달해서 적용
+  const { isAvailable, debouncedDupCheck } = useDupCheck({
+    checkType: 'email',
+    checkData: apiReqData,
+    dupCheckApi: emailDupCheckApi,
+  });
+
   return (
     <S.MainSection onSubmit={e => e.preventDefault()}>
       <S.SignUpTextBox>
@@ -49,17 +60,23 @@ function EmailView({
           register={register}
           signUpInputType="email"
           isError={Boolean(errors.email)}
+          debouncedCheck={debouncedDupCheck}
         />
-        <SS.SignUpErrorText>{errors?.email?.message}</SS.SignUpErrorText>
+        <SS.SignUpErrorText>
+          {errors?.email?.message ||
+            (!isAvailable &&
+              errors?.email &&
+              '해당 이메일 주소는 사용중입니다')}
+        </SS.SignUpErrorText>
         <Button
           type={'submit'}
           color={
-            !errors.email && inputValue.length
+            !errors.email && inputValue.length && isAvailable
               ? '--color-main-blue'
               : '--color-gray-300'
           } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
-          disabled={Boolean(errors.email)}
+          disabled={Boolean(errors.email) && !isAvailable}
           onClickHandler={() => {
             updateEmail(inputValue);
             emailVerifySendApi(apiReqData);
