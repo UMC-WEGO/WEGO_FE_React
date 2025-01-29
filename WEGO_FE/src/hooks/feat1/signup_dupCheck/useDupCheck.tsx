@@ -25,6 +25,7 @@ type TUseDupCheckReturn = {
   dupCheckLogic: (data) => Promise<void>;
   // debouncedDupCheck: (e: React.ChangeEvent<HTMLInputElement>) => void;
   debouncedDupCheck: (data) => void;
+  errorMsg: string;
 };
 
 function useDupCheck({
@@ -33,6 +34,7 @@ function useDupCheck({
   dupCheckApi,
 }: TDupCheckProps): TUseDupCheckReturn {
   const [isAvailable, setIsAvailable] = useState(false); // 중복검사 결과 저장
+  const [errorMsg, setErrorMsg] = useState('');
 
   // api 사용 로직
   const dupCheckLogic = useCallback(
@@ -41,6 +43,7 @@ function useDupCheck({
       console.log(data, apiRes, 'API 호출됨');
       if (apiRes?.code % 100 != 2) {
         setIsAvailable(false);
+        setErrorMsg(apiRes.message);
       }
       setIsAvailable(apiRes.isSuccess);
     },
@@ -62,7 +65,7 @@ function useDupCheck({
     };
   }, [debouncedDupCheck]);
 
-  return { isAvailable, dupCheckLogic, debouncedDupCheck };
+  return { isAvailable, dupCheckLogic, debouncedDupCheck, errorMsg };
 }
 
 export default useDupCheck;

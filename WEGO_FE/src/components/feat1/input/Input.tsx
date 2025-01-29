@@ -18,6 +18,9 @@ type TInputProps<T extends FieldValues> = {
   isError?: boolean;
   type?: string;
   debouncedCheck?: (data) => void;
+  // 추가: value와 onChange를 받도록 설정 (controlled input 지원)
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 interface StyledProps {
@@ -72,6 +75,8 @@ function Input<T extends FieldValues>({
   isError,
   type,
   debouncedCheck, // 리액트 훅 폼에서의 register-onChange는 래퍼함수로 동작하기 때문에 또 정의해도 괜찮음
+  value, // ✅ 추가: 외부에서 전달되는 value
+  onChange, // ✅ 추가: 외부에서 전달되는 onChange
 }: TInputProps<T>) {
   // onChange 병합
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,6 +85,11 @@ function Input<T extends FieldValues>({
     // 디바운스 처리
     if (debouncedCheck) {
       debouncedCheck({ email: e.target.value });
+    }
+
+    // ✅ props에서 받은 onChange가 있으면 사용
+    if (onChange) {
+      onChange(e);
     }
 
     // react-hook-form의 onChange 호출 (병합)
@@ -92,7 +102,7 @@ function Input<T extends FieldValues>({
   // register에서 onChange 제외하고 나머지 속성만 스프레드
   const registerProps =
     register && signUpInputType ? register(signUpInputType) : {};
-  const { onChange, ...restProps } = registerProps; // onChange 제외한 나머지 속성들
+  const { onChange: _, ...restProps } = registerProps; // onChange 제외한 나머지 속성들
 
   return (
     <MyInput
@@ -101,6 +111,7 @@ function Input<T extends FieldValues>({
       $isError={isError}
       placeholder={placeholder}
       onChange={handleChange} // onchange는 커스텀 핸들러 전달
+      value={value} // ✅ value가 존재하면 controlled input으로 사용
       {...restProps} // 나머지 register 속성 전달
       type={type == 'password' ? 'password' : 'text'}
     ></MyInput>

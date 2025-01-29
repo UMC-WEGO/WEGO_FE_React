@@ -1,28 +1,67 @@
-import { defaultInstance } from '../axiosInstance';
+import { authInstance, defaultInstance } from '../axiosInstance';
 import {} from '../../types/SignUpFormData';
+import { useTokenStore } from '../../store/token/useTokenStore';
+import { isTokenExpired } from '../../utils/feat1/authUtils';
 
-import axios from 'axios';
+type TLoginApiReqData = {
+  email: string;
+  password: string;
+};
 
-const login = async (username, password) => {
+type TRefreshApiReqData = {
+  refreshToken: string;
+};
+
+const { data, setData } = useTokenStore.getState();
+
+export const loginApi = async ({ email, password }: TLoginApiReqData) => {
   try {
-    const response = await axios.post('https://api.example.com/login', {
-      username,
+    const apiRes = await defaultInstance.post('/auth/login', {
+      email,
       password,
     });
 
+    console.log(apiRes.headers['authorization']);
+
+    // 응답 데이터에서 리프레쉬 토큰 추출
+    const refreshToken = apiRes.data.result.refreshToken;
+    setData({
+      refreshToken: refreshToken,
+    });
+
     // 응답 헤더에서 토큰 추출
-    const accessToken = response.headers['authorization']; // 예: 헤더 키가 "Authorization"일 경우
+    const accessToken = apiRes.headers['authorization']; // 예: 헤더 키가 "Authorization"일 경우
 
+    // 액세스 토큰 있으면 출력 후 스토어에 저장
     if (accessToken) {
-      // 로컬 스토리지에 저장 (또는 다른 저장소 사용)
-      localStorage.setItem('accessToken', accessToken);
-
       console.log('Access Token:', accessToken);
-      return accessToken;
+      console.log(isTokenExpired(accessToken));
+      setData({ accessToken: accessToken });
     } else {
-      console.error('Access token not found in headers.');
+      console.error('액세스 토큰을 헤더에서 찾을 수 없음');
+      return -1;
     }
   } catch (error) {
-    console.error('Login failed:', error);
+    console.error('로그인 실패:', error);
+    return -1;
+  }
+};
+
+export const tokenRefreshApi = async (data: TRefreshApiReqData) => {
+  try {
+    const apiRes = await authInstance.post('/auth/refresh', data);
+    console.log(apiRes);
+
+    // 응답 헤더에서 토큰 추출
+    const accessToken = apiRes.headers['authorization']; // 예: 헤더 키가 "Authorization"일 경우
+
+    if (accessToken) {
+      console.log('Access Token:', accessToken);
+      setData({ accessToken: accessToken });
+    } else {
+      console.error('액세스 토큰을 헤더에서 찾을 수 없음');
+    }
+  } catch (error) {
+    console.error('회원 탈퇴 실패:', error);
   }
 };

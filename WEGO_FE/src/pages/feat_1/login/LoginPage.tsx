@@ -12,13 +12,30 @@ import { IoMdEyeOff } from 'react-icons/io';
 
 import Input from '../../../components/feat1/input/Input';
 import Button from '../../../components/feat1/button/Button';
+import { loginApi } from '../../../apis/feat1/loginApis';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { isTokenExpired } from '../../../utils/feat1/authUtils';
+
+type TLoginInputs = {
+  email: string;
+  password: string;
+};
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const userId = 1; // 테스트용
+
   const LoginButtonText = '로그인';
   const [isPasswordOpen, setIsPasswordOpen] = useState(false);
+
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+
   const handleClickPasswordOpenButton = () => {
     setIsPasswordOpen(prev => !prev);
   };
+
   const handleClickOAuth2Button = type => {
     // login logic
   };
@@ -29,14 +46,36 @@ function LoginPage() {
         <S.LogoSection>
           <img src={logo} alt="logo" />
         </S.LogoSection>
-        <S.MainSection>
+        <S.MainSection
+          onSubmit={async e => {
+            e.preventDefault();
+            console.log(123);
+
+            const loginResult = await loginApi({
+              email: loginEmail,
+              password: loginPassword,
+            });
+
+            if (loginResult === -1) {
+              alert('아이디 또는 비밀번호가 잘못되었습니다.');
+            } else {
+              navigate('/home');
+            }
+          }}
+        >
           <S.LoginTextBox>로그인해주세요.</S.LoginTextBox>
           <S.LoginInputsBox>
-            <Input placeholder="아이디(이메일)를 입력하세요" />
+            <Input
+              placeholder="아이디(이메일)를 입력하세요"
+              value={loginEmail}
+              onChange={e => setLoginEmail(e.target.value)}
+            />
             <S.InputWrapper>
               <Input
                 placeholder="비밀번호를 입력하세요"
                 type={isPasswordOpen ? 'text' : 'password'}
+                value={loginPassword}
+                onChange={e => setLoginPassword(e.target.value)}
               />
               <S.PasswordOpenToggleButton
                 type="button"
@@ -50,18 +89,25 @@ function LoginPage() {
               </S.PasswordOpenToggleButton>
             </S.InputWrapper>
             <S.SubButtonsBox>
-              <button type="button">비밀번호 찾기</button>
-              <button type="button">회원가입</button>
+              <button
+                type="button"
+                onClick={() => navigate(`/user/${userId}/password/find`)}
+              >
+                비밀번호 찾기
+              </button>
+              <button type="button" onClick={() => navigate('/signup/email')}>
+                회원가입
+              </button>
             </S.SubButtonsBox>
             <Button
               type={'submit'}
-              color={'--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
+              color={
+                loginEmail && loginPassword
+                  ? '--color-main-blue'
+                  : '--color-gray-300'
+              } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
               content={LoginButtonText}
-              disabled={false}
-              onClickHandler={() => {
-                // login api
-                console.log(123);
-              }}
+              disabled={loginEmail && loginPassword ? false : true}
             ></Button>
           </S.LoginInputsBox>
         </S.MainSection>

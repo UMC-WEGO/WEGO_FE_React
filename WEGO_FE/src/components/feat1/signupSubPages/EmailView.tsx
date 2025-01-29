@@ -42,7 +42,7 @@ function EmailView({
   };
 
   // email 중복검사 로직 => input에 onchange 핸들러 prop을 정의하고 debouncedCheck를 전달해서 적용
-  const { isAvailable, debouncedDupCheck } = useDupCheck({
+  const { isAvailable, debouncedDupCheck, errorMsg } = useDupCheck({
     checkType: 'email',
     checkData: apiReqData,
     dupCheckApi: emailDupCheckApi,
@@ -64,9 +64,7 @@ function EmailView({
         />
         <SS.SignUpErrorText>
           {errors?.email?.message ||
-            (!isAvailable &&
-              errors?.email &&
-              '해당 이메일 주소는 사용중입니다')}
+            (!isAvailable && inputValue.length ? errorMsg : '')}
         </SS.SignUpErrorText>
         <Button
           type={'submit'}

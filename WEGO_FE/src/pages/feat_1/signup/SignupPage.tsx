@@ -39,24 +39,6 @@ function SignupPage() {
       defaultValues: initVal, // zustand 상태를 기본값으로 설정
     });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isValid },
-  } = returnsOfUseForm;
-
-  const postSignUp = async data => {
-    // api 로직
-  };
-
-  const onSubmit = data => {
-    console.log('폼 데이터 제출');
-    console.log(data);
-    postSignUp(data);
-  };
-
   return (
     <S.SignUpPageLayout>
       {/* 여기에서 viewContainer는 form 태그로 생성 */}
