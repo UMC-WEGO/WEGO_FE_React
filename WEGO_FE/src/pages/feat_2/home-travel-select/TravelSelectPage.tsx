@@ -31,31 +31,8 @@ import { AxiosRequestConfig, AxiosResponse } from "axios";
 
 function TravelSelectPage() {
   // 홈에서 정보 가져오기기
-  const location = useLocation();
-  const { departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = location.state || {};
-
-  // RIGHT POST SAMPLE
-  // "departure": "서울 강북",
-  // "participants": 1,
-  // "vehicle": "자가용",
-  // "duration": "1",
-  // "startDate": "2024-12-31T15:00:00Z",
-  // "endDate": "2025-01-01T15:00:00Z"
-
-  // POST DATA
-  // departure :  서울 강북
-  // participants :  1
-  // vehicle :  자가용  
-  // duration :  1  
-  // startDate :  2024-12-31T15:00:00.000Z  
-  // endDate :  2025-01-01T15:00:00.000Z
-
-  // export const Item_time = [
-  //   { label: "1시간 이내", icon: clock_icon },
-  //   { label: "1시간 ~ 2시간", icon: clock_icon },
-  //   { label: "2시간 ~ 3시간", icon: clock_icon },
-  //   { label: "3시간 이상", icon: clock_icon }
-  // ];
+  const uselocation = useLocation();
+  const { departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
 
   // 적절하게 값 변환
   const departure: string = departureLocation;
@@ -75,24 +52,15 @@ function TravelSelectPage() {
   const startDate: string = departureDate.toISOString().replace('.000', '');
   const endDate: string = arrivalDate.toISOString().replace('.000', '');;
 
-  console.log(
-    "POST값 확인하기",
-    " / departure : ",departure,
-    " / participants : ", participants,
-    " / vehicle : ", vehicle,
-    " / duration : ", duration,
-    " / startDate : ", startDate,
-    " / endDate : ", endDate,
-  )
-
-  // POST값 확인하기  / 
-  // departure :  서울 강북  / 
-  // participants :  1  / 
-  // vehicle :  자동차  / 
-  // duration :  1  / 
-  // startDate :  Wed Jan 01 2025 00:00:00 GMT+0900 (한국 표준시)  / 
-  // endDate :  Thu Jan 02 2025 00:00:00 GMT+0900 (한국 표준시)
-
+  // console.log(
+  //   "POST값 확인하기",
+  //   " / departure : ",departure,
+  //   " / participants : ", participants,
+  //   " / vehicle : ", vehicle,
+  //   " / duration : ", duration,
+  //   " / startDate : ", startDate,
+  //   " / endDate : ", endDate,
+  // )
 
   // --- --- --- 즉흥 게시물 조회 --- --- ---
   const [instantPost, setInstantPost] = useState([]);
@@ -116,14 +84,6 @@ function TravelSelectPage() {
 
   // --- --- --- 랜덤 여행지 조회 --- --- ---
   const [recommendedDestinations, setRecommendedDestinations] = useState([]);
-  // const [destinationCriterias, setDestinationCriterias] = useState([
-  //   departure,
-  //   participants,
-  //   vehicle,
-  //   duration,
-  //   startDate,
-  //   endDate
-  // ]);
   const [loadingDestination, setLoadingDestination] = useState(true);
   const [errorDestination, setErrorDestination] = useState<string | null>(null);
 
@@ -133,13 +93,6 @@ function TravelSelectPage() {
       try {
         const res = await axios.post('http://13.124.213.122:3000/home',
           {  
-            // departure: "서울 강북",
-            // participants: 1,
-            // vehicle: "자가용",
-            // duration: "1",
-            // startDate: "2025-01-06T12:00:00Z",
-            // endDate: "2025-01-08T12:00:00Z"
-
             departure,
             participants,
             vehicle,
@@ -164,11 +117,58 @@ function TravelSelectPage() {
     postCriterias();
   }, []);
 
+  // --- --- --- 여행 일정 등록 --- --- ---
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [locationData, setLocationData] = useState({location: "", region: "", growthRate: ""});
+  const [fixedTravelResponse, setFixedTravelResponse] = useState([]);
+
+  // 데이터 적절히 변환
+  const { location, region, growthRate } = locationData;
+  // const location = departure;
+
+  // POST TO SERVER
+    const postTravel = async() => {
+      try {
+        const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
+          // "location": "부산",
+          // "participants": 5,
+          // "vehicle": "자가용",
+          // "duration": "1",
+          // "startDate": "2025-01-06T12:00:00Z",
+          // "endDate": "2025-01-08T12:00:00Z"
+
+          // 고양
+          // 1 
+          // 자가용 
+          // 1 
+          // 2025-01-29T16:57:16.274Z 
+          // 2025-01-29T16:57:16.274Z
+
+          location,
+          participants,
+          vehicle,
+          duration,
+          startDate,
+          endDate
+        },{
+          headers: {
+            Authorization: `${TOKEN}`,
+            Accept: `application/json`,
+            'Content-Type': 'application/json',
+          },
+        });
+        setFixedTravelResponse(res.data.result);
+
+        console.log("선택된 여행지 확인", res);
+        console.log(res.data.message);
+      } catch (err) {
+        console.log('Error on Post (travel)!', err);        
+      }
+    };
+    // postTravel();
+
   // 로딩 페이지 상태 관리
   const [loading, setLoading] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [fixedDeparture, setFixedDeparture] = useState("");
-
   // 로딩화면 관리 - 임시로 2초간 보여주고 넘김
   useEffect(() => {
     setTimeout(() => {
@@ -206,7 +206,7 @@ function TravelSelectPage() {
                 key={index}
                 props={destinationData}                // 버튼에 들어갈 데이터
                 isSelected={selectedIndex === index}
-                onClick={() => {setSelectedIndex(index); setFixedDeparture(recommendedDestinations[index])}}
+                onClick={() => {setSelectedIndex(index); setLocationData(recommendedDestinations[index])}}
               />
             ))}
           </S.DestinationContainer>
@@ -226,6 +226,7 @@ function TravelSelectPage() {
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && 
               (0 <= selectedIndex && selectedIndex < 3)}
+              onClick={postTravel}
             >
               여기로 갈래요
             </S.SelectionComplete>

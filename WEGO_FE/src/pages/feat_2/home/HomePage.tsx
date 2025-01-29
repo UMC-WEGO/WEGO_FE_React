@@ -30,7 +30,8 @@ function HomePage() {
   // --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
-  const [erorrTravel, setErrorTravel] = useState<string | null>(null);
+  const [errorTravel, setErrorTravel] = useState<string | null>(null);
+  const [upcomingTravelMessage, setUpcomingTravelMessage] = useState("");
 
   const handleDelete = (flag: number) => {                         // flag: 해당 카드가 표시 될건지 안될건지
     const updatePlanList = upcomingTravelList.filter((_, index) => index !== flag);  // 해당 카드 삭제
@@ -43,10 +44,11 @@ function HomePage() {
         const responseTravel: AxiosResponse<any> = await axios.get(`http://13.124.213.122:3000/home/upcoming-trips`, {
           headers: {
             Authorization: `${TOKEN}`,
-            Accept: `application/josn`
+            Accept: `application/json`
           }
         })
         setUpcomingTravelList(responseTravel.data.result);
+        setUpcomingTravelMessage(responseTravel.data.message);
         setLoadingTravel(false);
       } catch(error) {
         setErrorTravel('Error fetching data');
@@ -55,6 +57,8 @@ function HomePage() {
     }
     getUpcomingTrip();
   }, [])
+
+  console.log(upcomingTravelList, upcomingTravelMessage);
 
   // --- --- --- 인기 게시물 조회 --- --- ---
   const [popularPostList, setPopularPostList] = useState([]);
@@ -168,7 +172,7 @@ function HomePage() {
 
             {/* 개시물 나열 */}
             <S.PopularPostArea>
-              <PostList posts={PopularPostData} showRanking={false}/>
+              <PostList posts={popularPostList} showRanking={false}/>
             </S.PopularPostArea>
           </S.PopularPostContainer>
 
