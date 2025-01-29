@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import { allQnA } from '../../../mocks/feat5/QnAData';
 
-function MyQAPage() {
+function MyQnAPage() {
   const navigate = useNavigate();
   const { qId } = useParams();
 
@@ -29,4 +29,4 @@ function MyQAPage() {
   );
 }
 
-export default MyQAPage;
+export default MyQnAPage;

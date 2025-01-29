@@ -1,4 +1,4 @@
-import * as S from '../../pages/feat_5/mypage/MyPage.style';
+import * as S from '../../../pages/feat_5/mypage/MyPage.style';
 
 interface ProfileProps {
   handleNavigate: (path: string) => void;

@@ -3,10 +3,10 @@ import Group from '../../../images/feat5/Group.svg';
 import Alarm from '../../../images/feat5/alarm.svg';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Profile from '../../../components/feat5/Profile';
-import ProfileMenu from '../../../components/feat5/ProfileMenu';
-import TempContainer from '../../../components/feat5/Temperature';
-import MenuList from '../../../components/feat5/MenuList';
+import Profile from '../../../components/feat5/MypageHome/Profile';
+import ProfileMenu from '../../../components/feat5/MypageHome/ProfileMenu';
+import TempContainer from '../../../components/feat5/MypageHome/Temperature';
+import MenuList from '../../../components/feat5/MypageHome/MenuList';
 import { users } from '../../../mocks/feat5/UserData';
 
 function MyPage() {
