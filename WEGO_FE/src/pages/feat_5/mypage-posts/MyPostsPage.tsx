@@ -52,15 +52,20 @@ function MyPostsPage() {
         </button>
         <h1>내가 쓴 글</h1>
       </S.Header>
-      <S.Content>
-        {userPosts.map(post => (
-          <S.PostWrapper key={post.id}>
-            <PostList posts={[post]} />
-            <S.Button onClick={() => handleOpenModal(Number(post.id))}>
-              <img src={PostButton} alt="Post Button" />
-            </S.Button>
-          </S.PostWrapper>
-        ))}
+
+      <S.Content noScroll={userPosts.length === 0}>
+        {userPosts.length > 0 ? (
+          userPosts.map(post => (
+            <S.PostWrapper key={post.id}>
+              <PostList posts={[post]} />
+              <S.Button onClick={() => handleOpenModal(Number(post.id))}>
+                <img src={PostButton} alt="Post Button" />
+              </S.Button>
+            </S.PostWrapper>
+          ))
+        ) : (
+          <S.NoPostMessage>작성한 글이 없습니다.</S.NoPostMessage>
+        )}
       </S.Content>
 
       {isModalOpen && (

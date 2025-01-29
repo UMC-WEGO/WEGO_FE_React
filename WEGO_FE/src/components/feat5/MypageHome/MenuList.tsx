@@ -1,9 +1,9 @@
-import * as S from '../../pages/feat_5/mypage/MyPage.style';
-import List1 from '../../images/feat5/List1.svg';
-import List2 from '../../images/feat5/List2.svg';
-import List4 from '../../images/feat5/List4.svg';
-import List5 from '../../images/feat5/List5.svg';
-import List6 from '../../images/feat5/List6.svg';
+import * as S from '../../../pages/feat_5/mypage/MyPage.style';
+import List1 from '../../../images/feat5/List1.svg';
+import List2 from '../../../images/feat5/List2.svg';
+import List4 from '../../../images/feat5/List4.svg';
+import List5 from '../../../images/feat5/List5.svg';
+import List6 from '../../../images/feat5/List6.svg';
 
 interface MenuListProps {
   handleNavigate: (path: string) => void;

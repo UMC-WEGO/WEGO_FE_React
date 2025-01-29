@@ -31,11 +31,11 @@ export { default as ScheduleMissionsVerificaionStatusPage } from './feat_1/sched
 export { default as MyPointsPage } from './feat_5/mypage-points/MyPointsPage';
 export { default as CouponPage } from './feat_5/mypage-points-coupon/CouponPage';
 export { default as MyPointsCompletePage } from './feat_5/mypage-points-complete/MyPointsCompletePage';
-export { default as MyQuestionPage } from './feat_5/mypage-questions/MyQuestionPage';
-export { default as MyQAPage } from './feat_5/mypage-qna/MyQnAPage';
+export { default as MyQuestionsPage } from './feat_5/mypage-questions/MyQuestionsPage';
+export { default as MyQnAPage } from './feat_5/mypage-qna/MyQnAPage';
 export { default as MyTermsPage } from './feat_5/mypage-terms/MyTermsPage';
 export { default as MyPrivacyPage } from './feat_5/mypage-privacy/MyPrivacyPage';
 
 // 30 + 1개 페이지 라우팅 ( 25.01.20 페이지 추가 => 비밀번호 찾기 및 변경 페이지  )
-export { default as PasswordFindPage} from '../pages/feat_1/password-find/PasswordFindPage'
-export { default as PasswordChangePage } from '../pages/feat_1/password-change/PasswordChangePage'
+export { default as PasswordFindPage } from '../pages/feat_1/password-find/PasswordFindPage';
+export { default as PasswordChangePage } from '../pages/feat_1/password-change/PasswordChangePage';

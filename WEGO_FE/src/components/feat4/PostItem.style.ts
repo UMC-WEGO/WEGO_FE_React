@@ -5,6 +5,10 @@ export const PostContainer = styled.div`
   align-items: flex-start;
   padding: 16px;
   border-bottom: 1px solid #e0e0e0;
+`;
+
+export const ImageWrapper = styled.div`
+  position: relative;
 
   img {
     width: 95px;
@@ -12,6 +16,23 @@ export const PostContainer = styled.div`
     margin-right: 13px;
     border-radius: 5px;
     object-fit: cover;
+  }
+`;
+
+export const BookmarkIcon = styled.div`
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  padding: 4px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    width: 18px;
+    height: 18px;
   }
 `;
 
@@ -37,7 +58,7 @@ export const Content = styled.div`
     font-size: 12px;
     font-weight: 400;
     color: #696969;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 
     height: 27px;
     overflow: hidden;
@@ -85,6 +106,8 @@ export const PostInfo = styled.div`
 `;
 
 export const Rank = styled.div`
+  position: relative;
+
   display: flex;
   justify-content: center;
   width: 18px;
@@ -93,4 +116,10 @@ export const Rank = styled.div`
   font-weight: bold;
   color: #0059ff;
   padding-right: 10px;
+
+  svg {
+    position: absolute;
+    top: -13px;
+    color: #fddc00;
+  }
 `;
