@@ -2,6 +2,7 @@ import styled, { isStyledComponent } from "styled-components";
 import { useState } from "react";
 import Bottomsheet from "../BottomSheet";
 import SearchDeparture from "./SearchDeparture";
+import search_icn from "../../../images/feat2/alarm_icon.png"
 
 const SearchCard = styled.div`
   display: flex;
@@ -57,7 +58,8 @@ const LocationTitle = styled.div`
 `
 
 const BottomSheetBtn = styled.button`
-  border: 1px solid violet;
+  display: flex;
+  padding-left: 30%;
 
   background-color: white;
   width: 370px;
@@ -80,7 +82,8 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location }: 
         <div>{"<-"}</div>
         <div>
           <BottomSheetBtn onClick={toggleSearchBottom}>
-            <span>출발지를 선택하세요</span><span>Q</span>
+            <span>출발지를 선택하세요</span>
+            <span><img src={search_icn}/></span>
           </BottomSheetBtn>
           <Bottomsheet isOpen={ isSearchBottomActive } onClose={ toggleSearchBottom } height="100%">
             <SearchDeparture location={location}/>

@@ -1,241 +1,190 @@
 //home/travel-select/
-import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router";
 import { Link } from "react-router";
+import axios from "axios";
+import * as S from "./TravelSelectPage.style"
+
+import Loading from "../home-travel-select-random/TravelSelectRandomPage";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
 import share_img from "../../../images/feat2/share_icon.png"
-import PostCard from "../../../components/feat2/PostCard";
+import PostCard from "../../../components/feat2/Post/PostCard";
 import PlaningCard from "../../../components/feat2/PlaningCard";
 import DestinationBtn from "../../../components/feat2/DestinationBtn";
+import PostList from "../../../components/feat2/Post/PostList";
 
-// 전체적인 레이아웃
-const AppContainer = styled.p`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+// 
+// 
+//
 
-  width: 100%;
-  margin-top: 42px;
-`
+import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
 
-// 스크롤 되는 영역
-const ScrollArea = styled.div`
-  overflow-y: auto;
-`
+//
+// 
+//
 
-// 툴바 영역 (뒤로가기, 공유 버튼 영역)
-const ToolBarContainer = styled.div`
-  margin: 5px;
-  margin-top: 24px;
-  height: 24px;
+// 임시데이터 가져오기
+// import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
+import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
 
-  display: flex;
-  justify-content: space-between;
-`
+// 임시 사용자 선택 데이터
+const defaultUserSelectCriterias = {
+  departure: "서울 강북",
+  participants: 1,
+  vehicle: "자가용",
+  duration: "1",
+  startDate: "2025-01-06T12:00:00Z",
+  endDate: "2025-01-08T12:00:00Z"
+}
 
-// "여행지를 선정하세요" 영역
-const PlanContainer = styled.div`
-  margin: 5px;
+// const {
+//   departureDate,
+//   arrivalDate,
+//   numAdult,
+//   numChild,
+//   transport,
+//   timeAway,
+//   departureLocation
+// } = useLocation()?.state || {};
 
-  margin-top: 32px;
-  height: 146px;
-
-  display: flex;
-  justify-content: center;
-`
-
-// 여행지 선택 버튼 영역
-const DestinationContainer = styled.div`
-  margin: 5px;
-  margin-top: 27px;
-  height: 146px;
-
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-`
-
-// 즉흥 게시판 영역
-const PostContainer = styled.div`
-  margin: 5px;
-
-  width: 363px;
-  height: 297px;
-`
-const PostArea = styled.div`
-  border: 1px solid gray;
-  border-radius: 10px;
-`
-const Title = styled.div`
-  width: 345px;
-  height: 18px;
-
-  margin-bottom: 10px;
-
-  font-size: 18px;
-  font-weight: 800;
-
-  display: flex;
-  justify-content: space-between;
-`
-
-const SubmitBtnContainer = styled.div`
-  margin: 5px;
-
-  margin-top: 32px;
-  margin-bottom: 36px;
-  height: 50px;
-`
-
-const Seemore = styled.button`
-  background-color: white;
-  color: rgba(165, 165, 165, 1);
-  font-size: 11px;
-  font-weight: 600;
-`
-
-// --- --- ---
-// --- --- ---
-// 여기로 갈래요 버튼
-const SelectionComplete = styled.button`
-  background-color: rgba(0, 89, 255, 1);
-  color: white;
-  padding: 10px;
-  width: 363px;
-  height: 50px;
-
-  font-size: 16px;
-  font-weight: 600;
-  
-  border-radius: 5px;
-`
-
-type DestinationPropsType = {
-  location: string;
-  city: string;
-  time: string;
-};
-
-type PostCardPropsType ={
-  ranking?: number;     // 인기순위 (인기 게시물에서)
-  img_src?: string;      // 이미지 경로
-  tag: string[];        // 상단에 들어가는 여행 태그
-  title: string;        // 글 제목
-  content: string;      // 글 내용
-  destination: string;  // 여행지
-  timestamp: Date;      // 게시 시간
-  like: number;         // 좋아요 수
-  comments: number;     // 댓글 수
-  script: number;       // 저장된 수
-};
-
-// 테스트용 임시 목적지 버튼 데이터
-const sampleDestination: DestinationPropsType[] = [
-  {
-    location: "경상북도",
-    city: "대구",
-    time: "1시간 44분"
-  },
-  {
-    location: "충청남도",
-    city: "천안",
-    time: "1시간 11분"
-  },
-  {
-    location: "충청북도",
-    city: "충주",
-    time: "1시간 30분"
-  }
-]
-
-// 테스트용 임시 인기 미션 데이터
-const samplePopular: PostCardPropsType[] = [
-  {
-    ranking: 1,
-    img_src: " ",
-    tag: ["#태그", "#태그", "#미션제안"],
-    title: "제목",
-    content: "내용",
-    destination: "여행지",
-    timestamp: new Date(),
-    like: 0,
-    comments: 0,
-    script: 0
-  },
-  {
-    ranking: 2,
-    img_src: " ",
-    tag: ["#미션 제안"],
-    title: "이런 건 어떤가요 ㅋㅋ",
-    content: "순천 안온해변에서 갑자기......",
-    destination: "순천시",
-    timestamp: new Date(),
-    like: 60,
-    comments: 23,
-    script: 43
-  },
-  {
-    ranking: 3,
-    img_src: " ",
-    tag: ["#태그"],
-    title: "제목____________",
-    content: "내용________________________________",
-    destination: "어디어디",
-    timestamp: new Date(),
-    like: 1,
-    comments: 1,
-    script: 1
-  }
-]
+// console.log("사용자 선택 값 : ",  departureDate,
+//   arrivalDate,
+//   numAdult,
+//   numChild,
+//   transport,
+//   timeAway,
+//   departureLocation)
 
 function TravelSelectPage() {
-  // (몇 개) 선택이 되었는지?   ->   1개 선택되면 버튼 활성화 되도록
-  const [isSelected, setIsSelected] = useState(1);
-  // 확정된 여행지
-  const [fixedDeparture, setFixedDeparture] = useState("");
-  // 이동시간
-  const [fixedTime, setFixedTime] = useState("")
+  // --- --- --- 즉흥 게시물 조회 --- --- ---
+  const [instantPost, setInstantPost] = useState([]);
 
+  useEffect(() => {
+    const getInstantPost = async() => {
+      try {
+        const responsePost = await axios.get(`http://13.124.213.122:3000/home/popular-missions`, {
+          headers: {
+            Authorization: `${TOKEN}`,
+            Accept: `application/josn`
+          }
+        })
+        setInstantPost(responsePost.data.result);
+      } catch(error) {
+        console.log(error)
+      }
+    }
+  })
+
+  // --- --- --- 랜덤 여행지 조회 --- --- ---
+  const [recommendedDestinations, setRecommendedDestinations] = useState([]);
+  const [destinationCriterias, setDestinationCriterias] = useState(defaultUserSelectCriterias);
+  const [loadingDestination, setLoadingDestination] = useState(true);
+  const [errorDestination, setErrorDestination] = useState<string | null>(null);
+
+  // POST to server
+  useEffect(() => {
+    const postCriterias = async () => {
+      try {
+        const res = await axios.post('http://13.124.213.122:3000/home',
+          defaultUserSelectCriterias,
+          // {  
+          //   departureDate,
+          //   arrivalDate,
+          //   numAdult,
+          //   numChild,
+          //   transport,
+          //   timeAway,
+          //   departureLocation
+          // },
+          {
+            headers: {
+              Authorization: `${TOKEN}`,
+              Accept: `application/json`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        console.log('Post Success', res.data.result);
+        setRecommendedDestinations(res.data.result);
+      } catch (err) {
+        console.log('Error!', err);
+      }
+    };
+    postCriterias();
+  }, []);
+
+  // 로딩 페이지 상태 관리
+  const [loading, setLoading] = useState(true);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [fixedDeparture, setFixedDeparture] = useState("");
+
+  // 로딩화면 관리 - 임시로 2초간 보여주고 넘김
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000)
+  },[]);
+  
   return(
     <>
-      <AppContainer>
-        <ScrollArea>
-          <ToolBarContainer>
+    {loading ? (
+      <Loading/>
+    ) : (
+      <S.AppContainer>
+        <S.ScrollArea>    
+          <S.ToolBarContainer>
             <Link to='/home'>
               <img src={back_arrow_img}/>
             </Link>
             <img src={share_img}/>
-          </ToolBarContainer>
+          </S.ToolBarContainer>
 
-          <PlanContainer>
-            <PlaningCard/>
-          </PlanContainer>
+          <S.PlanContainer>
+            <PlaningCard 
+              departureDate={destinationCriterias.startDate}
+              arrivalDate={destinationCriterias.endDate}
+              departureLocation={destinationCriterias.departure}
+              transport={destinationCriterias.vehicle}
+            />
+          </S.PlanContainer>
 
-          <DestinationContainer>
+          <S.DestinationContainer>
             {/* 3개만 출력 */}
-            {sampleDestination.slice(0,3).map((destinationData) => (
-              <DestinationBtn props={destinationData}/>
+            {recommendedDestinations.slice(0,3).map((destinationData, index) => (
+              <DestinationBtn 
+                key={index}
+                props={destinationData}                // 버튼에 들어갈 데이터
+                isSelected={selectedIndex === index}
+                onClick={() => {setSelectedIndex(index); setFixedDeparture(recommendedDestinations[index])}}
+              />
             ))}
-          </DestinationContainer>
+          </S.DestinationContainer>
 
-          <PostContainer>
-            <Title>
+          <S.PostContainer>
+            <S.Title>
               <div>즉흥 게시판</div>
-              <Seemore>더보기 {">"}</Seemore>
-            </Title>
-            <PostArea>
-              {samplePopular.slice(0, 2).map((popular) => (
-                <PostCard props={popular}/>
-              ))}              
-            </PostArea>
-          </PostContainer>
+              <S.Seemore>더보기 {">"}</S.Seemore>
+            </S.Title>
+            <S.PostArea>
+              <PostList posts={PopularPostData} showRanking={false}/>
+            </S.PostArea>
+          </S.PostContainer>
 
-          <SubmitBtnContainer>
-            <SelectionComplete>여기로 갈래요</SelectionComplete>
-          </SubmitBtnContainer>
-        </ScrollArea>
-      </AppContainer>
+          <S.SubmitBtnContainer>
+            <S.SelectionComplete
+              // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
+              isDestinationSelected={selectedIndex !== null && 
+              (0 <= selectedIndex && selectedIndex < 3)}
+            >
+              여기로 갈래요
+            </S.SelectionComplete>
+          </S.SubmitBtnContainer>
+        </S.ScrollArea>
+      </S.AppContainer>
+    )}
+      
     </>
   )
 }

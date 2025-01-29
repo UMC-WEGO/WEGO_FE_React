@@ -44,6 +44,12 @@ const DropdownListItem = styled.li`
   }
 `
 
+const SelectedDisplay = styled.div`
+  text-align: left;
+
+  width: 100%;
+`
+
 // type Option = {
 //   label: string;
 //   icon: string;
@@ -76,11 +82,9 @@ const Dropdown = ({
       <DropdownContainer>
         {/* 드롭다운 헤터 (보이는 부분) */}
         <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
-          <div>
-            <IconImg src={iconStream} />
-            <span>{value}</span>    {/* value: 기본값, selectedOption: 선택한 값 */}           
-          </div>
-          <span>{isOpenFlag ? "▲" : "▼"}</span>
+          <IconImg src={iconStream} />
+          <SelectedDisplay>{value}</SelectedDisplay>    {/* value: 기본값, selectedOption: 선택한 값 */}           
+          <div>{isOpenFlag ? "▲" : "▼"}</div>
         </DropdownHeader>
 
         {/* 드롭다운 요소 리스트 */}

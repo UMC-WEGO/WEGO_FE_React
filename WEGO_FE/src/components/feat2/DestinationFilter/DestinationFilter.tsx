@@ -12,6 +12,9 @@ import CrewSelector from "./CrewSelector";
 import Calendar from "./Calendar";
 import SelectDeparture from "./SelectDeparture";
 
+// 임시 데이터 가져오기
+import { location, Item_time, Item_transport } from "../../../mocks/feat2/TestData_Filter";
+
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
   width: 363px;
@@ -57,25 +60,6 @@ const BottomSheetBtn = styled.button`
   background-color: white;
 `
 
-// 교통수단, 시간대 옵션
-type Option = {
-  label: string;
-  icon: string;
-};
-
-const Item_time: Option[] = [
-  { label: "1시간 이내", icon: clock_icon },
-  { label: "1시간 ~ 2시간", icon: clock_icon },
-  { label: "2시간 ~ 3시간", icon: clock_icon },
-  { label: "3시간 이상", icon: clock_icon }
-];
-
-const Item_transport: Option[] = [
-  { label: "자동차", icon: car_icon },
-  { label: "버스", icon: car_icon },
-  { label: "기차(KTX)", icon: car_icon }
-]
-
 interface DestinationFilterProps {
   numAdult: number;
   numChild: number;
@@ -90,32 +74,35 @@ interface DestinationFilterProps {
   setDepartureLocation: any;
 
   departureDate: Date;
-  departureMonth: number;
-  departureYear: number;
+  arrivalDate: Date;
   setDepartureDate: any;
-
-  location: {name: string; elements: string[]}[];
+  setArrivalDate: any;
 }
 
 const DestinationFilter = ({
+  // 인원수
   numAdult,
   numChild,
-  transport,
-  timeAway,
-  departureLocation,
-
   setNumAdult,
   setNumChild,
+  
+  // 이동수단
+  transport,
   setTransport,
-  setTimeAway,
-  setDepartureLocation, 
 
+  // 이동시간
+  timeAway,
+  setTimeAway,
+
+  // 여행지역
+  departureLocation,
+  setDepartureLocation,
+
+  // 여행날짜
   departureDate, 
   setDepartureDate, 
-  departureMonth, 
-  departureYear,
-
-  location
+  arrivalDate,
+  setArrivalDate,
 }: DestinationFilterProps) => {
 
   // 바텀시트 활성화 상태 관리
@@ -138,16 +125,23 @@ const DestinationFilter = ({
             <IconImg src={calender_icon}/>
             <div>
               <BottomSheetBtn onClick={ toggleDateBottom }>
-                {departureYear}.
+                {/* 선택한 여행 출발 날짜 출력력 */}
+                {departureDate.getFullYear()}.
                 {String(departureDate.getMonth() + 1).padStart(2, "0")}.
                 {String(departureDate.getDate()).padStart(2, "0")}
+                {" ~ "}         
+                {departureDate.getFullYear() !== arrivalDate.getFullYear() && `${arrivalDate.getFullYear()}`}.    {/* 출발 도착 연도가 같으면 도착 연도 생략 */}
+                {String(arrivalDate.getMonth() + 1).padStart(2, "0")}.
+                {String(arrivalDate.getDate()).padStart(2, "0")}
               </BottomSheetBtn>
+
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">
+                {/* 바텀시트에 달력 출력 */}
                 <Calendar
                   departureDate={departureDate}
-                  departureMonth={departureMonth}
-                  departureYear={departureYear}
+                  arrivalDate={arrivalDate}
                   setDepartureDate={setDepartureDate}
+                  setArrivalDate={setArrivalDate}
                 />
               </Bottomsheet>
             </div>

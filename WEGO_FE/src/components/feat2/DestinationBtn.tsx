@@ -55,23 +55,23 @@ const DestinationTime = styled.div<{ selectedFlag: boolean }>`
 
 type DestinationBtnType = {
   location: string;
-  city: string;
-  time: string;
+  region: string;
+  growthRate: string;
 };
 
 interface DestinationBtnProps {
   props: DestinationBtnType;
+  isSelected: boolean;
+  onClick: () => void;
 }
 
-const DestinationBtn = ({props}: DestinationBtnProps) => {
-  const [selected, setSelected] = useState(false);
-
+const DestinationBtn = ({props, isSelected, onClick}: DestinationBtnProps) => {
   return(
       <>
-        <DestinationBtnBox selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>
-          <DestinationLocation selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>{props.location}</DestinationLocation>
-          <DestinationCity>{props.city}</DestinationCity>
-          <DestinationTime selectedFlag={selected} onClick={() => setSelected((prev) => !prev)}>{props.time}</DestinationTime>
+        <DestinationBtnBox selectedFlag={isSelected} onClick={onClick}>
+          <DestinationLocation selectedFlag={isSelected}>{props.region}</DestinationLocation>
+          <DestinationCity>{props.location}</DestinationCity>
+          <DestinationTime selectedFlag={isSelected}>{props.growthRate}</DestinationTime>
         </DestinationBtnBox>
       </>
     )

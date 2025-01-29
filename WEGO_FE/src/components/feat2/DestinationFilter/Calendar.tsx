@@ -33,15 +33,21 @@ const CalendarBox = styled.div`
   display: grid;
   grid-template-row: repeat(6, 1fr);      // 6주
   grid-template-columns: repeat(7, 1fr);  // 7일
-  gap: 5px;
+  gap: 10px;
 
   padding: 4px 12px 4px 12px;
 `
 
-const DayBtn = styled.button`
-  textAlign: center;
+const DayBtn = styled.button<{ isSelected:boolean }>`
+  text-align: center;
 
   padding: 10px;
+  background-color: ${({ isSelected }: { isSelected?: boolean }) => isSelected ? "lightblue" : "white"};
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 `
 
 // 현재 날짜
@@ -51,7 +57,7 @@ const MONTH = NOW.getMonth() + 1;
 
 // 달력 만들기
 const weekDay: string[] = ["일", "월", "화", "수", "목", "금", "토"];
-const groupDatesByWeek = (startDay: Date, endDay: Date) => {
+const groupDatesByWeek = (startDay: Date, endDay: Date) => {    // 첫날과 막날 요일
   const nowMonthCalendar: Date[][] = [];
   let currentWeek: Date[] = []; // 현재 처리 중인 주
   let currentDate = new Date(startDay); // 현재 처리 중인 날짜
@@ -85,7 +91,7 @@ const CalendarHead = ({year, month, onPrevMonth, onNextMonth}: HeadProps) => {
     <>
       <MonthDisplay>
         <button onClick={onPrevMonth}>{"<-"}</button>
-        <div>{year}.{String(month).padStart(2, "0")}</div>
+        <div>{year}.{String(month + 1).padStart(2, "0")}</div>
         <button onClick={onNextMonth}>{"->"}</button>
       </MonthDisplay>
     </>
@@ -93,23 +99,42 @@ const CalendarHead = ({year, month, onPrevMonth, onNextMonth}: HeadProps) => {
 }
 
 interface BodyProps {
-  nowMonthCalendar: Date[][];
-  selectedDate: Date;
-  onChangeDay: (date: Date) => void;
+  nowMonthCalendar: Date[][];   // 보여줄 현재 달의 달력
+  departureDate: Date;    
+  arrivalDate: Date;
+  onChangeDeparture: (date: Date) => void;   // setDepartureDate
+  onChangeArrival: (date: Date) => void;     // setArrivalDAte
+
 }
 
-const CalendarBody = ({ nowMonthCalendar, selectedDate, onChangeDay }: BodyProps) => {
+const CalendarBody = ({ nowMonthCalendar, departureDate, arrivalDate, onChangeDeparture, onChangeArrival }: BodyProps) => {
   return (
     <>
+      {/* 요일 보여주는 줄 */}
       <WeekBox>
         {weekDay.map((weekDay, index) => (
           <div key={index}>{weekDay}</div>
         ))}
       </WeekBox>
+
+      {/* 달력 보여주는 부분 */}
       <CalendarBox>
         {nowMonthCalendar.map((week, index) => 
           week.map((date) => (
-            <DayBtn key={date.toISOString()} onClick={() => onChangeDay(date)}>
+            <DayBtn 
+              key={date.toISOString()} 
+              isSelected={
+                date.toDateString() === departureDate.toDateString() ||
+                date.toDateString() === arrivalDate.toDateString()
+              }
+              onClick={() => {
+                if (!departureDate || date < departureDate) {
+                  onChangeDeparture(date);
+                }
+                else {
+                  onChangeArrival(date);
+                }
+              }}>
               {date.getDate()}
             </DayBtn>
           ))
@@ -121,18 +146,18 @@ const CalendarBody = ({ nowMonthCalendar, selectedDate, onChangeDay }: BodyProps
 
 interface CalendarProps {
   departureDate: Date;
-  departureMonth: number;
-  departureYear: number;
-  setDepartureDate: any;
+  arrivalDate: Date;
+  setDepartureDate: (date: Date) => void;
+  setArrivalDate: (date: Date) => void;
 }
 
-const Calendar = ({ departureDate, setDepartureDate, departureMonth, departureYear}: CalendarProps) => {
+const Calendar = ({ departureDate, arrivalDate, setDepartureDate, setArrivalDate}: CalendarProps) => {
   // 달력 첫 날
-  const startDay = new Date(departureYear, departureMonth - 1, 1);
+  const startDay = new Date(departureDate.getFullYear(), departureDate.getMonth(), 1);
   startDay.setDate(1 - startDay.getDay()); // 달력 첫날: 이전 달의 마지막 일요일
 
   // 달력 마지막 날
-  const endDay = new Date(departureYear, departureMonth, 0);
+  const endDay = new Date(departureDate.getFullYear(), departureDate.getMonth() + 1, 0);
   endDay.setDate(endDay.getDate() + (6 - endDay.getDay())); // 달력 마지막 날: 해당 주의 토요일
 
   // 해당 달 달력
@@ -149,15 +174,17 @@ const Calendar = ({ departureDate, setDepartureDate, departureMonth, departureYe
   return (
     <StyedCalendar>
       <CalendarHead
-        year={departureYear}
-        month={departureMonth}
+        year={departureDate.getFullYear()}
+        month={departureDate.getMonth()}
         onPrevMonth={handlePrevMonth}
         onNextMonth={handleNextMonth}
       />
       <CalendarBody
         nowMonthCalendar={nowMonthCalendar}
-        selectedDate={departureDate}
-        onChangeDay={setDepartureDate}
+        departureDate={departureDate}
+        arrivalDate={arrivalDate}
+        onChangeDeparture={setDepartureDate}
+        onChangeArrival={setArrivalDate}
       />
     </StyedCalendar>
   )

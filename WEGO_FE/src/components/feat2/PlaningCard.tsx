@@ -49,15 +49,22 @@ const PlaningCardRow4 = styled.div`
   gap: 20px;
 `
 
-const PlaningCard = () => {
+interface userCriterias {
+  departureDate: string;
+  arrivalDate: string;
+  departureLocation: string;
+  transport: string;
+}
+
+const PlaningCard = ({ departureDate, arrivalDate, departureLocation, transport }: userCriterias ) => {
     return(
         <>
             <PlaningCardBox>
               <PlaningCardRow1>여행지를 선정하세요</PlaningCardRow1>
-              <PlaningCardRow2>2024.11.26 ~ 2024.11.27</PlaningCardRow2>
+              <PlaningCardRow2>{departureDate} ~ {arrivalDate}</PlaningCardRow2>
               <PlaningCardRow3>
                 <div>출발지</div>
-                <BlueTag TagContent="부산"/>
+                <BlueTag TagContent={departureLocation}/>
               </PlaningCardRow3>
               <PlaningCardRow4>
                 <div>이동수단</div>

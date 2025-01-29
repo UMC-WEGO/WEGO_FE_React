@@ -43,11 +43,13 @@ const DeleteBtn = styled.button`
 `
 
 type PlanedCardType = {
-  destination: string;         // 여행 목적지
-  D_Days: number;              // 남은 날짜
-  period: string;              // 여행 기간
-  party_num: string | number;  // 여행 인원수
-  transport: string;           // 이동 수단
+  tripId : number;
+  location: string;
+  participants: number;
+  vehicle: string;
+  duration: string;
+  departureDate: string;
+  arrivalDate: string;
 }
 
 interface PlanedCardProps {
@@ -56,18 +58,20 @@ interface PlanedCardProps {
 }
 
 const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
+  const D_Days = "3";
+
     return(
       <>
         <PlanedCardBox>
           <PlanedCardHug>
             <PlanedCard_row1>
-              <div>{props.destination} 여행, D-{props.D_Days}</div>
+              <div>{props.location} 여행, D-{D_Days}</div>
               <DeleteBtn onClick={onClickDelete}><img src={trash_bin_img}/></DeleteBtn>
             </PlanedCard_row1>
             <PlanedCard_row2>
-              <BlueTag TagContent={props.period}/>
-              <BlueTag TagContent={`${props.party_num}명`}/>
-              <BlueTag TagContent={props.transport}/>
+              <BlueTag TagContent={props.duration}/>
+              <BlueTag TagContent={`${props.participants}명`}/>
+              <BlueTag TagContent={props.vehicle}/>
             </PlanedCard_row2>
           </PlanedCardHug>
         </PlanedCardBox>
