@@ -28,7 +28,7 @@ export const allPosts = [
   },
   {
     id: '4',
-    category: '여행 팁',
+    category: '일반',
     title: '여행 가서 꼭 챙길 아이템',
     content: '여행 가기 전에 꼭 챙겨야 할 아이템 리스트입니다.',
     time: '4시간 전',
@@ -60,7 +60,7 @@ export const allPosts = [
   },
   {
     id: '8',
-    category: '여행 팁',
+    category: '일반',
     title: '여행 중 유용한 앱',
     content: '여행 중에 유용하게 사용할 수 있는 앱을 소개합니다.',
     time: '7시간 전',
@@ -84,7 +84,7 @@ export const allPosts = [
   },
   {
     id: '11',
-    category: '여행 팁',
+    category: '일반',
     title: '여행 예산 관리하기',
     content: '여행 예산을 효율적으로 관리하는 방법입니다.',
     time: '10시간 전',
@@ -100,7 +100,7 @@ export const allPosts = [
   },
   {
     id: '13',
-    category: '여행 팁',
+    category: '일반',
     title: '경주에서의 역사 탐방',
     content: '경주에서 역사적인 유적지를 탐방해 보세요!',
     time: '6시간 전',
@@ -132,7 +132,7 @@ export const allPosts = [
   },
   {
     id: '17',
-    category: '여행 팁',
+    category: '일반',
     title: '속초의 맛집 리스트',
     content: '속초에서 꼭 가봐야 할 맛집 리스트입니다.',
     time: '1시간 전',
@@ -148,7 +148,7 @@ export const allPosts = [
   },
   {
     id: '19',
-    category: '여행 팁',
+    category: '일반',
     title: '가을 여행지 추천',
     content: '가을에 가기 좋은 여행지를 추천합니다.',
     time: '9시간 전',

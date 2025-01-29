@@ -9,7 +9,7 @@ function FreeBoard() {
     '즉흥 자랑',
     '미션 제안',
     '현지 정보',
-    '여행 팁',
+    '일반',
   ];
   const [selectedCategory, setSelectedCategory] = useState<string>('추천');
 
