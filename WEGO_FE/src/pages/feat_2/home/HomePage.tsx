@@ -22,7 +22,6 @@ import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
-import { time } from 'framer-motion';
 
 // 
 // 
@@ -149,12 +148,12 @@ function HomePage() {
                   }
                 })
               }}
-            >랜덤 돌리기</S.RandomBtn>
+            >랜덤 돌리기
+          </S.RandomBtn>
           </S.RandomBtnContainer>
 
           <S.PlanedContainer>          
             <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
-
             {upcomingTravelList.map((plan, flag) => (
               <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
             ))}

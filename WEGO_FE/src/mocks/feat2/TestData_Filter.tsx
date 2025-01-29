@@ -19,7 +19,7 @@ import clock_icon from "../../images/feat2/alarm_icon.png";
     { label: "3시간 이상", icon: clock_icon }
   ];
   export const Item_transport = [
-    { label: "자동차", icon: car_icon },
+    { label: "자가용", icon: car_icon },
     { label: "버스", icon: car_icon },
     { label: "기차(KTX)", icon: car_icon }
   ]

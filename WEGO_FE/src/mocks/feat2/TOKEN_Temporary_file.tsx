@@ -1,1 +1,1 @@
-export const TOKEN: string = `Bearer `
+export const TOKEN: string = `Bearer eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzM4MTM2NTg3LCJleHAiOjE3Mzg3NDEzODd9.UY5QAuopSMUScndVs9piMG8CF33Jidy-_NNpLCLl8pGnLUtm_YbX7LSADNNXGZmf5oM3F5lPxCHOfqRyLOpo9Q`

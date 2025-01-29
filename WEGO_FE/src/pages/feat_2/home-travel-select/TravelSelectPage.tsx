@@ -29,35 +29,71 @@ import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
 import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 
-// 임시 사용자 선택 데이터
-const defaultUserSelectCriterias = {
-  departure: "서울 강북",
-  participants: 1,
-  vehicle: "자가용",
-  duration: "1",
-  startDate: "2025-01-06T12:00:00Z",
-  endDate: "2025-01-08T12:00:00Z"
-}
-
-// const {
-//   departureDate,
-//   arrivalDate,
-//   numAdult,
-//   numChild,
-//   transport,
-//   timeAway,
-//   departureLocation
-// } = useLocation()?.state || {};
-
-// console.log("사용자 선택 값 : ",  departureDate,
-//   arrivalDate,
-//   numAdult,
-//   numChild,
-//   transport,
-//   timeAway,
-//   departureLocation)
-
 function TravelSelectPage() {
+  // 홈에서 정보 가져오기기
+  const location = useLocation();
+  const { departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = location.state || {};
+
+  // RIGHT POST SAMPLE
+  // "departure": "서울 강북",
+  // "participants": 1,
+  // "vehicle": "자가용",
+  // "duration": "1",
+  // "startDate": "2024-12-31T15:00:00Z",
+  // "endDate": "2025-01-01T15:00:00Z"
+
+  // POST DATA
+  // departure :  서울 강북
+  // participants :  1
+  // vehicle :  자가용  
+  // duration :  1  
+  // startDate :  2024-12-31T15:00:00.000Z  
+  // endDate :  2025-01-01T15:00:00.000Z
+
+  // export const Item_time = [
+  //   { label: "1시간 이내", icon: clock_icon },
+  //   { label: "1시간 ~ 2시간", icon: clock_icon },
+  //   { label: "2시간 ~ 3시간", icon: clock_icon },
+  //   { label: "3시간 이상", icon: clock_icon }
+  // ];
+
+  // 적절하게 값 변환
+  const departure: string = departureLocation;
+  const participants: number = numAdult + numChild;
+  const vehicle: string = transport;
+  let duration: string = '1';
+  if(timeAway == '1시간 이내'){
+    duration = '1';
+  } else if (timeAway == '1시간 ~ 2시간') {
+    duration = '1-2';
+  } else if (timeAway == '2시간 ~ 3시간') {
+    duration = '2-3';
+  } else if (timeAway == '3시간 이상') {
+    duration = '3+';
+  }
+
+  const startDate: string = departureDate.toISOString().replace('.000', '');
+  const endDate: string = arrivalDate.toISOString().replace('.000', '');;
+
+  console.log(
+    "POST값 확인하기",
+    " / departure : ",departure,
+    " / participants : ", participants,
+    " / vehicle : ", vehicle,
+    " / duration : ", duration,
+    " / startDate : ", startDate,
+    " / endDate : ", endDate,
+  )
+
+  // POST값 확인하기  / 
+  // departure :  서울 강북  / 
+  // participants :  1  / 
+  // vehicle :  자동차  / 
+  // duration :  1  / 
+  // startDate :  Wed Jan 01 2025 00:00:00 GMT+0900 (한국 표준시)  / 
+  // endDate :  Thu Jan 02 2025 00:00:00 GMT+0900 (한국 표준시)
+
+
   // --- --- --- 즉흥 게시물 조회 --- --- ---
   const [instantPost, setInstantPost] = useState([]);
 
@@ -75,11 +111,19 @@ function TravelSelectPage() {
         console.log(error)
       }
     }
-  })
+    getInstantPost();
+  },[])
 
   // --- --- --- 랜덤 여행지 조회 --- --- ---
   const [recommendedDestinations, setRecommendedDestinations] = useState([]);
-  const [destinationCriterias, setDestinationCriterias] = useState(defaultUserSelectCriterias);
+  // const [destinationCriterias, setDestinationCriterias] = useState([
+  //   departure,
+  //   participants,
+  //   vehicle,
+  //   duration,
+  //   startDate,
+  //   endDate
+  // ]);
   const [loadingDestination, setLoadingDestination] = useState(true);
   const [errorDestination, setErrorDestination] = useState<string | null>(null);
 
@@ -88,16 +132,21 @@ function TravelSelectPage() {
     const postCriterias = async () => {
       try {
         const res = await axios.post('http://13.124.213.122:3000/home',
-          defaultUserSelectCriterias,
-          // {  
-          //   departureDate,
-          //   arrivalDate,
-          //   numAdult,
-          //   numChild,
-          //   transport,
-          //   timeAway,
-          //   departureLocation
-          // },
+          {  
+            // departure: "서울 강북",
+            // participants: 1,
+            // vehicle: "자가용",
+            // duration: "1",
+            // startDate: "2025-01-06T12:00:00Z",
+            // endDate: "2025-01-08T12:00:00Z"
+
+            departure,
+            participants,
+            vehicle,
+            duration,
+            startDate,
+            endDate
+          },
           {
             headers: {
               Authorization: `${TOKEN}`,
@@ -109,7 +158,7 @@ function TravelSelectPage() {
         console.log('Post Success', res.data.result);
         setRecommendedDestinations(res.data.result);
       } catch (err) {
-        console.log('Error!', err);
+        console.log('Error on Post (criterias)!', err);
       }
     };
     postCriterias();
@@ -140,13 +189,13 @@ function TravelSelectPage() {
             </Link>
             <img src={share_img}/>
           </S.ToolBarContainer>
-
+          
           <S.PlanContainer>
             <PlaningCard 
-              departureDate={destinationCriterias.startDate}
-              arrivalDate={destinationCriterias.endDate}
-              departureLocation={destinationCriterias.departure}
-              transport={destinationCriterias.vehicle}
+              departureDate={startDate}
+              arrivalDate={endDate}
+              departureLocation={departure}
+              transport={vehicle}
             />
           </S.PlanContainer>
 

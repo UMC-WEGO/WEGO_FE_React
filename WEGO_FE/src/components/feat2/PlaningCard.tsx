@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import car_img from "../../images/feat2/car_icon.png";
 import BlueTag from "./BlueTag";
+import { string } from "yup";
 // 홈 화면에서 여행 조건을 선택하는 부분입니다
 // 날짜, 인원, 이동수단, 이동시간, 여행지역 선택
 
@@ -57,11 +58,27 @@ interface userCriterias {
 }
 
 const PlaningCard = ({ departureDate, arrivalDate, departureLocation, transport }: userCriterias ) => {
+  const DpDate = new Date(departureDate);
+  const ArDate = new Date(arrivalDate);
+
+  const Dp_year = DpDate.getFullYear();
+  const Dp_month = String(DpDate.getMonth() + 1).padStart(2, '0');
+  const Dp_day = String(DpDate.getDate()).padStart(2, '0');
+
+  const Ar_year = ArDate.getFullYear();
+  const Ar_month = String(ArDate.getMonth() + 1).padStart(2, '0');
+  const Ar_day = String(ArDate.getDate()).padStart(2, '0');
+
     return(
         <>
             <PlaningCardBox>
               <PlaningCardRow1>여행지를 선정하세요</PlaningCardRow1>
-              <PlaningCardRow2>{departureDate} ~ {arrivalDate}</PlaningCardRow2>
+              <PlaningCardRow2>
+              {/* {departureDate} ~ {arrivalDate} */}
+                {Dp_year}.{Dp_month}.{Dp_day} 
+                ~ 
+                {Ar_year}.{Ar_month}.{Ar_day}
+              </PlaningCardRow2>
               <PlaningCardRow3>
                 <div>출발지</div>
                 <BlueTag TagContent={departureLocation}/>
