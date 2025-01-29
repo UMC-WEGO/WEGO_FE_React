@@ -8,6 +8,7 @@ import {
   PiThumbsUpBold,
   PiBookmarkSimpleBold,
 } from 'react-icons/pi';
+import { LuDot } from 'react-icons/lu';
 import CommentList from '../../../components/feat4/CommentList/CommentList';
 import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
 
@@ -97,7 +98,11 @@ function BoardDetailPage() {
             <img src="https://buly.kr/CsipNnM" alt="Profile" />
             <div>
               <span>위고 닉네임</span>
-              <p>{post.time}</p>
+              <p>
+                {post.timestamp}
+                <LuDot />
+                {post.time}
+              </p>
             </div>
           </S.Profile>
           <h1>{post.title}</h1>
