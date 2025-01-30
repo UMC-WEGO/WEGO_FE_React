@@ -73,7 +73,7 @@ const PrevMission = styled.button`
   transform: rotate(180deg);
 `
 
-const MissionImg = styled.div`
+const MissionImg = styled.img`
   width: 313px;
   height: 160px;
 
@@ -99,16 +99,17 @@ const MissionContent = styled.div`
   margin-top: 20px;
 `
 
-type MissionPropsType = {
-  destination: string;
-  img_src?: string;
-  title: string;
-  content: string;
-};
-
 interface MissionProps {
-  props: MissionPropsType[];
+  props: {
+    missionId: number;
+    title: string;
+    content: string;
+    point: number;
+    imageUrl: string;
+    userCount: number;
+  }[];
 }
+
 
 const PopularMissionCard = ({props}: MissionProps) => {
   // 현재 표시할 미션 데이터
@@ -132,12 +133,12 @@ const PopularMissionCard = ({props}: MissionProps) => {
       <PopularMissionCardBox>
         <PopularMissionRow1>
           <Icon src={pin}/>
-          <div>{nowShowMission.destination}</div>
+          {/* <div>{nowShowMission.destination}</div> */}
         </PopularMissionRow1>
 
         <PopularMissionRow2>
           <PrevMission onClick={changePrevMission}><Icon src={chevron}/></PrevMission>
-          <MissionImg/>
+          <MissionImg src={nowShowMission.imageUrl}/>
           <NextMission onClick={changeNextMission}><Icon src={chevron}/></NextMission>
         </PopularMissionRow2>
 

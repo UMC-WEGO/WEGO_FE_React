@@ -1,6 +1,6 @@
 //home/travel-select/
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
 import axios from "axios";
 import * as S from "./TravelSelectPage.style"
@@ -128,6 +128,8 @@ function TravelSelectPage() {
   const { location, region, growthRate } = locationData;
   // const location = departure;
 
+  const navigate = useNavigate();
+
   // POST TO SERVER
     const postTravel = async() => {
       try {
@@ -164,9 +166,12 @@ function TravelSelectPage() {
     
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
-        if (fixedTravelResponse === "여행 일정이 성공적으로 저장되었습니다.") {
-          setIsShowModal(true);
-        }
+        
+        navigate('/home/1', {
+          state: {
+            fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
+          }
+        });
       } catch (err) {
         console.log("Error on Post (travel)!", err);
       }
@@ -180,12 +185,6 @@ function TravelSelectPage() {
       setLoading(false);
     }, 2000)
   },[]);
-  
-  useEffect(() => {
-    if (fixedTravelResponse === "다가오는 여행이 없습니다.") {
-      setIsShowModal(true);
-    }
-  }, [fixedTravelResponse]);
 
   return(
     <>
@@ -238,7 +237,8 @@ function TravelSelectPage() {
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && 
               (0 <= selectedIndex && selectedIndex < 3)}
-              onClick={postTravel}
+              // onClick={postTravel}
+              onClick={() => postTravel()}
             >
               여기로 갈래요
             </S.SelectionComplete>

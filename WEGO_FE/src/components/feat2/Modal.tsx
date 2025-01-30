@@ -22,7 +22,11 @@ const slideUp = keyframes`
 `;
 
 const ModalContainer = styled.div`
-  background-color: black;
+  width: 373px;
+  height: 50px;
+  border-radius: 5px;
+
+  background-color: #262626F2;
   color: white;
   animation: ${slideUp} 2s ease-in-out forwards;
 `;

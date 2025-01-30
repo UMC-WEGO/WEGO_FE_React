@@ -23,6 +23,7 @@ import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import ModalMessage from '../../../components/feat2/Modal';
+import { useLocation } from 'react-router';
 
 // 
 // 
@@ -99,7 +100,7 @@ function HomePage() {
           Accept: `application/josn`
         }
       })
-      setPopularMissionList(responseMission.data.result)
+      setPopularMissionList(responseMission.data.result.missions)
     }
     getPopularMission();
   }, [])
@@ -108,6 +109,17 @@ function HomePage() {
   const deleteUpcomingTravel = async() => {{
     
   }}
+
+  // 일정 선택 페이지에서 메시지 받아오기
+  const location = useLocation();
+  const fixedTravelResponse = location.state?.fixedTravelResponse;  // 전달된 응답 메시지 가져오기
+  const [isShowSaveModal, setIsShowSaveModal] = useState(false);
+
+  useEffect(() => {
+    if (fixedTravelResponse) {
+      setIsShowSaveModal(true);  // 응답 메시지가 있으면 모달을 띄움
+    }
+  }, [fixedTravelResponse]);
 
   // 필터 값
   const [numAdult, setNumAdult] = useState(0);              // 성인 인원수
@@ -196,11 +208,21 @@ function HomePage() {
 
           <S.PopularMissionContainer>
             <S.ContainerTitle>인기 미션</S.ContainerTitle>
-            <PopularMissionCard props={ PopularMissionData }/>
+            {popularMissionList.length > 0 ? (
+              <PopularMissionCard props={popularMissionList} />  // API에서 받은 미션 데이터를 props로 전달
+            ) : (
+              <div>미션이 없습니다.</div>
+            )}
           </S.PopularMissionContainer>
         </S.ScrollArea>
 
         <S.NavbarArea>
+          {isShowModal && (
+            <ModalMessage
+              message={fixedTravelResponse} // 전달된 응답 메시지
+              onClose={() => setIsShowModal(false)} // 모달 닫기
+            />
+          )}
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>
