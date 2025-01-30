@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useState } from "react";
+import axios from "axios";
 
 import car_icon from "../../../images/feat2/car_icon.png";
 import clock_icon from "../../../images/feat2/alarm_icon.png";
@@ -104,6 +105,13 @@ const DestinationFilter = ({
   arrivalDate,
   setArrivalDate,
 }: DestinationFilterProps) => {
+  // --- --- --- 최근 여행지 조회 --- --- ---
+  // const [recentLocation, setRecentLocation] = useState([]);
+  // const getRecentLocation = async() => {
+  //   try {
+  //     const response = await axios.post()
+  //   }
+  // }
 
   // 바텀시트 활성화 상태 관리
   const [isDateBottomActive, setIsDateBottomActive] = useState(false);

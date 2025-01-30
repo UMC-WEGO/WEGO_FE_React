@@ -1,4 +1,4 @@
-///home
+///home/:user_id
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
@@ -22,6 +22,7 @@ import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
+import ModalMessage from '../../../components/feat2/Modal';
 
 // 
 // 
@@ -32,6 +33,8 @@ function HomePage() {
   const [loadingTravel, setLoadingTravel] = useState(true);
   const [errorTravel, setErrorTravel] = useState<string | null>(null);
   const [upcomingTravelMessage, setUpcomingTravelMessage] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
+  // const [showModalMessage, setShowModalMessage] = useState(false);
 
   const handleDelete = (flag: number) => {                         // flag: 해당 카드가 표시 될건지 안될건지
     const updatePlanList = upcomingTravelList.filter((_, index) => index !== flag);  // 해당 카드 삭제
@@ -50,6 +53,13 @@ function HomePage() {
         setUpcomingTravelList(responseTravel.data.result);
         setUpcomingTravelMessage(responseTravel.data.message);
         setLoadingTravel(false);
+
+        if(responseTravel.data.message == "다가오는 여행이 없습니다."){
+          // setShowModalMessage(true);
+          // <ModalMessage message={responseTravel.data.message}/>
+          setUpcomingTravelMessage(responseTravel.data.message);
+          setIsShowModal(true);
+        }
       } catch(error) {
         setErrorTravel('Error fetching data');
         setLoadingTravel(false);
@@ -93,6 +103,11 @@ function HomePage() {
     }
     getPopularMission();
   }, [])
+
+  // --- --- --- 일정 삭제 --- --- ---
+  const deleteUpcomingTravel = async() => {{
+    
+  }}
 
   // 필터 값
   const [numAdult, setNumAdult] = useState(0);              // 성인 인원수
@@ -158,6 +173,9 @@ function HomePage() {
 
           <S.PlanedContainer>          
             <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
+            {/* 일정이 없을 경우 메시지 출력력 */}
+            {isShowModal && <ModalMessage message={upcomingTravelMessage} onClose={() => setIsShowModal(false)} />}
+            {/* 일정 출력 */}
             {upcomingTravelList.map((plan, flag) => (
               <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
             ))}
