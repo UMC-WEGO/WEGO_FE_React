@@ -13,6 +13,7 @@ import PostCard from "../../../components/feat2/Post/PostCard";
 import PlaningCard from "../../../components/feat2/PlaningCard";
 import DestinationBtn from "../../../components/feat2/DestinationBtn";
 import PostList from "../../../components/feat2/Post/PostList";
+import ModalMessage from "../../../components/feat2/Modal";
 
 // 
 // 
@@ -120,7 +121,8 @@ function TravelSelectPage() {
   // --- --- --- 여행 일정 등록 --- --- ---
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [locationData, setLocationData] = useState({location: "", region: "", growthRate: ""});
-  const [fixedTravelResponse, setFixedTravelResponse] = useState([]);
+  const [fixedTravelResponse, setFixedTravelResponse] = useState("");
+  const [isShowModal, setIsShowModal] = useState(false);
 
   // 데이터 적절히 변환
   const { location, region, growthRate } = locationData;
@@ -157,15 +159,18 @@ function TravelSelectPage() {
             'Content-Type': 'application/json',
           },
         });
-        setFixedTravelResponse(res.data.result);
-
         console.log("선택된 여행지 확인", res);
         console.log(res.data.message);
+    
+        // 서버 응답 메시지를 저장
+        setFixedTravelResponse(res.data.message);
+        if (fixedTravelResponse === "여행 일정이 성공적으로 저장되었습니다.") {
+          setIsShowModal(true);
+        }
       } catch (err) {
-        console.log('Error on Post (travel)!', err);        
+        console.log("Error on Post (travel)!", err);
       }
     };
-    // postTravel();
 
   // 로딩 페이지 상태 관리
   const [loading, setLoading] = useState(true);
@@ -176,6 +181,12 @@ function TravelSelectPage() {
     }, 2000)
   },[]);
   
+  useEffect(() => {
+    if (fixedTravelResponse === "다가오는 여행이 없습니다.") {
+      setIsShowModal(true);
+    }
+  }, [fixedTravelResponse]);
+
   return(
     <>
     {loading ? (
@@ -222,6 +233,7 @@ function TravelSelectPage() {
           </S.PostContainer>
 
           <S.SubmitBtnContainer>
+            {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && 
