@@ -34,7 +34,7 @@ function ScheduleCard({
 }) {
   const navigate = useNavigate();
 
-  const [isInReview, setIsInReview] = useState(false); // isInReview: 백엔드 미션 승인
+  const [isInReview, setIsInReview] = useState(false); // isInReview: 미션 검수 중(백엔드 미션 승인)
   const [isCompleted, setIsCompleted] = useState<boolean>(
     schedule.isMissionCompleted,
   );
@@ -106,6 +106,7 @@ function ScheduleCard({
 
   const handleCancel = () => {
     setIsModalVisible(false);
+    navigate(`/schedule/end/${schedule.id}`); // 여행 후 미션 인증하기 페이지로
   };
 
   const handleCloseModal = () => {
@@ -125,7 +126,7 @@ function ScheduleCard({
               : '442px'
             : isInReview // 인증 요청된 미션이 하나도 없는 경우
               ? '150px'
-              : '225px',
+              : '260px',
       }}
     >
       <S.HeaderContainer>
@@ -161,50 +162,54 @@ function ScheduleCard({
       )}
 
       {/* 포인트 적립 시, user의 point 값 올라야 함 */}
-      {/* 인증 요청한 미션이 없는 경우, 버튼만 보이게 */}
+      {/* 인증 요청한 미션이 없는 경우, 미션 단 없이 글과 버튼만 보이게 */}
       <S.MissionContainer>
-        {schedule.missions && schedule.missions.length > 0 && (
-          <S.MissionTextContainer>
-            <S.PointsContainer>
-              <S.CertifiedMissionText>
-                {isCompleted
-                  ? '인증된 미션'
-                  : isInReview
-                    ? '인증 요청된 미션'
-                    : '인증 요청된 미션'}
-              </S.CertifiedMissionText>
-              <S.Points>
-                {isCompleted
-                  ? `+${totalPoints} 포인트 적립`
-                  : isInReview
-                    ? '미션 검수 중'
-                    : ''}
-              </S.Points>
-            </S.PointsContainer>
-            <S.NextText>지난 여행에서 수행한 미션들이에요.</S.NextText>
-          </S.MissionTextContainer>
-        )}
+        {schedule.missions && schedule.missions.length > 0 ? (
+          <>
+            <S.MissionTextContainer>
+              <S.PointsContainer>
+                <S.CertifiedMissionText>
+                  {isCompleted
+                    ? '인증된 미션'
+                    : isInReview
+                      ? '인증된 미션'
+                      : '인증된 미션'}
+                </S.CertifiedMissionText>
+                <S.Points>
+                  {isCompleted
+                    ? `+${totalPoints} 포인트 적립`
+                    : isInReview
+                      ? '미션 검수 중'
+                      : ''}
+                </S.Points>
+              </S.PointsContainer>
+              <S.NextText>지난 여행에서 수행한 미션들이에요.</S.NextText>
+            </S.MissionTextContainer>
 
-        {schedule.missions && schedule.missions.length > 0 && (
-          <S.MissionSection>
-            <S.MissionImages>
-              {schedule.missions?.map(mission => (
-                <S.MissionItem
-                  key={mission.id}
-                  onClick={() =>
-                    handleImageClick(
-                      mission.imageUrl,
-                      mission.name,
-                      mission.mission_write,
-                    )
-                  }
-                >
-                  <img src={mission.imageUrl} alt={mission.name} />
-                  <S.MissionName>{mission.name}</S.MissionName>
-                </S.MissionItem>
-              ))}
-            </S.MissionImages>
-          </S.MissionSection>
+            <S.MissionSection>
+              <S.MissionImages>
+                {schedule.missions.map(mission => (
+                  <S.MissionItem
+                    key={mission.id}
+                    onClick={() =>
+                      handleImageClick(
+                        mission.imageUrl,
+                        mission.name,
+                        mission.mission_write,
+                      )
+                    }
+                  >
+                    <img src={mission.imageUrl} alt={mission.name} />
+                    <S.MissionName>{mission.name}</S.MissionName>
+                  </S.MissionItem>
+                ))}
+              </S.MissionImages>
+            </S.MissionSection>
+          </>
+        ) : (
+          <S.NoMissionContainer>
+            <p>아직 인증한 미션이 없어요🥲</p>
+          </S.NoMissionContainer>
         )}
 
         <S.ButtonContainer>
