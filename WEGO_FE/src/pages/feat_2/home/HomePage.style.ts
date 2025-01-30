@@ -1,5 +1,17 @@
 import styled from 'styled-components';
 
+export const NoMission = styled.div`
+  border: 1px solid gray;
+  border-radius: 10px;
+
+  height: 390px;
+  widht: 373px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
 // 홈 화면 전체적인 레이아웃
 export const AppContainer = styled.p`
   display: flex;

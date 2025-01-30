@@ -211,7 +211,8 @@ function HomePage() {
             {popularMissionList.length > 0 ? (
               <PopularMissionCard props={popularMissionList} />  // API에서 받은 미션 데이터를 props로 전달
             ) : (
-              <div>미션이 없습니다.</div>
+              // <div>미션이 없습니다.</div>
+              <S.NoMission>미션이 없습니다.</S.NoMission>
             )}
           </S.PopularMissionContainer>
         </S.ScrollArea>
