@@ -1,27 +1,49 @@
 import * as S from './MyPostsPage.style';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
-import { allPosts as initialPosts } from '../../../mocks/board/postData';
-import { users } from '../../../mocks/feat5/UserData';
 import Modal from '../../../components/feat5/Modal/Modal';
+import { userpostsApis } from '../../../apis/feat5/userpostsApis';
+import { UserPostsData } from '../../../types/feat5/UserPostsData';
 
 function MyPostsPage() {
   const navigate = useNavigate();
-  const { userId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
-  const [allPosts, setAllPosts] = useState(initialPosts);
+  const [allPosts, setAllPosts] = useState<UserPostsData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const user = users.find(user => user.userId === userId);
-  if (!user) {
-    return <div>찾을 수 없는 사용자</div>;
-  }
+  // API
+  useEffect(() => {
+    const fetchPostsData = async () => {
+      try {
+        const response = await userpostsApis();
+        setAllPosts(response.data); // 데이터 1개면 배열[]로 설정
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          console.log('API Error:', err.message);
+          setError(err.message || 'error');
+        } else {
+          console.log('Unknown Error:', err);
+          setError('error');
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  // 추후 post.userId로 수정해야 함 !!!
-  const userPosts = allPosts.filter(post => post.id === userId);
+    fetchPostsData();
+  }, []);
+
+  // 로딩, 에러처리
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
+  // 해당 사용자 게시물 필터링
+  const userPosts = allPosts.filter(post => post.userId);
 
   const handleOpenModal = (postId: number) => {
     setSelectedPostId(postId);
@@ -37,7 +59,7 @@ function MyPostsPage() {
   const handleDelete = () => {
     if (selectedPostId !== null) {
       const updatedPosts = allPosts.filter(
-        post => post.id !== String(selectedPostId),
+        post => post.postId !== selectedPostId,
       );
       setAllPosts(updatedPosts);
       handleCloseModal();
@@ -56,9 +78,19 @@ function MyPostsPage() {
       <S.Content noScroll={userPosts.length === 0}>
         {userPosts.length > 0 ? (
           userPosts.map(post => (
-            <S.PostWrapper key={post.id}>
-              <PostList posts={[post]} />
-              <S.Button onClick={() => handleOpenModal(Number(post.id))}>
+            <S.PostWrapper key={post.postId}>
+              <PostList // PostList 컴포넌트 사용
+                posts={[
+                  {
+                    id: String(post.postId),
+                    category: String(post.categoryId),
+                    time: post.createdAt,
+                    location: `${post.localId}`,
+                    ...post,
+                  },
+                ]}
+              />
+              <S.Button onClick={() => handleOpenModal(post.postId)}>
                 <img src={PostButton} alt="Post Button" />
               </S.Button>
             </S.PostWrapper>

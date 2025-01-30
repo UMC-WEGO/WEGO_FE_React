@@ -5,8 +5,6 @@ import { AxiosError } from 'axios';
 export const userinfoApis = async () => {
   try {
     const response = await authInstance.get('/users/info');
-
-    console.log('API Response:', response);
     console.log('API 데이터:', response.data);
     return response.data;
 
@@ -24,10 +22,7 @@ export const userinfoApis = async () => {
     // return { data: testData };
   } catch (error) {
     if (error instanceof AxiosError) {
-      console.error(
-        'Error fetching user info:',
-        error.response?.data || error.message,
-      );
+      console.error('조회 실패', error.response?.data || error.message);
     } else {
       console.error('Unknown error:', error);
     }
