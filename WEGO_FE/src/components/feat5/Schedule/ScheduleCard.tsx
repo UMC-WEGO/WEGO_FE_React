@@ -125,11 +125,15 @@ function ScheduleCard({
               ? 'auto'
               : '442px'
             : isInReview // 인증 요청된 미션이 하나도 없는 경우
-              ? '150px'
+              ? '130px'
               : '260px',
       }}
     >
-      <S.HeaderContainer>
+      <S.HeaderContainer
+        style={{
+          borderBottom: isInReview ? 'none' : '1px solid #eaeaea',
+        }}
+      >
         <S.TitleContainer>
           <S.Title>{schedule.title}</S.Title>
           <S.DeleteButton onClick={handleDeleteClick}>
@@ -162,7 +166,7 @@ function ScheduleCard({
       )}
 
       {/* 포인트 적립 시, user의 point 값 올라야 함 */}
-      {/* 인증 요청한 미션이 없는 경우, 미션 단 없이 글과 버튼만 보이게 */}
+      {/* 인증 미션이 하나도 없는 경우, 미션 단 없이 글과 버튼만 보이게 */}
       <S.MissionContainer>
         {schedule.missions && schedule.missions.length > 0 ? (
           <>
@@ -207,9 +211,12 @@ function ScheduleCard({
             </S.MissionSection>
           </>
         ) : (
-          <S.NoMissionContainer>
-            <p>아직 인증한 미션이 없어요🥲</p>
-          </S.NoMissionContainer>
+          !isCompleted &&
+          !isInReview && (
+            <S.NoMissionContainer>
+              <p>아직 인증한 미션이 없어요🥲</p>
+            </S.NoMissionContainer>
+          )
         )}
 
         <S.ButtonContainer>
