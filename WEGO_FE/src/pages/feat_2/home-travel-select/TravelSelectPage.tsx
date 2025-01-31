@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
 import axios from "axios";
 import * as S from "./TravelSelectPage.style"
+import styled from "styled-components";
 
 import Loading from "../home-travel-select-random/TravelSelectRandomPage";
 
@@ -29,6 +30,15 @@ import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
 // import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
 import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
+
+const NoPopularPost = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+
+  justify-content: center;
+  align-items: center;
+`
 
 function TravelSelectPage() {
   // 홈에서 정보 가져오기기
@@ -108,6 +118,7 @@ function TravelSelectPage() {
         setLoadingDestination(false);
         setRecommendedDestinations(res.data.result);
       } catch (err) {
+        // setErrorDestination(err);
         console.log('Error on Post (criterias)!', err);
       }
     };
@@ -234,10 +245,16 @@ function TravelSelectPage() {
           <S.PostContainer>
             <S.Title>
               <div>즉흥 게시판</div>
-              <S.Seemore>더보기 {">"}</S.Seemore>
+              <S.Seemore onClick={() => {navigate('/board')}}>더보기 {">"}</S.Seemore>
             </S.Title>
             <S.PostArea>
-              <PostList posts={PopularPostData} showRanking={false}/>
+              {instantPost.length > 0 ? (
+                <PostList posts={instantPost} showRanking={false}/>
+              ) : (
+                <NoPopularPost>즉흥 게시물이 없습니다.</NoPopularPost>
+              )}
+
+              {/* <PostList posts={PopularPostData} showRanking={false} limit={2}/> */}
             </S.PostArea>
           </S.PostContainer>
 

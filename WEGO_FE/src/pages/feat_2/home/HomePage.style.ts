@@ -10,6 +10,9 @@ export const NoMission = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  justify-content: center;
+  align-items: center;
 `
 
 // 홈 화면 전체적인 레이아웃

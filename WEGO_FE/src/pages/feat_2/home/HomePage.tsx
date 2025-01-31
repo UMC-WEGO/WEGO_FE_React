@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
 import * as S from "./HomePage.style"
+import styled from 'styled-components';
 
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
@@ -28,6 +29,28 @@ import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 // 
 // 
 // 
+
+const NoPlanedTravel = styled.div`
+  border: 1px solid rgba(165, 165, 165, 1);
+  border-radius: 15px;
+  margin-bottom: 9px;
+
+  justify-content: center;
+  align-items: center;
+
+  height: 108px;
+
+  display: flex;
+`
+
+const NoPopularPost = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+
+  justify-content: center;
+  align-items: center;
+`
 
 type UpcomingTravelType = {
   tripId : number;
@@ -227,7 +250,7 @@ function HomePage() {
                 <PlanedCard key={plan.tripId} props={plan} onClickDelete={deleteUpcomingTravel}/>
               ))
             ):(
-              <div> 저장된 일정이 없습니다. </div>
+              <NoPlanedTravel> 저장된 일정이 없습니다. </NoPlanedTravel>
             )}  
             
             {/* {upcomingTravelList.map((plan, flag) => (
@@ -247,7 +270,7 @@ function HomePage() {
               {popularPostList.length > 0 ? (
                 <PostList posts={popularPostList} showRanking={true}/>
               ) : (
-                <div>인기 게시물이 없습니다.</div>
+                <NoPopularPost>인기 게시물이 없습니다.</NoPopularPost>
               )}
               {/* <PostList posts={popularPostList} showRanking={false}/> */}
             </S.PopularPostArea>
@@ -258,7 +281,7 @@ function HomePage() {
             {popularMissionList.length > 0 ? (
               <PopularMissionCard props={popularMissionList} />  // API에서 받은 미션 데이터를 props로 전달
             ) : (
-              <S.NoMission>미션이 없습니다.</S.NoMission>
+              <S.NoMission>인기 미션이 없습니다.</S.NoMission>
             )}
           </S.PopularMissionContainer>
         </S.ScrollArea>
