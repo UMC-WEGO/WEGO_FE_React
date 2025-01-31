@@ -25,7 +25,6 @@ import { useLocation } from 'react-router';
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 
-
 // 
 // 
 // 

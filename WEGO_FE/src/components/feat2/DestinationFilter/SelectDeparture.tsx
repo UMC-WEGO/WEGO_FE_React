@@ -1,8 +1,10 @@
 import styled, { isStyledComponent } from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import Bottomsheet from "../BottomSheet";
 import SearchDeparture from "./SearchDeparture";
-import search_icn from "../../../images/feat2/alarm_icon.png"
+import search_icn from "../../../images/feat2/search_icon.png"
 
 const SearchCard = styled.div`
   display: flex;
@@ -60,10 +62,23 @@ const LocationTitle = styled.div`
 const BottomSheetBtn = styled.button`
   display: flex;
   padding-left: 30%;
+  justify-content: space-between;
 
   background-color: white;
   width: 370px;
 `
+
+// 
+// 
+// 
+
+import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
+
+// 
+// 
+// 
+
+const user_id = 1;
 
 interface SelectedDepartureProps {
   departureLocation: string;
@@ -72,6 +87,24 @@ interface SelectedDepartureProps {
 }
 
 const SelectDeparture = ({ departureLocation, setDepartureLocation, location }: SelectedDepartureProps) => {
+  // --- --- --- 최근 여행지역 조회 --- --- ---
+  const [recentLocation, setRecentLocation] = useState([]);
+
+  useEffect(() => {
+    const getRecentLocation = async() => {
+      const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search/${user_id}`, {
+        headers: {
+          Authorization: `${TOKEN}`,
+          Accept: `application/josn`
+        }
+      })
+      setRecentLocation(responseRecentLocation.data)
+    }
+    getRecentLocation();
+  }, [])
+
+  console.log(recentLocation);
+
   const [isSearchBottomActive, setIsSearchActive] = useState(false);
   const toggleSearchBottom = () => { setIsSearchActive(!isSearchBottomActive); }
 
@@ -97,6 +130,23 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location }: 
       </NotionRow>
 
       {/* 지역 선택 */}
+      {/* 최근지역역 */}
+      <SearchRow>
+        <LocationTitle>최근지역</LocationTitle>
+        <LabelBox>
+          {recentLocation.map((recent) => (
+            <Element
+            key={recent}
+            onClick={() => setDepartureLocation(recent)}
+            isSelected = { departureLocation === recent }
+            >
+              {recent}
+            </Element>
+          ))}        
+        </LabelBox>        
+      </SearchRow>
+    
+      {/* 지역 전체 */}
       {location.map((location) => (
         <SearchRow key={location.name}>
           <LocationTitle>{location.name}</LocationTitle>

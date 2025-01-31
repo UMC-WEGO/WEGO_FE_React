@@ -3,7 +3,6 @@ import car_icon from "../../images/feat2/car_icon.png";
 import clock_icon from "../../images/feat2/alarm_icon.png";
 
   export const location = [
-    { name: "최근출발", elements: []},
     { name: "수도권", elements: ["서울 강북", "서울 강남", "의정부시", "고양시", "용인시", "하남시", "성남시", "남양주시"] },
     { name: "강원도", elements: ["강릉시", "속초시", "춘천시", "정선군", "양양군", "평창군"] },
     { name: "전라도", elements: ["전주시", "군산시", "남원시", "부안군", "여수시", "순천시", "담양군", "목포시"] },
