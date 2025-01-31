@@ -50,21 +50,15 @@ function TravelSelectPage() {
     duration = '3+';
   }
 
-  const startDate: string = departureDate.toISOString().replace('.000', '');
-  const endDate: string = arrivalDate.toISOString().replace('.000', '');;
+  const startDate: string = departureDate.toISOString().split('T')[0];   // 'T'를 기준으로 나눠서 앞쪽(날짜 부분)을 저장
+  const endDate: string = arrivalDate.toISOString().split('T')[0];
 
-  // console.log(
-  //   "POST값 확인하기",
-  //   " / departure : ",departure,
-  //   " / participants : ", participants,
-  //   " / vehicle : ", vehicle,
-  //   " / duration : ", duration,
-  //   " / startDate : ", startDate,
-  //   " / endDate : ", endDate,
-  // )
+  // console.log("출발 : ",startDate);
 
   // --- --- --- 즉흥 게시물 조회 --- --- ---
   const [instantPost, setInstantPost] = useState([]);
+  const [loadingInstantPost, setLoadingInstantPost] = useState(true);
+  const [errorInstantPost, setErrorInstantPost] = useState<string | null>(null);
 
   useEffect(() => {
     const getInstantPost = async() => {
@@ -76,6 +70,7 @@ function TravelSelectPage() {
           }
         })
         setInstantPost(responsePost.data.result);
+        setLoadingInstantPost(false);
       } catch(error) {
         console.log(error)
       }
@@ -110,6 +105,7 @@ function TravelSelectPage() {
           }
         );
         console.log('Post Success', res.data.result);
+        setLoadingDestination(false);
         setRecommendedDestinations(res.data.result);
       } catch (err) {
         console.log('Error on Post (criterias)!', err);
@@ -126,6 +122,8 @@ function TravelSelectPage() {
 
   // 데이터 적절히 변환
   const { location, region, growthRate } = locationData;
+  const adult_participants = numAdult;
+  const child_participants = numChild;
   // const location = departure;
 
   const navigate = useNavigate();
@@ -134,12 +132,13 @@ function TravelSelectPage() {
     const postTravel = async() => {
       try {
         const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
-          // "location": "부산",
-          // "participants": 5,
+          // "location": "서울 경부",
+          // "adult_participants": 1,
+          // "child_participants": 1,
           // "vehicle": "자가용",
           // "duration": "1",
-          // "startDate": "2025-01-06T12:00:00Z",
-          // "endDate": "2025-01-08T12:00:00Z"
+          // "startDate": "2025-02-04",
+          // "endDate": "2025-02-06"
 
           // 고양
           // 1 
@@ -163,6 +162,7 @@ function TravelSelectPage() {
         });
         console.log("선택된 여행지 확인", res);
         console.log(res.data.message);
+        
     
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
@@ -176,6 +176,16 @@ function TravelSelectPage() {
         console.log("Error on Post (travel)!", err);
       }
     };
+
+    console.log("일정 등록 POST : ", 
+      location,
+      adult_participants,
+      child_participants,
+      vehicle,
+      duration,
+      startDate,
+      endDate
+    )
 
   // 로딩 페이지 상태 관리
   const [loading, setLoading] = useState(true);

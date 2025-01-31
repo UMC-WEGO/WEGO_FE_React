@@ -43,9 +43,19 @@ const DeleteBtn = styled.button`
 `
 
 type PlanedCardType = {
+  // "tripId": 1,
+  // "location": "부산",
+  // "adult_participants": 5,
+  // "child_participants": 2,
+  // "vehicle": "자가용",
+  // "duration": "2-3",
+  // "startDate": "2025-01-30",
+  // "endDate": "2025-01-31"
+
   tripId : number;
   location: string;
-  participants: number;
+  adult_participants: number;
+  child_participants: number;
   vehicle: string;
   duration: string;
   departureDate: string;
@@ -70,7 +80,7 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
             </PlanedCard_row1>
             <PlanedCard_row2>
               <BlueTag TagContent={props.duration}/>
-              <BlueTag TagContent={`${props.participants}명`}/>
+              <BlueTag TagContent={`${props.adult_participants + props.child_participants}명`}/>
               <BlueTag TagContent={props.vehicle}/>
             </PlanedCard_row2>
           </PlanedCardHug>

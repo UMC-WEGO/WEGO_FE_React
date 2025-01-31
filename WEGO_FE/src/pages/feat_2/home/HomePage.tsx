@@ -33,7 +33,8 @@ import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 type UpcomingTravelType = {
   tripId : number;
   location: string;
-  participants: number;
+  adult_participants: number;
+  child_participants: number;
   vehicle: string;
   duration: string;
   departureDate: string;
@@ -45,7 +46,7 @@ function HomePage() {
 
   console.log("사용자 ID : ", userId.user_id);
 
-  // --- --- --- 다가오는 여행 조회 --- --- ---
+// --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
   const [errorTravel, setErrorTravel] = useState<string | null>(null);
@@ -87,7 +88,7 @@ function HomePage() {
 
   console.log(upcomingTravelList, upcomingTravelMessage);
   
-  // --- --- --- 일정 삭제 --- --- ---
+// --- --- --- 다가오는 일정 삭제 --- --- ---
   const deleteUpcomingTravel = async(tripId: number) => {
     try {
       const responseDeleteTravel = await axios.delete(`http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,{
@@ -119,7 +120,8 @@ function HomePage() {
           Accept: `application/josn`
         }
       })
-      setPopularPostList(responsePost.data.result)
+      setPopularPostList(responsePost.data.result);
+      setLoadingPost(false);
     }
     getPopularPost();
   }, [])
@@ -145,11 +147,11 @@ function HomePage() {
   const fixedTravelResponse = location.state?.fixedTravelResponse;  // 전달된 응답 메시지 가져오기
   const [isShowSaveModal, setIsShowSaveModal] = useState(false);
 
-  useEffect(() => {
-    if (fixedTravelResponse) {
-      setIsShowSaveModal(true);  // 응답 메시지가 있으면 모달을 띄움
-    }
-  }, [fixedTravelResponse]);
+  // useEffect(() => {
+  //   if (fixedTravelResponse) {
+  //     setIsShowModal(true);  // 응답 메시지가 있으면 모달을 띄움
+  //   }
+  // }, [fixedTravelResponse]);
 
   // 필터 값
   const [numAdult, setNumAdult] = useState(0);              // 성인 인원수
@@ -269,7 +271,9 @@ function HomePage() {
             //   onClose={() => setIsShowModal(false)} // 모달 닫기
             // />
           )} */}
-          <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
+          {isShowModal && (
+            <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
+          )}
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>
