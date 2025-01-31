@@ -23,13 +23,26 @@ const NotionRow = styled.div`
   padding: 15px;
 `
 
-const Element = styled.button`
+// const Element = styled.button`
+//   width: 100%;
+//   height: 37px;
+//   margin: 20px;
+
+//   display: flex;
+//   align-items: center;
+// `
+
+const Element = styled.button<{ isSelected: boolean }>`
   width: 100%;
   height: 37px;
   margin: 20px;
 
   display: flex;
   align-items: center;
+
+  // 선택된 경우 색상 변경
+  background-color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 0.1)" : "rgba(246, 246, 246, 1)")};
+  color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 1)" : "black")};
 `
 
 const SearchedCard = styled.div`
@@ -38,9 +51,11 @@ const SearchedCard = styled.div`
 
 interface DestinationProps {
   location: { name: string; elements: string[] }[];
+  setDepartureLocation: any;
+  departureLocation: string;
 }
 
-const SearchDeparture = ({ location }: DestinationProps) => {
+const SearchDeparture = ({ location, setDepartureLocation, departureLocation }: DestinationProps) => {
   const [inputTerm, setInputTerm] = useState("");
   const filterdLocation = location.map((category) => ({
     ...category,
@@ -74,7 +89,11 @@ const SearchDeparture = ({ location }: DestinationProps) => {
           filterdLocation.map((category) => (
             <div key={category.name}>
               {category.elements.map((element) => (
-                <Element key={element}>
+                <Element 
+                  key={element}
+                  onClick={() => setDepartureLocation(element)}
+                  isSelected = {departureLocation === element}
+                >
                   <img src={MapPin_Icon} style={{padding: "7.4px 8.63px 7.4px 8.63px", backgroundColor: "rgba(246, 246, 246, 1)", borderRadius: "18.5px"}}/>
                   <div>{element} ({category.name})</div>
                 </Element>

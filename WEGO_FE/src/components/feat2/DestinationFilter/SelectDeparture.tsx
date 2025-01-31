@@ -50,6 +50,7 @@ const Element = styled.button<{ isSelected: boolean }>`
   font-size: 12px;
   font-weight: 600;
 
+  // 선택된 경우 색상 변경
   background-color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 0.1)" : "rgba(246, 246, 246, 1)")};
   color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 1)" : "black")};
 `
@@ -119,7 +120,7 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location }: 
             <span><img src={search_icn}/></span>
           </BottomSheetBtn>
           <Bottomsheet isOpen={ isSearchBottomActive } onClose={ toggleSearchBottom } height="100%">
-            <SearchDeparture location={location}/>
+            <SearchDeparture location={location} setDepartureLocation={setDepartureLocation} departureLocation={departureLocation}/>
           </Bottomsheet>
         </div>
       </SearchHeader>
@@ -136,9 +137,9 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location }: 
         <LabelBox>
           {recentLocation.map((recent) => (
             <Element
-            key={recent}
-            onClick={() => setDepartureLocation(recent)}
-            isSelected = { departureLocation === recent }
+              key={recent}
+              onClick={() => setDepartureLocation(recent)}
+              isSelected = { departureLocation === recent }
             >
               {recent}
             </Element>
