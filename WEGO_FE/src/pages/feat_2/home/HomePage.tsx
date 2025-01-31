@@ -1,13 +1,13 @@
-///home/:user_id
+///home/
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
 import * as S from "./HomePage.style"
 
 import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 
 import PlanedCard from '../../../components/feat2/PlanedCard';
-import PopularPostCard from '../../../components/feat2/Post/PostCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 import Navbar from '../../../components/navbar/Navbar'
@@ -15,8 +15,8 @@ import PostList from '../../../components/feat2/Post/PostList';
 
 // 임시 데이터 가져오기
 // import PlanedTravelData from '../../../mocks/feat2/TestData_PlanedTravel';
-import { PopularMissionData } from '../../../mocks/feat2/TestData_PopularMission';
-import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
+// import { PopularMissionData } from '../../../mocks/feat2/TestData_PopularMission';
+// import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
 // 
 // 
 // 
@@ -29,6 +29,10 @@ import { useLocation } from 'react-router';
 // 
 // 
 function HomePage() {
+  const userId = useParams();     // 사용자 ID 받아오기
+
+  console.log("사용자 ID : ", userId.user_id);
+
   // --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
@@ -70,6 +74,23 @@ function HomePage() {
   }, [])
 
   console.log(upcomingTravelList, upcomingTravelMessage);
+  
+  // --- --- --- 일정 삭제 --- --- ---
+  const deleteUpcomingTravel = async(tripId: number) => {
+    try {
+      const responseDeleteTravel = await axios.delete(`http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,{
+        headers: {
+          Authorization: `${TOKEN}`,
+          Accept: `application/json`,
+          'Content-Type': 'application/json',
+        }
+      })
+
+      console.log("삭제 성공 여부 : ", responseDeleteTravel);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // --- --- --- 인기 게시물 조회 --- --- ---
   const [popularPostList, setPopularPostList] = useState([]);
@@ -105,12 +126,7 @@ function HomePage() {
     getPopularMission();
   }, [])
 
-  // --- --- --- 일정 삭제 --- --- ---
-  const deleteUpcomingTravel = async() => {{
-    
-  }}
-
-  // 일정 선택 페이지에서 메시지 받아오기
+  // --- --- --- 일정 선택 페이지에서 메시지 받아오기
   const location = useLocation();
   const fixedTravelResponse = location.state?.fixedTravelResponse;  // 전달된 응답 메시지 가져오기
   const [isShowSaveModal, setIsShowSaveModal] = useState(false);
@@ -141,6 +157,10 @@ function HomePage() {
         <S.ScrollArea>
           {/* 로고 영역 */}
           <S.LogoContainer><img src={WEGO_Logo}/></S.LogoContainer>
+
+          <button>
+            임시 삭제 버튼
+          </button>
 
           <S.SelectorContainer>
             <DestinationFilter 
@@ -185,24 +205,36 @@ function HomePage() {
 
           <S.PlanedContainer>          
             <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
-            {/* 일정이 없을 경우 메시지 출력력 */}
-            {isShowModal && <ModalMessage message={upcomingTravelMessage} onClose={() => setIsShowModal(false)} />}
             {/* 일정 출력 */}
-            {upcomingTravelList.map((plan, flag) => (
+
+            {upcomingTravelList.length > 0 ? (
+              upcomingTravelList.map((plan, flag) => (
+                <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
+              ))
+            ):(
+              <div> 저장된 일정이 없습니다. </div>
+            )}  
+            
+            {/* {upcomingTravelList.map((plan, flag) => (
               <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
-            ))}
+            ))} */}
           </S.PlanedContainer>
 
           <S.PopularPostContainer>
             {/* 인기 개시물 헤더더 */}
             <S.ContainerTitle>
               <div>인기 게시물</div>
-              <S.MoreBtn>더보기 {">"}</S.MoreBtn>
+              <S.MoreBtn onClick={() => {navigate('/board')}}>더보기 {">"}</S.MoreBtn>
             </S.ContainerTitle>
 
             {/* 개시물 나열 */}
             <S.PopularPostArea>
-              <PostList posts={popularPostList} showRanking={false}/>
+              {popularPostList.length > 0 ? (
+                <PostList posts={popularPostList} showRanking={true}/>
+              ) : (
+                <div>인기 게시물이 없습니다.</div>
+              )}
+              {/* <PostList posts={popularPostList} showRanking={false}/> */}
             </S.PopularPostArea>
           </S.PopularPostContainer>
 
@@ -211,19 +243,19 @@ function HomePage() {
             {popularMissionList.length > 0 ? (
               <PopularMissionCard props={popularMissionList} />  // API에서 받은 미션 데이터를 props로 전달
             ) : (
-              // <div>미션이 없습니다.</div>
               <S.NoMission>미션이 없습니다.</S.NoMission>
             )}
           </S.PopularMissionContainer>
         </S.ScrollArea>
 
         <S.NavbarArea>
-          {isShowModal && (
-            <ModalMessage
-              message={fixedTravelResponse} // 전달된 응답 메시지
-              onClose={() => setIsShowModal(false)} // 모달 닫기
-            />
-          )}
+          {/* {isShowSaveModal && (
+            // <ModalMessage
+            //   message={fixedTravelResponse} // 전달된 응답 메시지
+            //   onClose={() => setIsShowModal(false)} // 모달 닫기
+            // />
+          )} */}
+          <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>

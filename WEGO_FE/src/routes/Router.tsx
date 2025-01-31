@@ -48,7 +48,7 @@ const Router = [
       { path: '/scrap', element: <ScrapPage /> },
 
       // 메인 페이지 라우팅
-      { path: '/home/:user_id', element: <HomePage /> },
+      { path: '/home', element: <HomePage /> },
       {
         path: '/home/travel-select/random',
         element: <TravelSelectRandomPage />,

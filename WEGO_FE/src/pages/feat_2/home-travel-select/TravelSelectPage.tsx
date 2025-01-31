@@ -167,7 +167,7 @@ function TravelSelectPage() {
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
         
-        navigate('/home/1', {
+        navigate('/home', {
           state: {
             fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
           }
