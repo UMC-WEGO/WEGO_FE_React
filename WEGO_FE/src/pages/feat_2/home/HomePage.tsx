@@ -12,6 +12,8 @@ import PopularMissionCard from '../../../components/feat2/MissionCard';
 import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 import Navbar from '../../../components/navbar/Navbar'
 import PostList from '../../../components/feat2/Post/PostList';
+import ModalMessage from '../../../components/feat2/Modal';
+import { useLocation } from 'react-router';
 
 // 임시 데이터 가져오기
 // import PlanedTravelData from '../../../mocks/feat2/TestData_PlanedTravel';
@@ -22,29 +24,39 @@ import PostList from '../../../components/feat2/Post/PostList';
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
-import ModalMessage from '../../../components/feat2/Modal';
-import { useLocation } from 'react-router';
+
 
 // 
 // 
 // 
+
+type UpcomingTravelType = {
+  tripId : number;
+  location: string;
+  participants: number;
+  vehicle: string;
+  duration: string;
+  departureDate: string;
+  arrivalDate: string;
+}
+
 function HomePage() {
   const userId = useParams();     // 사용자 ID 받아오기
 
   console.log("사용자 ID : ", userId.user_id);
 
   // --- --- --- 다가오는 여행 조회 --- --- ---
-  const [upcomingTravelList, setUpcomingTravelList] = useState([]);
+  const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
   const [errorTravel, setErrorTravel] = useState<string | null>(null);
   const [upcomingTravelMessage, setUpcomingTravelMessage] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
   // const [showModalMessage, setShowModalMessage] = useState(false);
 
-  const handleDelete = (flag: number) => {                         // flag: 해당 카드가 표시 될건지 안될건지
-    const updatePlanList = upcomingTravelList.filter((_, index) => index !== flag);  // 해당 카드 삭제
-    setUpcomingTravelList(updatePlanList);                                   // 상태 업데이트
-  }
+  // const handleDelete = (flag: number) => {                         // flag: 해당 카드가 표시 될건지 안될건지
+  //   const updatePlanList = upcomingTravelList.filter((_, index) => index !== flag);  // 해당 카드 삭제
+  //   setUpcomingTravelList(updatePlanList);                                   // 상태 업데이트
+  // }
 
   useEffect(() => {
     const getUpcomingTrip = async() => {
@@ -87,6 +99,8 @@ function HomePage() {
       })
 
       console.log("삭제 성공 여부 : ", responseDeleteTravel);
+
+      setUpcomingTravelList((prevPlanList) => prevPlanList.filter((plan) => plan.tripId !== tripId))
     } catch (error) {
       console.log(error);
     }
@@ -158,9 +172,10 @@ function HomePage() {
           {/* 로고 영역 */}
           <S.LogoContainer><img src={WEGO_Logo}/></S.LogoContainer>
 
-          <button>
+          {/* <button onClick={() => deleteUpcomingTravel(7)}>
+            // 정상 작동 확인 완료 
             임시 삭제 버튼
-          </button>
+          </button> */}
 
           <S.SelectorContainer>
             <DestinationFilter 
@@ -206,10 +221,9 @@ function HomePage() {
           <S.PlanedContainer>          
             <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
             {/* 일정 출력 */}
-
             {upcomingTravelList.length > 0 ? (
-              upcomingTravelList.map((plan, flag) => (
-                <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
+              upcomingTravelList.map((plan) => (
+                <PlanedCard key={plan.tripId} props={plan} onClickDelete={deleteUpcomingTravel}/>
               ))
             ):(
               <div> 저장된 일정이 없습니다. </div>

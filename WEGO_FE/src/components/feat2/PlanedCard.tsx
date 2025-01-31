@@ -54,7 +54,7 @@ type PlanedCardType = {
 
 interface PlanedCardProps {
   props: PlanedCardType;
-  onClickDelete: () => void;
+  onClickDelete: (tripId: number) => void;
 }
 
 const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
@@ -66,7 +66,7 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
           <PlanedCardHug>
             <PlanedCard_row1>
               <div>{props.location} 여행, D-{D_Days}</div>
-              <DeleteBtn onClick={onClickDelete}><img src={trash_bin_img}/></DeleteBtn>
+              <DeleteBtn onClick={() => onClickDelete(props.tripId)}><img src={trash_bin_img}/></DeleteBtn>
             </PlanedCard_row1>
             <PlanedCard_row2>
               <BlueTag TagContent={props.duration}/>
