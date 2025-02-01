@@ -64,9 +64,13 @@ type UpcomingTravelType = {
 }
 
 function HomePage() {
-  const userId = useParams();     // 사용자 ID 받아오기
-
-  console.log("사용자 ID : ", userId.user_id);
+  const user_Id = useParams();     // 사용자 ID 받아오기
+  const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
+  
+  console.log(userId); // ':'가 제거된 userId 출력
+  
+  
+  console.log("사용자 ID : ", userId);
 
 // --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
@@ -204,6 +208,7 @@ function HomePage() {
           <S.SelectorContainer>
             <DestinationFilter 
               // 필터에 들어가는 값값
+              userId={String(userId)}
               departureDate={departureDate}
               arrivalDate={arrivalDate}
               numAdult={numAdult}
@@ -226,7 +231,7 @@ function HomePage() {
             <S.RandomBtnContainer>
             <S.RandomBtn 
               onClick={() => { 
-                navigate('/home/travel-select', {
+                navigate(`/home/travel-select/:${userId}`, {
                   state: {
                     departureDate,
                     arrivalDate,
@@ -286,6 +291,9 @@ function HomePage() {
           </S.PopularMissionContainer>
         </S.ScrollArea>
 
+        {isShowModal && (
+            <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
+          )}
         <S.NavbarArea>
           {/* {isShowSaveModal && (
             // <ModalMessage
@@ -293,9 +301,9 @@ function HomePage() {
             //   onClose={() => setIsShowModal(false)} // 모달 닫기
             // />
           )} */}
-          {isShowModal && (
+          {/* {isShowModal && (
             <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
-          )}
+          )} */}
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>

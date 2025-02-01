@@ -62,6 +62,8 @@ const BottomSheetBtn = styled.button`
 `
 
 interface DestinationFilterProps {
+  userId: string;
+
   numAdult: number;
   numChild: number;
   transport: string;
@@ -81,6 +83,8 @@ interface DestinationFilterProps {
 }
 
 const DestinationFilter = ({
+  userId,
+
   // 인원수
   numAdult,
   numChild,
@@ -194,7 +198,7 @@ const DestinationFilter = ({
             <div>
               <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
               <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
-                <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation} location={location}/>
+                <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation} location={location} userId={userId}/>
               </Bottomsheet>
             </div>
           </Label>

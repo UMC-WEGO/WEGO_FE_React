@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import axios from "axios";
 import * as S from "./TravelSelectPage.style"
 import styled from "styled-components";
+import { useParams } from "react-router";
 
 import Loading from "../home-travel-select-random/TravelSelectRandomPage";
 
@@ -41,6 +42,9 @@ const NoPopularPost = styled.div`
 `
 
 function TravelSelectPage() {
+  const user_Id = useParams();     // 사용자 ID 받아오기
+  const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
+
   // 홈에서 정보 가져오기기
   const uselocation = useLocation();
   const { departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
@@ -159,7 +163,8 @@ function TravelSelectPage() {
           // 2025-01-29T16:57:16.274Z
 
           location,
-          participants,
+          adult_participants,
+          child_participants,
           vehicle,
           duration,
           startDate,
@@ -171,14 +176,13 @@ function TravelSelectPage() {
             'Content-Type': 'application/json',
           },
         });
-        console.log("선택된 여행지 확인", res);
         console.log(res.data.message);
         
     
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
         
-        navigate('/home', {
+        navigate(`/home/:${userId}`, {
           state: {
             fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
           }
@@ -188,7 +192,7 @@ function TravelSelectPage() {
       }
     };
 
-    console.log("일정 등록 POST : ", 
+    console.log("선택된 조건 확인 : ", 
       location,
       adult_participants,
       child_participants,
@@ -209,7 +213,7 @@ function TravelSelectPage() {
 
   return(
     <>
-    {loading ? (
+    {loadingDestination ? (
       <Loading/>
     ) : (
       <S.AppContainer>

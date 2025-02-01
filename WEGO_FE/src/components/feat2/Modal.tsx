@@ -22,13 +22,18 @@ const slideUp = keyframes`
 `;
 
 const ModalContainer = styled.div`
-  width: 373px;
+  width: 100%;
   height: 50px;
   border-radius: 5px;
+  padding: 20px;
 
   background-color: #262626F2;
   color: white;
   animation: ${slideUp} 2s ease-in-out forwards;
+
+  display: flex;
+  justify-content: center;  // 가로 중앙 정렬
+  align-items: center;      // 세로 중앙 정렬
 `;
 
 const ModalMessage = ({ message, onClose }: { message: string, onClose: () => void }) => {
