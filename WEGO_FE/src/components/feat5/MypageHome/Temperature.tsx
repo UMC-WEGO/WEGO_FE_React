@@ -47,6 +47,11 @@ function TempContainer({ temperature }: TempContainerProps) {
             <S.TempLabel>즉흥 온도</S.TempLabel>
             <S.TempImage src={TempInfo} alt="온도정보 아이콘" />
           </S.TempButton>
+          {isClicked && (
+            <S.TempInfoMessage>
+              <img src={TempDes} alt="온도 설명" />
+            </S.TempInfoMessage>
+          )}
         </S.TempValueLabelWrapper>
         <S.TempGrade>
           <img
@@ -56,12 +61,6 @@ function TempContainer({ temperature }: TempContainerProps) {
           <span>{getGrade(temperature).grade}</span>
         </S.TempGrade>
       </S.TempHeader>
-
-      {isClicked && (
-        <S.TempInfoMessage>
-          <img src={TempDes} alt="온도 설명" />
-        </S.TempInfoMessage>
-      )}
 
       <S.ProgressBarSection>
         <img src={TempBar} alt="온도 바" />

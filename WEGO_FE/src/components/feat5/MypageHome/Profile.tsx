@@ -21,7 +21,7 @@ function Profile({ userData }: ProfileProps) {
           </S.InfoCard>
           <S.InfoCard>
             {/* 0 처리 */}
-            <h3>{userData.completedMissions ?? 'X'}</h3>
+            <h3>{userData.completedMissions ?? 0}</h3>
             <p>미션 달성</p>
           </S.InfoCard>
         </S.InfoSection>

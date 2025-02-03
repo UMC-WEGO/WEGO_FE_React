@@ -42,6 +42,7 @@ export const TempButton = styled.button`
   align-items: center;
   gap: 3px;
   margin-top: 5px;
+  position: relative;
 `;
 
 export const TempLabel = styled.div`
@@ -83,9 +84,7 @@ export const TempImage = styled.img`
 
 export const TempInfoMessage = styled.div`
   position: absolute;
-  margin-top: 30px;
-  margin-left: -12px;
-  top: 50%;
+  top: 115%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 10;
