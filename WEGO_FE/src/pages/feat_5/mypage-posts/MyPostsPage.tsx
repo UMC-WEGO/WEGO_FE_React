@@ -21,13 +21,14 @@ function MyPostsPage() {
     const fetchPostsData = async () => {
       try {
         const data = await userpostsApis();
+        console.log('API 받은 데이터', data);
         setAllPosts(data.posts || []);
       } catch (err: unknown) {
         if (err instanceof Error) {
-          console.log('API Error:', err.message);
+          console.log('API Error', err.message);
           setError(err.message || 'error');
         } else {
-          console.log('Unknown Error:', err);
+          console.log('Unknown Error', err);
           setError('error');
         }
       } finally {
