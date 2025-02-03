@@ -4,9 +4,11 @@ import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router';
 import { useState, useEffect } from 'react';
 import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
+import Modal from '../../../components/feat4/Modal/Modal';
 
 function BoardWritePage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false); // 취소 모달 상태
   const [selectedTopic, setSelectedTopic] = useState('전체'); // 선택된 주제
   const [title, setTitle] = useState(''); // 제목 상태
   const [content, setContent] = useState(''); // 내용 상태
@@ -73,6 +75,19 @@ function BoardWritePage() {
     }
   }, []);
 
+  // 로컬스토리지에 작성 글 저장
+  const saveToLocalStorage = () => {
+    localStorage.setItem(
+      'boardWriteData',
+      JSON.stringify({
+        selectedTopic,
+        title,
+        content,
+        uploadedImages,
+      }),
+    );
+  };
+
   // 주제 선택 버튼 -> 모달 열기
   const handleSelectButtonClick = () => {
     setIsModalOpen(true);
@@ -85,6 +100,18 @@ function BoardWritePage() {
 
   // 이전 페이지
   const handleBack = () => {
+    setIsCancelModalOpen(true);
+  };
+
+  const handleModalConfirm = () => {
+    saveToLocalStorage(); // 임시 저장
+    setIsCancelModalOpen(false);
+    navigate('/board'); // 이전 페이지 이동
+  };
+
+  const handleModalCancel = () => {
+    localStorage.removeItem('boardWriteData');
+    setIsCancelModalOpen(false);
     navigate('/board');
   };
 
@@ -176,6 +203,15 @@ function BoardWritePage() {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         onTopicSelect={handleTopicSelect}
+      />
+
+      <Modal
+        isOpen={isCancelModalOpen}
+        onContinue={handleModalConfirm}
+        onCancel={handleModalCancel}
+        message1="작성한 글을 임시저장 하시겠습니까?"
+        message2="취소할 경우 글이 삭제됩니다."
+        buttontext="임시저장"
       />
 
       <S.Content>
