@@ -2,7 +2,7 @@ import * as S from './MyPage.style';
 import Group from '../../../images/feat5/Group.svg';
 import Alarm from '../../../images/feat5/alarm.svg';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../../../components/feat5/MypageHome/Profile';
 import ProfileMenu from '../../../components/feat5/MypageHome/ProfileMenu';
 import TempContainer from '../../../components/feat5/MypageHome/Temperature';
@@ -12,6 +12,8 @@ import { UserInfoData } from '../../../types/feat5/UserInfoData';
 
 function MyPage() {
   const navigate = useNavigate();
+  const { userId } = useParams();
+  const urlUserId = userId; // url에 있는 userId
   const [userData, setUserData] = useState<UserInfoData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +46,21 @@ function MyPage() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
+  // user_id가 다른 경우 접근 처리
+  if (userData && urlUserId !== String(userData.user_id)) {
+    return (
+      <S.Container>
+        <S.Header>
+          <h1>마이페이지</h1>
+        </S.Header>
+        <p className="noaccess">
+          잘못된 접근입니다.
+          <span className="line">다시 시도해주세요!</span>
+        </p>
+      </S.Container>
+    );
+  }
+
   // 경로 이동
   const handleNavigate = (path: string) => {
     if (userData) {
@@ -69,7 +86,7 @@ function MyPage() {
         <S.Header>
           <h1>마이페이지</h1>
         </S.Header>
-        <p>사용자 정보를 찾을 수 없습니다.</p>
+        <p className="noaccess">사용자 정보를 찾을 수 없습니다.</p>
       </S.Container>
     );
   }

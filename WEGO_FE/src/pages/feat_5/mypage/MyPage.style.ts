@@ -7,6 +7,23 @@ export const Container = styled.div`
   margin-bottom: 90px;
   border-bottom: 1px solid #ddd;
   flex-direction: column;
+
+  .noaccess {
+    margin-top: 329px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #0059ff;
+  }
+
+  .line {
+    display: block;
+    margin-top: 8px;
+  }
 `;
 
 export const Header = styled.header`
