@@ -44,8 +44,11 @@ function MyPage() {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>{error}</div>;
 
+  // 경로 이동
   const handleNavigate = (path: string) => {
-    navigate(`/mypage/${path}`);
+    if (userData) {
+      navigate(`/mypage/${userData.user_id}/${path}`);
+    }
   };
 
   const handleCancel = () => {
