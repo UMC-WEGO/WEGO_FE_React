@@ -21,8 +21,9 @@ function MyPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await userinfoApis();
-        setUserData(response.data);
+        const data = await userinfoApis();
+        console.log('API 받은 데이터', data);
+        setUserData(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
           console.log('API Error:', err.message);
