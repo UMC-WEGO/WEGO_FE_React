@@ -10,7 +10,7 @@ import TempContainer from '../../../components/feat5/MypageHome/Temperature';
 import MenuList from '../../../components/feat5/MypageHome/MenuList';
 import { userinfoApis } from '../../../apis/feat5/userinfoApis';
 // import { UserInfoData } from '../../../types/feat5/UserInfoData';
-import Loading from '../../../components/feat5/loading';
+import Loading from '../../../components/feat5/Loading';
 import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPage() {

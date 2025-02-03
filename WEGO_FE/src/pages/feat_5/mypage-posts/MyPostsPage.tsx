@@ -9,7 +9,7 @@ import Modal from '../../../components/feat5/Modal/Modal';
 import { userpostsApis } from '../../../apis/feat5/userpostsApis';
 import { UserPostsData } from '../../../types/feat5/UserPostsData';
 import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
-import Loading from '../../../components/feat5/loading';
+import Loading from '../../../components/feat5/Loading';
 import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPostsPage() {
