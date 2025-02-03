@@ -58,7 +58,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const TopicButton = styled.button`
-  width: 140px;
+  width: 150px;
   padding: 10px 0;
   border: 1px solid transparent;
   border-radius: 20px;

@@ -82,11 +82,12 @@ export const Content = styled.div`
   }
 `;
 
-export const Region = styled.div`
+export const Region = styled.div<{ $isRequired: boolean }>`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin: 0px 25px;
-  padding: 15px 3px 10px;
+  padding: 12px 3px 10px;
 
   font-size: 16px;
   font-weight: 600;
@@ -106,6 +107,7 @@ export const Photo = styled.div`
 
   h1 {
     font-size: 16px;
+    margin: 9px 0;
   }
 
   p {
@@ -113,6 +115,20 @@ export const Photo = styled.div`
     line-height: 17px;
     color: #262626;
   }
+`;
+
+export const RegionWarningText = styled.h6`
+  font-size: 12px;
+  color: #dc0000;
+  font-weight: 400;
+  margin-right: 120px;
+`;
+
+export const PhotoWarningText = styled.h6`
+  font-size: 12px;
+  color: #dc0000;
+  margin: 5px 0;
+  font-weight: 400;
 `;
 
 export const ScrollContainer = styled.div`
@@ -124,7 +140,7 @@ export const ScrollContainer = styled.div`
   white-space: nowrap;
 `;
 
-export const UploadBox = styled.label`
+export const UploadBox = styled.label<{ $isPhotoRequired: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -141,6 +157,12 @@ export const UploadBox = styled.label`
   cursor: pointer;
 
   box-sizing: border-box;
+
+  ${({ $isPhotoRequired }) =>
+    $isPhotoRequired &&
+    `
+    border: 1px solid #dc0000;
+  `}
 
   p {
     color: #bbb;
