@@ -65,3 +65,25 @@ export const tokenRefreshApi = async (data: TRefreshApiReqData) => {
     console.error('회원 탈퇴 실패:', error);
   }
 };
+
+export const logoutApi = async () => {
+  try {
+    const apiRes = await authInstance.patch('/auth/logout');
+    console.log(apiRes);
+    return 1;
+  } catch (error) {
+    console.error('로그아웃 실패:', error);
+    return -1;
+  }
+};
+
+export const userDeleteApi = async () => {
+  try {
+    const apiRes = await authInstance.patch('auth/delete');
+    console.log(apiRes);
+    return 1;
+  } catch (error) {
+    console.error('회원 탈퇴 실패:', error);
+    return -1;
+  }
+};

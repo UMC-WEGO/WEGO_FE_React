@@ -74,20 +74,18 @@ function Input<T extends FieldValues>({
   signUpInputType,
   isError,
   type,
-  debouncedCheck, // 리액트 훅 폼에서의 register-onChange는 래퍼함수로 동작하기 때문에 또 정의해도 괜찮음
-  value, // ✅ 추가: 외부에서 전달되는 value
-  onChange, // ✅ 추가: 외부에서 전달되는 onChange
+  debouncedCheck,
+  value, // 외부에서 전달되는 value
+  onChange, // 외부에서 전달되는 onChange
 }: TInputProps<T>) {
   // onChange 병합
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Debounced check and register onChange triggered');
-
     // 디바운스 처리
     if (debouncedCheck) {
       debouncedCheck({ email: e.target.value });
     }
 
-    // ✅ props에서 받은 onChange가 있으면 사용
+    // props에서 받은 onChange가 있으면 사용
     if (onChange) {
       onChange(e);
     }
@@ -111,7 +109,7 @@ function Input<T extends FieldValues>({
       $isError={isError}
       placeholder={placeholder}
       onChange={handleChange} // onchange는 커스텀 핸들러 전달
-      value={value} // ✅ value가 존재하면 controlled input으로 사용
+      value={value} // value가 존재하면 controlled input으로 사용
       {...restProps} // 나머지 register 속성 전달
       type={type == 'password' ? 'password' : 'text'}
     ></MyInput>

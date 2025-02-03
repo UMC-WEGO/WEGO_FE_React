@@ -9,6 +9,9 @@ import { PasswordSchema } from '../../../constants/schema';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router';
+import { passwordChangeApi } from '../../../apis/feat1/passwordFindApis';
+import { useTokenStore } from '../../../store/token/useTokenStore';
+import { usePasswordFindStore } from '../../../store/passwordFind/usePasswordFindStore';
 
 export type TPasswordFormData = {
   password: string;
@@ -41,15 +44,19 @@ function PasswordChangePage() {
 
   const inputPasswordValue = watch('password', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
   const inputPasswordCheckValue = watch('passwordCheck', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const { data: emailData, setData } = usePasswordFindStore();
+  console.log(emailData);
 
   const onSubmit = async data => {
-    const { password, passwordCheck } = data;
-    console.log('폼 데이터 제출:', data);
+    const {
+      password,
+      passwordCheck,
+    }: { password: string; passwordCheck: string } = data;
     // API 호출 및 로직 처리
-  };
-
-  const postPasswordChange = async data => {
-    // api 로직
+    passwordChangeApi({
+      email: emailData.email,
+      password: password,
+    });
   };
 
   return (

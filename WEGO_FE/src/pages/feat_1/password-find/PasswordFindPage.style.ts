@@ -33,6 +33,7 @@ const MainSection = styled.form`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  position: relative;
 `;
 const PasswordTextBox = styled.div`
   width: 100%;
@@ -91,6 +92,12 @@ const SignUpErrorText = styled.p`
   letter-spacing: -0.32px;
 
   color: #dc0000;
+  position: absolute;
+  bottom: -16px;
+`;
+const NextButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 6.7vh;
 `;
 
 export {
@@ -103,4 +110,5 @@ export {
   PasswordInputWrapper,
   VerifyButton,
   SignUpErrorText,
+  NextButtonWrapper,
 };

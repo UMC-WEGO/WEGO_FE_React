@@ -10,9 +10,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TReturnsOfUseForm } from '../../../types/SignUpFormData';
 import { EmailSchema } from '../../../constants/schema';
 import { useNavigate } from 'react-router';
+import { usePasswordFindStore } from '../../../store/passwordFind/usePasswordFindStore';
+import {
+  passwordAuthCodeSendApi,
+  passwordAuthCodeVerifyApi,
+} from '../../../apis/feat1/passwordFindApis';
 
 export type TEmailFormData = {
   email: string;
+  code: string;
 };
 
 function PasswordFindPage() {
@@ -28,13 +34,17 @@ function PasswordFindPage() {
   const navigate = useNavigate();
   const userId = 1;
 
+  // zustand
+  const { data, setData } = usePasswordFindStore();
+
   //--------------------------------------------
   //--------------- hook form ------------------
   const initVal: TEmailFormData = {
     email: '',
+    code: '',
   };
 
-  // react-hook-form 정의 + zustand 사용안함
+  // react-hook-form 정의
   const returnsOfUseForm: TReturnsOfUseForm<TEmailFormData> =
     useForm<TEmailFormData>({
       mode: 'onChange',
@@ -50,22 +60,42 @@ function PasswordFindPage() {
     formState: { errors, isValid },
   } = returnsOfUseForm;
 
-  const inputValue = watch('email', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const emailValue = watch('email', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const codeValue = watch('code', '');
 
   const onSubmit = async data => {
     const { email } = data;
+    setData({
+      email: email,
+    });
     console.log('폼 데이터 제출:', data);
     // API 호출 및 로직 처리
   };
 
   const getPasswordVerifyCode = async () => {
-    setVerifyCode('testCode');
     setIsVerifyStarted(true);
+
+    passwordAuthCodeSendApi({
+      email: emailValue,
+    });
   };
 
   const postEmailVerify = async () => {
-    setIsVerifySuccess(true);
-    setIsVerifyStarted(false);
+    const verifyResult = await passwordAuthCodeVerifyApi({
+      email: emailValue,
+      code: codeValue,
+    });
+
+    if (verifyResult == 1) {
+      console.log(verifyResult);
+      setIsVerifySuccess(true);
+      setIsVerifyStarted(false);
+      setIsCodeDiff(false);
+    } else {
+      setIsVerifySuccess(false);
+      setIsVerifyStarted(true);
+      setIsCodeDiff(true);
+    }
   };
 
   return (
@@ -89,7 +119,7 @@ function PasswordFindPage() {
               <S.VerifyButton
                 type="button"
                 $color={
-                  errors.email || !inputValue.length
+                  errors.email || !emailValue.length
                     ? '--color-gray-300'
                     : '--color-main-blue'
                 }
@@ -113,9 +143,9 @@ function PasswordFindPage() {
             <S.PasswordInputWrapper>
               <Input
                 placeholder="인증번호를 입력해주세요."
-                // register={register}
-                // signUpInputType="email"
-                // isError={Boolean(errors.email)}
+                register={register}
+                signUpInputType="code"
+                isError={Boolean(errors.email)}
               />
               <S.VerifyButton
                 type="button"
@@ -126,8 +156,13 @@ function PasswordFindPage() {
               >
                 {isVerifyStarted ? '인증하기' : '인증완료'}
               </S.VerifyButton>
-              {/* <S.SignUpErrorText>{isVerifyStarted && isCodeDiff && ""}</S.SignUpErrorText> */}
             </S.PasswordInputWrapper>
+            <S.SignUpErrorText>
+              {isVerifyStarted &&
+                isCodeDiff &&
+                Boolean(codeValue.length) &&
+                '인증 코드가 불일치합니다'}
+            </S.SignUpErrorText>
           </S.PasswordInputsBox>
           <Button
             type={'submit'}
