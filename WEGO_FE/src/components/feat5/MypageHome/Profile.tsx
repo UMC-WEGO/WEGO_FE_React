@@ -1,5 +1,6 @@
 import * as S from './Profile.style';
 import { UserInfoData } from '../../../types/feat5/UserInfoData';
+import profile_circle from '../../../images/feat5/profile_circle.svg';
 
 interface ProfileProps {
   userData: UserInfoData;
@@ -9,7 +10,11 @@ function Profile({ userData }: ProfileProps) {
   return (
     <S.ProfileContainer>
       <S.ProfileHeader>
-        <S.ProfilePic src={userData.profile_image} alt="Profile Picture" />
+        {/* 기본 프로필 이미지 설정 */}
+        <S.ProfilePic
+          src={userData.profile_image ?? profile_circle}
+          alt="Profile Picture"
+        />
         <S.InfoSection>
           <S.InfoCard>
             <h3>{userData.point}</h3>
