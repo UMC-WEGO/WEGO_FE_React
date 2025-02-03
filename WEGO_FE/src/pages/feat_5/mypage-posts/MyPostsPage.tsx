@@ -20,8 +20,8 @@ function MyPostsPage() {
   useEffect(() => {
     const fetchPostsData = async () => {
       try {
-        const response = await userpostsApis();
-        setAllPosts(response.data); // 데이터 1개면 배열[]로 설정
+        const data = await userpostsApis();
+        setAllPosts(data.posts || []);
       } catch (err: unknown) {
         if (err instanceof Error) {
           console.log('API Error:', err.message);
@@ -43,7 +43,9 @@ function MyPostsPage() {
   if (error) return <div>{error}</div>;
 
   // 해당 사용자 게시물 필터링
-  const userPosts = allPosts.filter(post => post.userId);
+  const userPosts = Array.isArray(allPosts)
+    ? allPosts.filter(post => post.userId)
+    : [];
 
   const handleOpenModal = (postId: number) => {
     setSelectedPostId(postId);
