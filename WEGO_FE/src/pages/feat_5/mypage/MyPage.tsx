@@ -1,53 +1,38 @@
 import * as S from './MyPage.style';
 import Group from '../../../images/feat5/Group.svg';
 import Alarm from '../../../images/feat5/alarm.svg';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../../../components/feat5/MypageHome/Profile';
 import ProfileMenu from '../../../components/feat5/MypageHome/ProfileMenu';
 import TempContainer from '../../../components/feat5/MypageHome/Temperature';
 import MenuList from '../../../components/feat5/MypageHome/MenuList';
 import { userinfoApis } from '../../../apis/feat5/userinfoApis';
-import { UserInfoData } from '../../../types/feat5/UserInfoData';
+// import { UserInfoData } from '../../../types/feat5/UserInfoData';
+import Loading from '../../../components/feat5/loading';
+import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPage() {
   const navigate = useNavigate();
   const { userId } = useParams();
   const urlUserId = userId; // url에 있는 userId
-  const [userData, setUserData] = useState<UserInfoData | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
   // API
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const data = await userinfoApis();
-        console.log('API 받은 데이터', data);
-        setUserData(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.log('API Error:', err.message);
-          setError(err.message || 'error');
-        } else {
-          console.log('Unknown Error:', err);
-          setError('error');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['userData'],
+    queryFn: userinfoApis,
+  });
 
-    fetchUserData();
-  }, []);
+  // 로딩, 에러 처리
+  if (isLoading) return <Loading />;
+  if (error instanceof Error) return <ErrorMessage error={error} />;
 
-  // 로딩, 에러처리
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  console.log('API 받은 데이터', data);
 
   // user_id가 다른 경우 접근 처리
-  if (userData && urlUserId !== String(userData.user_id)) {
+  if (data && urlUserId !== String(data.user_id)) {
     return (
       <S.Container>
         <S.Header>
@@ -60,11 +45,10 @@ function MyPage() {
       </S.Container>
     );
   }
-
   // 경로 이동
   const handleNavigate = (path: string) => {
-    if (userData) {
-      navigate(`/mypage/${userData.user_id}/${path}`);
+    if (data) {
+      navigate(`/mypage/${data.user_id}/${path}`);
     }
   };
 
@@ -80,7 +64,7 @@ function MyPage() {
     setShowLogoutModal(!showLogoutModal);
   };
 
-  if (!userData) {
+  if (!data) {
     return (
       <S.Container>
         <S.Header>
@@ -100,12 +84,12 @@ function MyPage() {
       </S.Header>
 
       <S.ProfileContainer>
-        <Profile userData={userData} />
+        <Profile userData={data} />
       </S.ProfileContainer>
       <ProfileMenu handleNavigate={handleNavigate} />
 
       <S.TempContainer>
-        <TempContainer temperature={userData.temperature} />{' '}
+        <TempContainer temperature={data.temperature} />{' '}
       </S.TempContainer>
 
       <MenuList handleNavigate={handleNavigate} />

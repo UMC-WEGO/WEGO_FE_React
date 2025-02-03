@@ -1,4 +1,8 @@
 export type UserPostsData = {
+  posts: Post[];
+};
+
+export type Post = {
   postId: number;
   categoryId: number;
   userId: number;

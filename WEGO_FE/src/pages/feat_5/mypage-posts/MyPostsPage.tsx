@@ -1,52 +1,46 @@
 import * as S from './MyPostsPage.style';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
 import Modal from '../../../components/feat5/Modal/Modal';
 import { userpostsApis } from '../../../apis/feat5/userpostsApis';
 import { UserPostsData } from '../../../types/feat5/UserPostsData';
+import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
+import Loading from '../../../components/feat5/loading';
+import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPostsPage() {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
-  const [allPosts, setAllPosts] = useState<UserPostsData[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   // API
+  const { data, isLoading, error } = useQuery<UserPostsData, Error>({
+    queryKey: ['userPosts'],
+    queryFn: userpostsApis,
+  });
+
+  // 삭제버튼
+  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
+  // const userPosts = Array.isArray(data?.posts)
+  //   ? data.posts.filter(post => post.userId)
+  //   : [];
+
+  // useEffect로 데이터 설정
   useEffect(() => {
-    const fetchPostsData = async () => {
-      try {
-        const data = await userpostsApis();
-        console.log('API 받은 데이터', data);
-        setAllPosts(data.posts || []);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.log('API Error', err.message);
-          setError(err.message || 'error');
-        } else {
-          console.log('Unknown Error', err);
-          setError('error');
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (data?.posts) {
+      setUserPosts(data.posts.filter(post => post.userId));
+    }
+  }, [data]);
 
-    fetchPostsData();
-  }, []);
+  // 로딩, 에러 처리
+  if (isLoading) return <Loading />;
+  if (error instanceof Error) return <ErrorMessage error={error} />;
 
-  // 로딩, 에러처리
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-
-  // 해당 사용자 게시물 필터링
-  const userPosts = Array.isArray(allPosts)
-    ? allPosts.filter(post => post.userId)
-    : [];
+  console.log('API 받은 데이터', data);
 
   const handleOpenModal = (postId: number) => {
     setSelectedPostId(postId);
@@ -58,13 +52,13 @@ function MyPostsPage() {
     setIsModalOpen(false);
   };
 
-  // 포스트 삭제 처리
+  // 삭제 버튼 / API 필요
   const handleDelete = () => {
     if (selectedPostId !== null) {
-      const updatedPosts = allPosts.filter(
+      const updatedPosts = userPosts.filter(
         post => post.postId !== selectedPostId,
       );
-      setAllPosts(updatedPosts);
+      setUserPosts(updatedPosts); //
       handleCloseModal();
     }
   };
