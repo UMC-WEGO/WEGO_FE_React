@@ -17,8 +17,8 @@ import {
   MyPointsPage,
   CouponPage,
   MyPointsCompletePage,
-  MyQuestionPage,
-  MyQAPage,
+  MyQuestionsPage,
+  MyQnAPage,
   MyTermsPage,
   MyPrivacyPage,
   CurrentSchedulePage,
@@ -29,7 +29,10 @@ import {
   SignupCompletePage,
   ErrorPage,
   RegionSelectPage,
+  AlertsPage,
   ScheduleMissionsVerificaionStatusPage,
+  PasswordFindPage,
+  PasswordChangePage,
 } from '../pages/index';
 
 const Router = [
@@ -43,6 +46,13 @@ const Router = [
       { path: '/login', element: <LoginPage /> },
       { path: '/signup/:step', element: <SignupPage /> },
       { path: '/signup/complete', element: <SignupCompletePage /> },
+
+      // 비밀번호 관련 라우팅
+      { path: '/user/:userId/password/find', element: <PasswordFindPage /> },
+      {
+        path: '/user/:userId/password/change',
+        element: <PasswordChangePage />,
+      },
 
       // 스크랩
       { path: '/scrap', element: <ScrapPage /> },
@@ -83,6 +93,10 @@ const Router = [
         path: '/board/region-select',
         element: <RegionSelectPage />,
       },
+      {
+        path: '/board/alert',
+        element: <AlertsPage />,
+      },
 
       // 마이페이지 관련 라우팅
       { path: '/mypage/:userId', element: <MyPage /> },
@@ -93,8 +107,8 @@ const Router = [
       { path: '/mypage/:userId/schedules', element: <MySchedulesPage /> },
       { path: '/mypage/:userId/posts', element: <MyPostsPage /> },
       { path: '/mypage/:userId/missions', element: <MyMissionsPage /> },
-      { path: '/mypage/:userId/question', element: <MyQuestionPage /> },
-      { path: '/mypage/:userId/question/:qId', element: <MyQAPage /> },
+      { path: '/mypage/:userId/question', element: <MyQuestionsPage /> },
+      { path: '/mypage/:userId/question/:qId', element: <MyQnAPage /> },
       { path: '/mypage/:userId/points', element: <MyPointsPage /> },
       { path: '/mypage/:userId/points/:pointId', element: <CouponPage /> },
       {

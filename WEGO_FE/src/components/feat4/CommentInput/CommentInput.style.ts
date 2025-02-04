@@ -40,8 +40,12 @@ export const InputContainer = styled.div`
     padding: 10px 40px 10px 10px;
     border-radius: 20px;
     font-size: 14px;
-    color: #a5a5a5;
+    color: #000;
     background-color: #f6f6f6;
+
+    &::placeholder {
+      color: #a5a5a5;
+    }
   }
 
   button {

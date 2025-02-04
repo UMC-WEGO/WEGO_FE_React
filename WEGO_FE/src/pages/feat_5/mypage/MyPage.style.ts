@@ -5,7 +5,6 @@ export const Container = styled.div`
   width: 100%;
   margin-top: 59px;
   margin-bottom: 90px;
-  border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   flex-direction: column;
 `;
@@ -103,7 +102,7 @@ export const MenuList = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 19px;
-  margin-top: 36px;
+  margin-top: 45px;
   padding-left: 32px;
 
   button {
@@ -137,7 +136,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 100px;
+  margin-top: 80px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
@@ -178,7 +177,7 @@ export const ModalContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f9f9f9;
+  background: #f2f2f7;
 `;
 
 export const TextContainer = styled.div`
@@ -211,9 +210,9 @@ export const DButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f9f9f9;
+    background-color: #f2f2f7;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 17px;
     font-weight: 500;

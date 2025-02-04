@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
+interface ContentProps {
+  noScroll?: boolean;
+}
+
 export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  border-top: 1px solid #ddd;
   flex-direction: column;
   margin-left: 20px;
-  margin-right: 20px;
+  margin-right: 2px;
 `;
 
 export const Header = styled.header`
@@ -16,7 +19,7 @@ export const Header = styled.header`
   justify-content: center;
   width: 100%;
   height: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
   position: relative;
 
   h1 {
@@ -27,7 +30,7 @@ export const Header = styled.header`
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    margin: 0px;
+    margin-left: -18px;
   }
 
   .arrow-btn {
@@ -51,25 +54,13 @@ export const Header = styled.header`
   }
 `;
 
-export const Content = styled.div`
+export const Content = styled.div<ContentProps>`
   display: flex;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  overflow-y: scroll;
+  overflow-y: ${props => (props.noScroll ? 'hidden' : 'auto')};
+  padding-bottom: 30px;
+  overflow-anchor: none;
 `;
 
 export const PostWrapper = styled.div`
@@ -88,4 +79,17 @@ export const Button = styled.div`
     width: 16px;
     height: 16px;
   }
+`;
+
+export const NoPostMessage = styled.div`
+  margin-top: 329px;
+  margin-left: -18px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.3199999928474426px;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #0059ff;
 `;

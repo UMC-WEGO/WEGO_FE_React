@@ -6,7 +6,6 @@ export const Container = styled.div`
   flex-direction: column;
 
   margin-top: 59px;
-  overflow-y: auto;
 
   hr {
     border: 3px solid #eaeaea;
@@ -29,7 +28,7 @@ export const Profile = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 0 25px 10px;
+  padding: 10px 25px;
 
   img {
     width: 70px;
@@ -78,14 +77,19 @@ export const Info = styled.div`
   }
 `;
 
-export const Post = styled.div`
+export const PostBox = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+  min-height: 400px;
 
   p {
     font-size: 17px;
     font-weight: 600;
-    padding: 15px 15px 5px;
+    padding: 15px 15px 8px;
   }
+`;
+
+export const Post = styled.div`
+  overflow-y: auto;
 `;
