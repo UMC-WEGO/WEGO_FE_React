@@ -3,25 +3,8 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import X from '../../../images/feat5/X.svg';
 import scheduleDeleteBtn from '../../../images/feat5/scheduleDeleteBtn.svg';
-
-interface Mission {
-  id: number;
-  name: string;
-  imageUrl: string;
-  mission_write: string;
-  points: number;
-}
-
-interface Schedule {
-  id: number;
-  title: string;
-  dateRange: string;
-  people: number;
-  tag: string;
-  points: number;
-  isMissionCompleted: boolean;
-  missions?: Mission[];
-}
+import { Schedule } from '../../../types/feat5/UserSchedulesData';
+import missionpic from '../../../images/feat5/missionpic.png';
 
 function ScheduleCard({
   schedule,
@@ -36,7 +19,7 @@ function ScheduleCard({
 
   const [isInReview, setIsInReview] = useState(false); // isInReview: 미션 검수 중(백엔드 미션 승인)
   const [isCompleted, setIsCompleted] = useState<boolean>(
-    schedule.isMissionCompleted,
+    schedule.missions.some(m => m.receivedMission.status),
   );
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -51,10 +34,10 @@ function ScheduleCard({
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
 
   // 여행 포인트 (각 미션의 포인트 합)
-  const totalPoints =
-    schedule.missions?.reduce((total, mission) => total + mission.points, 0) ||
-    0;
-  schedule.points = totalPoints;
+  const totalPoints = schedule.missions.reduce(
+    (total, mission) => total + mission.mission.point,
+    0,
+  );
 
   const handleDeleteClick = () => {
     setIsDeleteModalVisible(true);
@@ -71,7 +54,7 @@ function ScheduleCard({
   };
 
   const handleDelete = () => {
-    onDelete(schedule.id);
+    onDelete(schedule.tripId);
   };
 
   // 상세 보기
@@ -92,21 +75,21 @@ function ScheduleCard({
 
   const handleConfirmMission = () => {
     setIsCompleted(true);
-    onMissionComplete(schedule.id);
+    onMissionComplete(schedule.tripId);
     setIsModalVisible(false);
-    navigate(`/schedule/${schedule.id}/missions/status`); // 한 여행의 미션 인증 페이지로
+    navigate(`/schedule/${schedule.tripId}/missions/status`); // 한 여행의 미션 인증 페이지로
   };
 
   // 여행 완료 모달
   const handleCompletion = () => {
     setIsInReview(true);
     setIsModalVisible(false);
-    onMissionComplete(schedule.id);
+    onMissionComplete(schedule.tripId);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    navigate(`/schedule/end/${schedule.id}`); // 여행 후 미션 인증하기 페이지로
+    navigate(`/schedule/end/${schedule.tripId}`); // 여행 후 미션 인증하기 페이지로
   };
 
   const handleCloseModal = () => {
@@ -135,15 +118,39 @@ function ScheduleCard({
         }}
       >
         <S.TitleContainer>
-          <S.Title>{schedule.title}</S.Title>
+          <S.Title>
+            {schedule.location} 여행,
+            {/* 디데이 계산(현재 날짜 기준) */}
+            {(() => {
+              const today = new Date();
+              const endDate = new Date(schedule.endDate);
+              // 시간 초기화
+              today.setHours(0, 0, 0, 0);
+              endDate.setHours(0, 0, 0, 0);
+              const timeDiff = endDate.getTime() - today.getTime();
+              const daysLeft = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+              if (daysLeft > 0) {
+                return ` D-${daysLeft}`;
+              } else if (daysLeft === 0) {
+                return ' D-Day';
+              } else {
+                return ` D+${Math.abs(daysLeft)}`;
+              }
+            })()}
+          </S.Title>
           <S.DeleteButton onClick={handleDeleteClick}>
             <img src={scheduleDeleteBtn} alt="삭제" />
           </S.DeleteButton>
         </S.TitleContainer>
         <S.TagContainer>
-          <S.Tag>{schedule.dateRange}</S.Tag>
-          <S.Tag>{schedule.people}명</S.Tag>
-          <S.Tag>{schedule.tag}</S.Tag>
+          <S.Tag>
+            {/* 날짜 파싱해서 출력 */}
+            {new Date(schedule.startDate).toISOString().split('T')[0]} ~{' '}
+            {`${(new Date(schedule.endDate).getMonth() + 1).toString().padStart(2, '0')}-${new Date(schedule.endDate).getDate().toString().padStart(2, '0')}`}
+          </S.Tag>
+          <S.Tag>{`${schedule.adult_participants}명`}</S.Tag>
+          <S.Tag>{schedule.vehicle}</S.Tag>
         </S.TagContainer>
       </S.HeaderContainer>
 
@@ -193,18 +200,26 @@ function ScheduleCard({
             <S.MissionSection>
               <S.MissionImages>
                 {schedule.missions.map(mission => (
-                  <S.MissionItem
-                    key={mission.id}
-                    onClick={() =>
-                      handleImageClick(
-                        mission.imageUrl,
-                        mission.name,
-                        mission.mission_write,
-                      )
-                    }
-                  >
-                    <img src={mission.imageUrl} alt={mission.name} />
-                    <S.MissionName>{mission.name}</S.MissionName>
+                  <S.MissionItem key={mission.mission.id}>
+                    {/* 사진 업로드가 안되어서 일단 기본 이미지로 출력 */}
+                    <img
+                      src={mission.mission.imageUrl || missionpic}
+                      alt={mission.mission.title}
+                      onError={(
+                        e: React.SyntheticEvent<HTMLImageElement, Event>,
+                      ) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = missionpic;
+                      }}
+                      onClick={() =>
+                        handleImageClick(
+                          mission.mission.imageUrl || missionpic,
+                          mission.mission.title,
+                          mission.mission.content,
+                        )
+                      }
+                    />
+                    <S.MissionName>{mission.mission.title}</S.MissionName>
                   </S.MissionItem>
                 ))}
               </S.MissionImages>
