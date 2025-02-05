@@ -77,7 +77,7 @@ function ScheduleCard({
     setIsCompleted(true);
     onMissionComplete(schedule.tripId);
     setIsModalVisible(false);
-    navigate(`/schedule/${schedule.tripId}/missions/status`); // 한 여행의 미션 인증 페이지로
+    navigate(`/schedule/end/${schedule.tripId}`);
   };
 
   // 여행 완료 모달
@@ -85,11 +85,11 @@ function ScheduleCard({
     setIsInReview(true);
     setIsModalVisible(false);
     onMissionComplete(schedule.tripId);
+    navigate(`/schedule`);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    navigate(`/schedule/end/${schedule.tripId}`); // 여행 후 미션 인증하기 페이지로
   };
 
   const handleCloseModal = () => {
@@ -106,7 +106,7 @@ function ScheduleCard({
           schedule.missions && schedule.missions.length > 0
             ? isCompleted || isInReview
               ? 'auto'
-              : '442px'
+              : '426px'
             : isInReview // 인증 요청된 미션이 하나도 없는 경우
               ? '130px'
               : '260px',
