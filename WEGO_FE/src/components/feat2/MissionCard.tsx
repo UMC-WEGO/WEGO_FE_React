@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 import chevron from "../../images/feat2/chevron-forward-outline.png";
 import pin from "../../images/feat2/map_pin_icon.png";
@@ -99,6 +100,16 @@ const MissionContent = styled.div`
   margin-top: 20px;
 `
 
+// 
+// 
+// 
+
+import { TOKEN } from '../../mocks/feat2/TOKEN_Temporary_file';
+
+// 
+// 
+// 
+
 interface MissionProps {
   props: {
     missionId: number;
@@ -128,6 +139,20 @@ const PopularMissionCard = ({props}: MissionProps) => {
     }
   }
 
+const SavePopularMisson = async (MissionId: any) => {
+  const responseSaveMission = await axios.post(
+    `http://13.124.213.122:3000/home/savePopularMission/${MissionId}`,
+    {},
+    {
+      headers: {
+        Authorization: `${TOKEN}`
+      }
+    }
+  );
+
+  console.log(responseSaveMission);
+}
+
   return(
     <>
       <PopularMissionCardBox>
@@ -148,7 +173,7 @@ const PopularMissionCard = ({props}: MissionProps) => {
         </PopularMissionRow3>
 
         <PopularMissionRow4>
-          <MissionSaveBtn>미션 저장</MissionSaveBtn>
+          <MissionSaveBtn onClick={() => SavePopularMisson(nowShowMission.missionId)}>미션 저장</MissionSaveBtn>
         </PopularMissionRow4>
       </PopularMissionCardBox>
     </>

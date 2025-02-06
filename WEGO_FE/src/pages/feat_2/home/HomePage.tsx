@@ -148,6 +148,8 @@ function HomePage() {
       })
       setPopularPostList(responsePost.data.result);
       setLoadingPost(false);
+
+      console.log("인기 게시물 조회 결과", responsePost.data.result.missions);
     }
     getPopularPost();
   }, [])
@@ -295,15 +297,6 @@ function HomePage() {
             <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
           )}
         <S.NavbarArea>
-          {/* {isShowSaveModal && (
-            // <ModalMessage
-            //   message={fixedTravelResponse} // 전달된 응답 메시지
-            //   onClose={() => setIsShowModal(false)} // 모달 닫기
-            // />
-          )} */}
-          {/* {isShowModal && (
-            <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
-          )} */}
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>
