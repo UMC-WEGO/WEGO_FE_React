@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import X from '../../../images/feat5/X.svg';
 import scheduleDeleteBtn from '../../../images/feat5/scheduleDeleteBtn.svg';
 import { Schedule } from '../../../types/feat5/UserSchedulesData';
-import missionpic from '../../../images/feat5/missionpic.png';
 
 function ScheduleCard({
   schedule,
@@ -201,21 +200,20 @@ function ScheduleCard({
               <S.MissionImages>
                 {schedule.missions.map(mission => (
                   <S.MissionItem key={mission.mission.id}>
-                    {/* 사진 업로드가 안되어서 일단 기본 이미지로 출력 */}
+                    {/* 인증된 사진 null 상태 */}
                     <img
-                      src={mission.mission.imageUrl || missionpic}
-                      alt={mission.mission.title}
-                      onError={(
-                        e: React.SyntheticEvent<HTMLImageElement, Event>,
-                      ) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = missionpic;
-                      }}
+                      src={mission.receivedMission.imgUrl} // 인증 사진으로
                       onClick={() =>
                         handleImageClick(
-                          mission.mission.imageUrl || missionpic,
+                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고, 추후 아래 코드로 수정!
+                          mission.mission.imageUrl,
                           mission.mission.title,
                           mission.mission.content,
+                          // 인증
+                          // 현재 인증된 미션이 없어서 상세 조회 클릭이 안됨
+                          // mission.receivedMission.imgUrl,
+                          // mission.mission.title,
+                          // mission.receivedMission.content,
                         )
                       }
                     />
