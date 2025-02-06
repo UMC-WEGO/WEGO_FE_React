@@ -10,7 +10,7 @@ import {
 
 export type TSignUpFormData = {
   email: string;
-  verificationCode?: string; // 인증 코드
+  verificationCode: string; // 인증 코드
   password: string;
   passwordCheck: string;
   termsAgree: boolean;
@@ -30,4 +30,26 @@ export type TReturnsOfUseForm<TFieldValues extends FieldValues> = {
   watch: UseFormWatch<TFieldValues>; // 입력 값 관찰 함수
   setValue: UseFormSetValue<TFieldValues>; // 특정 필드의 값 설정
   formState: FormState<TFieldValues>; // 폼 상태 정보
+};
+
+// api 리퀘스트 데이터 형태 - zustand로 관리
+export type TSignupApiReqData = {
+  email: string;
+  password: string;
+  nickname: string;
+  marketing_consent: boolean;
+  info_consent: boolean;
+};
+export type TEmailVerifySendApiReqData = {
+  email: string;
+};
+export type TEmailVerifyResponseApiReqData = {
+  email: string;
+  code: string;
+};
+export type TNicknameDupCheckApiReqData = {
+  nickname: string;
+};
+export type TEmailDupCheckApiReqData = {
+  email: string;
 };
