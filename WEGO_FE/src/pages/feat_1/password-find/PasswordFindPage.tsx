@@ -10,9 +10,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { TReturnsOfUseForm } from '../../../types/SignUpFormData';
 import { EmailSchema } from '../../../constants/schema';
 import { useNavigate } from 'react-router';
+import { usePasswordFindStore } from '../../../store/passwordFind/usePasswordFindStore';
+import {
+  passwordAuthCodeSendApi,
+  passwordAuthCodeVerifyApi,
+} from '../../../apis/feat1/passwordFindApis';
+import { Timer } from '../../../components/feat1/timer/Timer';
+import { useParams } from 'react-router';
 
 export type TEmailFormData = {
   email: string;
+  code: string;
 };
 
 function PasswordFindPage() {
@@ -20,21 +28,28 @@ function PasswordFindPage() {
   const [isVerifySuccess, setIsVerifySuccess] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
   const [isCodeDiff, setIsCodeDiff] = useState(true);
+  // 타이머 상태
+  const [isTimerActive, setIsTimerActive] = useState(false);
+  const [initialMinites, setInitialMinites] = useState<number>(3);
+  const [timerKey, setTimerKey] = useState(0);
   const verifyButtonText = {
     default: '인증번호 받기',
     retry: '다시받기',
   };
 
   const navigate = useNavigate();
-  const userId = 1;
+  const { userId } = useParams();
+
+  // zustand
+  const { setData, isTimerEnd, setIsTimerEnd } = usePasswordFindStore();
 
   //--------------------------------------------
   //--------------- hook form ------------------
   const initVal: TEmailFormData = {
     email: '',
+    code: '',
   };
 
-  // react-hook-form 정의 + zustand 사용안함
   const returnsOfUseForm: TReturnsOfUseForm<TEmailFormData> =
     useForm<TEmailFormData>({
       mode: 'onChange',
@@ -50,22 +65,49 @@ function PasswordFindPage() {
     formState: { errors, isValid },
   } = returnsOfUseForm;
 
-  const inputValue = watch('email', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const emailValue = watch('email', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const codeValue = watch('code', '');
 
+  //--------------------------------------------
+  //--------------- 로직들 ------------------
   const onSubmit = async data => {
     const { email } = data;
-    console.log('폼 데이터 제출:', data);
-    // API 호출 및 로직 처리
+    setData({
+      email: email,
+    });
   };
 
   const getPasswordVerifyCode = async () => {
-    setVerifyCode('testCode');
+    if (isVerifyStarted) {
+      alert('인증번호를 재전송합니다');
+      setIsTimerEnd(false);
+      setTimerKey(prev => prev + 1);
+    }
+
     setIsVerifyStarted(true);
+    setIsTimerActive(true);
+
+    passwordAuthCodeSendApi({
+      email: emailValue,
+    });
   };
 
   const postEmailVerify = async () => {
-    setIsVerifySuccess(true);
-    setIsVerifyStarted(false);
+    const verifyResult = await passwordAuthCodeVerifyApi({
+      email: emailValue,
+      code: codeValue,
+    });
+
+    if (verifyResult == 1) {
+      console.log(verifyResult);
+      setIsVerifySuccess(true);
+      setIsVerifyStarted(false);
+      setIsCodeDiff(false);
+    } else {
+      setIsVerifySuccess(false);
+      setIsVerifyStarted(true);
+      setIsCodeDiff(true);
+    }
   };
 
   return (
@@ -85,11 +127,12 @@ function PasswordFindPage() {
                 register={register}
                 signUpInputType="email"
                 isError={Boolean(errors.email)}
+                width="100%"
               />
               <S.VerifyButton
                 type="button"
                 $color={
-                  errors.email || !inputValue.length
+                  errors.email || !emailValue.length
                     ? '--color-gray-300'
                     : '--color-main-blue'
                 }
@@ -113,9 +156,10 @@ function PasswordFindPage() {
             <S.PasswordInputWrapper>
               <Input
                 placeholder="인증번호를 입력해주세요."
-                // register={register}
-                // signUpInputType="email"
-                // isError={Boolean(errors.email)}
+                register={register}
+                signUpInputType="code"
+                isError={Boolean(errors.email)}
+                width="100%"
               />
               <S.VerifyButton
                 type="button"
@@ -126,15 +170,34 @@ function PasswordFindPage() {
               >
                 {isVerifyStarted ? '인증하기' : '인증완료'}
               </S.VerifyButton>
-              {/* <S.SignUpErrorText>{isVerifyStarted && isCodeDiff && ""}</S.SignUpErrorText> */}
+              {isTimerActive && (
+                <Timer
+                  key={timerKey}
+                  initialMinutes={initialMinites}
+                  isActive={isTimerActive}
+                />
+              )}
             </S.PasswordInputWrapper>
+            <S.SignUpErrorText>
+              {isTimerEnd && '인증이 만료되었습니다'}
+              {!isTimerEnd &&
+                isVerifyStarted &&
+                isCodeDiff &&
+                Boolean(codeValue.length) &&
+                '인증 코드가 불일치합니다'}
+            </S.SignUpErrorText>
           </S.PasswordInputsBox>
           <Button
             type={'submit'}
-            color={isVerifySuccess ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
+            color={
+              isVerifySuccess && !isTimerEnd
+                ? '--color-main-blue'
+                : '--color-gray-300'
+            } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
             content={'비밀번호 찾기'}
-            disabled={Boolean(errors.email)}
+            disabled={Boolean(errors.email) && !isTimerEnd}
             onClickHandler={() => navigate(`/user/${userId}/password/change`)}
+            width="100%"
           ></Button>
         </S.MainSection>
       </S.ViewContainer>

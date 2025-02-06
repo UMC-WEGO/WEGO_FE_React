@@ -1,17 +1,22 @@
 import React from 'react';
 import { IoArrowBack } from 'react-icons/io5';
+import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 
 const BackArrowLayout = styled.div`
   position: absolute;
   top: 12px;
   left: 10px;
+  cursor: pointer;
 `;
 
-// props 추가해서 위치 조정가능하게,  12px 10px을 디폴트로 두기 
+// props 추가해서 위치 조정가능하게,  12px 10px을 디폴트로 두기
 function BackArrow() {
+  const navigate = useNavigate();
   return (
-    <BackArrowLayout>
+    <BackArrowLayout
+      onClick={() => (window.history.length > 1 ? navigate(-1) : '')}
+    >
       <IoArrowBack size={'30px'}></IoArrowBack>
     </BackArrowLayout>
   );
