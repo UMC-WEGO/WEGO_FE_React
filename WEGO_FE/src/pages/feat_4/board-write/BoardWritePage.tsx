@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from 'react-router';
 import { useState, useEffect } from 'react';
 import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
 import Modal from '../../../components/feat4/Modal/Modal';
+import { createPostApi } from '../../../apis/feat4/postApi';
 
 function BoardWritePage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
@@ -122,7 +123,7 @@ function BoardWritePage() {
   };
 
   // 완료 버튼 클릭
-  const handleComplete = () => {
+  const handleComplete = async () => {
     let hasError = false;
 
     if (!selectedRegion || selectedRegion === '지역 선택') {
@@ -139,10 +140,36 @@ function BoardWritePage() {
       setIsPhotoRequired(false);
     }
 
-    if (!hasError) {
+    if (hasError) return;
+
+    const user_id = localStorage.getItem('user_id');
+
+    const categoryMap: Record<string, number> = {
+      '즉흥 자랑': 1,
+      일반: 2,
+      '미션 제안': 3,
+      '현지 정보': 4,
+    };
+
+    const category_id = categoryMap[selectedTopic] || 0;
+
+    const postData = {
+      category_id,
+      user_id: Number(user_id),
+      local_id: 3, // 지역 ID
+      title,
+      content,
+      picture_url: [], // 업로드된 이미지의 URL (구현 필요)
+    };
+
+    const result = await createPostApi(postData);
+
+    if (result) {
       console.log('폼 제출 성공!');
       navigate('/board');
       localStorage.removeItem('boardWriteData');
+    } else {
+      console.log('게시글 작성 실패. 다시 시도해주세요.');
     }
   };
 

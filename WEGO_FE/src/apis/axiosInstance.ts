@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = '';
+const BASE_URL = 'http://13.124.213.122:3000';
 
 // 단순 get요청으로 인증값이 필요없는 경우
 const axiosApi = (url: string) => {
