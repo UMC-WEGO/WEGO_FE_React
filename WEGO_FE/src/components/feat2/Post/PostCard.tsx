@@ -4,33 +4,49 @@ import { PiChatTextBold, PiThumbsUpBold, PiBookmarkSimpleBold } from "react-icon
 // 게시물 카드
 
 interface PostDataForm {
+  id: number;
+  img_url: string;
   ranking?: number;
   showRanking?: boolean;  
-  tag: string[];
+  tag: string;
   title: string;
   content: string;
   timestamp: string;
   location: string;
+  likes_num: number;
+  comments_num: number;
+  scripts_num: number;
 }
 
 const PostCard = ({
   ranking,
   showRanking,
+  id,
+  img_url,
   tag,
   title,
   content,
   timestamp,
-  location
+  location,
+  likes_num,
+  comments_num,
+  scripts_num
+
+  // ranking,
+  // showRanking,
+  // tag,
+  // title,
+  // content,
+  // timestamp,
+  // location
 }: PostDataForm) => {
   return(
       <S.PostContainer>
         {showRanking && <S.Rank>{ranking}</S.Rank>}
-        <img/>
+        <img src={img_url}/>
         <S.Content>
           <span>
-            {tag.map((tagcontent, index) => (
-              <div key={index}>#{tagcontent}</div>
-            ))}
+              <div>#{tag}</div>
           </span>
           <h3>{title}</h3>
           <h4>{content}</h4>
@@ -41,13 +57,13 @@ const PostCard = ({
             </h5>
             <h6>
               <div>
-                <PiThumbsUpBold />0
+                <PiThumbsUpBold />{likes_num}
               </div>
               <div>
-                <PiChatTextBold />0
+                <PiChatTextBold />{comments_num}
               </div>
               <div>
-                <PiBookmarkSimpleBold />0
+                <PiBookmarkSimpleBold />{scripts_num}
               </div>
             </h6>
           </S.PostInfo>

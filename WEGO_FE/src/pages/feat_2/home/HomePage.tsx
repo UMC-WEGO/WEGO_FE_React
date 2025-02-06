@@ -67,10 +67,10 @@ function HomePage() {
   const user_Id = useParams();     // 사용자 ID 받아오기
   const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
   
-  console.log(userId); // ':'가 제거된 userId 출력
+  // console.log(userId); // ':'가 제거된 userId 출력
   
   
-  console.log("사용자 ID : ", userId);
+  // console.log("사용자 ID : ", userId);
 
 // --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
@@ -112,7 +112,7 @@ function HomePage() {
     getUpcomingTrip();
   }, [])
 
-  console.log(upcomingTravelList, upcomingTravelMessage);
+  // console.log(upcomingTravelList, upcomingTravelMessage);
   
 // --- --- --- 다가오는 일정 삭제 --- --- ---
   const deleteUpcomingTravel = async(tripId: number) => {
@@ -125,11 +125,11 @@ function HomePage() {
         }
       })
 
-      console.log("삭제 성공 여부 : ", responseDeleteTravel);
+      // console.log("삭제 성공 여부 : ", responseDeleteTravel);
 
       setUpcomingTravelList((prevPlanList) => prevPlanList.filter((plan) => plan.tripId !== tripId))
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
 
@@ -146,7 +146,7 @@ function HomePage() {
           Accept: `application/josn`
         }
       })
-      setPopularPostList(responsePost.data.result);
+      setPopularPostList(responsePost.data.result.missions);
       setLoadingPost(false);
 
       console.log("인기 게시물 조회 결과", responsePost.data.result.missions);
@@ -193,7 +193,7 @@ function HomePage() {
   // 선택한 조건 여행선택페이지로 전송
   const navigate = useNavigate();
 
-  console.log(upcomingTravelList);
+  // console.log(upcomingTravelList);
 
   return(
     <>    
