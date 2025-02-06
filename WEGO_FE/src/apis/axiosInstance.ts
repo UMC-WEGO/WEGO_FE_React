@@ -16,7 +16,7 @@ const axiosApi = (url: string) => {
   return instance;
 };
 
-const { data, setData } = useTokenStore.getState();
+const { data } = useTokenStore.getState();
 const { accessToken, refreshToken } = data;
 
 // post, delete등 api요청 시 인증값이 필요한 경우
@@ -31,9 +31,9 @@ const axiosAuthApi = (url: string) => {
   // 요청 인터셉터
   instance.interceptors.request.use(
     config => {
-      // zustand의 액세스 토큰을 불러와서 사용
+      const { data } = useTokenStore.getState();
       config.headers['Content-Type'] = 'application/json';
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = data.accessToken;
 
       return config;
     },
@@ -60,10 +60,8 @@ const axiosAuthApi = (url: string) => {
           refreshToken: refreshToken,
         });
 
-        error.config.headers = {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${accessToken}`,
-        };
+        const newState = useTokenStore.getState();
+        error.config.headers['Authorization'] = newState.data.accessToken;
 
         // 중단된 요청을(에러난 요청)을 토큰 갱신 후 재요청
         const response = await axios.request(error.config);
