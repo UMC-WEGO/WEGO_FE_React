@@ -31,6 +31,7 @@ const axiosAuthApi = (url: string) => {
   // 요청 인터셉터
   instance.interceptors.request.use(
     config => {
+      // zustand의 액세스 토큰을 불러와서 사용
       const { data } = useTokenStore.getState();
       config.headers['Content-Type'] = 'application/json';
       config.headers['Authorization'] = data.accessToken;
