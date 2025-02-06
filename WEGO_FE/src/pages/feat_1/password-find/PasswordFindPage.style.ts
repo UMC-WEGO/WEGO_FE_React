@@ -33,6 +33,7 @@ const MainSection = styled.form`
   display: flex;
   flex-direction: column;
   /* align-items: center; */
+  position: relative;
 `;
 const PasswordTextBox = styled.div`
   width: 100%;
@@ -48,6 +49,7 @@ const PasswordTextBox = styled.div`
 `;
 
 const PasswordInputsBox = styled(SS.SignUpInputsBox)`
+  width: 100%;
   position: relative;
   margin-bottom: 30px;
   &:nth-child(3) {
@@ -59,7 +61,7 @@ const PasswordInputWrapper = styled.div`
   width: 100%;
   button {
     position: absolute;
-    right: 22px;
+    right: 5px;
     top: 33px;
     color: white;
   }
@@ -91,6 +93,12 @@ const SignUpErrorText = styled.p`
   letter-spacing: -0.32px;
 
   color: #dc0000;
+  position: absolute;
+  bottom: -16px;
+`;
+const NextButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 6.7vh;
 `;
 
 export {
@@ -103,4 +111,5 @@ export {
   PasswordInputWrapper,
   VerifyButton,
   SignUpErrorText,
+  NextButtonWrapper,
 };
