@@ -63,6 +63,30 @@ function MyPostsPage() {
     }
   };
 
+  // 내가 쓴 글 시간 계산
+  const CalculateCreatedAt = (createdAt: string) => {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const isToday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate();
+
+    if (isToday) {
+      const diffInHours = Math.floor(
+        (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
+      );
+      return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
+    } else {
+      return `${(createdDate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}.${createdDate
+        .getDate()
+        .toString()
+        .padStart(2, '0')}`;
+    }
+  };
+
   return (
     <S.Container>
       <S.Header>
@@ -81,8 +105,8 @@ function MyPostsPage() {
                   {
                     id: String(post.postId),
                     category: String(post.categoryId),
-                    time: post.createdAt,
-                    location: `${post.localId}`,
+                    time: CalculateCreatedAt(post.createdAt),
+                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함함
                     ...post,
                   },
                 ]}
