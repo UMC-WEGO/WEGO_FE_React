@@ -18,6 +18,8 @@ const initVal: TPasswordInputs = {
 type TPasswordFindStore = {
   data: TPasswordInputs;
   setData: (inputData: Partial<TPasswordInputs>) => void;
+  isTimerEnd: boolean;
+  setIsTimerEnd: (inputData: boolean) => void;
 };
 
 // zustand 스토어, 필요한 폼데이터 하위속성만 수정해서 setFormData함수에 전달해서 반영
@@ -27,4 +29,8 @@ export const usePasswordFindStore = create<TPasswordFindStore>(set => ({
   data: initVal, // 초기 폼 데이터 설정
   setData: inputData =>
     set(state => ({ data: { ...state.data, ...inputData } })), // 일부 데이터만 병합하여 상태 업데이트
+  isTimerEnd: false,
+  setIsTimerEnd: inputData => {
+    set(state => ({ isTimerEnd: inputData }));
+  },
 }));

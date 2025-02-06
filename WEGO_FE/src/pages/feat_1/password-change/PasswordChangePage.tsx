@@ -75,6 +75,7 @@ function PasswordChangePage() {
               register={register}
               signUpInputType="password"
               isError={Boolean(errors.password)}
+              width="100%"
             />
             <S.SignUpErrorText>{errors?.password?.message}</S.SignUpErrorText>
           </S.PasswordInputsBox>
@@ -85,6 +86,7 @@ function PasswordChangePage() {
               register={register}
               signUpInputType="passwordCheck"
               isError={Boolean(errors.passwordCheck)}
+              width="100%"
             />
             <S.SignUpErrorText>
               {errors?.passwordCheck?.message}
@@ -103,6 +105,7 @@ function PasswordChangePage() {
             content={'로그인 하러 가기'}
             disabled={Boolean(errors.password) || Boolean(errors.passwordCheck)}
             onClickHandler={() => navigate('/login')}
+            width="100%"
           ></Button>
         </S.MainSection>
       </S.ViewContainer>

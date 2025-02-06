@@ -49,6 +49,7 @@ const PasswordTextBox = styled.div`
 `;
 
 const PasswordInputsBox = styled(SS.SignUpInputsBox)`
+  width: 100%;
   position: relative;
   margin-bottom: 30px;
   &:nth-child(3) {
@@ -60,7 +61,7 @@ const PasswordInputWrapper = styled.div`
   width: 100%;
   button {
     position: absolute;
-    right: 22px;
+    right: 5px;
     top: 33px;
     color: white;
   }
