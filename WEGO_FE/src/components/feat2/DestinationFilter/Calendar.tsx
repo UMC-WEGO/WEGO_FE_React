@@ -128,10 +128,9 @@ const CalendarBody = ({ nowMonthCalendar, departureDate, arrivalDate, onChangeDe
                 date.toDateString() === arrivalDate.toDateString()
               }
               onClick={() => {
-                if (!departureDate || date < departureDate) {
+                if (!departureDate || date < departureDate || (departureDate && arrivalDate && date < arrivalDate)) {
                   onChangeDeparture(date);
-                }
-                else {
+                } else {
                   onChangeArrival(date);
                 }
               }}>
