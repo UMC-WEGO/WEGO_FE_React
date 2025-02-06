@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as S from './CommentInput.style';
-import { TbPhotoSquareRounded, TbSend } from 'react-icons/tb';
+import { TbSend } from 'react-icons/tb';
 
 interface CommentInputProps {
   onAddComment: (comment: string) => void;
@@ -19,9 +19,6 @@ const CommentInput: React.FC<CommentInputProps> = ({ onAddComment }) => {
 
   return (
     <S.Container onSubmit={handleSubmit}>
-      <span>
-        <TbPhotoSquareRounded />
-      </span>
       <S.InputContainer>
         <input
           type="text"
