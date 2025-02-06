@@ -140,16 +140,16 @@ function HomePage() {
 
   useEffect(() => {
     const getPopularPost = async() => {
-      const responsePost: AxiosResponse<any> = await axios.get(`http://13.124.213.122:3000/home/popular-missions`, {
+      const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
         headers: {
           Authorization: `${TOKEN}`,
           Accept: `application/josn`
         }
       })
-      setPopularPostList(responsePost.data.result.missions);
+      setPopularPostList(responseGet.data);
       setLoadingPost(false);
 
-      console.log("인기 게시물 조회 결과", responsePost.data.result.missions);
+      console.log("인기 게시물 조회 결과", responseGet.data);
     }
     getPopularPost();
   }, [])

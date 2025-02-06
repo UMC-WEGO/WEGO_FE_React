@@ -1,10 +1,17 @@
 import * as S from '../../feat4/PostItem.style';
+import styled from 'styled-components';
 
 import { PiChatTextBold, PiThumbsUpBold, PiBookmarkSimpleBold } from "react-icons/pi";
+
+const Mission_Img = styled.img`
+  height: 95px;
+  width: 95px;
+  padding-right: 12px;
+`
+
 // 게시물 카드
 
 interface PostDataForm {
-  id: number;
   img_url: string;
   ranking?: number;
   showRanking?: boolean;  
@@ -21,7 +28,6 @@ interface PostDataForm {
 const PostCard = ({
   ranking,
   showRanking,
-  id,
   img_url,
   tag,
   title,
@@ -43,10 +49,10 @@ const PostCard = ({
   return(
       <S.PostContainer>
         {showRanking && <S.Rank>{ranking}</S.Rank>}
-        <img src={img_url}/>
+        <Mission_Img src={img_url}/>
         <S.Content>
           <span>
-              <div>#{tag}</div>
+              <div>{tag}</div>
           </span>
           <h3>{title}</h3>
           <h4>{content}</h4>

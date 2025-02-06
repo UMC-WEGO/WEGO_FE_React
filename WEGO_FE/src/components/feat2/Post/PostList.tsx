@@ -9,7 +9,7 @@ interface PostForm {
   title: string;
   content: string;
   location_name: string;
-  create_at: string;
+  created_at: string;
   conmment_count: number;
   like_count: number;
   scrap_count: number;
@@ -30,13 +30,12 @@ const PostList = ({posts, limit, showRanking = false}: PostListForm) => {
       {displayPosts.map((postData, index) => (
         <Link key={postData.id} to={`/board/detail/${postData.id}`}>
           <PostCard
-            id={postData.id}
             img_url={postData.picture_url}
             tag={postData.category_name}
             title={postData.title}
             content={postData.content}
             location={postData.location_name}
-            timestamp={postData.create_at}
+            timestamp={postData.created_at}
             likes_num={postData.like_count}
             comments_num={postData.conmment_count}
             scripts_num={postData.scrap_count}
