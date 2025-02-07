@@ -38,14 +38,6 @@ const PostList = ({posts, limit, showRanking = false}: PostListForm) => {
             likes_num={postData.like_count}
             comments_num={postData.conmment_count}
             scripts_num={postData.scrap_count}
-
-            // ranking={postData.ranking}
-            // showRanking={showRanking}
-            // tag={postData.tag}
-            // title={postData.title}
-            // content={postData.content}
-            // timestamp={postData.timestamp}
-            // location={postData.location}
           />
         </Link>
       ))}

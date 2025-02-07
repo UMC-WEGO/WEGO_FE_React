@@ -112,6 +112,9 @@ export const PopularPostArea = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
   padding: 18px;
+
+  height: 359px;
+  overflow-y: auto;
 `
 // --- --- ---
 // --- --- ---

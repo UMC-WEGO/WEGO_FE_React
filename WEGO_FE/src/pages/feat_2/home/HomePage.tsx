@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useParams } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
+import { useLocation } from 'react-router';
 import * as S from "./HomePage.style"
 import styled from 'styled-components';
 
@@ -12,9 +13,9 @@ import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 import Navbar from '../../../components/navbar/Navbar'
-import PostList from '../../../components/feat2/Post/PostList';
+// import PostList from '../../../components/feat2/Post/PostList';
+import PostList from '../../../components/feat4/PostList';
 import ModalMessage from '../../../components/feat2/Modal';
-import { useLocation } from 'react-router';
 
 // 임시 데이터 가져오기
 // import PlanedTravelData from '../../../mocks/feat2/TestData_PlanedTravel';
@@ -274,11 +275,14 @@ function HomePage() {
 
             {/* 개시물 나열 */}
             <S.PopularPostArea>
-              {popularPostList.length > 0 ? (
+              <PostList
+                posts={popularPostList}
+              />
+              {/* {popularPostList.length > 0 ? (
                 <PostList posts={popularPostList} showRanking={true}/>
               ) : (
                 <NoPopularPost>인기 게시물이 없습니다.</NoPopularPost>
-              )}
+              )} */}
               {/* <PostList posts={popularPostList} showRanking={false}/> */}
             </S.PopularPostArea>
           </S.PopularPostContainer>

@@ -14,7 +14,8 @@ import share_img from "../../../images/feat2/share_icon.png"
 import PostCard from "../../../components/feat2/Post/PostCard";
 import PlaningCard from "../../../components/feat2/PlaningCard";
 import DestinationBtn from "../../../components/feat2/DestinationBtn";
-import PostList from "../../../components/feat2/Post/PostList";
+// import PostList from "../../../components/feat2/Post/PostList";
+import PostList from "../../../components/feat4/PostList";
 import ModalMessage from "../../../components/feat2/Modal";
 
 // 
@@ -239,11 +240,15 @@ function TravelSelectPage() {
               <S.Seemore onClick={() => {navigate('/board')}}>더보기 {">"}</S.Seemore>
             </S.Title>
             <S.PostArea>
-              {instantPostList.length > 0 ? (
+              <PostList
+                posts={instantPostList}
+              />
+
+              {/* {instantPostList.length > 0 ? (
                 <PostList posts={instantPostList} limit={2} showRanking={false}/>
               ) : (
                 <NoPopularPost>즉흥 게시물이 없습니다.</NoPopularPost>
-              )}
+              )} */}
 
               {/* <PostList posts={PopularPostData} showRanking={false} limit={2}/> */}
             </S.PostArea>
