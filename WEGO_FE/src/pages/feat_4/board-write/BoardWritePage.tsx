@@ -21,7 +21,7 @@ function BoardWritePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedRegion, setSelectedRegion] = useState(
-    location.state?.selectedRegion || '지역 선택',
+    location.state?.selectedRegion || { id: null, name: '지역 선택' },
   );
 
   useEffect(() => {
@@ -142,13 +142,13 @@ function BoardWritePage() {
 
     if (hasError) return;
 
-    const user_id = localStorage.getItem('user_id');
+    const user_id = 5; // 임시 유저아이디값
 
     const categoryMap: Record<string, number> = {
       '즉흥 자랑': 1,
-      일반: 2,
-      '미션 제안': 3,
-      '현지 정보': 4,
+      '미션 제안': 2,
+      '현지 정보': 3,
+      일반: 4,
     };
 
     const category_id = categoryMap[selectedTopic] || 0;
@@ -156,7 +156,7 @@ function BoardWritePage() {
     const postData = {
       category_id,
       user_id: Number(user_id),
-      local_id: 3, // 지역 ID
+      local_id: selectedRegion.id, // 지역 ID
       title,
       content,
       picture_url: [], // 업로드된 이미지의 URL (구현 필요)
@@ -255,8 +255,8 @@ function BoardWritePage() {
       </S.Content>
 
       <S.Region onClick={handleRegionClick} $isRequired={isRegionRequired}>
-        {selectedRegion && <p>{selectedRegion}</p>}
-        {isRegionRequired && selectedRegion === '지역 선택' && (
+        {selectedRegion && <p>{selectedRegion.name}</p>}
+        {isRegionRequired && selectedRegion.name === '지역 선택' && (
           <S.RegionWarningText>
             게시글의 지역을 선택해주세요.
           </S.RegionWarningText>

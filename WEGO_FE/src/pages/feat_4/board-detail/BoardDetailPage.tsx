@@ -1,8 +1,10 @@
 import * as S from './BoardDetailPage.style';
 import { TbArrowLeft, TbShare2, TbDotsVertical } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
-import { allPosts } from '../../../mocks/board/postData';
+import { useState, useEffect } from 'react';
+// import { allPosts } from '../../../mocks/board/postData';
+import { getPostByIdApi } from '../../../apis/feat4/postApi';
+import { PostInfo, Comment } from '../../../types/postType';
 import {
   PiChatTextBold,
   PiThumbsUpBold,
@@ -12,41 +14,59 @@ import { LuDot } from 'react-icons/lu';
 import CommentList from '../../../components/feat4/CommentList/CommentList';
 import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
 
+// 상대 시간 변환 함수
+// const timeAgoFormat = (dateString: string) => {
+//   const date = new Date(dateString);
+//   const now = new Date();
+//   const diffMs = now.getTime() - date.getTime();
+//   const diffSec = Math.floor(diffMs / 1000);
+//   const diffMin = Math.floor(diffSec / 60);
+//   const diffHour = Math.floor(diffMin / 60);
+//   const diffDay = Math.floor(diffHour / 24);
+
+//   if (diffDay > 0) return `${diffDay}일 전`;
+//   if (diffHour > 0) return `${diffHour}시간 전`;
+//   if (diffMin > 0) return `${diffMin}분 전`;
+//   return '방금 전';
+// };
+
 function BoardDetailPage() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>(); // URL에서 id를 가져와
-  const post = allPosts.find(post => post.id === postId); // id로 게시글 찾아
 
-  const [activeIcons, setActiveIcons] = useState<{
-    like: boolean;
-    comment: boolean;
-    scrap: boolean;
-  }>({
+  const [post, setPost] = useState<PostInfo | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const fetchPostData = async () => {
+      if (!postId) return;
+      try {
+        setIsLoading(true);
+        const data = await getPostByIdApi(Number(postId));
+        if (data) {
+          setPost(data.post_info);
+          setComments(data.comments || []);
+        } else {
+          setIsError(true);
+        }
+      } catch (error) {
+        console.error('게시글 불러오기 실패:', error);
+        setIsError(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPostData();
+  }, [postId]);
+
+  const [activeIcons, setActiveIcons] = useState({
     like: false,
     comment: false,
     scrap: false,
   });
-
-  const [comments, setComments] = useState([
-    {
-      username: '위고',
-      text: '댓글 테스트',
-      time: '3일 전',
-      profileImage: 'https://buly.kr/G3CTK8F',
-    },
-    {
-      username: '위고',
-      text: '댓글 테스트',
-      time: '2일 전',
-      profileImage: 'https://buly.kr/G3CTK8F',
-    },
-    {
-      username: '위고',
-      text: '댓글댓글',
-      time: '1일 전',
-      profileImage: 'https://buly.kr/G3CTK8F',
-    },
-  ]);
 
   const handleBack = () => {
     navigate(-1); // 이전 페이지
@@ -62,18 +82,19 @@ function BoardDetailPage() {
   // 댓글 예시
   const addComment = (text: string) => {
     const newComment = {
-      username: '위고 사용자',
-      text,
-      time: '방금 전',
-      profileImage: 'https://buly.kr/G3CTK8F',
+      comment_author_name: '위고 사용자',
+      comment_author_profile: 'https://buly.kr/G3CTK8F',
+      comment_created_at: '방금 전',
+      comment_content: text,
     };
-    setComments([...comments, newComment]);
+    setComments(prev => [...prev, newComment as Comment]);
   };
 
-  // 게시글 존재하는지 확인
-  if (!post) {
-    return <div>게시글을 찾을 수 없습니다.</div>;
-  }
+  // 로딩
+  if (isLoading) return <div>게시글 불러오는 중</div>;
+
+  // 에러
+  if (isError || !post) return <div>게시글을 찾을 수 없습니다.</div>;
 
   return (
     <S.Container>
@@ -93,21 +114,21 @@ function BoardDetailPage() {
         </S.Header>
 
         <S.Content>
-          <p> # {post.category}</p>
+          <p> # {post.category_name}</p>
           <S.Profile>
             <img src="https://buly.kr/CsipNnM" alt="Profile" />
             <div>
-              <span>위고 닉네임</span>
+              <span>{post.post_author_nickname}</span>
               <p>
-                {post.timestamp}
+                {/* {post.timestamp} */}
                 <LuDot />
-                {post.time}
+                {/* {post.time} */}
               </p>
             </div>
           </S.Profile>
-          <h1>{post.title}</h1>
+          {/* <h1>{post.title}</h1> */}
           <img src="https://buly.kr/AaoydRw" alt="Post Image" />
-          <h6>{post.content}</h6>
+          {/* <h6>{post.content}</h6> */}
         </S.Content>
 
         <hr />
@@ -116,19 +137,19 @@ function BoardDetailPage() {
             <PiThumbsUpBold
               className={`icon ${activeIcons.like ? 'active' : ''}`}
             />
-            <p>공감 5</p>
+            <p>공감 {post.like_counts}</p>
           </span>
           <span onClick={() => handleClick('comment')}>
             <PiChatTextBold
               className={`icon ${activeIcons.comment ? 'active' : ''}`}
             />
-            <p>댓글 3</p>
+            <p>댓글 {post.comment_counts}</p>
           </span>
           <span onClick={() => handleClick('scrap')}>
             <PiBookmarkSimpleBold
               className={`icon ${activeIcons.scrap ? 'active' : ''}`}
             />
-            <p>스크랩 2</p>
+            <p>스크랩 {post.scrap_counts}</p>
           </span>
         </S.Response>
         <S.CommentHr />

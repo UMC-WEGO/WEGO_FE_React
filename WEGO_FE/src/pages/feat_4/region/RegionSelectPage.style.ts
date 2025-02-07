@@ -52,10 +52,16 @@ export const Content = styled.div`
 export const Select = styled.div`
   div {
     display: flex;
+    flex-direction: column;
     gap: 12px;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
   }
 
   h3 {

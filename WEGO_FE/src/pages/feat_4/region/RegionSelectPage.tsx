@@ -1,9 +1,104 @@
 import * as S from './RegionSelectPage.style';
 import { TbArrowLeft, TbSearch } from 'react-icons/tb';
 import { useNavigate } from 'react-router';
+import { useState, useEffect } from 'react';
+import { getRecentLocalApi } from '../../../apis/feat4/postApi';
+
+// 서버 수정 후에 지역 수정해야함 !!
+const regions = [
+  {
+    id: 1,
+    name: '경기도',
+    cities: [
+      { id: 101, name: '서울 강남' },
+      { id: 102, name: '서울 강북' },
+      { id: 103, name: '고양' },
+      { id: 9, name: '남양주' },
+      { id: 7, name: '수원' },
+      { id: 6, name: '용인' },
+      { id: 107, name: '인천' },
+      { id: 108, name: '의정부' },
+      { id: 8, name: '하남' },
+    ],
+  },
+  {
+    id: 2,
+    name: '강원도',
+    cities: [
+      { id: 10, name: '강릉' },
+      { id: 11, name: '속초' },
+      { id: 14, name: '양양' },
+      { id: 13, name: '정선' },
+      { id: 12, name: '춘천' },
+    ],
+  },
+  {
+    id: 3,
+    name: '전라도',
+    cities: [
+      { id: 15, name: '광주' },
+      { id: 18, name: '군산' },
+      { id: 19, name: '남원' },
+      { id: 23, name: '담양' },
+      { id: 20, name: '목포' },
+      { id: 17, name: '부안' },
+      { id: 21, name: '순천' },
+      { id: 22, name: '여수' },
+      { id: 16, name: '전주' },
+    ],
+  },
+  {
+    id: 4,
+    name: '경상도',
+    cities: [
+      { id: 33, name: '거제' },
+      { id: 27, name: '경주' },
+      { id: 34, name: '김해' },
+      { id: 24, name: '대구' },
+      { id: 30, name: '문경' },
+      { id: 25, name: '부산' },
+      { id: 29, name: '안동' },
+      { id: 26, name: '울산' },
+      { id: 31, name: '창원' },
+      { id: 32, name: '통영' },
+      { id: 28, name: '포항' },
+    ],
+  },
+  {
+    id: 5,
+    name: '충청도',
+    cities: [
+      { id: 43, name: '공주' },
+      { id: 37, name: '단양' },
+      { id: 35, name: '대전' },
+      { id: 42, name: '보령' },
+      { id: 36, name: '세종' },
+      { id: 44, name: '아산' },
+      { id: 41, name: '천안' },
+      { id: 38, name: '청주' },
+      { id: 39, name: '충주' },
+    ],
+  },
+];
 
 const RegionSelectPage = () => {
   const navigate = useNavigate();
+  const userId = 1; // 임시 사용자 아이디 값 !!
+  const [recentLocations, setRecentLocations] = useState<
+    { id: number; name: string }[]
+  >([]);
+
+  // 최근 출발 지역 불러오기
+  useEffect(() => {
+    const fetchRecentLocations = async () => {
+      const data = await getRecentLocalApi(userId);
+      if (data) {
+        setRecentLocations(data);
+        console.log(data);
+      }
+    };
+    fetchRecentLocations();
+  }, []);
 
   // 이전 페이지 이동
   const handleBack = () => {
@@ -11,9 +106,9 @@ const RegionSelectPage = () => {
   };
 
   // 지역 선택
-  const handleRegionSelect = (region: string) => {
-    console.log('선택된 지역:', region);
-    navigate('/board/write', { state: { selectedRegion: region } });
+  const handleRegionSelect = (id: number, name: string) => {
+    console.log('선택된 지역:', { id, name });
+    navigate('/board/write', { state: { selectedRegion: { id, name } } });
   };
 
   return (
@@ -27,88 +122,43 @@ const RegionSelectPage = () => {
           <TbSearch />
         </span>
       </S.Header>
+
       <S.Content>
         <p>현재 위치가 아닌, 도시의 중심부를 기준으로 잡아요.</p>
         <S.Select>
-          <h3>최근 출발</h3>
           <div>
-            <button onClick={() => handleRegionSelect('부산')}>부산</button>
-            <button onClick={() => handleRegionSelect('서울 강북')}>
-              서울 강북
-            </button>
+            <h3>최근 출발</h3>
+            <div>
+              {/* {recentLocations.length > 0 ? (
+  recentLocations.map((loc, index) => (
+    <button
+      key={index} // 배열 순서(index)를 key로 사용
+      onClick={() => handleRegionSelect(index, loc)} // id 대신 index 사용
+    >
+      {loc}
+    </button>
+  ))
+) : (
+  <p>최근 출발 지역이 없습니다.</p>
+)} */}
+            </div>
           </div>
 
-          <h3>경기도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('서울 강남')}>
-              서울 강남
-            </button>
-            <button onClick={() => handleRegionSelect('서울 강북')}>
-              서울 강북
-            </button>
-            <button onClick={() => handleRegionSelect('고양')}>고양</button>
-            <button onClick={() => handleRegionSelect('남양주')}>남양주</button>
-            <button onClick={() => handleRegionSelect('수원')}>수원</button>
-            <button onClick={() => handleRegionSelect('용인')}>용인</button>
-            <button onClick={() => handleRegionSelect('인천')}>인천</button>
-            <button onClick={() => handleRegionSelect('의정부')}>의정부</button>
-            <button onClick={() => handleRegionSelect('하남')}>하남</button>
-          </div>
-
-          <h3>강원도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('강릉')}>강릉</button>
-            <button onClick={() => handleRegionSelect('속초')}>속초</button>
-            <button onClick={() => handleRegionSelect('양양')}>양양</button>
-            <button onClick={() => handleRegionSelect('정선')}>정선</button>
-            <button onClick={() => handleRegionSelect('춘천')}>춘천</button>
-          </div>
-
-          <h3>전라도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('광주')}>광주</button>
-            <button onClick={() => handleRegionSelect('군산')}>군산</button>
-            <button onClick={() => handleRegionSelect('남원')}>남원</button>
-            <button onClick={() => handleRegionSelect('담양')}>담양</button>
-            <button onClick={() => handleRegionSelect('목포')}>목포</button>
-            <button onClick={() => handleRegionSelect('부안')}>부안</button>
-            <button onClick={() => handleRegionSelect('순천')}>순천</button>
-            <button onClick={() => handleRegionSelect('여수')}>여수</button>
-            <button onClick={() => handleRegionSelect('전주')}>전주</button>
-          </div>
-
-          <h3>경상도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('경주')}>경주</button>
-            <button onClick={() => handleRegionSelect('거제')}>거제</button>
-            <button onClick={() => handleRegionSelect('김해')}>김해</button>
-            <button onClick={() => handleRegionSelect('대구')}>대구</button>
-            <button onClick={() => handleRegionSelect('문경')}>문경</button>
-            <button onClick={() => handleRegionSelect('부산')}>부산</button>
-            <button onClick={() => handleRegionSelect('안동')}>안동</button>
-            <button onClick={() => handleRegionSelect('울산')}>울산</button>
-            <button onClick={() => handleRegionSelect('창원')}>창원</button>
-            <button onClick={() => handleRegionSelect('통영')}>통영</button>
-            <button onClick={() => handleRegionSelect('포항')}>포항</button>
-          </div>
-
-          <h3>충청도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('공주')}>공주</button>
-            <button onClick={() => handleRegionSelect('단양')}>단양</button>
-            <button onClick={() => handleRegionSelect('대전')}>대전</button>
-            <button onClick={() => handleRegionSelect('보령')}>보령</button>
-            <button onClick={() => handleRegionSelect('세종')}>세종</button>
-            <button onClick={() => handleRegionSelect('아산')}>아산</button>
-            <button onClick={() => handleRegionSelect('천안')}>천안</button>
-            <button onClick={() => handleRegionSelect('청주')}>청주</button>
-            <button onClick={() => handleRegionSelect('충주')}>충주</button>
-          </div>
-
-          <h3>제주도</h3>
-          <div>
-            <button onClick={() => handleRegionSelect('제주도')}>제주도</button>
-          </div>
+          {regions.map(region => (
+            <div key={region.id}>
+              <h3>{region.name}</h3>
+              <div>
+                {region.cities.map(city => (
+                  <button
+                    key={city.id}
+                    onClick={() => handleRegionSelect(city.id, city.name)}
+                  >
+                    {city.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
         </S.Select>
       </S.Content>
     </S.Container>
