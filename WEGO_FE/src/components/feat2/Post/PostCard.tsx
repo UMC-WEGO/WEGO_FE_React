@@ -1,7 +1,9 @@
+// src/components/feat4/PostItem.tsx 를 변형
 import * as S from '../../feat4/PostItem.style';
 import styled from 'styled-components';
 
 import { PiChatTextBold, PiThumbsUpBold, PiBookmarkSimpleBold } from "react-icons/pi";
+import { FaCrown } from 'react-icons/fa6';
 
 const Mission_Img = styled.img`
   height: 95px;
@@ -37,14 +39,6 @@ const PostCard = ({
   likes_num,
   comments_num,
   scripts_num
-
-  // ranking,
-  // showRanking,
-  // tag,
-  // title,
-  // content,
-  // timestamp,
-  // location
 }: PostDataForm) => {
   const postedDate = new Date(timestamp);
   const nowDate = new Date();
@@ -60,14 +54,29 @@ const PostCard = ({
 
   return(
       <S.PostContainer>
-        {showRanking && <S.Rank>{ranking}</S.Rank>}
-        <Mission_Img src={img_url}/>
+        {/* 순위 표시 영역 */}
+        {showRanking && 
+          <S.Rank>
+            {ranking === 1 && <FaCrown/>}{ranking}
+          </S.Rank>
+        }
+
+        {/* 이미지 영역 */}
+        {/* <Mission_Img src={img_url}/> */}
+        <S.ImageWrapper>
+          <img src={img_url}/>
+          <S.BookmarkIcon>
+            <PiBookmarkSimpleBold />
+          </S.BookmarkIcon>
+        </S.ImageWrapper>
+
+        {/* 본문 영역 */}
         <S.Content>
-          <span>
-              <div>{tag}</div>
-          </span>
+          <span>#{tag}</span>
           <h3>{title}</h3>
           <h4>{content}</h4>
+
+          {/* 하단 기타 정보 영역역 */}
           <S.PostInfo>
             <h5>
               {location}

@@ -13,8 +13,8 @@ import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 import Navbar from '../../../components/navbar/Navbar'
-// import PostList from '../../../components/feat2/Post/PostList';
-import PostList from '../../../components/feat4/PostList';
+import PostList from '../../../components/feat2/Post/PostList';
+// import PostList from '../../../components/feat4/PostList';
 import ModalMessage from '../../../components/feat2/Modal';
 
 // 임시 데이터 가져오기
@@ -275,14 +275,14 @@ function HomePage() {
 
             {/* 개시물 나열 */}
             <S.PopularPostArea>
-              <PostList
+              {/* <PostList
                 posts={popularPostList}
-              />
-              {/* {popularPostList.length > 0 ? (
+              /> */}
+              {popularPostList.length > 0 ? (
                 <PostList posts={popularPostList} showRanking={true}/>
               ) : (
                 <NoPopularPost>인기 게시물이 없습니다.</NoPopularPost>
-              )} */}
+              )}
               {/* <PostList posts={popularPostList} showRanking={false}/> */}
             </S.PopularPostArea>
           </S.PopularPostContainer>
