@@ -70,27 +70,25 @@ function TravelSelectPage() {
   // console.log("출발 : ",startDate);
 
   // --- --- --- 즉흥 게시물 조회 --- --- ---
-  const [instantPost, setInstantPost] = useState([]);
+  const [instantPostList, setInstantPostList] = useState([]);
   const [loadingInstantPost, setLoadingInstantPost] = useState(true);
   const [errorInstantPost, setErrorInstantPost] = useState<string | null>(null);
 
   useEffect(() => {
     const getInstantPost = async() => {
-      try {
-        const responsePost = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
-          headers: {
-            Authorization: `${TOKEN}`,
-            Accept: `application/josn`
-          }
-        })
-        setInstantPost(responsePost.data.result);
-        setLoadingInstantPost(false);
-      } catch(error) {
-        console.log(error)
-      }
+      const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
+        headers: {
+          Authorization: `${TOKEN}`,
+          Accept: `application/josn`
+        }
+      })
+      setInstantPostList(responseGet.data);
+      setLoadingInstantPost(false);
+
+      console.log("인기 게시물 조회 결과", responseGet.data);
     }
     getInstantPost();
-  },[])
+  }, [])
 
   // --- --- --- 랜덤 여행지 조회 --- --- ---
   const [recommendedDestinations, setRecommendedDestinations] = useState([]);
@@ -118,12 +116,12 @@ function TravelSelectPage() {
             },
           }
         );
-        console.log('Post Success', res.data.result);
+        // console.log('Post Success', res.data.result);
         setLoadingDestination(false);
         setRecommendedDestinations(res.data.result);
       } catch (err) {
         // setErrorDestination(err);
-        console.log('Error on Post (criterias)!', err);
+        // console.log('Error on Post (criterias)!', err);
       }
     };
     postCriterias();
@@ -161,7 +159,7 @@ function TravelSelectPage() {
             'Content-Type': 'application/json',
           },
         });
-        console.log(res.data.message);
+        // console.log(res.data.message);
         
     
         // 서버 응답 메시지를 저장
@@ -173,19 +171,19 @@ function TravelSelectPage() {
           }
         });
       } catch (err) {
-        console.log("Error on Post (travel)!", err);
+        // console.log("Error on Post (travel)!", err);
       }
     };
 
-    console.log("선택된 조건 확인 : ", 
-      location,
-      adult_participants,
-      child_participants,
-      vehicle,
-      duration,
-      startDate,
-      endDate
-    )
+    // console.log("선택된 조건 확인 : ", 
+    //   location,
+    //   adult_participants,
+    //   child_participants,
+    //   vehicle,
+    //   duration,
+    //   startDate,
+    //   endDate
+    // )
 
   // 로딩 페이지 상태 관리
   // const [loading, setLoading] = useState(true);
@@ -204,7 +202,7 @@ function TravelSelectPage() {
       <S.AppContainer>
         <S.ScrollArea>    
           <S.ToolBarContainer>
-            <Link to='/home'>
+            <Link to={`/home/${userId}`}>
               <img src={back_arrow_img}/>
             </Link>
             <img src={share_img}/>
@@ -237,8 +235,8 @@ function TravelSelectPage() {
               <S.Seemore onClick={() => {navigate('/board')}}>더보기 {">"}</S.Seemore>
             </S.Title>
             <S.PostArea>
-              {instantPost.length > 0 ? (
-                <PostList posts={instantPost} showRanking={false}/>
+              {instantPostList.length > 0 ? (
+                <PostList posts={instantPostList} showRanking={false}/>
               ) : (
                 <NoPopularPost>즉흥 게시물이 없습니다.</NoPopularPost>
               )}

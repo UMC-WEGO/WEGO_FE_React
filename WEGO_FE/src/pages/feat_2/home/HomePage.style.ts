@@ -39,7 +39,7 @@ export const NavbarArea = styled.div`
   margin-top: auto;
 
   width: 100%;
-  height: 155px;
+  height: 215px;
 `
 
 // --- --- --- 
