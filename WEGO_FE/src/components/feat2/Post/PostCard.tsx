@@ -52,6 +52,13 @@ const PostCard = ({
   const monDiff = dayDiff / 30;
   const yearDiff = monDiff / 12;
 
+  const intSecDiff = Math.floor(secDiff);  // 또는 Math.round(), parseInt() 등 사용 가능
+  const intMinDiff = Math.floor(minDiff);
+  const intHourDiff = Math.floor(hourDiff);
+  const intDayDiff = Math.floor(dayDiff);
+  const intMonDiff = Math.floor(monDiff);
+  const intYearDiff = Math.floor(yearDiff);
+
   return(
       <S.PostContainer>
         {/* 순위 표시 영역 */}
@@ -81,11 +88,11 @@ const PostCard = ({
             <h5>
               {location}
               {
-                yearDiff < 0 ? ` ${yearDiff}년전` : 
-                monDiff < 0 ? ` ${monDiff}달전` : 
-                dayDiff < 0 ? ` ${dayDiff}일전` :
-                hourDiff < 0 ? ` ${hourDiff}시간전` : 
-                minDiff < 0 ? ` ${minDiff}분전` :
+                yearDiff >= 1 ? ` ${intSecDiff}년전` : 
+                monDiff >= 1 ? ` ${intMonDiff}달전` : 
+                dayDiff >= 1 ? ` ${intDayDiff}일전` :
+                hourDiff >= 1 ? ` ${intHourDiff}시간전` : 
+                minDiff >= 1 ? ` ${intMinDiff}분전` :
                   `${" 방금 전"}`
               }
             </h5>

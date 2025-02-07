@@ -74,6 +74,9 @@ const BottomSheetBtn = styled.button`
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
+import { PiArrowArcLeft, PiArrowLeft, PiArrowLeftBold } from "react-icons/pi";
+import { TbMapPinSearch } from "react-icons/tb";
+import { CgSearch } from "react-icons/cg";
 
 // 
 // 
@@ -114,11 +117,12 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
     <SearchCard>
       {/* 뒤로가기 및 검색바 */}
       <SearchHeader>
-        <div>{"<-"}</div>
+        <PiArrowLeftBold/>
         <div>
           <BottomSheetBtn onClick={toggleSearchBottom}>
             <span>출발지를 선택하세요</span>
-            <span><img src={search_icn}/></span>
+            {/* <span><img src={search_icn}/></span> */}
+            <CgSearch/>
           </BottomSheetBtn>
           <Bottomsheet isOpen={ isSearchBottomActive } onClose={ toggleSearchBottom } height="100%">
             <SearchDeparture location={location} setDepartureLocation={setDepartureLocation} departureLocation={departureLocation}/>

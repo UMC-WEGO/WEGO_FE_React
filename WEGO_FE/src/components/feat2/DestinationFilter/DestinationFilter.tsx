@@ -13,8 +13,10 @@ import CrewSelector from "./CrewSelector";
 import Calendar from "./Calendar";
 import SelectDeparture from "./SelectDeparture";
 
-// 임시 데이터 가져오기
+// 아이콘 가져오기
 import { location, Item_time, Item_transport } from "../../../mocks/feat2/TestData_Filter";
+import { CgCalendar } from "react-icons/cg";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -139,6 +141,7 @@ const DestinationFilter = ({
           {/* 날짜 */}
           <Label>
             <IconImg src={calender_icon}/>
+            {/* <CgCalendar/> */}
             <div>
               <BottomSheetBtn onClick={ toggleDateBottom }>
                 <DateStyle sameYear={departureDate.getFullYear() === arrivalDate.getFullYear()}>
@@ -167,6 +170,7 @@ const DestinationFilter = ({
           {/* 인원수 */}
           <Label>
             <IconImg src={people_icon}/>
+            {/* <FaPeopleGroup/> */}
             <div>
               <BottomSheetBtn onClick={ togglePeopleBottom }>
                 {numAdult === 0 && numChild === 0 ? "인원수" : `성인 ${numAdult}명 아동 ${numChild}명`}            

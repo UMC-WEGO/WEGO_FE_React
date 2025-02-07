@@ -59,8 +59,8 @@ export const PostArea = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
 
-  height: 269px;
-  overflow-y: auto;
+  // height: 269px;
+  // overflow-y: auto;
 `
 export const Title = styled.div`
   width: 345px;
