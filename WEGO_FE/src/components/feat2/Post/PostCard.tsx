@@ -46,6 +46,18 @@ const PostCard = ({
   // timestamp,
   // location
 }: PostDataForm) => {
+  const postedDate = new Date(timestamp);
+  const nowDate = new Date();
+
+  const timeDiff = nowDate.getTime() - postedDate.getTime();
+
+  const secDiff = timeDiff / 1000;
+  const minDiff = secDiff / 60;
+  const hourDiff = minDiff / 60;
+  const dayDiff = hourDiff / 24;
+  const monDiff = dayDiff / 30;
+  const yearDiff = monDiff / 12;
+
   return(
       <S.PostContainer>
         {showRanking && <S.Rank>{ranking}</S.Rank>}
@@ -59,7 +71,14 @@ const PostCard = ({
           <S.PostInfo>
             <h5>
               {location}
-              {timestamp}
+              {
+                yearDiff < 0 ? ` ${yearDiff}년전` : 
+                monDiff < 0 ? ` ${monDiff}달전` : 
+                dayDiff < 0 ? ` ${dayDiff}일전` :
+                hourDiff < 0 ? ` ${hourDiff}시간전` : 
+                minDiff < 0 ? ` ${minDiff}분전` :
+                  `${" 방금 전"}`
+              }
             </h5>
             <h6>
               <div>

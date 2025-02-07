@@ -1,5 +1,4 @@
 import PostCard from "./PostCard";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 interface PostForm {
@@ -27,7 +26,7 @@ const PostList = ({posts, limit, showRanking = false}: PostListForm) => {
 
   return(
     <div>
-      {displayPosts.map((postData, index) => (
+      {displayPosts.slice(0,3).map((postData, index) => (
         <Link key={postData.id} to={`/board/detail/${postData.id}`}>
           <PostCard
             img_url={postData.picture_url}
