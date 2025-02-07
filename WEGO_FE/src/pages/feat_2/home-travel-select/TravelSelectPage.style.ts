@@ -100,4 +100,7 @@ export const SelectionComplete = styled.button<{ isDestinationSelected: boolean 
   font-weight: 600;
   
   border-radius: 5px;
+
+  // 목적지가 선택 안되었을 때 버튼 비활성화
+  cursor: ${(props) => (props.isDestinationSelected ? 'pointer' : 'not-allowed')};
 `
