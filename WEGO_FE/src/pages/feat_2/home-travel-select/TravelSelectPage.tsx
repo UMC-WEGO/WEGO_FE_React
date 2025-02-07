@@ -253,8 +253,8 @@ function TravelSelectPage() {
             {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
-              isDestinationSelected={selectedIndex !== null && 
-              (0 <= selectedIndex && selectedIndex < 3)}
+              isDestinationSelected={selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3)}
+              disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
               // onClick={postTravel}
               onClick={() => postTravel()}
             >
