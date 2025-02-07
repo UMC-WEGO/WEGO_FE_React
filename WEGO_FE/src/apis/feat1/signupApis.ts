@@ -1,4 +1,4 @@
-import { defaultInstance } from '../feat5/axiosInstance';
+import { defaultInstance } from '../axiosInstance';
 import {
   TEmailDupCheckApiReqData,
   TEmailVerifyResponseApiReqData,
