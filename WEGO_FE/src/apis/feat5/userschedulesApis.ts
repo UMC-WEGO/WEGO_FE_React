@@ -19,3 +19,19 @@ export const userschedulesApis = async () => {
     throw error;
   }
 };
+
+export const deleteschedulesApis = async (tripId: number) => {
+  try {
+    const response = await authInstance.delete(`/users/past-trips/${tripId}`);
+    console.log('지난 여행 일정 삭제 성공', response);
+    console.log('API 데이터', response.data);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error('삭제 실패', error.response?.data || error.message);
+    } else {
+      console.error('Unknown error', error);
+    }
+    throw error;
+  }
+};
