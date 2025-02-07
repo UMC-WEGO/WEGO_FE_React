@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import { authInstance } from './axiosInstance';
+import { authInstance } from './axiosUserInstance';
 import { AxiosError } from 'axios';
 
 export const userinfoApis = async () => {
