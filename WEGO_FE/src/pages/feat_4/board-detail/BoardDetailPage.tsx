@@ -2,7 +2,6 @@ import * as S from './BoardDetailPage.style';
 import { TbArrowLeft, TbShare2, TbDotsVertical } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-// import { allPosts } from '../../../mocks/board/postData';
 import { getPostByIdApi } from '../../../apis/feat4/postApi';
 import { PostInfo, Comment } from '../../../types/postType';
 import {
@@ -13,6 +12,7 @@ import {
 import { LuDot } from 'react-icons/lu';
 import CommentList from '../../../components/feat4/CommentList/CommentList';
 import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
+import EditModal from '../../../components/feat4/EditModal/EditModal';
 
 // 상대 시간 변환 함수
 // const timeAgoFormat = (dateString: string) => {
@@ -38,6 +38,7 @@ function BoardDetailPage() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -67,6 +68,14 @@ function BoardDetailPage() {
     comment: false,
     scrap: false,
   });
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const handleBack = () => {
     navigate(-1); // 이전 페이지
@@ -107,11 +116,13 @@ function BoardDetailPage() {
             <span>
               <TbShare2 />
             </span>
-            <span>
+            <span onClick={handleModalOpen}>
               <TbDotsVertical />
             </span>
           </div>
         </S.Header>
+
+        <EditModal isOpen={isModalOpen} onClose={handleModalClose} />
 
         <S.Content>
           <p> # {post.category_name}</p>

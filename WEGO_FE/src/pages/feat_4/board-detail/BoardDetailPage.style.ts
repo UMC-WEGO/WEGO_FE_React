@@ -96,7 +96,6 @@ export const Profile = styled.div`
     p {
       font-size: 12px;
       color: #696969;
-      display: flex;
     }
   }
 `;
