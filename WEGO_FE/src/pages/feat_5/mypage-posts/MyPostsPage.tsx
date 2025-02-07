@@ -113,9 +113,9 @@ function MyPostsPage() {
                 posts={[
                   {
                     id: String(post.postId),
-                    category: String(post.categoryId),
+                    category: String(post.categoryId), // 카테고리 id가 아닌 문자열로 나와야 함
                     time: CalculateCreatedAt(post.createdAt),
-                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함함
+                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함
                     ...post,
                   },
                 ]}
