@@ -73,8 +73,7 @@ function MySchedulesPage() {
 
   return (
     <S.Container>
-      {/* 스크롤 숫자 */}
-      <S.Content noScroll={(schedules?.length || 0) <= 2}>
+      <S.Content noScroll={(schedules?.length || 0) <= 1}>
         <S.Header>
           <button className="arrow-btn" onClick={() => navigate(-1)}>
             <img src={Arrow} alt="Arrow" className="arrow-img" />
