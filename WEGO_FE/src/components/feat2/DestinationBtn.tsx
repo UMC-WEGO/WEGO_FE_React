@@ -16,26 +16,24 @@ const DestinationBtnBox = styled.button<{ selectedFlag: boolean }>`
   background-color: ${(props) => (props.selectedFlag ? "rgba(0, 89, 255, 0.1)" : "white")};
 
   padding-top:10px;
-  padding-right: 13px;
   padding-bottom: 10px;
-  padding-left: 13px;
 
   align-items: center;
   justify-content: center;
 `
-const DestinationLocation = styled.div<{ selectedFlag: boolean }>`
-  width: 49px;
+const DestinationLocation = styled.div<{ selectedFlag: boolean, textLenth: number }>`
+  // width: 49px;
   height: 21px;
 
   color: ${(props) => (props.selectedFlag ? "black" : "rgba(165, 165, 165, 1)")};
 
-  font-size: 14px;
+  font-size: ${(props) => (props.textLenth > 4 ? "12px" : "14px")};
 `
-const DestinationCity = styled.div`
-  width: 49px;
+const DestinationCity = styled.div<{ textLenth: number }>`
+  // width: 49px;
   height: 32px;
 
-  font-size: 28px;
+  font-size: ${(props) => (props.textLenth > 2 ? "26px" : "28px")};
   font-weight: 600;
 `
 const DestinationTime = styled.div<{ selectedFlag: boolean }>`
@@ -69,8 +67,8 @@ const DestinationBtn = ({props, isSelected, onClick}: DestinationBtnProps) => {
   return(
       <>
         <DestinationBtnBox selectedFlag={isSelected} onClick={onClick}>
-          <DestinationLocation selectedFlag={isSelected}>{props.region}</DestinationLocation>
-          <DestinationCity>{props.location}</DestinationCity>
+          <DestinationLocation selectedFlag={isSelected} textLenth={props.region.length}>{props.region}</DestinationLocation>
+          <DestinationCity textLenth={props.location.length}>{props.location}</DestinationCity>
           <DestinationTime selectedFlag={isSelected}>{props.growthRate}</DestinationTime>
         </DestinationBtnBox>
       </>

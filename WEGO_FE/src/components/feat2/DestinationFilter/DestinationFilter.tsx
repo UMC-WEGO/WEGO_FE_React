@@ -61,6 +61,10 @@ const BottomSheetBtn = styled.button`
   background-color: white;
 `
 
+const DateStyle = styled.div<{sameYear: boolean}>`
+  font-size: ${(props) => (props.sameYear ? '12px' : '10px')};
+`
+
 interface DestinationFilterProps {
   userId: string;
 
@@ -137,14 +141,16 @@ const DestinationFilter = ({
             <IconImg src={calender_icon}/>
             <div>
               <BottomSheetBtn onClick={ toggleDateBottom }>
-                {/* 선택한 여행 출발 날짜 출력력 */}
-                {departureDate.getFullYear()}.
-                {String(departureDate.getMonth() + 1).padStart(2, "0")}.
-                {String(departureDate.getDate()).padStart(2, "0")}
-                {" ~ "}         
-                {departureDate.getFullYear() !== arrivalDate.getFullYear() && `${arrivalDate.getFullYear()}`}.    {/* 출발 도착 연도가 같으면 도착 연도 생략 */}
-                {String(arrivalDate.getMonth() + 1).padStart(2, "0")}.
-                {String(arrivalDate.getDate()).padStart(2, "0")}
+                <DateStyle sameYear={departureDate.getFullYear() === arrivalDate.getFullYear()}>
+                  {/* 선택한 여행 출발 날짜 출력력 */}
+                  {departureDate.getFullYear()}.
+                  {String(departureDate.getMonth() + 1).padStart(2, "0")}.
+                  {String(departureDate.getDate()).padStart(2, "0")}
+                  {" ~ "}         
+                  {departureDate.getFullYear() !== arrivalDate.getFullYear() && `${arrivalDate.getFullYear()}`}.    {/* 출발 도착 연도가 같으면 도착 연도 생략 */}
+                  {String(arrivalDate.getMonth() + 1).padStart(2, "0")}.
+                  {String(arrivalDate.getDate()).padStart(2, "0")}
+                </DateStyle>
               </BottomSheetBtn>
 
               <Bottomsheet isOpen={isDateBottomActive} onClose={ toggleDateBottom } height="67vh">

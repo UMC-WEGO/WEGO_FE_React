@@ -77,7 +77,7 @@ function TravelSelectPage() {
   useEffect(() => {
     const getInstantPost = async() => {
       try {
-        const responsePost = await axios.get(`http://13.124.213.122:3000/home/popular-missions`, {
+        const responsePost = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
           headers: {
             Authorization: `${TOKEN}`,
             Accept: `application/josn`
@@ -147,21 +147,6 @@ function TravelSelectPage() {
     const postTravel = async() => {
       try {
         const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
-          // "location": "서울 경부",
-          // "adult_participants": 1,
-          // "child_participants": 1,
-          // "vehicle": "자가용",
-          // "duration": "1",
-          // "startDate": "2025-02-04",
-          // "endDate": "2025-02-06"
-
-          // 고양
-          // 1 
-          // 자가용 
-          // 1 
-          // 2025-01-29T16:57:16.274Z 
-          // 2025-01-29T16:57:16.274Z
-
           location,
           adult_participants,
           child_participants,
@@ -203,17 +188,17 @@ function TravelSelectPage() {
     )
 
   // 로딩 페이지 상태 관리
-  const [loading, setLoading] = useState(true);
-  // 로딩화면 관리 - 임시로 2초간 보여주고 넘김
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000)
-  },[]);
+  // const [loading, setLoading] = useState(true);
+  // // 로딩화면 관리 - 임시로 2초간 보여주고 넘김
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000)
+  // },[]);
 
   return(
     <>
-    {loadingDestination ? (
+    {loadingDestination ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
       <Loading/>
     ) : (
       <S.AppContainer>
@@ -235,7 +220,7 @@ function TravelSelectPage() {
           </S.PlanContainer>
 
           <S.DestinationContainer>
-            {/* 3개만 출력 */}
+            {/* 3개만 나열해서 출력 */}
             {recommendedDestinations.slice(0,3).map((destinationData, index) => (
               <DestinationBtn 
                 key={index}
