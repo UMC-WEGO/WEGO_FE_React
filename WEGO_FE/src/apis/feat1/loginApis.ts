@@ -1,4 +1,4 @@
-import { authInstance, defaultInstance } from '../axiosInstance';
+import { authInstance, defaultInstance } from '../feat5/axiosInstance';
 import {} from '../../types/SignUpFormData';
 import { useTokenStore } from '../../store/token/useTokenStore';
 import { isTokenExpired } from '../../utils/feat1/authUtils';

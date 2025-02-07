@@ -1,4 +1,4 @@
-import { authInstance, defaultInstance } from '../axiosInstance';
+import { authInstance, defaultInstance } from '../feat5/axiosInstance';
 
 type TPasswordAuthCodeSendApiReqData = {
   email: string;

@@ -1,4 +1,4 @@
-import { defaultInstance } from '../axiosInstance';
+import { defaultInstance } from '../feat5/axiosInstance';
 import {
   TEmailDupCheckApiReqData,
   TEmailVerifyResponseApiReqData,
@@ -6,7 +6,6 @@ import {
   TNicknameDupCheckApiReqData,
   TSignupApiReqData,
 } from '../../types/SignUpFormData';
-
 
 export const signupApi = async (data: TSignupApiReqData) => {
   try {

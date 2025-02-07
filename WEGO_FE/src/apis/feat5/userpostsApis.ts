@@ -1,5 +1,5 @@
 // import axios from 'axios';
-import { authInstance } from '../axiosInstance';
+import { authInstance } from './axiosInstance';
 import { AxiosError } from 'axios';
 
 export const userpostsApis = async () => {

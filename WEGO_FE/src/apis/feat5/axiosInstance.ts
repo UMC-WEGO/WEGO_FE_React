@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { useTokenStore } from '../store/token/useTokenStore';
-import { isTokenExpired } from '../utils/feat1/authUtils';
-import { tokenRefreshApi } from './feat1/loginApis';
+import { useTokenStore } from '../../store/token/useTokenStore';
+import { isTokenExpired } from '../../utils/feat1/authUtils';
+import { tokenRefreshApi } from '../feat1/loginApis';
 
 const BASE_URL = 'http://13.124.213.122:3000';
 
