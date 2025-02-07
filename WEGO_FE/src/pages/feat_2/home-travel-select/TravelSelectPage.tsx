@@ -82,10 +82,14 @@ function TravelSelectPage() {
           Accept: `application/josn`
         }
       })
-      setInstantPostList(responseGet.data);
+      
+      // 카테고리가 "즉흥 자랑"인 게시물만 저장
+      const filteredPosts = responseGet.data.filter((post: { category_name: string }) => post.category_name === "즉흥 자랑");
+
+      setInstantPostList(filteredPosts);
       setLoadingInstantPost(false);
 
-      console.log("인기 게시물 조회 결과", responseGet.data);
+      console.log("필터링 게시물 결과", filteredPosts);
     }
     getInstantPost();
   }, [])
@@ -236,7 +240,7 @@ function TravelSelectPage() {
             </S.Title>
             <S.PostArea>
               {instantPostList.length > 0 ? (
-                <PostList posts={instantPostList} showRanking={false}/>
+                <PostList posts={instantPostList} limit={2} showRanking={false}/>
               ) : (
                 <NoPopularPost>즉흥 게시물이 없습니다.</NoPopularPost>
               )}
