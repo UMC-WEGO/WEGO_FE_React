@@ -1,27 +1,46 @@
 import * as S from './MyPostsPage.style';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
-import { allPosts as initialPosts } from '../../../mocks/board/postData';
-import { users } from '../../../mocks/feat5/UserData';
 import Modal from '../../../components/feat5/Modal/Modal';
+import { userpostsApis } from '../../../apis/feat5/userpostsApis';
+import { UserPostsData } from '../../../types/feat5/UserPostsData';
+import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
+import Loading from '../../../components/feat5/Loading';
+import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPostsPage() {
   const navigate = useNavigate();
-  const { userId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
-  const [allPosts, setAllPosts] = useState(initialPosts);
 
-  const user = users.find(user => user.userId === userId);
-  if (!user) {
-    return <div>찾을 수 없는 사용자</div>;
-  }
+  // API
+  const { data, isLoading, error } = useQuery<UserPostsData, Error>({
+    queryKey: ['userPosts'],
+    queryFn: userpostsApis,
+  });
 
-  // 추후 post.userId로 수정해야 함 !!!
-  const userPosts = allPosts.filter(post => post.id === userId);
+  // 삭제버튼
+  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
+  // const userPosts = Array.isArray(data?.posts)
+  //   ? data.posts.filter(post => post.userId)
+  //   : [];
+
+  // useEffect로 데이터 설정
+  useEffect(() => {
+    if (data?.posts) {
+      setUserPosts(data.posts.filter(post => post.userId));
+    }
+  }, [data]);
+
+  // 로딩, 에러 처리
+  if (isLoading) return <Loading />;
+  if (error instanceof Error) return <ErrorMessage error={error} />;
+
+  console.log('API 받은 데이터', data);
 
   const handleOpenModal = (postId: number) => {
     setSelectedPostId(postId);
@@ -33,14 +52,38 @@ function MyPostsPage() {
     setIsModalOpen(false);
   };
 
-  // 포스트 삭제 처리
+  // 삭제 버튼 / API 필요
   const handleDelete = () => {
     if (selectedPostId !== null) {
-      const updatedPosts = allPosts.filter(
-        post => post.id !== String(selectedPostId),
+      const updatedPosts = userPosts.filter(
+        post => post.postId !== selectedPostId,
       );
-      setAllPosts(updatedPosts);
+      setUserPosts(updatedPosts); //
       handleCloseModal();
+    }
+  };
+
+  // 내가 쓴 글 시간 계산
+  const CalculateCreatedAt = (createdAt: string) => {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const isToday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate();
+
+    if (isToday) {
+      const diffInHours = Math.floor(
+        (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
+      );
+      return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
+    } else {
+      return `${(createdDate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}.${createdDate
+        .getDate()
+        .toString()
+        .padStart(2, '0')}`;
     }
   };
 
@@ -56,9 +99,19 @@ function MyPostsPage() {
       <S.Content noScroll={userPosts.length === 0}>
         {userPosts.length > 0 ? (
           userPosts.map(post => (
-            <S.PostWrapper key={post.id}>
-              <PostList posts={[post]} />
-              <S.Button onClick={() => handleOpenModal(Number(post.id))}>
+            <S.PostWrapper key={post.postId}>
+              <PostList // PostList 컴포넌트 사용
+                posts={[
+                  {
+                    id: String(post.postId),
+                    category: String(post.categoryId),
+                    time: CalculateCreatedAt(post.createdAt),
+                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함함
+                    ...post,
+                  },
+                ]}
+              />
+              <S.Button onClick={() => handleOpenModal(post.postId)}>
                 <img src={PostButton} alt="Post Button" />
               </S.Button>
             </S.PostWrapper>
