@@ -1,12 +1,15 @@
 import * as S from './MyPostsPage.style';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
 import Modal from '../../../components/feat5/Modal/Modal';
-import { userpostsApis } from '../../../apis/feat5/userpostsApis';
+import {
+  userpostsApis,
+  deletepostsApis,
+} from '../../../apis/feat5/userpostsApis';
 import { UserPostsData } from '../../../types/feat5/UserPostsData';
 import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
 import Loading from '../../../components/feat5/Loading';
@@ -17,18 +20,28 @@ function MyPostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
-  // API
+  // API (내가 쓴 글 조회)
   const { data, isLoading, error } = useQuery<UserPostsData, Error>({
     queryKey: ['userPosts'],
     queryFn: userpostsApis,
   });
 
-  // 삭제버튼
-  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
-  // const userPosts = Array.isArray(data?.posts)
-  //   ? data.posts.filter(post => post.userId)
-  //   : [];
+  // API (내가 쓴 글 삭제)
+  const deleteMutation = useMutation({
+    mutationFn: (post_id: number) => deletepostsApis(post_id),
+    onSuccess: (_, post_id) => {
+      console.log('내가 쓴 글 삭제 성공');
+      setUserPosts(prevPosts =>
+        prevPosts.filter(post => post.postId !== post_id),
+      );
+      handleCloseModal();
+    },
+    onError: error => {
+      console.error('내가 쓴 글 삭제 실패:', error);
+    },
+  });
 
+  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
   // useEffect로 데이터 설정
   useEffect(() => {
     if (data?.posts) {
@@ -52,14 +65,10 @@ function MyPostsPage() {
     setIsModalOpen(false);
   };
 
-  // 삭제 버튼 / API 필요
-  const handleDelete = () => {
+  // 삭제 버튼
+  const handleDelete = (selectedPostId: number) => {
     if (selectedPostId !== null) {
-      const updatedPosts = userPosts.filter(
-        post => post.postId !== selectedPostId,
-      );
-      setUserPosts(updatedPosts); //
-      handleCloseModal();
+      deleteMutation.mutate(selectedPostId);
     }
   };
 

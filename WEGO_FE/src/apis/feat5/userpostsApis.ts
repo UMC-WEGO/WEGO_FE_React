@@ -19,3 +19,21 @@ export const userpostsApis = async () => {
     throw error;
   }
 };
+
+export const deletepostsApis = async (post_id: number) => {
+  try {
+    const response = await authInstance.delete(
+      `/community/posts/delete/${post_id}`,
+    );
+    console.log('내가 쓴 글 삭제 성공', response);
+    console.log('API 데이터', response.data);
+    return response.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.error('삭제 실패', error.response?.data || error.message);
+    } else {
+      console.error('Unknown error', error);
+    }
+    throw error;
+  }
+};
