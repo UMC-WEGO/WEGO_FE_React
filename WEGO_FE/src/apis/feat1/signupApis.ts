@@ -7,7 +7,6 @@ import {
   TSignupApiReqData,
 } from '../../types/SignUpFormData';
 
-
 export const signupApi = async (data: TSignupApiReqData) => {
   try {
     console.log(data);
