@@ -72,21 +72,32 @@ function MyPostsPage() {
     }
   };
 
-  // 내가 쓴 글 시간 계산
+  // 내가 쓴 글 날짜(시간) 계산
   const CalculateCreatedAt = (createdAt: string) => {
     const createdDate = new Date(createdAt);
     const now = new Date();
+
+    // 당일(방금 전, n시간 전)
     const isToday =
       createdDate.getFullYear() === now.getFullYear() &&
       createdDate.getMonth() === now.getMonth() &&
       createdDate.getDate() === now.getDate();
+
+    // 어제
+    const isYesterday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate() - 1;
 
     if (isToday) {
       const diffInHours = Math.floor(
         (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
       );
       return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
+    } else if (isYesterday) {
+      return '어제';
     } else {
+      // 그 외는 날짜로 표시(MM.DD)
       return `${(createdDate.getMonth() + 1)
         .toString()
         .padStart(2, '0')}.${createdDate
