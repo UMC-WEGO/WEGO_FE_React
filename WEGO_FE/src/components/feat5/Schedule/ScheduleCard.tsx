@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import X from '../../../images/feat5/X.svg';
 import scheduleDeleteBtn from '../../../images/feat5/scheduleDeleteBtn.svg';
 import { Schedule } from '../../../types/feat5/UserSchedulesData';
-import missionpic from '../../../images/feat5/missionpic.png'; // 임시
+// import missionpic from '../../../images/feat5/missionpic.png'; // 임시
 
 function ScheduleCard({
   schedule,
@@ -227,18 +227,18 @@ function ScheduleCard({
                   <S.MissionItem key={mission.mission.id}>
                     {/* 인증된 사진 null 상태 */}
                     <img
-                      src={missionpic} // 인증 사진으로 (mission.receivedMission?.imgUrl)
+                      src={mission.receivedMission?.imgUrl} // 인증 사진
                       onClick={() =>
                         handleImageClick(
-                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고, 추후 아래 코드로 수정!
-                          missionpic,
-                          mission.mission.title,
-                          mission.mission.content,
-
-                          // 인증된 미션
-                          // mission.receivedMission?.imgUrl,
+                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고
+                          // missionpic,
                           // mission.mission.title,
-                          // mission.receivedMission?.content ?? ' ', // null인 경우 빈 문자열
+                          // mission.mission.content,
+
+                          // 인증된 미션 (현재 null이여서 상세 조회 클릭x)
+                          mission.receivedMission?.imgUrl,
+                          mission.mission.title,
+                          mission.receivedMission?.content ?? ' ', // null인 경우 빈 문자열
                         )
                       }
                     />
