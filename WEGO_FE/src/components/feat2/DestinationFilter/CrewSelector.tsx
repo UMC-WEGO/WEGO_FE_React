@@ -31,8 +31,9 @@ const AlterNumBtn = styled.button`
   height: 40px;
   
   background-color: rgba(223, 236, 255, 1);
+  color: rgba(65, 128, 245, 1);
 
-  // 비활성ㅎ 상태   
+  // 비활성 상태   
   &:disabled {
     border: 1px solid rgba(230, 230, 245, 1);
     background-color: white;

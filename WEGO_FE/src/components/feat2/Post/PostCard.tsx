@@ -62,11 +62,11 @@ const PostCard = ({
   return(
       <S.PostContainer>
         {/* 순위 표시 영역 */}
-        {showRanking && 
+        {showRanking && (
           <S.Rank>
             {ranking === 1 && <FaCrown/>}{ranking}
           </S.Rank>
-        }
+        )}
 
         {/* 이미지 영역 */}
         {/* <Mission_Img src={img_url}/> */}
@@ -83,7 +83,7 @@ const PostCard = ({
           <h3>{title}</h3>
           <h4>{content}</h4>
 
-          {/* 하단 기타 정보 영역역 */}
+          {/* 하단 정보 영역 */}
           <S.PostInfo>
             <h5>
               {location}

@@ -4,6 +4,7 @@ import axios from "axios";
 
 import chevron from "../../images/feat2/chevron-forward-outline.png";
 import pin from "../../images/feat2/map_pin_icon.png";
+
 // 미션 내용 카드
 
 const PopularMissionCardBox = styled.div`
@@ -55,22 +56,22 @@ const MissionSaveBtn = styled.button`
   width: 109px;
   height: 41px;
 
-  background-color: blue;
+  background-color: var(--color-main-blue);
   border-radius: 5px;
 
   padding: 10px;
 
   font-weight: 600;
   font-size: 16px;
-  color: white;
+  color: var(--color-white);
 `
 
 const NextMission = styled.button`
-  background-color: white;
+  background-color: var(--color-white);
 `
 
 const PrevMission = styled.button`
-  background-color: white;
+  background-color: var(--color-white);
   transform: rotate(180deg);
 `
 
@@ -95,7 +96,7 @@ const MissionTitle = styled.div`
 const MissionContent = styled.div`
   font-size: 13px;
   font-weight: 600;
-  color: rgba(138, 138, 138, 1);
+  color: var(--color-gray-400);
 
   margin-top: 20px;
 `

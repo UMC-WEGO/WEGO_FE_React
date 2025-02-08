@@ -17,10 +17,6 @@ import PostList from '../../../components/feat2/Post/PostList';
 // import PostList from '../../../components/feat4/PostList';
 import ModalMessage from '../../../components/feat2/Modal';
 
-// 임시 데이터 가져오기
-// import PlanedTravelData from '../../../mocks/feat2/TestData_PlanedTravel';
-// import { PopularMissionData } from '../../../mocks/feat2/TestData_PopularMission';
-// import { PopularPostData } from '../../../mocks/feat2/TestData_PopularPost';
 // 
 // 
 // 
