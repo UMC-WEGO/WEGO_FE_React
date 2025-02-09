@@ -1,12 +1,15 @@
 import * as S from './MyPostsPage.style';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
 import Modal from '../../../components/feat5/Modal/Modal';
-import { userpostsApis } from '../../../apis/feat5/userpostsApis';
+import {
+  userpostsApis,
+  deletepostsApis,
+} from '../../../apis/feat5/userpostsApis';
 import { UserPostsData } from '../../../types/feat5/UserPostsData';
 import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
 import Loading from '../../../components/feat5/Loading';
@@ -17,18 +20,28 @@ function MyPostsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
-  // API
+  // API (내가 쓴 글 조회)
   const { data, isLoading, error } = useQuery<UserPostsData, Error>({
     queryKey: ['userPosts'],
     queryFn: userpostsApis,
   });
 
-  // 삭제버튼
-  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
-  // const userPosts = Array.isArray(data?.posts)
-  //   ? data.posts.filter(post => post.userId)
-  //   : [];
+  // API (내가 쓴 글 삭제)
+  const deleteMutation = useMutation({
+    mutationFn: (post_id: number) => deletepostsApis(post_id),
+    onSuccess: (_, post_id) => {
+      console.log('내가 쓴 글 삭제 성공');
+      setUserPosts(prevPosts =>
+        prevPosts.filter(post => post.postId !== post_id),
+      );
+      handleCloseModal();
+    },
+    onError: error => {
+      console.error('내가 쓴 글 삭제 실패:', error);
+    },
+  });
 
+  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
   // useEffect로 데이터 설정
   useEffect(() => {
     if (data?.posts) {
@@ -52,32 +65,39 @@ function MyPostsPage() {
     setIsModalOpen(false);
   };
 
-  // 삭제 버튼 / API 필요
-  const handleDelete = () => {
+  // 삭제 버튼
+  const handleDelete = (selectedPostId: number) => {
     if (selectedPostId !== null) {
-      const updatedPosts = userPosts.filter(
-        post => post.postId !== selectedPostId,
-      );
-      setUserPosts(updatedPosts); //
-      handleCloseModal();
+      deleteMutation.mutate(selectedPostId);
     }
   };
 
-  // 내가 쓴 글 시간 계산
+  // 내가 쓴 글 날짜(시간) 계산
   const CalculateCreatedAt = (createdAt: string) => {
     const createdDate = new Date(createdAt);
     const now = new Date();
+
+    // 당일(방금 전, n시간 전)
     const isToday =
       createdDate.getFullYear() === now.getFullYear() &&
       createdDate.getMonth() === now.getMonth() &&
       createdDate.getDate() === now.getDate();
+
+    // 어제
+    const isYesterday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate() - 1;
 
     if (isToday) {
       const diffInHours = Math.floor(
         (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
       );
       return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
+    } else if (isYesterday) {
+      return '어제';
     } else {
+      // 그 외는 날짜로 표시(MM.DD)
       return `${(createdDate.getMonth() + 1)
         .toString()
         .padStart(2, '0')}.${createdDate
@@ -104,9 +124,9 @@ function MyPostsPage() {
                 posts={[
                   {
                     id: String(post.postId),
-                    category: String(post.categoryId),
+                    category: String(post.categoryId), // 카테고리 id가 아닌 문자열로 나와야 함
                     time: CalculateCreatedAt(post.createdAt),
-                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함함
+                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함
                     ...post,
                   },
                 ]}

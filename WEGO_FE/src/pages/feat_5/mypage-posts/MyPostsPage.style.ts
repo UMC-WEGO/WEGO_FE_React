@@ -61,6 +61,7 @@ export const Content = styled.div<ContentProps>`
   overflow-y: ${props => (props.noScroll ? 'hidden' : 'auto')};
   padding-bottom: 30px;
   overflow-anchor: none;
+  margin-left: -10px;
 `;
 
 export const PostWrapper = styled.div`

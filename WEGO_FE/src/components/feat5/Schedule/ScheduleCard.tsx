@@ -1,9 +1,10 @@
 import * as S from './ScheduleCard.style';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import X from '../../../images/feat5/X.svg';
 import scheduleDeleteBtn from '../../../images/feat5/scheduleDeleteBtn.svg';
 import { Schedule } from '../../../types/feat5/UserSchedulesData';
+// import missionpic from '../../../images/feat5/missionpic.png'; // 임시
 
 function ScheduleCard({
   schedule,
@@ -16,10 +17,32 @@ function ScheduleCard({
 }) {
   const navigate = useNavigate();
 
-  const [isInReview, setIsInReview] = useState(false); // isInReview: 미션 검수 중(백엔드 미션 승인)
-  const [isCompleted, setIsCompleted] = useState<boolean>(
-    schedule.missions.some(m => m.receivedMission.status),
+  // 로컬 스토리지
+  const loadStateFromLocalStorage = () => {
+    const savedCompletedState = localStorage.getItem(
+      `completed-${schedule.tripId}`,
+    );
+    const savedReviewState = localStorage.getItem(`review-${schedule.tripId}`);
+    return {
+      isCompleted: savedCompletedState === 'true',
+      isInReview: savedReviewState === 'true',
+    };
+  };
+
+  const [isInReview, setIsInReview] = useState<boolean>(
+    loadStateFromLocalStorage().isInReview,
   );
+  const [isCompleted, setIsCompleted] = useState<boolean>(
+    loadStateFromLocalStorage().isCompleted,
+  );
+
+  // 상태
+  useEffect(() => {
+    localStorage.setItem(`completed-${schedule.tripId}`, String(isCompleted));
+  }, [isCompleted, schedule.tripId]);
+  useEffect(() => {
+    localStorage.setItem(`review-${schedule.tripId}`, String(isInReview));
+  }, [isInReview, schedule.tripId]);
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedMissionWrite, setSelectedMissionWrite] = useState<
@@ -82,6 +105,7 @@ function ScheduleCard({
   // 여행 완료 모달
   const handleCompletion = () => {
     setIsInReview(true);
+    localStorage.setItem(`completed-${schedule.tripId}`, 'true'); //
     setIsModalVisible(false);
     onMissionComplete(schedule.tripId);
     navigate(`/schedule`);
@@ -186,10 +210,11 @@ function ScheduleCard({
                       : '인증된 미션'}
                 </S.CertifiedMissionText>
                 <S.Points>
-                  {isCompleted
-                    ? `+${totalPoints} 포인트 적립`
-                    : isInReview
-                      ? '미션 검수 중'
+                  {/* 우선순위 수정 */}
+                  {isInReview
+                    ? '미션 검수 중'
+                    : isCompleted
+                      ? `+${totalPoints} 포인트 적립`
                       : ''}
                 </S.Points>
               </S.PointsContainer>
@@ -202,18 +227,18 @@ function ScheduleCard({
                   <S.MissionItem key={mission.mission.id}>
                     {/* 인증된 사진 null 상태 */}
                     <img
-                      src={mission.receivedMission.imgUrl} // 인증 사진으로
+                      src={mission.receivedMission?.imgUrl} // 인증 사진
                       onClick={() =>
                         handleImageClick(
-                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고, 추후 아래 코드로 수정!
-                          mission.mission.imageUrl,
-                          mission.mission.title,
-                          mission.mission.content,
-                          // 인증
-                          // 현재 인증된 미션이 없어서 상세 조회 클릭이 안됨
-                          // mission.receivedMission.imgUrl,
+                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고
+                          // missionpic,
                           // mission.mission.title,
-                          // mission.receivedMission.content,
+                          // mission.mission.content,
+
+                          // 인증된 미션 (현재 null이여서 상세 조회 클릭x)
+                          mission.receivedMission?.imgUrl,
+                          mission.mission.title,
+                          mission.receivedMission?.content ?? ' ', // null인 경우 빈 문자열
                         )
                       }
                     />
