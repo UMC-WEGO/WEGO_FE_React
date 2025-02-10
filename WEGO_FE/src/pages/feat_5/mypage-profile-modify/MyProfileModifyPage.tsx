@@ -16,7 +16,7 @@ function MyProfileModifyPage() {
   const { userId } = useParams();
   const [username, setUsername] = useState('');
   const [useremail, setUseremail] = useState('');
-  const [profilePic, setProfilePic] = useState<File | null>(null);
+  const [profilePic, setProfilePic] = useState<string | File>('');
   const [isModified, setIsModified] = useState(false);
   const [error, setError] = useState<{ username: string; useremail: string }>({
     username: '',
@@ -28,9 +28,9 @@ function MyProfileModifyPage() {
       try {
         const userData = await userinfoApis();
         if (userData) {
-          setUsername(userData.nickname || '');
-          setUseremail(userData.email || '');
-          setProfilePic(userData.profile_image || null);
+          setUsername(userData.nickname);
+          setUseremail(userData.email);
+          setProfilePic(userData.profile_image);
         }
       } catch (error) {
         console.error('사용자 정보 불러오기 실패', error);
@@ -76,23 +76,13 @@ function MyProfileModifyPage() {
       const formData = new FormData();
       if (username) formData.append('nickname', username);
       if (useremail) formData.append('email', useremail);
-      if (profilePic instanceof File) {
-        console.log('1', profilePic);
-        formData.append('profile_image', profilePic);
-      } else if (profilePic && typeof profilePic === 'string') {
-        console.log('2', profilePic);
+      if (typeof profilePic === 'string' && profilePic.trim() !== '') {
+        formData.append('profile_image_url', profilePic);
+      } else if (profilePic instanceof File) {
         formData.append('profile_image', profilePic);
       }
 
-      const result = await userprofilemodifyApis(formData);
-      console.log('프로필 수정 완료', result);
-
-      const updatedUserData = await userinfoApis();
-      console.log('updatedUserData:', updatedUserData);
-      if (updatedUserData && updatedUserData.profile_image) {
-        setProfilePic(updatedUserData.profile_image);
-      }
-
+      await userprofilemodifyApis(formData);
       navigate(`/mypage/${userId}`);
     } catch (error) {
       console.error('프로필 수정 실패', error);
