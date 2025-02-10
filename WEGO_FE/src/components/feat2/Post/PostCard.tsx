@@ -2,6 +2,7 @@
 import * as S from '../../feat4/PostItem.style';
 import styled from 'styled-components';
 
+import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 import { PiChatTextBold, PiThumbsUpBold, PiBookmarkSimpleBold } from "react-icons/pi";
 import { FaCrown } from 'react-icons/fa6';
 
@@ -71,7 +72,13 @@ const PostCard = ({
         {/* 이미지 영역 */}
         {/* <Mission_Img src={img_url}/> */}
         <S.ImageWrapper>
-          <img src={img_url}/>
+          <img 
+            src={img_url} 
+            style={{width: '95px', height: '95px', objectFit: 'contain'}}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = WEGO_Logo; // 로고 이미지를 src로 설정
+          }}/>
           <S.BookmarkIcon>
             <PiBookmarkSimpleBold />
           </S.BookmarkIcon>
