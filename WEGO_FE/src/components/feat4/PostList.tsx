@@ -30,7 +30,6 @@ const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (
       return (
         <StyledLink key={post.post_id} to={`/board/detail/${post.post_id}`}>
           <PostItem
-            key={post.post_id} // 중복 key 제거
             rank={index + 1}
             category={post.category_name}
             title={post.title}

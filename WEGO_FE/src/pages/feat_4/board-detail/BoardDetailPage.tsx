@@ -2,7 +2,7 @@ import * as S from './BoardDetailPage.style';
 import { TbArrowLeft, TbShare2, TbDotsVertical } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { getPostByIdApi } from '../../../apis/feat4/postApi';
+import { getPostByIdApi, deletePostApi } from '../../../apis/feat4/postApi';
 import { PostInfo, Comment } from '../../../types/postType';
 import {
   PiChatTextBold,
@@ -99,6 +99,18 @@ function BoardDetailPage() {
     }));
   };
 
+  const handleDelete = async () => {
+    if (!postId) return;
+
+    const success = await deletePostApi(Number(postId));
+    if (success) {
+      alert('게시글이 삭제되었습니다.');
+      navigate('/board');
+    } else {
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
   // 댓글 예시
   const addComment = (text: string) => {
     const newComment = {
@@ -133,7 +145,11 @@ function BoardDetailPage() {
           </div>
         </S.Header>
 
-        <EditModal isOpen={isModalOpen} onClose={handleModalClose} />
+        <EditModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onDelete={handleDelete}
+        />
 
         <S.Content>
           <p> # {post.category_name}</p>
