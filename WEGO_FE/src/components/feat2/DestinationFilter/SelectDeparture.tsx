@@ -69,18 +69,21 @@ const BottomSheetBtn = styled.button`
   width: 370px;
 `
 
+const Icon = styled.div`
+
+`
+
 // 
 // 
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
-import { PiArrowArcLeft, PiArrowLeft, PiArrowLeftBold } from "react-icons/pi";
-import { TbMapPinSearch } from "react-icons/tb";
+import { PiArrowLeftBold } from "react-icons/pi";
 import { CgSearch } from "react-icons/cg";
 
 // 
 // 
-// s
+//
 
 
 interface SelectedDepartureProps {
@@ -153,16 +156,6 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
         ):(
           <div> 최근 여행지가 없습니다. </div>
         )}
-          
-          {/* {recentLocation.map((recent) => (
-            <Element
-              key={recent}
-              onClick={() => setDepartureLocation(recent)}
-              isSelected = { departureLocation === recent }
-            >
-              {recent}
-            </Element>
-          ))}         */}
         </LabelBox>        
       </SearchRow>
     

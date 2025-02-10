@@ -22,6 +22,7 @@ import ModalMessage from '../../../components/feat2/Modal';
 // 
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
+import StartPage from '../home-start/StartPage';
 
 // 
 // 
@@ -193,7 +194,10 @@ function HomePage() {
   // console.log(upcomingTravelList);
 
   return(
-    <>    
+    <>
+      {loadingTravel && loadingPost ? (
+        <StartPage/>
+      ):(
       <S.AppContainer>
         <S.ScrollArea>
           {/* 로고 영역 */}
@@ -300,6 +304,7 @@ function HomePage() {
           <Navbar/>
         </S.NavbarArea>
       </S.AppContainer>
+      )}
     </>
   )
 }
