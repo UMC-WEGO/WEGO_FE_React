@@ -1,11 +1,14 @@
 import * as S from './MySchedulesPage.style';
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import ScheduleCard from '../../../components/feat5/Schedule/ScheduleCard';
 // import { initialSchedules } from '../../../mocks/feat5/ScheduleData';
-import { userschedulesApis } from '../../../apis/feat5/userschedulesApis';
+import {
+  userschedulesApis,
+  deleteschedulesApis,
+} from '../../../apis/feat5/userschedulesApis';
 import {
   Schedule,
   UserSchedulesData,
@@ -17,7 +20,7 @@ function MySchedulesPage() {
   const navigate = useNavigate();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
 
-  // API
+  // API (지난 여행 조회)
   const { data, isLoading, error } = useQuery<UserSchedulesData, Error>({
     queryKey: ['userSchedules'],
     queryFn: userschedulesApis,
@@ -28,6 +31,19 @@ function MySchedulesPage() {
       setSchedules(data.pastTrips);
     }
   }, [data]);
+
+  // API (지난 여행 삭제)
+  const deleteMutation = useMutation({
+    mutationFn: deleteschedulesApis,
+    onSuccess: (_, tripId) => {
+      setSchedules(prevSchedules =>
+        prevSchedules.filter(schedule => schedule.tripId !== tripId),
+      );
+    },
+    onError: error => {
+      console.error('삭제 실패', error);
+    },
+  });
 
   // 로딩, 에러 처리
   if (isLoading) return <Loading />;
@@ -52,9 +68,7 @@ function MySchedulesPage() {
   };
 
   const handleDeleteSchedule = (scheduleId: number) => {
-    setSchedules(prevSchedules =>
-      prevSchedules.filter(schedule => schedule.tripId !== scheduleId),
-    );
+    deleteMutation.mutate(scheduleId);
   };
 
   return (
