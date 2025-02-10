@@ -50,7 +50,7 @@ export const Content = styled.div`
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     margin: 5px 0;
   }
@@ -94,6 +94,7 @@ export const Profile = styled.div`
     }
 
     p {
+      display: flex;
       font-size: 12px;
       color: #696969;
     }

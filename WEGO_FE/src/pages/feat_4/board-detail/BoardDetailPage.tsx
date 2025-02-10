@@ -14,21 +14,32 @@ import CommentList from '../../../components/feat4/CommentList/CommentList';
 import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
 import EditModal from '../../../components/feat4/EditModal/EditModal';
 
-// 상대 시간 변환 함수
-// const timeAgoFormat = (dateString: string) => {
-//   const date = new Date(dateString);
-//   const now = new Date();
-//   const diffMs = now.getTime() - date.getTime();
-//   const diffSec = Math.floor(diffMs / 1000);
-//   const diffMin = Math.floor(diffSec / 60);
-//   const diffHour = Math.floor(diffMin / 60);
-//   const diffDay = Math.floor(diffHour / 24);
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+  const year = date.getFullYear().toString().slice(2); // "2025" → "25"
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 2 → "02"
+  const day = String(date.getDate()).padStart(2, '0'); // 9 → "09"
+  const hours = String(date.getHours()).padStart(2, '0'); // 16 → "16"
+  const minutes = String(date.getMinutes()).padStart(2, '0'); // 27 → "27"
 
-//   if (diffDay > 0) return `${diffDay}일 전`;
-//   if (diffHour > 0) return `${diffHour}시간 전`;
-//   if (diffMin > 0) return `${diffMin}분 전`;
-//   return '방금 전';
-// };
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
+// 상대 시간 변환 함수
+const timeAgoFormat = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHour = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHour / 24);
+
+  if (diffDay > 0) return `${diffDay}일 전`;
+  if (diffHour > 0) return `${diffHour}시간 전`;
+  if (diffMin > 0) return `${diffMin}분 전`;
+  return '방금 전';
+};
 
 function BoardDetailPage() {
   const navigate = useNavigate();
@@ -131,15 +142,17 @@ function BoardDetailPage() {
             <div>
               <span>{post.post_author_nickname}</span>
               <p>
-                {/* {post.timestamp} */}
+                {formatDate(post.created_at)}
                 <LuDot />
-                {/* {post.time} */}
+                {/* {post.} */}
+                <LuDot />
+                {timeAgoFormat(post.created_at)}
               </p>
             </div>
           </S.Profile>
-          {/* <h1>{post.title}</h1> */}
+          <h1>{post.title}</h1>
           <img src="https://buly.kr/AaoydRw" alt="Post Image" />
-          {/* <h6>{post.content}</h6> */}
+          <h6>{post.content}</h6>
         </S.Content>
 
         <hr />

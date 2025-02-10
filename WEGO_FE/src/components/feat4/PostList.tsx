@@ -8,7 +8,7 @@ const StyledLink = styled(Link)`
 `;
 
 interface Post {
-  id: number;
+  post_id: number;
   category_name: string;
   title: string;
   content: string;
@@ -26,23 +26,25 @@ interface PostListProps {
 
 const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (
   <div>
-    {posts.map((post, index) => (
-      <StyledLink key={post.id} to={`/board/detail/${post.id}`}>
-        <PostItem
-          key={post.id} // 중복 key 제거
-          rank={index + 1}
-          category={post.category_name}
-          title={post.title}
-          content={post.content}
-          time={post.created_at}
-          location={post.location_name}
-          showRank={showRank}
-          total_comment={post.total_comment}
-          total_like={post.total_like}
-          total_scrap={post.total_scrap}
-        />
-      </StyledLink>
-    ))}
+    {posts.map((post, index) => {
+      return (
+        <StyledLink key={post.post_id} to={`/board/detail/${post.post_id}`}>
+          <PostItem
+            key={post.post_id} // 중복 key 제거
+            rank={index + 1}
+            category={post.category_name}
+            title={post.title}
+            content={post.content}
+            time={post.created_at}
+            location={post.location_name}
+            showRank={showRank}
+            total_comment={post.total_comment}
+            total_like={post.total_like}
+            total_scrap={post.total_scrap}
+          />
+        </StyledLink>
+      );
+    })}
   </div>
 );
 

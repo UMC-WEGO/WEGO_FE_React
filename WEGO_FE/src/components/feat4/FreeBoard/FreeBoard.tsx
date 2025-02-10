@@ -5,7 +5,7 @@ import PostList from '../PostList';
 import { getAllPostsApi } from '../../../apis/feat4/postApi';
 
 type Post = {
-  id: number;
+  post_id: number;
   picture_url: string | null;
   category_name: string;
   title: string;

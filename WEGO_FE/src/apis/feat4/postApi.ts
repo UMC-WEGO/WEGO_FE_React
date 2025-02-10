@@ -3,7 +3,6 @@ import { authInstance, defaultInstance } from '../axiosInstance';
 // 게시글 작성
 export const createPostApi = async (postData: {
   category_id: number;
-  user_id: number;
   local_id: number;
   title: string;
   content: string;
@@ -288,11 +287,9 @@ export const getTopPostsApi = async () => {
 };
 
 // 최근 출발 지역 조회
-export const getRecentLocalApi = async (user_id: number) => {
+export const getRecentLocalApi = async () => {
   try {
-    const apiRes = await defaultInstance.get(
-      `/community/posts/local-search/${user_id}`,
-    );
+    const apiRes = await defaultInstance.get(`/community/posts/local-search`);
     console.log('최근 출발 지역 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {

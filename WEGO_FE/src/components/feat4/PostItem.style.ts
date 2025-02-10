@@ -38,7 +38,7 @@ export const BookmarkIcon = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  width: 230px;
+  width: 240px;
 
   span {
     font-size: 12px;

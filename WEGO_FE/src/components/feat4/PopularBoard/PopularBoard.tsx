@@ -5,7 +5,7 @@ import { getPopularPostsApi } from '../../../apis/feat4/postApi';
 import { useState, useEffect } from 'react';
 
 type Post = {
-  id: number;
+  post_id: number;
   picture_url: string | null;
   category_name: string;
   title: string;
@@ -23,6 +23,7 @@ function PopularBoard() {
   useEffect(() => {
     const fetchPosts = async () => {
       const data = await getPopularPostsApi();
+      console.log(data);
       if (data) {
         setPosts(data); // 받아온 게시글 저장
       }

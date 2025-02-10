@@ -142,8 +142,6 @@ function BoardWritePage() {
 
     if (hasError) return;
 
-    const user_id = 5; // 임시 유저아이디값
-
     const categoryMap: Record<string, number> = {
       '즉흥 자랑': 1,
       '미션 제안': 2,
@@ -155,7 +153,6 @@ function BoardWritePage() {
 
     const postData = {
       category_id,
-      user_id: Number(user_id),
       local_id: selectedRegion.id, // 지역 ID
       title,
       content,
