@@ -1,37 +1,40 @@
 import * as S from './Profile.style';
-import { useParams } from 'react-router-dom';
-import { users } from '../../../mocks/feat5/UserData';
+import { UserInfoData } from '../../../types/feat5/UserInfoData';
+import profile_circle from '../../../images/feat5/profile_circle.svg';
 
-function Profile() {
-  const { userId } = useParams();
-  const user = users.find(user => user.userId === userId);
-  if (!user) {
-    return <div>찾을 수 없는 사용자입니다.</div>;
-  }
+interface ProfileProps {
+  userData: UserInfoData;
+}
 
+function Profile({ userData }: ProfileProps) {
   return (
     <S.ProfileContainer>
       <S.ProfileHeader>
-        <S.ProfilePic src={user.profilePic} alt="Profile Picture" />
+        {/* 기본 프로필 이미지 설정 */}
+        <S.ProfilePic
+          src={userData.profile_image ?? profile_circle}
+          alt="Profile Picture"
+        />
         <S.InfoSection>
           <S.InfoCard>
-            <h3>{user.points}</h3>
+            <h3>{userData.point}</h3>
             <p>포인트</p>
           </S.InfoCard>
           <S.InfoCard>
-            <h3>{user.trips}</h3>
+            <h3>{userData.travelCount}</h3>
             <p>여행</p>
           </S.InfoCard>
           <S.InfoCard>
-            <h3>{user.missionsCompleted}</h3>
+            {/* 0 처리 */}
+            <h3>{userData.completedMissions ?? 0}</h3>
             <p>미션 달성</p>
           </S.InfoCard>
         </S.InfoSection>
       </S.ProfileHeader>
 
       <S.UserInfo>
-        <h3>{user.username}</h3>
-        <p>{user.useremail}</p>
+        <h3>{userData.nickname}</h3>
+        <p>{userData.email}</p>
       </S.UserInfo>
     </S.ProfileContainer>
   );

@@ -16,6 +16,7 @@ import { loginApi } from '../../../apis/feat1/loginApis';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { isTokenExpired } from '../../../utils/feat1/authUtils';
+import { useTokenStore } from '../../../store/token/useTokenStore';
 
 type TLoginInputs = {
   email: string;
@@ -39,6 +40,9 @@ function LoginPage() {
   const handleClickOAuth2Button = type => {
     // login logic
   };
+
+  const { data } = useTokenStore();
+  console.log(data.accessToken);
 
   return (
     <S.LoginPageLayout>
