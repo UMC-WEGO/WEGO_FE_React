@@ -12,6 +12,9 @@ export const validateUsername = (
   if (username.length > 10) {
     return '닉네임은 10글자 이내로 작성해주세요.';
   }
+  if (username.length < 1) {
+    return '닉네임은 1글자 이상으로 작성해주세요.';
+  }
   if (
     existingUsers.some(
       user => user.username === username && user.userId !== currentUserId,

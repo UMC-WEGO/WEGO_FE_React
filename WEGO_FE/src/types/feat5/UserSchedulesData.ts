@@ -24,7 +24,7 @@ export type Schedule = {
       status: boolean;
       createdAt: string;
       updatedAt: string;
-      imgUrl: string;
+      picture: string;
     };
   }[];
 };

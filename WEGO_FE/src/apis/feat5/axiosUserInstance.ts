@@ -36,6 +36,10 @@ const axiosAuthApi = (url: string) => {
       config.headers['Content-Type'] = 'application/json';
       config.headers['Authorization'] = data.accessToken;
 
+      // PATCH
+      if (config.data instanceof FormData) {
+        config.headers['Content-Type'] = 'multipart/form-data';
+      }
       return config;
     },
     error => {
