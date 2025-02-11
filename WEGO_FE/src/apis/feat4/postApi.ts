@@ -3,7 +3,6 @@ import { authInstance, defaultInstance } from '../axiosInstance';
 // 게시글 작성
 export const createPostApi = async (postData: {
   category_id: number;
-  user_id: number;
   local_id: number;
   title: string;
   content: string;
@@ -87,7 +86,7 @@ export const getPopularPostsApi = async () => {
 // 특정 게시글 조회
 export const getPostByIdApi = async (post_id: number) => {
   try {
-    const apiRes = await defaultInstance.get(`/community/posts/${post_id}`);
+    const apiRes = await authInstance.get(`/community/posts/${post_id}`);
     console.log('특정 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -97,9 +96,9 @@ export const getPostByIdApi = async (post_id: number) => {
 };
 
 // 내가 작성한 게시글 조회
-export const getMyPostsApi = async (user_id: number) => {
+export const getMyPostsApi = async () => {
   try {
-    const apiRes = await authInstance.get(`/community/my-posts/${user_id}`);
+    const apiRes = await authInstance.get(`/community/my-posts`);
     console.log('내 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -109,15 +108,11 @@ export const getMyPostsApi = async (user_id: number) => {
 };
 
 // 댓글 작성
-export const createCommentApi = async (
-  post_id: number,
-  content: string,
-  user_id: number,
-) => {
+export const createCommentApi = async (post_id: number, content: string) => {
   try {
     const apiRes = await authInstance.post(
       `/community/posts/${post_id}/comments`,
-      { content, user_id },
+      { content },
     );
     console.log('댓글 작성 성공:', apiRes.data);
     return apiRes.data;
@@ -142,11 +137,9 @@ export const deleteCommentApi = async (post_id: number, comment_id: number) => {
 };
 
 // 좋아요 누르기
-export const likePostApi = async (post_id: number, user_id: number) => {
+export const likePostApi = async (post_id: number) => {
   try {
-    const apiRes = await authInstance.post(
-      `/community/posts/${post_id}/likes/${user_id}`,
-    );
+    const apiRes = await authInstance.post(`/community/posts/${post_id}/likes`);
     console.log('좋아요 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -156,10 +149,10 @@ export const likePostApi = async (post_id: number, user_id: number) => {
 };
 
 // 좋아요 취소
-export const unlikePostApi = async (post_id: number, user_id: number) => {
+export const unlikePostApi = async (post_id: number) => {
   try {
     const apiRes = await authInstance.delete(
-      `/community/delete/${post_id}/likes/${user_id}`,
+      `/community/delete/${post_id}/likes`,
     );
     console.log('좋아요 취소 성공:', apiRes.data);
     return apiRes.data;
@@ -170,11 +163,9 @@ export const unlikePostApi = async (post_id: number, user_id: number) => {
 };
 
 // 게시글 스크랩
-export const scrapPostApi = async (post_id: number, user_id: number) => {
+export const scrapPostApi = async (post_id: number) => {
   try {
-    const apiRes = await authInstance.post(
-      `/community/posts/${post_id}/scrap/${user_id}`,
-    );
+    const apiRes = await authInstance.post(`/community/posts/${post_id}/scrap`);
     console.log('게시글 스크랩 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -184,10 +175,10 @@ export const scrapPostApi = async (post_id: number, user_id: number) => {
 };
 
 // 스크랩 삭제
-export const deleteScrapApi = async (post_id: number, user_id: number) => {
+export const deleteScrapApi = async (post_id: number) => {
   try {
     const apiRes = await authInstance.delete(
-      `/community/delete/${post_id}/scrap/${user_id}`,
+      `/community/delete/${post_id}/scrap`,
     );
     console.log('스크랩 삭제 성공:', apiRes.data);
     return apiRes.data;
@@ -198,9 +189,9 @@ export const deleteScrapApi = async (post_id: number, user_id: number) => {
 };
 
 // 스크랩한 글 조회
-export const getMyScrapsApi = async (user_id: number) => {
+export const getMyScrapsApi = async () => {
   try {
-    const apiRes = await authInstance.get(`/community/my-scraps/${user_id}`);
+    const apiRes = await authInstance.get(`/community/my-scraps`);
     console.log('스크랩한 글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -210,13 +201,10 @@ export const getMyScrapsApi = async (user_id: number) => {
 };
 
 // 카테고리별 스크랩 조회
-export const getScrapsByCategoryApi = async (
-  user_id: number,
-  category_id: number,
-) => {
+export const getScrapsByCategoryApi = async (category_id: number) => {
   try {
     const apiRes = await authInstance.get(
-      `/community/my-scraps/${user_id}/category/${category_id}`,
+      `/community/my-scraps/category/${category_id}`,
     );
     console.log('카테고리별 스크랩 조회 성공:', apiRes.data);
     return apiRes.data;
@@ -227,11 +215,9 @@ export const getScrapsByCategoryApi = async (
 };
 
 // 게시글 작성자 프로필 조회
-export const getUserProfileApi = async (user_id: number) => {
+export const getUserProfileApi = async () => {
   try {
-    const apiRes = await defaultInstance.get(
-      `/community/users/${user_id}/profile`,
-    );
+    const apiRes = await defaultInstance.get(`/community/users/profile`);
     console.log('게시글 작성자 프로필 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {

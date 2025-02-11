@@ -21,10 +21,12 @@ export const loginApi = async ({ email, password }: TLoginApiReqData) => {
       password,
     });
 
+    console.log(apiRes);
     console.log(apiRes.headers['authorization']);
 
     // 응답 데이터에서 리프레쉬 토큰 추출
     const refreshToken = apiRes.data.result.refreshToken;
+    console.log(refreshToken, apiRes);
     setData({
       refreshToken: refreshToken,
     });
@@ -50,7 +52,7 @@ export const loginApi = async ({ email, password }: TLoginApiReqData) => {
 export const tokenRefreshApi = async (data: TRefreshApiReqData) => {
   try {
     const apiRes = await authInstance.post('/auth/refresh', data);
-    console.log(apiRes);
+    console.log(apiRes, data);
 
     // 응답 헤더에서 토큰 추출
     const accessToken = apiRes.headers['authorization']; // 예: 헤더 키가 "Authorization"일 경우
@@ -62,7 +64,7 @@ export const tokenRefreshApi = async (data: TRefreshApiReqData) => {
       console.error('액세스 토큰을 헤더에서 찾을 수 없음');
     }
   } catch (error) {
-    console.error('회원 탈퇴 실패:', error);
+    console.error('토큰 재발급 실패:', error);
   }
 };
 
