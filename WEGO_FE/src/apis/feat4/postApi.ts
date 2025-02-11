@@ -85,7 +85,7 @@ export const getPopularPostsApi = async () => {
 // 특정 게시글 조회
 export const getPostByIdApi = async (post_id: number) => {
   try {
-    const apiRes = await defaultInstance.get(`/community/posts/${post_id}`);
+    const apiRes = await authInstance.get(`/community/posts/${post_id}`);
     console.log('특정 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -275,7 +275,7 @@ export const getTopPostsApi = async () => {
 // 최근 출발 지역 조회
 export const getRecentLocalApi = async () => {
   try {
-    const apiRes = await defaultInstance.get(`/community/posts/local-search`);
+    const apiRes = await authInstance.get(`/community/posts/local-search`);
     console.log('최근 출발 지역 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {

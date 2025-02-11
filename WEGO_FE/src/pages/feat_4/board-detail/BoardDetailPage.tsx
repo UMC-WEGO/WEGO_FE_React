@@ -58,8 +58,8 @@ function BoardDetailPage() {
         setIsLoading(true);
         const data = await getPostByIdApi(Number(postId));
         if (data) {
-          setPost(data.post_info);
-          setComments(data.comments || []);
+          setPost(data.post.post_info);
+          setComments(data.post.comments || []);
         } else {
           setIsError(true);
         }
