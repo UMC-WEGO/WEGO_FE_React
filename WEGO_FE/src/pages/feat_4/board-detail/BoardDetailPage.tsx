@@ -89,7 +89,7 @@ function BoardDetailPage() {
   };
 
   const handleBack = () => {
-    navigate(-1); // 이전 페이지
+    navigate('/board'); // 이전 페이지
   };
 
   const handleClick = (icon: 'like' | 'comment' | 'scrap') => {
@@ -109,6 +109,14 @@ function BoardDetailPage() {
     } else {
       alert('게시글 삭제에 실패했습니다.');
     }
+  };
+
+  const handleEditClick = () => {
+    if (!postId) return;
+    console.log(post);
+    navigate('/board/edit', {
+      state: { editPostData: post, postId: postId }, // 기존 게시글 데이터
+    });
   };
 
   // 댓글 예시
@@ -149,6 +157,7 @@ function BoardDetailPage() {
           isOpen={isModalOpen}
           onClose={handleModalClose}
           onDelete={handleDelete}
+          onEdit={handleEditClick}
         />
 
         <S.Content>
@@ -160,9 +169,9 @@ function BoardDetailPage() {
               <p>
                 {formatDate(post.created_at)}
                 <LuDot />
-                {/* {post.} */}
-                <LuDot />
                 {timeAgoFormat(post.created_at)}
+                <LuDot />
+                {post.location_name}
               </p>
             </div>
           </S.Profile>
@@ -177,19 +186,19 @@ function BoardDetailPage() {
             <PiThumbsUpBold
               className={`icon ${activeIcons.like ? 'active' : ''}`}
             />
-            <p>공감 {post.like_counts}</p>
+            <p>공감 {post.total_like}</p>
           </span>
           <span onClick={() => handleClick('comment')}>
             <PiChatTextBold
               className={`icon ${activeIcons.comment ? 'active' : ''}`}
             />
-            <p>댓글 {post.comment_counts}</p>
+            <p>댓글 {post.total_comment}</p>
           </span>
           <span onClick={() => handleClick('scrap')}>
             <PiBookmarkSimpleBold
               className={`icon ${activeIcons.scrap ? 'active' : ''}`}
             />
-            <p>스크랩 {post.scrap_counts}</p>
+            <p>스크랩 {post.total_scrap}</p>
           </span>
         </S.Response>
         <S.CommentHr />

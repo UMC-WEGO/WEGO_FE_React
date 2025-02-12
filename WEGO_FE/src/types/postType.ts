@@ -6,9 +6,10 @@ export interface PostInfo {
   created_at: string;
   title: string;
   content: string;
-  comment_counts: number;
-  like_counts: number;
-  scrap_counts: number;
+  total_comment: number;
+  total_like: number;
+  total_scrap: number;
+  location_name: string;
 }
 
 export interface Comment {

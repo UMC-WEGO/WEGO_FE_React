@@ -53,7 +53,6 @@ export const Select = styled.div`
   div {
     display: flex;
     flex-direction: column;
-    gap: 12px;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
@@ -61,6 +60,12 @@ export const Select = styled.div`
     div {
       display: flex;
       flex-direction: row;
+    }
+
+    span {
+      font-size: 12px;
+      margin: 5px 0 15px;
+      color: #aaa;
     }
   }
 
@@ -73,7 +78,7 @@ export const Select = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 25px;
+    margin: 5px 12px 25px 0;
 
     height: 30px;
     padding: 10px 13px;

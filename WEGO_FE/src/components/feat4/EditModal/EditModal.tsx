@@ -4,9 +4,15 @@ interface EditModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
-const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onDelete }) => {
+const EditModal: React.FC<EditModalProps> = ({
+  isOpen,
+  onClose,
+  onDelete,
+  onEdit,
+}) => {
   if (!isOpen) return null;
 
   const handleDeleteClick = () => {
@@ -20,7 +26,7 @@ const EditModal: React.FC<EditModalProps> = ({ isOpen, onClose, onDelete }) => {
     <S.ModalOverlay onClick={onClose}>
       <S.ModalContent onClick={e => e.stopPropagation()}>
         <S.ButtonContainer>
-          <S.TopicButton>수정</S.TopicButton>
+          <S.TopicButton onClick={onEdit}>수정</S.TopicButton>
           <S.TopicButton onClick={handleDeleteClick}>삭제</S.TopicButton>
         </S.ButtonContainer>
       </S.ModalContent>
