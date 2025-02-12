@@ -7,6 +7,7 @@ import FreeBoard from '../../../components/feat4/FreeBoard/FreeBoard';
 import PopularBoard from '../../../components/feat4/PopularBoard/PopularBoard';
 import logoImg from '../../../images/feat1/logo.svg';
 import Modal from '../../../components/feat4/Modal/Modal';
+import Navbar from '../../../components/navbar/Navbar';
 
 function BoardPage() {
   const [activeTab, setActiveTab] = useState('instant'); // 'instant' 또는 'popular'
@@ -47,49 +48,53 @@ function BoardPage() {
 
   return (
     <S.Container>
-      <S.Header>
-        <img src={logoImg} alt="Icon" />
-        <div>
-          <span onClick={handleProfileButtonClick}>
-            <CgProfile />
-          </span>
-          <span onClick={handleAlertButtonClick}>
-            <PiBellBold />
-          </span>
-        </div>
-      </S.Header>
+      <S.ViewContainer>
+        <S.Header>
+          <img src={logoImg} alt="Icon" />
+          <div>
+            <span onClick={handleProfileButtonClick}>
+              <CgProfile />
+            </span>
+            <span onClick={handleAlertButtonClick}>
+              <PiBellBold />
+            </span>
+          </div>
+        </S.Header>
 
-      {/* 탭 전환 */}
-      <S.TabSwitcher>
-        <button
-          onClick={() => setActiveTab('instant')}
-          className={activeTab === 'instant' ? 'active' : ''}
-        >
-          즉흥 게시판
-        </button>
-        <button
-          onClick={() => setActiveTab('popular')}
-          className={activeTab === 'popular' ? 'active' : ''}
-        >
-          인기
-        </button>
-      </S.TabSwitcher>
+        {/* 탭 전환 */}
+        <S.TabSwitcher>
+          <button
+            onClick={() => setActiveTab('instant')}
+            className={activeTab === 'instant' ? 'active' : ''}
+          >
+            즉흥 게시판
+          </button>
+          <button
+            onClick={() => setActiveTab('popular')}
+            className={activeTab === 'popular' ? 'active' : ''}
+          >
+            인기
+          </button>
+        </S.TabSwitcher>
 
-      {/* 조건부 렌더링으로 게시판 전환 */}
-      {activeTab === 'instant' ? <FreeBoard /> : <PopularBoard />}
+        {/* 조건부 렌더링으로 게시판 전환 */}
+        {activeTab === 'instant' ? <FreeBoard /> : <PopularBoard />}
 
-      <S.WriteButton onClick={handleWriteButtonClick}>
-        <CgMathPlus /> 글쓰기
-      </S.WriteButton>
+        <S.WriteButton onClick={handleWriteButtonClick}>
+          <CgMathPlus /> 글쓰기
+        </S.WriteButton>
 
-      <Modal
-        isOpen={isModalOpen}
-        onContinue={handleModalContinue} // 임시 저장된 글로 이어쓰기
-        onCancel={handleModalCancel} // 모달 닫기
-        message1="임시 저장된 글이 있습니다."
-        message2="취소할 경우 기존 글이 삭제됩니다."
-        buttontext="이어쓰기"
-      />
+        <Modal
+          isOpen={isModalOpen}
+          onContinue={handleModalContinue} // 임시 저장된 글로 이어쓰기
+          onCancel={handleModalCancel} // 모달 닫기
+          message1="임시 저장된 글이 있습니다."
+          message2="취소할 경우 기존 글이 삭제됩니다."
+          buttontext="이어쓰기"
+        />
+
+        <Navbar />
+      </S.ViewContainer>
     </S.Container>
   );
 }

@@ -1,6 +1,5 @@
 import * as S from './PopularBoard.style';
 import PostList from '../PostList';
-// import { allPosts } from '../../../mocks/board/postData';
 import { getPopularPostsApi } from '../../../apis/feat4/postApi';
 import { useState, useEffect } from 'react';
 
