@@ -96,6 +96,8 @@ function HomePage() {
         setUpcomingTravelMessage(responseTravel.data.message);
         setLoadingTravel(false);
 
+        console.log("다가오는 여행 조회 결과 : ", responseTravel)
+
         if(responseTravel.data.message == "다가오는 여행이 없습니다."){
           // setShowModalMessage(true);
           // <ModalMessage message={responseTravel.data.message}/>
@@ -138,17 +140,22 @@ function HomePage() {
 
   useEffect(() => {
     const getPopularPost = async() => {
-      const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
-        headers: {
-          Authorization: `${TOKEN}`,
-          Accept: `application/josn`
-        }
-      })
-      setPopularPostList(responseGet.data);
-      setLoadingPost(false);
+      try {
+        const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
+          headers: {
+            Authorization: `${TOKEN}`,
+            Accept: `application/josn`
+          }
+        })
+        setPopularPostList(responseGet.data);
+        setLoadingPost(false);
 
-      console.log("인기 게시물 조회 결과", responseGet.data);
+        console.log("인기 게시물 조회 결과 : ", responseGet);
+      }  catch(error) {
+        setErrorPost('Error on importing posts')
+      }
     }
+      
     getPopularPost();
   }, [])
 
@@ -164,7 +171,8 @@ function HomePage() {
         }
       })
       setPopularMissionList(responseMission.data.result.missions)
-    }
+      console.log("인기 미션 조회 결과 : ",responseMission)
+    }    
     getPopularMission();
   }, [])
 
@@ -188,10 +196,19 @@ function HomePage() {
   const [departureDate, setDepartureDate] = useState(new Date());              // 출발 날짜
   const [arrivalDate, setArrivalDate] = useState(new Date());                  // 도착 날짜짜
 
-  // 선택한 조건 여행선택페이지로 전송
+  // 선택한 조건 여행선택페이지로 전송하기 위한 함수
   const navigate = useNavigate();
 
-  // console.log(upcomingTravelList);
+  // 수정사항이 발생할 경우 추천 여행지 조회
+  useEffect(() => {
+    const callAPI = () => {
+      console.log("API 호출됨됨")
+    }
+
+    if((numAdult + numChild !=0) && transport != "이동 수단" && departureLocation != "출발지 선택" && (departureDate && arrivalDate) != new Date()){
+      callAPI()
+    }
+  },[timeAway])
 
   return(
     <>
