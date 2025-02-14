@@ -129,8 +129,8 @@ export const MoreBtn = styled.button`
   background-color: white;
 `
 
-export const RandomBtn = styled.button`
-  background-color: rgba(0, 89, 255, 1);
+export const RandomBtn = styled.button<{isActivated: boolean}>`
+  background-color: ${(props) => props.isActivated ? 'rgba(0, 89, 255, 1)' : 'rgba(217, 217, 217, 1)'};
   height: 50px;
   width: 100%;
 

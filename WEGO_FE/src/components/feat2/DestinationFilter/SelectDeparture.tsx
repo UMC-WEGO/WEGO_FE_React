@@ -4,7 +4,7 @@ import axios from "axios";
 
 import Bottomsheet from "../BottomSheet";
 import SearchDeparture from "./SearchDeparture";
-import search_icn from "../../../images/feat2/search_icon.png"
+// import search_icn from "../../../images/feat2/search_icon.png"
 
 const SearchCard = styled.div`
   display: flex;
@@ -69,9 +69,9 @@ const BottomSheetBtn = styled.button`
   width: 370px;
 `
 
-const Icon = styled.div`
+// const Icon = styled.div`
 
-`
+// `
 
 // 
 // 

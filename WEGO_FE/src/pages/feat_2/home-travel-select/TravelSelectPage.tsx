@@ -96,6 +96,8 @@ function TravelSelectPage() {
     getInstantPost();
   }, [])
 
+
+
   // --- --- --- 랜덤 여행지 조회 --- --- ---
   // const [recommendedDestinations, setRecommendedDestinations] = useState([]);
   // const [loadingDestination, setLoadingDestination] = useState(true);
@@ -191,20 +193,18 @@ function TravelSelectPage() {
     //   endDate
     // )
 
-  // 로딩 페이지 상태 관리
-  // const [loading, setLoading] = useState(true);
-  // // 로딩화면 관리 - 임시로 2초간 보여주고 넘김
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000)
-  // },[]);
+    const [isLoading, setIsLoading] = useState(true);
+    useEffect(() => {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 4000)
+    }, [])
 
   return(
     <>
-    {/* {loadingDestination ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
+    {isLoading ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
       <Loading/>
-    ) : ( */}
+    ) : (
       <S.AppContainer>
         <S.ScrollArea>    
           <S.ToolBarContainer>
@@ -269,7 +269,7 @@ function TravelSelectPage() {
           </S.SubmitBtnContainer>
         </S.ScrollArea>
       </S.AppContainer>
-    {/* )} */} 
+     )}
     </>
   )
 }

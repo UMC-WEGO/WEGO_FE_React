@@ -221,38 +221,50 @@ function HomePage() {
 
   useEffect(() => {
     const getRandomDestinations = async() => {
-      // console.log("API 호출됨")
-      const response = await axios.post('http://13.124.213.122:3000/home',
-        {
-          departure,
-          participants,
-          vehicle,
-          duration,
-          departureDate,
-          arrivalDate
-        },
-        {
-          headers: {
-            Authorization: `${TOKEN}`,
-            Accept: `application/json`,
-            'Content-Type': 'application/json',
+      try{
+        // console.log("API 호출됨")
+        const response = await axios.post('http://13.124.213.122:3000/home',
+          {
+            departure,
+            participants,
+            vehicle,
+            duration,
+            departureDate,
+            arrivalDate
+          },
+          {
+            headers: {
+              Authorization: `${TOKEN}`,
+              Accept: `application/json`,
+              'Content-Type': 'application/json',
+            }
           }
+        );    
+        setRandomDestination(response.data.result)
+        console.log("여행지 조회 결과 : ", response)
+
+        if(response.status == 200){
+          setRandomBtnStatus(true)
         }
-      );
-
-      setRandomDestination(response.data.result)
-      console.log("여행지 조회 결과 : ", response)
-
-      if(response.status == 200){
-        setRandomBtnStatus(true)
+        else{
+          setRandomBtnStatus(false)
+        }
+        
+      } catch (error) {
+        setRandomBtnStatus(false)
       }
-      console.log("버튼 활성 상태 : ",randomBtnStatus)
     }
 
     if(((numAdult + numChild !=0) && transport != "이동 수단" && (departureDate && arrivalDate) != new Date()) && (timeAway != "시간대" || departureLocation != "출발지 선택")){
       getRandomDestinations()
     }
+
+    console.log("버튼 활성 상태 : ", randomBtnStatus);
   },[timeAway, departureLocation])
+
+  // useEffect(() => {
+  //   console.log("버튼 활성 상태 : ", randomBtnStatus);
+  // }, [randomBtnStatus]);
 
   return(
     <>
@@ -293,7 +305,9 @@ function HomePage() {
             />
           </S.SelectorContainer>
             <S.RandomBtnContainer>
-            <S.RandomBtn 
+            <S.RandomBtn
+              isActivated = {randomBtnStatus}
+              disabled={!randomBtnStatus}
               onClick={() => { 
                 navigate(`/home/travel-select/:${userId}`, {
                   state: {
