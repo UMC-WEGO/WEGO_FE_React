@@ -40,49 +40,67 @@ const RegionSelectPage = () => {
 
           <h3>경기도</h3>
           <div>
-            <button onClick={() => handleRegionSelect('서울 강북')}>
-              서울 강북
-            </button>
             <button onClick={() => handleRegionSelect('서울 강남')}>
               서울 강남
             </button>
+            <button onClick={() => handleRegionSelect('서울 강북')}>
+              서울 강북
+            </button>
+            <button onClick={() => handleRegionSelect('고양')}>고양</button>
+            <button onClick={() => handleRegionSelect('남양주')}>남양주</button>
+            <button onClick={() => handleRegionSelect('수원')}>수원</button>
+            <button onClick={() => handleRegionSelect('용인')}>용인</button>
             <button onClick={() => handleRegionSelect('인천')}>인천</button>
             <button onClick={() => handleRegionSelect('의정부')}>의정부</button>
-            <button onClick={() => handleRegionSelect('고양')}>고양</button>
+            <button onClick={() => handleRegionSelect('하남')}>하남</button>
           </div>
 
           <h3>강원도</h3>
           <div>
             <button onClick={() => handleRegionSelect('강릉')}>강릉</button>
             <button onClick={() => handleRegionSelect('속초')}>속초</button>
-            <button onClick={() => handleRegionSelect('춘천')}>춘천</button>
-            <button onClick={() => handleRegionSelect('정선')}>정선</button>
             <button onClick={() => handleRegionSelect('양양')}>양양</button>
+            <button onClick={() => handleRegionSelect('정선')}>정선</button>
+            <button onClick={() => handleRegionSelect('춘천')}>춘천</button>
           </div>
 
           <h3>전라도</h3>
           <div>
-            <button onClick={() => handleRegionSelect('목포')}>목포</button>
-            <button onClick={() => handleRegionSelect('전주')}>전주</button>
             <button onClick={() => handleRegionSelect('광주')}>광주</button>
-            <button onClick={() => handleRegionSelect('여수')}>여수</button>
+            <button onClick={() => handleRegionSelect('군산')}>군산</button>
             <button onClick={() => handleRegionSelect('남원')}>남원</button>
+            <button onClick={() => handleRegionSelect('담양')}>담양</button>
+            <button onClick={() => handleRegionSelect('목포')}>목포</button>
+            <button onClick={() => handleRegionSelect('부안')}>부안</button>
+            <button onClick={() => handleRegionSelect('순천')}>순천</button>
+            <button onClick={() => handleRegionSelect('여수')}>여수</button>
+            <button onClick={() => handleRegionSelect('전주')}>전주</button>
           </div>
 
           <h3>경상도</h3>
           <div>
-            <button onClick={() => handleRegionSelect('대구')}>대구</button>
-            <button onClick={() => handleRegionSelect('부산')}>부산</button>
             <button onClick={() => handleRegionSelect('경주')}>경주</button>
+            <button onClick={() => handleRegionSelect('거제')}>거제</button>
+            <button onClick={() => handleRegionSelect('김해')}>김해</button>
+            <button onClick={() => handleRegionSelect('대구')}>대구</button>
+            <button onClick={() => handleRegionSelect('문경')}>문경</button>
+            <button onClick={() => handleRegionSelect('부산')}>부산</button>
+            <button onClick={() => handleRegionSelect('안동')}>안동</button>
             <button onClick={() => handleRegionSelect('울산')}>울산</button>
             <button onClick={() => handleRegionSelect('창원')}>창원</button>
+            <button onClick={() => handleRegionSelect('통영')}>통영</button>
+            <button onClick={() => handleRegionSelect('포항')}>포항</button>
           </div>
 
           <h3>충청도</h3>
           <div>
-            <button onClick={() => handleRegionSelect('서산')}>서산</button>
+            <button onClick={() => handleRegionSelect('공주')}>공주</button>
+            <button onClick={() => handleRegionSelect('단양')}>단양</button>
             <button onClick={() => handleRegionSelect('대전')}>대전</button>
+            <button onClick={() => handleRegionSelect('보령')}>보령</button>
             <button onClick={() => handleRegionSelect('세종')}>세종</button>
+            <button onClick={() => handleRegionSelect('아산')}>아산</button>
+            <button onClick={() => handleRegionSelect('천안')}>천안</button>
             <button onClick={() => handleRegionSelect('청주')}>청주</button>
             <button onClick={() => handleRegionSelect('충주')}>충주</button>
           </div>

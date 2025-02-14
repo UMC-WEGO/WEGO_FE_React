@@ -4,21 +4,31 @@ interface ModalProps {
   isOpen: boolean;
   onContinue: () => void;
   onCancel: () => void;
+  message1: string;
+  message2: string;
+  buttontext: string;
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onContinue, onCancel }) => {
+const Modal: React.FC<ModalProps> = ({
+  isOpen,
+  onContinue,
+  onCancel,
+  message1,
+  message2,
+  buttontext,
+}) => {
   if (!isOpen) return null;
 
   return (
     <S.ModalOverlay onClick={onCancel}>
       <S.ModalContent onClick={e => e.stopPropagation()}>
-        <p>작성된 글을 임시저장 하시겠습니까?</p>
-        <p>취소할 경우 글이 삭제됩니다.</p>
+        <p>{message1}</p>
+        <p>{message2}</p>
         <S.ButtonContainer>
           <button className="button1" onClick={onCancel}>
             취소
           </button>
-          <button onClick={onContinue}>임시저장</button>
+          <button onClick={onContinue}>{buttontext}</button>
         </S.ButtonContainer>
       </S.ModalContent>
     </S.ModalOverlay>
