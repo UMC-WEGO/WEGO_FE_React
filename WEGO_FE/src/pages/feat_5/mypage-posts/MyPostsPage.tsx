@@ -1,27 +1,59 @@
 import * as S from './MyPostsPage.style';
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
-import { allPosts as initialPosts } from '../../../mocks/board/postData';
-import { users } from '../../../mocks/feat5/UserData';
 import Modal from '../../../components/feat5/Modal/Modal';
+import {
+  userpostsApis,
+  deletepostsApis,
+} from '../../../apis/feat5/userpostsApis';
+import { UserPostsData } from '../../../types/feat5/UserPostsData';
+import { Post } from '../../../types/feat5/UserPostsData'; // 삭제버튼
+import Loading from '../../../components/feat5/Loading';
+import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPostsPage() {
   const navigate = useNavigate();
-  const { userId } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
-  const [allPosts, setAllPosts] = useState(initialPosts);
 
-  const user = users.find(user => user.userId === userId);
-  if (!user) {
-    return <div>찾을 수 없는 사용자</div>;
-  }
+  // API (내가 쓴 글 조회)
+  const { data, isLoading, error } = useQuery<UserPostsData, Error>({
+    queryKey: ['userPosts'],
+    queryFn: userpostsApis,
+  });
 
-  // 추후 post.userId로 수정해야 함 !!!
-  const userPosts = allPosts.filter(post => post.id === userId);
+  // API (내가 쓴 글 삭제)
+  const deleteMutation = useMutation({
+    mutationFn: (post_id: number) => deletepostsApis(post_id),
+    onSuccess: (_, post_id) => {
+      console.log('내가 쓴 글 삭제 성공');
+      setUserPosts(prevPosts =>
+        prevPosts.filter(post => post.postId !== post_id),
+      );
+      handleCloseModal();
+    },
+    onError: error => {
+      console.error('내가 쓴 글 삭제 실패:', error);
+    },
+  });
+
+  const [userPosts, setUserPosts] = useState<Array<Post>>([]);
+  // useEffect로 데이터 설정
+  useEffect(() => {
+    if (data?.posts) {
+      setUserPosts(data.posts.filter(post => post.userId));
+    }
+  }, [data]);
+
+  // 로딩, 에러 처리
+  if (isLoading) return <Loading />;
+  if (error instanceof Error) return <ErrorMessage error={error} />;
+
+  console.log('API 받은 데이터', data);
 
   const handleOpenModal = (postId: number) => {
     setSelectedPostId(postId);
@@ -33,14 +65,45 @@ function MyPostsPage() {
     setIsModalOpen(false);
   };
 
-  // 포스트 삭제 처리
-  const handleDelete = () => {
+  // 삭제 버튼
+  const handleDelete = (selectedPostId: number) => {
     if (selectedPostId !== null) {
-      const updatedPosts = allPosts.filter(
-        post => post.id !== String(selectedPostId),
+      deleteMutation.mutate(selectedPostId);
+    }
+  };
+
+  // 내가 쓴 글 날짜(시간) 계산
+  const CalculateCreatedAt = (createdAt: string) => {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+
+    // 당일(방금 전, n시간 전)
+    const isToday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate();
+
+    // 어제
+    const isYesterday =
+      createdDate.getFullYear() === now.getFullYear() &&
+      createdDate.getMonth() === now.getMonth() &&
+      createdDate.getDate() === now.getDate() - 1;
+
+    if (isToday) {
+      const diffInHours = Math.floor(
+        (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
       );
-      setAllPosts(updatedPosts);
-      handleCloseModal();
+      return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
+    } else if (isYesterday) {
+      return '어제';
+    } else {
+      // 그 외는 날짜로 표시(MM.DD)
+      return `${(createdDate.getMonth() + 1)
+        .toString()
+        .padStart(2, '0')}.${createdDate
+        .getDate()
+        .toString()
+        .padStart(2, '0')}`;
     }
   };
 
@@ -56,9 +119,19 @@ function MyPostsPage() {
       <S.Content noScroll={userPosts.length === 0}>
         {userPosts.length > 0 ? (
           userPosts.map(post => (
-            <S.PostWrapper key={post.id}>
-              <PostList posts={[post]} />
-              <S.Button onClick={() => handleOpenModal(Number(post.id))}>
+            <S.PostWrapper key={post.postId}>
+              <PostList // PostList 컴포넌트 사용
+                posts={[
+                  {
+                    id: String(post.postId),
+                    category: String(post.categoryId), // 카테고리 id가 아닌 문자열로 나와야 함
+                    time: CalculateCreatedAt(post.createdAt),
+                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함
+                    ...post,
+                  },
+                ]}
+              />
+              <S.Button onClick={() => handleOpenModal(post.postId)}>
                 <img src={PostButton} alt="Post Button" />
               </S.Button>
             </S.PostWrapper>

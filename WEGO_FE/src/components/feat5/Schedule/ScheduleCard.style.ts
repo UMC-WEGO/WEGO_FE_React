@@ -81,6 +81,26 @@ export const MissionContainer = styled.div`
   margin-right: 9px;
 `;
 
+export const NoMissionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  margin-left: 9px;
+  margin-right: 9px;
+  height: 30px;
+
+  p {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: -0.3199999928474426px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    color: #0059ff;
+  }
+`;
+
 export const MissionTextContainer = styled.div`
   display: flex;
   flex-direction: column;
