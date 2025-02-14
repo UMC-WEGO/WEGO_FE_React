@@ -48,7 +48,8 @@ function TravelSelectPage() {
 
   // 홈에서 정보 가져오기기
   const uselocation = useLocation();
-  const { departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
+  const { randomDestinations, departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
+  console.log("홈에서 받아온 랜덤 여행지 : ",randomDestinations);
 
   // 적절하게 값 변환
   const departure: string = departureLocation;
@@ -96,41 +97,41 @@ function TravelSelectPage() {
   }, [])
 
   // --- --- --- 랜덤 여행지 조회 --- --- ---
-  const [recommendedDestinations, setRecommendedDestinations] = useState([]);
-  const [loadingDestination, setLoadingDestination] = useState(true);
-  const [errorDestination, setErrorDestination] = useState<string | null>(null);
+  // const [recommendedDestinations, setRecommendedDestinations] = useState([]);
+  // const [loadingDestination, setLoadingDestination] = useState(true);
+  // const [errorDestination, setErrorDestination] = useState<string | null>(null);
 
-  // POST to server
-  useEffect(() => {
-    const postCriterias = async() => {
-      try {
-        const res = await axios.post('http://13.124.213.122:3000/home',
-          {  
-            departure,
-            participants,
-            vehicle,
-            duration,
-            startDate,
-            endDate
-          },
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-              Accept: `application/json`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        // console.log('Post Success', res.data.result);
-        setLoadingDestination(false);
-        setRecommendedDestinations(res.data.result);
-      } catch (err) {
-        // setErrorDestination(err);
-        // console.log('Error on Post (criterias)!', err);
-      }
-    };
-    postCriterias();
-  }, []);
+  // // POST to server
+  // useEffect(() => {
+  //   const postCriterias = async() => {
+  //     try {
+  //       const res = await axios.post('http://13.124.213.122:3000/home',
+  //         {  
+  //           departure,
+  //           participants,
+  //           vehicle,
+  //           duration,
+  //           startDate,
+  //           endDate
+  //         },
+  //         {
+  //           headers: {
+  //             Authorization: `${TOKEN}`,
+  //             Accept: `application/json`,
+  //             'Content-Type': 'application/json',
+  //           },
+  //         }
+  //       );
+  //       console.log('조회한 랜덤 여행지 : ', recommendedDestinations);
+  //       setLoadingDestination(false);
+  //       setRecommendedDestinations(res.data.result);
+  //     } catch (err) {
+  //       // setErrorDestination(err);
+  //       // console.log('Error on Post (criterias)!', err);
+  //     }
+  //   };
+  //   postCriterias();
+  // }, []);
 
   // --- --- --- 여행 일정 등록 --- --- ---
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -201,9 +202,9 @@ function TravelSelectPage() {
 
   return(
     <>
-    {loadingDestination ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
+    {/* {loadingDestination ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
       <Loading/>
-    ) : (
+    ) : ( */}
       <S.AppContainer>
         <S.ScrollArea>    
           <S.ToolBarContainer>
@@ -223,13 +224,13 @@ function TravelSelectPage() {
           </S.PlanContainer>
 
           <S.DestinationContainer>
-            {/* 3개만 나열해서 출력 */}
-            {recommendedDestinations.slice(0,3).map((destinationData, index) => (
+            {/* 추천 여행지 나열 */}
+            {randomDestinations.map((destinationData: any, index: any) => (
               <DestinationBtn 
                 key={index}
                 props={destinationData}                // 버튼에 들어갈 데이터
                 isSelected={selectedIndex === index}
-                onClick={() => {setSelectedIndex(index); setLocationData(recommendedDestinations[index])}}
+                onClick={() => {setSelectedIndex(index); setLocationData(randomDestinations[index])}}
               />
             ))}
           </S.DestinationContainer>
@@ -268,8 +269,7 @@ function TravelSelectPage() {
           </S.SubmitBtnContainer>
         </S.ScrollArea>
       </S.AppContainer>
-    )}
-      
+    {/* )} */} 
     </>
   )
 }

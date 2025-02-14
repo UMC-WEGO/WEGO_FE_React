@@ -202,7 +202,7 @@ function HomePage() {
 
   // 수정사항이 발생할 경우 추천 여행지 조회
   const [randomBtnStatus, setRandomBtnStatus] = useState(false)    // '랜덤 돌리기' 버튼 활성화 상태
-  const [randomLocation, setRandomLocation] = useState([]);
+  const [randomDestinations, setRandomDestination] = useState([]);
 
   // 요청에 맞게 데이터 적절히 변형
   const departure: string = departureLocation;
@@ -220,7 +220,7 @@ function HomePage() {
   }
 
   useEffect(() => {
-    const getRandomLocation = async() => {
+    const getRandomDestinations = async() => {
       // console.log("API 호출됨")
       const response = await axios.post('http://13.124.213.122:3000/home',
         {
@@ -240,13 +240,19 @@ function HomePage() {
         }
       );
 
+      setRandomDestination(response.data.result)
       console.log("여행지 조회 결과 : ", response)
+
+      if(response.status == 200){
+        setRandomBtnStatus(true)
+      }
+      console.log("버튼 활성 상태 : ",randomBtnStatus)
     }
 
-    if((numAdult + numChild !=0) && transport != "이동 수단" && departureLocation != "출발지 선택" && (departureDate && arrivalDate) != new Date()){
-      getRandomLocation()
+    if(((numAdult + numChild !=0) && transport != "이동 수단" && (departureDate && arrivalDate) != new Date()) && (timeAway != "시간대" || departureLocation != "출발지 선택")){
+      getRandomDestinations()
     }
-  },[timeAway])
+  },[timeAway, departureLocation])
 
   return(
     <>
@@ -291,6 +297,7 @@ function HomePage() {
               onClick={() => { 
                 navigate(`/home/travel-select/:${userId}`, {
                   state: {
+                    randomDestinations,
                     departureDate,
                     arrivalDate,
                     numAdult,

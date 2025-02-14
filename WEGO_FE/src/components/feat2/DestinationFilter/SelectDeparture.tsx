@@ -110,8 +110,8 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
     getRecentLocation();
   }, [])
 
-  console.log("최근 여행지 URL : ", `http://13.124.213.122:3000/community/posts/local-search/${userId}`)
-  console.log("최근 여행지 : ", recentLocation);
+  // console.log("최근 여행지 URL : ", `http://13.124.213.122:3000/community/posts/local-search/${userId}`)
+  // console.log("최근 여행지 : ", recentLocation);
 
   const [isSearchBottomActive, setIsSearchActive] = useState(false);
   const toggleSearchBottom = () => { setIsSearchActive(!isSearchBottomActive); }
