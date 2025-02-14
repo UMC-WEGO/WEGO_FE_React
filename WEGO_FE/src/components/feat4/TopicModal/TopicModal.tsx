@@ -27,16 +27,16 @@ const TopicModal: React.FC<TopicModalProps> = ({
             <S.TopicButton onClick={() => handleTopicClick('즉흥 자랑')}>
               # 즉흥 자랑
             </S.TopicButton>
-            <S.TopicButton onClick={() => handleTopicClick('미션 제안')}>
-              # 미션 제안
-            </S.TopicButton>
-          </div>
-          <div>
             <S.TopicButton onClick={() => handleTopicClick('현지 정보')}>
               # 현지 정보
             </S.TopicButton>
-            <S.TopicButton onClick={() => handleTopicClick('즉흥 여행 팁')}>
-              # 즉흥 여행 팁
+          </div>
+          <div>
+            <S.TopicButton onClick={() => handleTopicClick('미션 제안')}>
+              # 미션 제안
+            </S.TopicButton>
+            <S.TopicButton onClick={() => handleTopicClick('일반')}>
+              # 일반
             </S.TopicButton>
           </div>
         </S.ButtonContainer>

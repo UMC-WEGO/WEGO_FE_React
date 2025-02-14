@@ -19,6 +19,11 @@ export const CommentBox = styled.div`
   div {
     display: flex;
   }
+
+  svg {
+    width: 40px;
+    margin-right: 10px;
+  }
 `;
 
 export const Comment = styled.div`

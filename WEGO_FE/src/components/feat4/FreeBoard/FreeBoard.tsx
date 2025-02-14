@@ -1,26 +1,59 @@
 import * as S from './FreeBoard.style';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PostList from '../PostList';
-import { allPosts } from '../../../mocks/board/postData';
+// import { allPosts } from '../../../mocks/board/postData';
+import { getAllPostsApi } from '../../../apis/feat4/postApi';
+
+type Post = {
+  id: number;
+  picture_url: string | null;
+  category_name: string;
+  title: string;
+  content: string;
+  location_name: string;
+  created_at: string;
+  total_comment: number;
+  total_like: number;
+  total_scrap: number;
+};
 
 function FreeBoard() {
   const categories: string[] = [
-    '추천',
+    '전체',
     '즉흥 자랑',
     '미션 제안',
     '현지 정보',
     '일반',
   ];
-  const [selectedCategory, setSelectedCategory] = useState<string>('추천');
+  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  const [posts, setPosts] = useState<Post[]>([]); // 전체 게시글 상태
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const data = await getAllPostsApi(100); // 첫 페이지 100개 가져오기
+      if (data) {
+        setPosts(data); // 받아온 게시글 저장
+      }
+    };
+
+    fetchPosts();
+  }, []);
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
 
   // 카테고리 별로 필터링
-  const filteredPosts = allPosts.filter(
-    post => post.category === selectedCategory,
-  );
+  // const filteredPosts = allPosts.filter(
+  //   post => post.category === selectedCategory,
+  // );
+
+  console.log(posts);
+
+  const filteredPosts =
+    selectedCategory === '전체'
+      ? posts
+      : posts.filter(post => post.category_name === selectedCategory);
 
   return (
     <S.Container>

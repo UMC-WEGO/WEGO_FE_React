@@ -29,11 +29,12 @@ const axiosAuthApi = (url: string) => {
   });
 
   // 요청 인터셉터
+  console.log('access', accessToken);
   instance.interceptors.request.use(
     config => {
       // zustand의 액세스 토큰을 불러와서 사용
       config.headers['Content-Type'] = 'application/json';
-      config.headers['Authorization'] = `Bearer ${accessToken}`;
+      config.headers['authorization'] = `${accessToken}`;
 
       return config;
     },

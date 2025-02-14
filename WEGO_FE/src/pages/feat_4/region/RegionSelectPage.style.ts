@@ -53,6 +53,9 @@ export const Select = styled.div`
   div {
     display: flex;
     gap: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
   }
 
   h3 {
