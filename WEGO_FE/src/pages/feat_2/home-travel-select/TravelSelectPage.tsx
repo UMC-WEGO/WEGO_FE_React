@@ -102,7 +102,7 @@ function TravelSelectPage() {
 
   // POST to server
   useEffect(() => {
-    const postCriterias = async () => {
+    const postCriterias = async() => {
       try {
         const res = await axios.post('http://13.124.213.122:3000/home',
           {  

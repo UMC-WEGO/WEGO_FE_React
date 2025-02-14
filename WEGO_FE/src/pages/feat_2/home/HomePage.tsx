@@ -23,6 +23,7 @@ import ModalMessage from '../../../components/feat2/Modal';
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import StartPage from '../home-start/StartPage';
+import { get } from 'react-hook-form';
 
 // 
 // 
@@ -179,7 +180,7 @@ function HomePage() {
   // --- --- --- 일정 선택 페이지에서 메시지 받아오기
   const location = useLocation();
   const fixedTravelResponse = location.state?.fixedTravelResponse;  // 전달된 응답 메시지 가져오기
-  const [isShowSaveModal, setIsShowSaveModal] = useState(false);
+  const [isShowSaveModal, setIsShowSaveModal] = useState<boolean>(false);
 
   // useEffect(() => {
   //   if (fixedTravelResponse) {
@@ -200,13 +201,50 @@ function HomePage() {
   const navigate = useNavigate();
 
   // 수정사항이 발생할 경우 추천 여행지 조회
+  const [randomBtnStatus, setRandomBtnStatus] = useState(false)    // '랜덤 돌리기' 버튼 활성화 상태
+  const [randomLocation, setRandomLocation] = useState([]);
+
+  // 요청에 맞게 데이터 적절히 변형
+  const departure: string = departureLocation;
+  const participants: number = numAdult + numChild;
+  const vehicle: string = transport;
+  let duration: string = '1';
+  if(timeAway == '1시간 이내'){
+    duration = '1';
+  } else if (timeAway == '1시간 ~ 2시간') {
+    duration = '1-2';
+  } else if (timeAway == '2시간 ~ 3시간') {
+    duration = '2-3';
+  } else if (timeAway == '3시간 이상') {
+    duration = '3+';
+  }
+
   useEffect(() => {
-    const callAPI = () => {
-      console.log("API 호출됨됨")
+    const getRandomLocation = async() => {
+      // console.log("API 호출됨")
+      const response = await axios.post('http://13.124.213.122:3000/home',
+        {
+          departure,
+          participants,
+          vehicle,
+          duration,
+          departureDate,
+          arrivalDate
+        },
+        {
+          headers: {
+            Authorization: `${TOKEN}`,
+            Accept: `application/json`,
+            'Content-Type': 'application/json',
+          }
+        }
+      );
+
+      console.log("여행지 조회 결과 : ", response)
     }
 
     if((numAdult + numChild !=0) && transport != "이동 수단" && departureLocation != "출발지 선택" && (departureDate && arrivalDate) != new Date()){
-      callAPI()
+      getRandomLocation()
     }
   },[timeAway])
 
