@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './SavedMission.style';
+import SavedMissionCard from './SavedMissionCard';
 
 const SavedMission = () => {
   return (
@@ -11,10 +12,17 @@ const SavedMission = () => {
           <img src="/src/images/feat3/InforIcon.svg" alt="i 아이콘" />
         </S.MoreInfor>
       </S.TitleBoxWrap>
-      <S.ContentBox>
+      <S.ContentBox_mission>
+        <SavedMissionCard />
+        <SavedMissionCard />
+        <SavedMissionCard />
+        <SavedMissionCard />
+        <SavedMissionCard />
+      </S.ContentBox_mission>
+      {/* <S.ContentBox_noMission>
         <img src="/src/images/feat3/iconoir_plus-circle-solid.svg" alt="" />
         미션을 추가하세요!
-      </S.ContentBox>
+      </S.ContentBox_noMission> */}
       {/* <S.Line /> */}
     </S.Container>
   );

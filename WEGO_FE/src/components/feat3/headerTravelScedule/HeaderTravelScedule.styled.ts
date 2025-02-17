@@ -36,7 +36,7 @@ const message = styled.div`
 `;
 
 const Line = styled.div`
-  width: 420px;
+  width: 430px;
   height: 10px;
   background-color: #eaeaea;
   border: none;

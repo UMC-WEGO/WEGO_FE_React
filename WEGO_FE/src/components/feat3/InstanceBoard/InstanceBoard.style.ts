@@ -13,7 +13,6 @@ const TitleBoxWrap = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0px 16px;
 `;
 const Title = styled.p`
   width: fit-content;

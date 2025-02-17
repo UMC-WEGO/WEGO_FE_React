@@ -36,4 +36,6 @@ const MoreInfor = styled.a`
   gap: 5px;
 `;
 
-export { Container, TitleBoxWrap, Title, MoreInfor };
+const MissionBox = styled.div``;
+
+export { Container, TitleBoxWrap, Title, MoreInfor, MissionBox };
