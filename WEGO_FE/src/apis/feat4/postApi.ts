@@ -214,9 +214,11 @@ export const getScrapsByCategoryApi = async (category_id: number) => {
 };
 
 // 게시글 작성자 프로필 조회
-export const getUserProfileApi = async () => {
+export const getUserProfileApi = async (user_id: number) => {
   try {
-    const apiRes = await defaultInstance.get(`/community/users/profile`);
+    const apiRes = await defaultInstance.get(
+      `/community/users/${user_id}/profile`,
+    );
     console.log('게시글 작성자 프로필 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {

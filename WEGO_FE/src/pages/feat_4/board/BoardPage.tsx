@@ -1,5 +1,5 @@
 import * as S from './BoardPage.style';
-import { CgProfile, CgMathPlus } from 'react-icons/cg';
+import { CgMathPlus } from 'react-icons/cg';
 import { PiBellBold } from 'react-icons/pi';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
@@ -37,11 +37,6 @@ function BoardPage() {
     navigate(`/board/write`);
   };
 
-  const handleProfileButtonClick = () => {
-    const tempAuthorId = '12345'; // 임시 아이디 값
-    navigate(`/board/author/profile/${tempAuthorId}`);
-  };
-
   const handleAlertButtonClick = () => {
     navigate(`/board/alert`);
   };
@@ -52,9 +47,6 @@ function BoardPage() {
         <S.Header>
           <img src={logoImg} alt="Icon" />
           <div>
-            <span onClick={handleProfileButtonClick}>
-              <CgProfile />
-            </span>
             <span onClick={handleAlertButtonClick}>
               <PiBellBold />
             </span>

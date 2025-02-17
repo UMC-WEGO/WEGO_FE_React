@@ -34,7 +34,7 @@ const axiosAuthApi = (url: string) => {
     config => {
       // zustand의 액세스 토큰을 불러와서 사용
       config.headers['Content-Type'] = 'application/json';
-      config.headers['authorization'] = `Bearer ${accessToken}`;
+      config.headers['Authorization'] = `${accessToken}`;
 
       return config;
     },

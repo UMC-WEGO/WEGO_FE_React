@@ -19,7 +19,7 @@ export const CommentHr = styled.hr`
 
 export const Scroll = styled.div`
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding-bottom: 60px;
 `;
 

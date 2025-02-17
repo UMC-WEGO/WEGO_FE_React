@@ -15,6 +15,7 @@ function BoardEditPage() {
   );
 
   const editPostData = location.state?.editPostData || null;
+  console.log(editPostData);
   const [editPostId, setEditPostId] = useState(location.state?.postId);
 
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태

@@ -1,9 +1,8 @@
 import * as S from './BoardDetailPage.style';
 import { TbArrowLeft, TbShare2, TbDotsVertical } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { getPostByIdApi, deletePostApi } from '../../../apis/feat4/postApi';
-import { PostInfo, Comment } from '../../../types/postType';
+import { useState } from 'react';
+import { deletePostApi } from '../../../apis/feat4/postApi';
 import {
   PiChatTextBold,
   PiThumbsUpBold,
@@ -12,13 +11,10 @@ import {
 import { LuDot } from 'react-icons/lu';
 import CommentInput_chanmin from '../../../components/feat4/CommentInput/CommentInput_chanmin';
 import CommentList_chanmin from '../../../components/feat4/CommentList/CommentList_chanmin';
-import usePostComments, {
+import {
   usePostActions,
   usePostDetail,
 } from '../../../hooks/feat4/usePostActions';
-import { tokenRefreshApi } from '../../../apis/feat1/loginApis';
-import { useTokenStore } from '../../../store/token/useTokenStore';
-import { authInstance } from '../../../apis/axiosInstance';
 import EditModal from '../../../components/feat4/EditModal/EditModal';
 
 export type TCommentData = {
@@ -29,7 +25,7 @@ export type TCommentData = {
   user_id: number;
 };
 
-type TPostInfo = {
+export type TPostInfo = {
   category_name: string;
   content: string;
   created_at: string;
@@ -56,11 +52,11 @@ export type TPostDetailResData = {
 
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
-  const year = date.getFullYear().toString().slice(2); // "2025" → "25"
-  const month = String(date.getMonth() + 1).padStart(2, '0'); // 2 → "02"
-  const day = String(date.getDate()).padStart(2, '0'); // 9 → "09"
-  const hours = String(date.getHours()).padStart(2, '0'); // 16 → "16"
-  const minutes = String(date.getMinutes()).padStart(2, '0'); // 27 → "27"
+  const year = date.getFullYear().toString().slice(2);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
 
   return `${year}/${month}/${day} ${hours}:${minutes}`;
 };
@@ -84,8 +80,8 @@ const timeAgoFormat = (dateString: string) => {
 function BoardDetailPage() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>(); // URL에서 id를 가져와
+  const numericPostId = postId ? parseInt(postId) : 0;
   const { isLoading, error, data: post } = usePostDetail(Number(postId));
-  const { data: tokens } = useTokenStore();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
   const {
@@ -97,15 +93,12 @@ function BoardDetailPage() {
     unscrapPost,
   } = usePostActions(Number(postId));
 
-  const [activeIcons, setActiveIcons] = useState<{
-    like: boolean;
-    comment: boolean;
-    scrap: boolean;
-  }>({
+  const [activeIcons, setActiveIcons] = useState({
     like: false,
     comment: false,
     scrap: false,
   });
+
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -127,25 +120,6 @@ function BoardDetailPage() {
       ...prev,
       [icon]: !prev[icon], // 클릭할 때마다 해당 아이콘의 상태를 토글
     }));
-    const handleDelete = async () => {
-      if (!postId) return;
-
-      const success = await deletePostApi(Number(postId));
-      if (success) {
-        alert('게시글이 삭제되었습니다.');
-        navigate('/board');
-      } else {
-        alert('게시글 삭제에 실패했습니다.');
-      }
-    };
-
-    const handleEditClick = () => {
-      if (!postId) return;
-      console.log(post);
-      navigate('/board/edit', {
-        state: { editPostData: post, postId: postId }, // 기존 게시글 데이터
-      });
-    };
 
     switch (icon) {
       case 'like':
@@ -173,6 +147,26 @@ function BoardDetailPage() {
       default:
         break;
     }
+  };
+
+  const handleDelete = async () => {
+    if (!postId) return;
+
+    const success = await deletePostApi(Number(postId));
+    if (success) {
+      alert('게시글이 삭제되었습니다.');
+      navigate('/board');
+    } else {
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleEditClick = () => {
+    if (!postId) return;
+    console.log(post);
+    navigate('/board/edit', {
+      state: { editPostData: post?.post.post_info, postId: postId }, // 기존 게시글 데이터
+    });
   };
 
   // 로딩
@@ -206,23 +200,23 @@ function BoardDetailPage() {
         />
 
         <S.Content>
-          <p> # {post.category_name}</p>
+          <p> # {post.post.post_info.category_name}</p>
           <S.Profile>
             <img src="https://buly.kr/CsipNnM" alt="Profile" />
             <div>
-              <span>{post.post_author_nickname}</span>
+              <span>{post.post.post_info.post_author_nickname}</span>
               <p>
-                {formatDate(post.created_at)}
+                {formatDate(post.post.post_info.created_at)}
                 <LuDot />
-                {timeAgoFormat(post.created_at)}
+                {timeAgoFormat(post.post.post_info.created_at)}
                 <LuDot />
-                {post.location_name}
+                {post.post.post_info.location_name}
               </p>
             </div>
           </S.Profile>
-          <h1>{post.title}</h1>
+          <h1>{post.post.post_info.title}</h1>
           <img src="https://buly.kr/AaoydRw" alt="Post Image" />
-          <h6>{post.content}</h6>
+          <h6>{post.post.post_info.content}</h6>
         </S.Content>
         <hr />
         <S.Response>
@@ -246,7 +240,11 @@ function BoardDetailPage() {
           </span>
         </S.Response>
         <S.CommentHr />
-        <CommentList_chanmin comments={post.post.comments} />
+        <CommentList_chanmin
+          comments={post.post.comments}
+          onDeleteComment={deleteComment}
+          postId={numericPostId}
+        />
       </S.Scroll>
 
       <S.InputBox>
