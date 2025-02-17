@@ -210,12 +210,29 @@ function ScheduleCard({
                       : '인증된 미션'}
                 </S.CertifiedMissionText>
                 <S.Points>
-                  {/* 우선순위 수정 */}
-                  {isInReview
-                    ? '미션 검수 중'
-                    : isCompleted
-                      ? `+${totalPoints} 포인트 적립`
-                      : ''}
+                  {/* receivedMission의 status가 true일 경우 "n 포인트 지급" 표시 */}
+                  {schedule.missions
+                    .filter(
+                      mission =>
+                        mission.receivedMission &&
+                        mission.receivedMission.content,
+                    )
+                    .every(mission => mission.receivedMission.status)
+                    ? `+${schedule.missions
+                        .filter(
+                          mission =>
+                            mission.receivedMission &&
+                            mission.receivedMission.content,
+                        )
+                        .reduce(
+                          (total, mission) => total + mission.mission.point,
+                          0,
+                        )} 포인트 지급`
+                    : isInReview
+                      ? '미션 검수 중'
+                      : isCompleted
+                        ? `+${totalPoints} 포인트 적립`
+                        : ''}
                 </S.Points>
               </S.PointsContainer>
               <S.NextText>지난 여행에서 수행한 미션들이에요.</S.NextText>
@@ -223,28 +240,28 @@ function ScheduleCard({
 
             <S.MissionSection>
               <S.MissionImages>
-                {schedule.missions.map(mission => (
-                  <S.MissionItem key={mission.mission.id}>
-                    {/* 인증된 사진 null 상태 */}
-                    <img
-                      src={mission.receivedMission?.imgUrl} // 인증 사진
-                      onClick={() =>
-                        handleImageClick(
-                          // 미션 자체(사용자 인증x) / 상세 조회 클릭보려고
-                          // missionpic,
-                          // mission.mission.title,
-                          // mission.mission.content,
-
-                          // 인증된 미션 (현재 null이여서 상세 조회 클릭x)
-                          mission.receivedMission?.imgUrl,
-                          mission.mission.title,
-                          mission.receivedMission?.content ?? ' ', // null인 경우 빈 문자열
-                        )
-                      }
-                    />
-                    <S.MissionName>{mission.mission.title}</S.MissionName>
-                  </S.MissionItem>
-                ))}
+                {schedule.missions
+                  .filter(
+                    mission =>
+                      mission.receivedMission &&
+                      mission.receivedMission.content, // content가 null이 아닌 경우만
+                  )
+                  .map(mission => (
+                    <S.MissionItem key={mission.receivedMission.id}>
+                      {/* 인증된 사진 null 상태 처리 */}
+                      <img
+                        src={mission.receivedMission.picture}
+                        onClick={() =>
+                          handleImageClick(
+                            mission.receivedMission.picture,
+                            mission.mission.title,
+                            mission.receivedMission.content ?? ' ',
+                          )
+                        }
+                      />
+                      <S.MissionName>{mission.mission.title}</S.MissionName>
+                    </S.MissionItem>
+                  ))}
               </S.MissionImages>
             </S.MissionSection>
           </>

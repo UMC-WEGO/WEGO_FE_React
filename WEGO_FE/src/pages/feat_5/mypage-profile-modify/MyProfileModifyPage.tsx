@@ -1,19 +1,22 @@
 import * as S from './MyProfileModifyPage.style';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { users } from '../../../mocks/feat5/UserData';
+// import { users } from '../../../mocks/feat5/UserData';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import InputFieldWrapper from '../../../components/feat5/modify/InputWrapper';
 import ProfilePicUpload from '../../../components/feat5/modify/ProfilePicUpload';
 import { validateInputs } from '../../../utils/feat5/validation';
+import {
+  userinfoApis,
+  userprofilemodifyApis,
+} from '../../../apis/feat5/userinfoApis';
 
 function MyProfileModifyPage() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const user = users.find(user => user.userId === userId);
-  const [username, setUsername] = useState(user?.username || '');
-  const [useremail, setUseremail] = useState(user?.useremail || '');
-  const [profilePic, setProfilePic] = useState(user?.profilePic || '');
+  const [username, setUsername] = useState('');
+  const [useremail, setUseremail] = useState('');
+  const [profilePic, setProfilePic] = useState<string | File>('');
   const [isModified, setIsModified] = useState(false);
   const [error, setError] = useState<{ username: string; useremail: string }>({
     username: '',
@@ -21,7 +24,24 @@ function MyProfileModifyPage() {
   });
 
   useEffect(() => {
-    const errors = validateInputs(username, useremail, users, userId);
+    const fetchUserInfo = async () => {
+      try {
+        const userData = await userinfoApis();
+        if (userData) {
+          setUsername(userData.nickname);
+          setUseremail(userData.email);
+          setProfilePic(userData.profile_image);
+        }
+      } catch (error) {
+        console.error('사용자 정보 불러오기 실패', error);
+      }
+    };
+
+    fetchUserInfo();
+  }, []);
+
+  useEffect(() => {
+    const errors = validateInputs(username, useremail, [], userId);
     setError({
       username: errors.username || '',
       useremail: errors.useremail || '',
@@ -29,16 +49,16 @@ function MyProfileModifyPage() {
     setIsModified(
       !errors.username &&
         !errors.useremail &&
-        (username.trim() !== user?.username ||
-          useremail.trim() !== user?.useremail ||
-          profilePic !== user?.profilePic),
+        Boolean(
+          username || useremail || (profilePic && profilePic instanceof File),
+        ),
     );
-  }, [username, useremail, profilePic, user, userId]);
+  }, [username, useremail, profilePic, userId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const newProfilePic = URL.createObjectURL(e.target.files[0]);
-      setProfilePic(newProfilePic);
+      const file = e.target.files[0];
+      setProfilePic(file);
     }
   };
 
@@ -51,14 +71,22 @@ function MyProfileModifyPage() {
     }
   };
 
-  const handleSave = () => {
-    // UserData 업데이트(로컬 데이터만 변경)
-    if (user) {
-      user.username = username;
-      user.useremail = useremail;
-      user.profilePic = profilePic;
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      if (username) formData.append('nickname', username);
+      if (useremail) formData.append('email', useremail);
+      if (typeof profilePic === 'string' && profilePic.trim() !== '') {
+        formData.append('profile_image_url', profilePic);
+      } else if (profilePic instanceof File) {
+        formData.append('profile_image', profilePic);
+      }
+
+      await userprofilemodifyApis(formData);
+      navigate(`/mypage/${userId}`);
+    } catch (error) {
+      console.error('프로필 수정 실패', error);
     }
-    navigate(`/mypage/${userId}`); // 저장 후 페이지 이동
   };
 
   return (
@@ -78,7 +106,11 @@ function MyProfileModifyPage() {
       </S.Header>
 
       <ProfilePicUpload
-        profilePic={profilePic}
+        profilePic={
+          profilePic instanceof File
+            ? URL.createObjectURL(profilePic)
+            : profilePic
+        }
         handleProfilePictureClick={handleProfilePictureClick}
         handleFileChange={handleFileChange}
       />

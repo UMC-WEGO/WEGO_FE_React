@@ -10,9 +10,49 @@ import {
   PiBookmarkSimpleBold,
 } from 'react-icons/pi';
 import { LuDot } from 'react-icons/lu';
-import CommentList from '../../../components/feat4/CommentList/CommentList';
-import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
+import CommentInput_chanmin from '../../../components/feat4/CommentInput/CommentInput_chanmin';
+import CommentList_chanmin from '../../../components/feat4/CommentList/CommentList_chanmin';
+import usePostComments, {
+  usePostActions,
+  usePostDetail,
+} from '../../../hooks/feat4/usePostActions';
+import { tokenRefreshApi } from '../../../apis/feat1/loginApis';
+import { useTokenStore } from '../../../store/token/useTokenStore';
+import { authInstance } from '../../../apis/axiosInstance';
 import EditModal from '../../../components/feat4/EditModal/EditModal';
+
+export type TCommentData = {
+  comment_author_name: string;
+  comment_author_profile: string;
+  comment_content: string;
+  comment_created_at: string;
+  user_id: number;
+};
+
+type TPostInfo = {
+  category_name: string;
+  content: string;
+  created_at: string;
+  id: number;
+  location_name: string;
+  picture_urls: string[];
+  post_author_nickname: string;
+  post_author_profile: string | null;
+  title: string;
+  total_comment: number;
+  total_like: number;
+  total_scrap: number | null;
+  updated_at: string;
+};
+
+export type TPostDetailResData = {
+  liked: boolean;
+  post: {
+    comments: TCommentData[];
+    post_info: TPostInfo;
+  };
+  scraped: boolean;
+};
 
 const formatDate = (isoString: string) => {
   const date = new Date(isoString);
@@ -44,42 +84,28 @@ const timeAgoFormat = (dateString: string) => {
 function BoardDetailPage() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>(); // URL에서 id를 가져와
-
-  const [post, setPost] = useState<PostInfo | null>(null);
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const { isLoading, error, data: post } = usePostDetail(Number(postId));
+  const { data: tokens } = useTokenStore();
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
-  useEffect(() => {
-    const fetchPostData = async () => {
-      if (!postId) return;
-      try {
-        setIsLoading(true);
-        const data = await getPostByIdApi(Number(postId));
-        if (data) {
-          setPost(data.post.post_info);
-          setComments(data.post.comments || []);
-        } else {
-          setIsError(true);
-        }
-      } catch (error) {
-        console.error('게시글 불러오기 실패:', error);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const {
+    addComment,
+    deleteComment,
+    likePost,
+    unlikePost,
+    scrapPost,
+    unscrapPost,
+  } = usePostActions(Number(postId));
 
-    fetchPostData();
-  }, [postId]);
-
-  const [activeIcons, setActiveIcons] = useState({
+  const [activeIcons, setActiveIcons] = useState<{
+    like: boolean;
+    comment: boolean;
+    scrap: boolean;
+  }>({
     like: false,
     comment: false,
     scrap: false,
   });
-
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -93,48 +119,67 @@ function BoardDetailPage() {
   };
 
   const handleClick = (icon: 'like' | 'comment' | 'scrap') => {
+    if (icon == 'comment') {
+      return;
+    }
+
     setActiveIcons(prev => ({
       ...prev,
       [icon]: !prev[icon], // 클릭할 때마다 해당 아이콘의 상태를 토글
     }));
-  };
+    const handleDelete = async () => {
+      if (!postId) return;
 
-  const handleDelete = async () => {
-    if (!postId) return;
-
-    const success = await deletePostApi(Number(postId));
-    if (success) {
-      alert('게시글이 삭제되었습니다.');
-      navigate('/board');
-    } else {
-      alert('게시글 삭제에 실패했습니다.');
-    }
-  };
-
-  const handleEditClick = () => {
-    if (!postId) return;
-    console.log(post);
-    navigate('/board/edit', {
-      state: { editPostData: post, postId: postId }, // 기존 게시글 데이터
-    });
-  };
-
-  // 댓글 예시
-  const addComment = (text: string) => {
-    const newComment = {
-      comment_author_name: '위고 사용자',
-      comment_author_profile: 'https://buly.kr/G3CTK8F',
-      comment_created_at: '방금 전',
-      comment_content: text,
+      const success = await deletePostApi(Number(postId));
+      if (success) {
+        alert('게시글이 삭제되었습니다.');
+        navigate('/board');
+      } else {
+        alert('게시글 삭제에 실패했습니다.');
+      }
     };
-    setComments(prev => [...prev, newComment as Comment]);
+
+    const handleEditClick = () => {
+      if (!postId) return;
+      console.log(post);
+      navigate('/board/edit', {
+        state: { editPostData: post, postId: postId }, // 기존 게시글 데이터
+      });
+    };
+
+    switch (icon) {
+      case 'like':
+        if (activeIcons.like) {
+          unlikePost({
+            postId: Number(postId),
+          });
+        } else {
+          likePost({
+            postId: Number(postId),
+          });
+        }
+        break;
+      case 'scrap':
+        if (activeIcons.scrap) {
+          unscrapPost({
+            postId: Number(postId),
+          });
+        } else {
+          scrapPost({
+            postId: Number(postId),
+          });
+        }
+        break;
+      default:
+        break;
+    }
   };
 
   // 로딩
   if (isLoading) return <div>게시글 불러오는 중</div>;
 
   // 에러
-  if (isError || !post) return <div>게시글을 찾을 수 없습니다.</div>;
+  if (error || !post) return <div>게시글을 찾을 수 없습니다.</div>;
 
   return (
     <S.Container>
@@ -179,34 +224,37 @@ function BoardDetailPage() {
           <img src="https://buly.kr/AaoydRw" alt="Post Image" />
           <h6>{post.content}</h6>
         </S.Content>
-
         <hr />
         <S.Response>
           <span onClick={() => handleClick('like')}>
             <PiThumbsUpBold
               className={`icon ${activeIcons.like ? 'active' : ''}`}
             />
-            <p>공감 {post.total_like}</p>
+            <p>공감 {post.post.post_info.total_like || 0}</p>
           </span>
           <span onClick={() => handleClick('comment')}>
             <PiChatTextBold
               className={`icon ${activeIcons.comment ? 'active' : ''}`}
             />
-            <p>댓글 {post.total_comment}</p>
+            <p>댓글 {post.post.post_info.total_comment || 0}</p>
           </span>
           <span onClick={() => handleClick('scrap')}>
             <PiBookmarkSimpleBold
               className={`icon ${activeIcons.scrap ? 'active' : ''}`}
             />
-            <p>스크랩 {post.total_scrap}</p>
+            <p>스크랩 {post.post.post_info.total_scrap || 0}</p>
           </span>
         </S.Response>
         <S.CommentHr />
-        <CommentList comments={comments} />
+        <CommentList_chanmin comments={post.post.comments} />
       </S.Scroll>
 
       <S.InputBox>
-        <CommentInput onAddComment={addComment} />
+        <CommentInput_chanmin
+          onAddComment={addComment}
+          userId={1}
+          postId={Number(postId)}
+        />
       </S.InputBox>
     </S.Container>
   );
