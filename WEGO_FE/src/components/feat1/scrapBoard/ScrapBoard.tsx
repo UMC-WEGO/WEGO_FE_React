@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import * as S from './ScrapBoard.style';
 import { useState } from 'react';
@@ -6,9 +6,15 @@ import PostList from '../../feat4/PostList';
 import { allPosts } from '../../../mocks/board/postData';
 import bookmark from '../../../images/feat1/Bookmark.svg';
 import ScrapPostList from '../scrapPostList/ScrapPostList';
+import { getScrapPostsApi } from '../../../apis/feat1/scrapApis';
 
 function ScrapBoard() {
-  const scrapPosts = allPosts;
+  const [scrapPosts, setScrapPosts] = useState([]);
+  useEffect(() => {
+    getScrapPostsApi();
+  }, []);
+
+  // const scrapPosts = allPosts;
   const categories: string[] = [
     '추천',
     '즉흥 자랑',
@@ -24,7 +30,7 @@ function ScrapBoard() {
 
   // 카테고리 별로 필터링
   const filteredPosts = scrapPosts.filter(
-    post => post.category === selectedCategory,
+    post => post.category_name === selectedCategory,
   );
 
   return (
