@@ -10,6 +10,9 @@ import {
   TReturnsOfUseForm,
 } from '../../../types/SignUpFormData';
 import { useNavigate } from 'react-router';
+import { useSignUpStore } from '../../../store/signup/useSignUpStore';
+import { nicknameDupCheckApi, signupApi } from '../../../apis/feat1/signupApis';
+import useDupCheck from '../../../hooks/feat1/signup_dupCheck/useDupCheck';
 
 const NicknameInputWrapper = styled.div`
   position: relative;
@@ -54,6 +57,26 @@ function NickNameView({
   // console.log(register('nickname'));
   const inputValue = watch('nickname', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
 
+  // zustand
+  const { reqData, setReqData } = useSignUpStore();
+  const updateNickname = (nickname: string) => {
+    const data = {
+      nickname: nickname,
+    };
+    setReqData(data);
+  };
+
+  const apiReqData = {
+    nickname: inputValue,
+  };
+
+  // nickname 중복검사 로직 => input에 onchange 핸들러 prop을 정의하고 debouncedCheck를 전달해서 적용
+  const { isAvailable, debouncedDupCheck } = useDupCheck({
+    checkType: 'nickname',
+    checkData: apiReqData,
+    dupCheckApi: nicknameDupCheckApi,
+  });
+
   return (
     <S.MainSection>
       <S.SignUpTextBox>
@@ -67,16 +90,28 @@ function NickNameView({
             register={register}
             signUpInputType="nickname"
             isError={Boolean(errors.nickname)}
+            debouncedCheck={debouncedDupCheck}
           />
           <NicknameLengthText>{inputValue.length} / 10</NicknameLengthText>
         </NicknameInputWrapper>
-        <SS.SignUpErrorText>{errors?.nickname?.message}</SS.SignUpErrorText>
+        <SS.SignUpErrorText>
+          {errors?.nickname?.message ||
+            (!isAvailable && errors?.nickname && '해당 닉네임은 사용중입니다')}
+        </SS.SignUpErrorText>
         <Button
           type={'submit'}
-          color={!errors.nickname ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
+          color={
+            !errors.nickname && isAvailable
+              ? '--color-main-blue'
+              : '--color-gray-300'
+          } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
-          disabled={Boolean(errors.nickname)}
-          onClickHandler={() => navigate('/signup/complete')}
+          disabled={Boolean(errors.nickname) && !isAvailable}
+          onClickHandler={() => {
+            updateNickname(inputValue);
+            signupApi({ ...reqData, nickname: inputValue });
+            navigate('/signup/complete');
+          }}
         ></Button>
       </S.SignUpInputsBox>
     </S.MainSection>

@@ -1,7 +1,5 @@
 import * as S from './Temperature.style.ts';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { users } from '../../../mocks/feat5/UserData.ts';
 import grade1 from '../../../images/feat5/score1.svg';
 import grade2 from '../../../images/feat5/score2.svg';
 import grade3 from '../../../images/feat5/score3.svg';
@@ -11,18 +9,18 @@ import TempInfo from '../../../images/feat5/Temp_info.svg';
 import TempBar from '../../../images/feat5/Temp_bar.svg';
 import TempDes from '../../../images/feat5/Temp_description.svg';
 
+interface TempContainerProps {
+  temperature: number;
+}
+
 interface GradeInfo {
   grade: string;
   imageUrl: string;
 }
 
-function TempContainer() {
+function TempContainer({ temperature }: TempContainerProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false);
-  const { userId } = useParams();
-  const user = users.find(user => user.userId === userId);
-  if (!user) {
-    return <div>찾을 수 없는 사용자</div>;
-  }
+
   const toggleContent = (): void => {
     setIsClicked(true);
     setTimeout(() => {
@@ -38,33 +36,31 @@ function TempContainer() {
     return { grade: '개척가', imageUrl: grade5 };
   };
 
-  const tempValue: number = user.tempValue;
-  const progressBarWidth = (tempValue / 100) * 93.5;
+  const progressBarWidth = (temperature / 100) * 93.5;
 
   return (
     <S.TempContainer>
       <S.TempHeader>
         <S.TempValueLabelWrapper>
-          <S.TempValue>{tempValue}°C</S.TempValue>
+          <S.TempValue>{temperature}°C</S.TempValue>
           <S.TempButton onClick={toggleContent}>
             <S.TempLabel>즉흥 온도</S.TempLabel>
             <S.TempImage src={TempInfo} alt="온도정보 아이콘" />
           </S.TempButton>
+          {isClicked && (
+            <S.TempInfoMessage>
+              <img src={TempDes} alt="온도 설명" />
+            </S.TempInfoMessage>
+          )}
         </S.TempValueLabelWrapper>
         <S.TempGrade>
           <img
-            src={getGrade(tempValue).imageUrl}
-            alt={getGrade(tempValue).grade}
+            src={getGrade(temperature).imageUrl}
+            alt={getGrade(temperature).grade}
           />
-          <span>{getGrade(tempValue).grade}</span>
+          <span>{getGrade(temperature).grade}</span>
         </S.TempGrade>
       </S.TempHeader>
-
-      {isClicked && (
-        <S.TempInfoMessage>
-          <img src={TempDes} alt="온도 설명" />
-        </S.TempInfoMessage>
-      )}
 
       <S.ProgressBarSection>
         <img src={TempBar} alt="온도 바" />

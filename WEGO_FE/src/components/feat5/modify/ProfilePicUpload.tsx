@@ -3,7 +3,7 @@ import ProfilePicButton from './ProfilePicButton';
 import Profile_cam from '../../../images/feat5/Profile_cam.svg';
 
 interface ProfilePicUploadProps {
-  profilePic: string;
+  profilePic: File | string | null;
   handleProfilePictureClick: () => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

@@ -11,6 +11,7 @@ import {
   TSignUpFormData,
   TReturnsOfUseForm,
 } from '../../../types/SignUpFormData';
+import { useSignUpStore } from '../../../store/signup/useSignUpStore';
 
 function PasswordView({
   returnsOfUseForm,
@@ -37,6 +38,15 @@ function PasswordView({
   };
   const handleClickOAuth2Button = type => {
     // login logic
+  };
+
+  // zustand
+  const { setReqData } = useSignUpStore();
+  const updatePassword = (password: string) => {
+    const data = {
+      password: password,
+    };
+    setReqData(data);
   };
 
   return (
@@ -95,6 +105,7 @@ function PasswordView({
           content={nextText}
           disabled={Boolean(errors.password) || Boolean(errors.passwordCheck)}
           onClickHandler={() => {
+            updatePassword(inputValue);
             navigate('/signup/terms');
           }}
         ></Button>

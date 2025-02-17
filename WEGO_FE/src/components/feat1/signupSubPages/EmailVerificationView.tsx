@@ -4,9 +4,12 @@ import Input from '../../../components/feat1/input/Input';
 import Button from '../../../components/feat1/button/Button';
 import { useNavigate } from 'react-router';
 import {
+  TEmailVerifyResponseApiReqData,
   TReturnsOfUseForm,
   TSignUpFormData,
 } from '../../../types/SignUpFormData';
+import { useSignUpStore } from '../../../store/signup/useSignUpStore';
+import { emailVerifyResponseApi } from '../../../apis/feat1/signupApis';
 
 function EmailVerificationView({
   returnsOfUseForm,
@@ -18,11 +21,12 @@ function EmailVerificationView({
   const [istNextReady, setIsNextReady] = useState(); // 인증 처리 후에 true
 
   const { register, formState, watch } = returnsOfUseForm;
-  const inputValue = watch('verificationCode', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const { errors } = formState;
 
-  const verifyEmailAuth = () => {
-    // 입력값의 코드를 통한 이메일 인증 처리
-    // inputValue로 접근
+  const inputValue = watch('verificationCode', ''); // 'myField'는 필드 이름, 기본값은 빈 문자열
+  const apiReqData = {
+    email: watch('email', ''),
+    code: watch('verificationCode', ''),
   };
 
   return (
@@ -32,13 +36,25 @@ function EmailVerificationView({
       </S.SignUpTextBox>
       <S.SignInputLable>인증코드</S.SignInputLable>
       <S.SignUpInputsBox>
-        <Input placeholder="인증 코드 입력" />
+        <Input
+          placeholder="인증 코드 입력"
+          register={register}
+          signUpInputType="verificationCode"
+          isError={Boolean(errors.verificationCode)}
+        />
         <Button
           type={'submit'}
-          color={istNextReady ? '--color-main-blue' : '--color-gray-300'} // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
+          color={
+            !errors.verificationCode && inputValue.length
+              ? '--color-main-blue'
+              : '--color-gray-300'
+          } // css 전역변수명을 그대로 사용 -> 받아서 var()로 처리
           content={nextText}
-          onClickHandler={() => navigate('/signup/password')}
-          disabled={!istNextReady}
+          disabled={Boolean(errors.verificationCode)}
+          onClickHandler={() => {
+            emailVerifyResponseApi(apiReqData);
+            navigate('/signup/password');
+          }}
         ></Button>
       </S.SignUpInputsBox>
     </S.MainSection>
