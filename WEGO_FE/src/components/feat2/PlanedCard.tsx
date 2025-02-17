@@ -58,8 +58,8 @@ type PlanedCardType = {
   child_participants: number;
   vehicle: string;
   duration: string;
-  departureDate: string;
-  arrivalDate: string;
+  startDate: string;
+  endDate: string;
 }
 
 interface PlanedCardProps {
@@ -68,8 +68,13 @@ interface PlanedCardProps {
 }
 
 const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
+  const departureDate = new Date(props.startDate)
+  const arrivalDate = new Date(props.endDate)
+  const nowDate = new Date()
+
   const D_Days = "3";
 
+  console.log("props : ", props)
     return(
       <>
         <PlanedCardBox>
@@ -79,7 +84,15 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
               <DeleteBtn onClick={() => onClickDelete(props.tripId)}><img src={trash_bin_img}/></DeleteBtn>
             </PlanedCard_row1>
             <PlanedCard_row2>
-              <BlueTag TagContent={props.duration}/>
+              <BlueTag TagContent={`
+                ${departureDate.getFullYear().toString()}.
+                ${departureDate.getMonth().toString()}.
+                ${departureDate.getDate().toString()}
+                ~
+                ${arrivalDate.getFullYear().toString()}.
+                ${arrivalDate.getMonth().toString()}.
+                ${arrivalDate.getDate().toString()}`
+                }/>
               <BlueTag TagContent={`${props.adult_participants + props.child_participants}명`}/>
               <BlueTag TagContent={props.vehicle}/>
             </PlanedCard_row2>
