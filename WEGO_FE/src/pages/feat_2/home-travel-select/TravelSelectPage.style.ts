@@ -31,7 +31,6 @@ export const PlanContainer = styled.div`
   margin: 5px;
 
   margin-top: 32px;
-  margin-bottom: 18px;
   height: 146px;
 
   display: flex;
@@ -41,7 +40,7 @@ export const PlanContainer = styled.div`
 // 여행지 선택 버튼 영역
 export const DestinationContainer = styled.div`
   margin: 5px;
-  margin-top: 9px;
+  margin-top: 27px;
   height: 146px;
 
   display: flex;
@@ -79,9 +78,9 @@ export const Title = styled.div`
 export const SubmitBtnContainer = styled.div`
   margin: 5px;
 
-  font-size: 10px;
-  font-weight: 500;
-  color: rgba(105, 105, 105, 1)
+  margin-top: 32px;
+  margin-bottom: 36px;
+  height: 50px;
 `
 
 // 개시판 옆 '더보기' 버튼

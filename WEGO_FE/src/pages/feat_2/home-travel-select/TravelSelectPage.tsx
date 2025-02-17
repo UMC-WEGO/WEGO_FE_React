@@ -15,6 +15,7 @@ import PostCard from "../../../components/feat2/Post/PostCard";
 import PlaningCard from "../../../components/feat2/PlaningCard";
 import DestinationBtn from "../../../components/feat2/DestinationBtn";
 import PostList from "../../../components/feat2/Post/PostList";
+// import PostList from "../../../components/feat4/PostList";
 import ModalMessage from "../../../components/feat2/Modal";
 
 // 
@@ -22,11 +23,16 @@ import ModalMessage from "../../../components/feat2/Modal";
 //
 
 import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
-import ToolTip from "../../../components/feat2/ToolTip";
 
 //
 // 
 //
+
+// 임시데이터 가져오기
+// import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
+import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+
 const NoPopularPost = styled.div`
   display: flex;
   align-items: flex-start;
@@ -37,9 +43,6 @@ const NoPopularPost = styled.div`
 `
 
 function TravelSelectPage() {
-  const user_Id = useParams();     // 사용자 ID 받아오기
-  const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
-
   // 홈에서 정보 가져오기기
   const uselocation = useLocation();
   const { randomDestinations, departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
@@ -90,6 +93,45 @@ function TravelSelectPage() {
     getInstantPost();
   }, [])
 
+
+
+  // --- --- --- 랜덤 여행지 조회 --- --- ---
+  // const [recommendedDestinations, setRecommendedDestinations] = useState([]);
+  // const [loadingDestination, setLoadingDestination] = useState(true);
+  // const [errorDestination, setErrorDestination] = useState<string | null>(null);
+
+  // // POST to server
+  // useEffect(() => {
+  //   const postCriterias = async() => {
+  //     try {
+  //       const res = await axios.post('http://13.124.213.122:3000/home',
+  //         {  
+  //           departure,
+  //           participants,
+  //           vehicle,
+  //           duration,
+  //           startDate,
+  //           endDate
+  //         },
+  //         {
+  //           headers: {
+  //             Authorization: `${TOKEN}`,
+  //             Accept: `application/json`,
+  //             'Content-Type': 'application/json',
+  //           },
+  //         }
+  //       );
+  //       console.log('조회한 랜덤 여행지 : ', recommendedDestinations);
+  //       setLoadingDestination(false);
+  //       setRecommendedDestinations(res.data.result);
+  //     } catch (err) {
+  //       // setErrorDestination(err);
+  //       // console.log('Error on Post (criterias)!', err);
+  //     }
+  //   };
+  //   postCriterias();
+  // }, []);
+
   // --- --- --- 여행 일정 등록 --- --- ---
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [locationData, setLocationData] = useState({location: "", region: "", growthRate: ""});
@@ -128,7 +170,7 @@ function TravelSelectPage() {
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
         
-        navigate(`/home/:${userId}`, {
+        navigate(`/home`, {
           state: {
             fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
           }
@@ -163,7 +205,7 @@ function TravelSelectPage() {
       <S.AppContainer>
         <S.ScrollArea>    
           <S.ToolBarContainer>
-            <Link to={`/home/${userId}`}>
+            <Link to={`/home`}>
               <img src={back_arrow_img}/>
             </Link>
             <img src={share_img}/>
@@ -177,11 +219,6 @@ function TravelSelectPage() {
               transport={vehicle}
             />
           </S.PlanContainer>
-
-          <ToolTip
-            content="12월 전년 대비 여행객 방문 변화율을 참고해 보세요"
-            tip="팁"
-          />
 
           <S.DestinationContainer>
             {/* 추천 여행지 나열 */}

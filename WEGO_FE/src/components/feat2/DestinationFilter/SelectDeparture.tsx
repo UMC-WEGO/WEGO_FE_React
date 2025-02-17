@@ -90,16 +90,15 @@ interface SelectedDepartureProps {
   departureLocation: string;
   setDepartureLocation: any;
   location: { name: string; elements: string[] }[];
-  userId: string;
 }
 
-const SelectDeparture = ({ departureLocation, setDepartureLocation, location, userId }: SelectedDepartureProps) => {
+const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: SelectedDepartureProps) => {
   // --- --- --- 최근 여행지역 조회 --- --- ---
   const [recentLocation, setRecentLocation] = useState([]);
 
   useEffect(() => {
     const getRecentLocation = async() => {
-      const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search/${userId}`, {
+      const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search`, {
         headers: {
           Authorization: `${TOKEN}`,
           Accept: `application/josn`
@@ -109,9 +108,6 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
     }
     getRecentLocation();
   }, [])
-
-  // console.log("최근 여행지 URL : ", `http://13.124.213.122:3000/community/posts/local-search/${userId}`)
-  // console.log("최근 여행지 : ", recentLocation);
 
   const [isSearchBottomActive, setIsSearchActive] = useState(false);
   const toggleSearchBottom = () => { setIsSearchActive(!isSearchBottomActive); }
@@ -140,7 +136,7 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
 
       {/* 지역 선택 */}
       {/* 최근지역 */}
-      <SearchRow>
+      {/* <SearchRow>
         <LocationTitle>최근지역</LocationTitle>
         <LabelBox>
         {recentLocation.length > 0 ? (
@@ -157,7 +153,7 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
           <div> 최근 여행지가 없습니다. </div>
         )}
         </LabelBox>        
-      </SearchRow>
+      </SearchRow> */}
     
       {/* 지역 전체 */}
       {location.map((location) => (
@@ -176,7 +172,6 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location, us
           </LabelBox>
         </SearchRow>
       ))}
-      
     </SearchCard>
   )
 }

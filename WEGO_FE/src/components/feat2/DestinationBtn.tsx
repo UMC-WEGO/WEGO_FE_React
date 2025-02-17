@@ -69,7 +69,7 @@ const DestinationBtn = ({props, isSelected, onClick}: DestinationBtnProps) => {
         <DestinationBtnBox selectedFlag={isSelected} onClick={onClick}>
           <DestinationLocation selectedFlag={isSelected} textLenth={props.region.length}>{props.region}</DestinationLocation>
           <DestinationCity textLenth={props.location.length}>{props.location}</DestinationCity>
-          <DestinationTime selectedFlag={isSelected}>{props.growthRate}%</DestinationTime>
+          <DestinationTime selectedFlag={isSelected}>{props.growthRate}</DestinationTime>
         </DestinationBtnBox>
       </>
     )

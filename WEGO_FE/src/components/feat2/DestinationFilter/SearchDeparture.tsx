@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { useState, useEffect } from "react"
-import { CategoryButton } from "../../feat4/FreeBoard.style"
+// import { CategoryButton } from "../../feat4/FreeBoard.style"
 
 import MapPin_Icon from '../../../images/feat2/map_pin_icon.png';
 

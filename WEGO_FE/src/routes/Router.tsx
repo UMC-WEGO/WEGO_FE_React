@@ -58,12 +58,12 @@ const Router = [
       { path: '/scrap', element: <ScrapPage /> },
 
       // 메인 페이지 라우팅
-      { path: '/home/:userId', element: <HomePage /> },
+      { path: '/home', element: <HomePage /> },
       {
         path: '/home/travel-select/random',
         element: <TravelSelectRandomPage />,
       },
-      { path: '/home/travel-select/:userId', element: <TravelSelectPage /> },
+      { path: '/home/travel-select', element: <TravelSelectPage /> },
 
       // 일정 페이지 라우팅
       { path: '/schedule', element: <HomeScedulePage /> },
