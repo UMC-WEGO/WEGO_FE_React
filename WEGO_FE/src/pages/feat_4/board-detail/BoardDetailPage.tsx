@@ -77,7 +77,7 @@ function BoardDetailPage() {
   }>({
     like: post ? post.liked : false,
     comment: false,
-    scrap: false,
+    scrap: post ? post.scraped : false,
   });
 
   const handleBack = () => {
