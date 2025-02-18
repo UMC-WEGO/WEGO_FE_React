@@ -15,4 +15,6 @@ export type Post = {
   likeCount: number;
   scrapCount: number;
   commentCount: number;
+  categoryName: string;
+  locationName: string;
 };
