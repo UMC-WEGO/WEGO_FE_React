@@ -4,8 +4,6 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   margin-top: 59px;
-  margin-bottom: 90px;
-  border-bottom: 1px solid #ddd;
   flex-direction: column;
 
   .noaccess {
@@ -129,7 +127,7 @@ export const MenuList = styled.div`
 export const LogoutButton = styled.div`
   border: none;
   padding-left: 32px;
-  margin-top: 80px;
+  margin-top: 90px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
