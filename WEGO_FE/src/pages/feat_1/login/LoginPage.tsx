@@ -12,7 +12,7 @@ import { IoMdEyeOff } from 'react-icons/io';
 
 import Input from '../../../components/feat1/input/Input';
 import Button from '../../../components/feat1/button/Button';
-import { loginApi } from '../../../apis/feat1/loginApis';
+import { getUserInfoApi, loginApi } from '../../../apis/feat1/loginApis';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { isTokenExpired } from '../../../utils/feat1/authUtils';
@@ -41,8 +41,17 @@ function LoginPage() {
     // login logic
   };
 
-  const { data } = useTokenStore();
+  const { data, setData } = useTokenStore();
   console.log(data.accessToken);
+
+  const saveUserInfoWithNavigate = async () => {
+    const apiRes = await getUserInfoApi();
+    console.log(apiRes);
+    setData({
+      userId: apiRes.user_id,
+    });
+    navigate('/home');
+  };
 
   return (
     <S.LoginPageLayout>
@@ -53,7 +62,6 @@ function LoginPage() {
         <S.MainSection
           onSubmit={async e => {
             e.preventDefault();
-            console.log(123);
 
             const loginResult = await loginApi({
               email: loginEmail,
@@ -63,7 +71,7 @@ function LoginPage() {
             if (loginResult === -1) {
               alert('아이디 또는 비밀번호가 잘못되었습니다.');
             } else {
-              navigate('/home');
+              saveUserInfoWithNavigate();
             }
           }}
         >
