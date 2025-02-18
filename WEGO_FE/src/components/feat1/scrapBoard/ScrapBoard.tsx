@@ -7,12 +7,17 @@ import { allPosts } from '../../../mocks/board/postData';
 import bookmark from '../../../images/feat1/Bookmark.svg';
 import ScrapPostList from '../scrapPostList/ScrapPostList';
 import { getScrapPostsApi } from '../../../apis/feat1/scrapApis';
+import { Post } from '../../../types/feat5/UserPostsData';
 
 function ScrapBoard() {
   const [scrapPosts, setScrapPosts] = useState([]);
-  useEffect(() => {
-    getScrapPostsApi();
-  }, []);
+  const [filteredPosts, setFilteredPosts] = useState([]);
+
+  const getScrapPostsState = async () => {
+    const apiRes = await getScrapPostsApi();
+    console.log(apiRes[0]);
+    setScrapPosts(apiRes);
+  };
 
   // const scrapPosts = allPosts;
   const categories: string[] = [
@@ -28,10 +33,17 @@ function ScrapBoard() {
     setSelectedCategory(category);
   };
 
-  // 카테고리 별로 필터링
-  const filteredPosts = scrapPosts.filter(
-    post => post.category_name === selectedCategory,
-  );
+  useEffect(() => {
+    getScrapPostsState();
+  }, []);
+
+  useEffect(() => {
+    setFilteredPosts(
+      scrapPosts?.filter(post => post.category_name === selectedCategory),
+    );
+  }, [scrapPosts, selectedCategory]); // <- selectedCategory도 의존성에 추가
+
+  console.log(filteredPosts);
 
   return (
     <S.Container>
@@ -50,7 +62,7 @@ function ScrapBoard() {
         {/* <p>선택된 카테고리: {selectedCategory}</p> */}
         {/* 여기에 선택된 카테고리에 맞는 게시물 목록 렌더링 */}
         {/* <PostList posts={filteredPosts} /> 혜윤이 버전*/}
-        <ScrapPostList posts={filteredPosts} />
+        <ScrapPostList posts={filteredPosts && filteredPosts} />
       </S.PostListContainer>
     </S.Container>
   );
