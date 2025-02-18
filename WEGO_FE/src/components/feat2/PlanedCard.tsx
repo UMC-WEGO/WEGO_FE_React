@@ -1,8 +1,9 @@
+import { useState } from "react";
 import styled from "styled-components";
 import trash_bin_img from "../../images/feat2/trash_binpng.png";
 import BlueTag from "./BlueTag";
-// 계획된 여행을 보여주는 카드
-// "다가오는 여행"
+import Bottomsheet from "./BottomSheet";
+import DltAlertCard from "./DltAlertCard";
 
 const PlanedCardBox = styled.div`
   border: 1px solid rgba(234, 234, 234, 1);
@@ -58,8 +59,8 @@ type PlanedCardType = {
   child_participants: number;
   vehicle: string;
   duration: string;
-  startDate: string;
-  endDate: string;
+  departureDate: string;
+  arrivalDate: string;
 }
 
 interface PlanedCardProps {
@@ -68,30 +69,40 @@ interface PlanedCardProps {
 }
 
 const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
-  const departureDate = new Date(props.startDate)
-  const arrivalDate = new Date(props.endDate)
+  const startDate = new Date(props.startDate)
+  const endDate = new Date(props.endDate)
   const nowDate = new Date()
 
-  const D_Days = "3";
+  const dayDiff = (startDate.getTime() - nowDate.getTime()) / (1000 * 60 * 60 * 24)   // 날짜 사이 시간차
+  const D_Days = Math.ceil(dayDiff)       // 실수 -> 정수 변환
+
+  const [isShowMessage, setIsShowMessage] = useState(false);
+  const downMessage = () => {
+    setIsShowMessage(false)
+  }
 
   console.log("props : ", props)
     return(
       <>
+        {isShowMessage && (
+          <DltAlertCard message="확인 메시지" downMessage={downMessage} deletePlan={() => onClickDelete(props.tripId)}/>
+        )}
         <PlanedCardBox>
           <PlanedCardHug>
             <PlanedCard_row1>
-              <div>{props.location} 여행, D-{D_Days}</div>
-              <DeleteBtn onClick={() => onClickDelete(props.tripId)}><img src={trash_bin_img}/></DeleteBtn>
-            </PlanedCard_row1>
+              <div>{props.location} 여행, D-{`${D_Days === 0 ? "Day" : D_Days}`}</div>
+              {/* <DeleteBtn onClick={() => {setIsShowMessage(true); onClickDelete(props.tripId)}}><img src={trash_bin_img}/></DeleteBtn> */}
+              <DeleteBtn onClick={() => {setIsShowMessage(true); }}><img src={trash_bin_img}/></DeleteBtn>
+              </PlanedCard_row1>
             <PlanedCard_row2>
               <BlueTag TagContent={`
-                ${departureDate.getFullYear().toString()}.
-                ${departureDate.getMonth().toString()}.
-                ${departureDate.getDate().toString()}
+                ${startDate.getFullYear().toString()}.
+                ${startDate.getMonth().toString()}.
+                ${startDate.getDate().toString()}
                 ~
-                ${arrivalDate.getFullYear().toString()}.
-                ${arrivalDate.getMonth().toString()}.
-                ${arrivalDate.getDate().toString()}`
+                ${endDate.getFullYear().toString()}.
+                ${endDate.getMonth().toString()}.
+                ${endDate.getDate().toString()}`
                 }/>
               <BlueTag TagContent={`${props.adult_participants + props.child_participants}명`}/>
               <BlueTag TagContent={props.vehicle}/>

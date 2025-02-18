@@ -93,45 +93,6 @@ function TravelSelectPage() {
     getInstantPost();
   }, [])
 
-
-
-  // --- --- --- 랜덤 여행지 조회 --- --- ---
-  // const [recommendedDestinations, setRecommendedDestinations] = useState([]);
-  // const [loadingDestination, setLoadingDestination] = useState(true);
-  // const [errorDestination, setErrorDestination] = useState<string | null>(null);
-
-  // // POST to server
-  // useEffect(() => {
-  //   const postCriterias = async() => {
-  //     try {
-  //       const res = await axios.post('http://13.124.213.122:3000/home',
-  //         {  
-  //           departure,
-  //           participants,
-  //           vehicle,
-  //           duration,
-  //           startDate,
-  //           endDate
-  //         },
-  //         {
-  //           headers: {
-  //             Authorization: `${TOKEN}`,
-  //             Accept: `application/json`,
-  //             'Content-Type': 'application/json',
-  //           },
-  //         }
-  //       );
-  //       console.log('조회한 랜덤 여행지 : ', recommendedDestinations);
-  //       setLoadingDestination(false);
-  //       setRecommendedDestinations(res.data.result);
-  //     } catch (err) {
-  //       // setErrorDestination(err);
-  //       // console.log('Error on Post (criterias)!', err);
-  //     }
-  //   };
-  //   postCriterias();
-  // }, []);
-
   // --- --- --- 여행 일정 등록 --- --- ---
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [locationData, setLocationData] = useState({location: "", region: "", growthRate: ""});
@@ -164,7 +125,7 @@ function TravelSelectPage() {
             'Content-Type': 'application/json',
           },
         });
-        // console.log(res.data.message);
+        console.log(res);
         
     
         // 서버 응답 메시지를 저장
