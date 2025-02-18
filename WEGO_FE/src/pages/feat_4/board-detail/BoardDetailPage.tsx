@@ -27,6 +27,7 @@ export type TCommentData = {
 };
 
 export type TPostInfo = {
+  viewer_id: number;
   category_name: string;
   content: string;
   created_at: string;
@@ -169,6 +170,12 @@ function BoardDetailPage() {
     });
   };
 
+  const handleProfileButtonClick = (authorId: number) => {
+    navigate(`/board/author/profile/${authorId}`, {
+      state: { authorId },
+    });
+  };
+
   // 로딩
   if (isLoading) return <div>게시글 불러오는 중</div>;
 
@@ -202,7 +209,13 @@ function BoardDetailPage() {
         <S.Content>
           <p> # {post.post.post_info.category_name}</p>
           <S.Profile>
-            <img src="https://buly.kr/CsipNnM" alt="Profile" />
+            <img
+              src="https://buly.kr/CsipNnM"
+              alt="Profile"
+              onClick={() =>
+                handleProfileButtonClick(post.post.post_info.viewer_id)
+              }
+            />
             <div>
               <span>{post.post.post_info.post_author_nickname}</span>
               <p>

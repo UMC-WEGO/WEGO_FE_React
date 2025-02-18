@@ -39,9 +39,6 @@ function BoardAuthorProfilePage() {
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const authorId = location.state?.authorId;
 
-  console.log(posts);
-  console.log(userInfo);
-
   useEffect(() => {
     const fetchPosts = async () => {
       const data = await getUserProfileApi(authorId);
