@@ -6,9 +6,11 @@ import homeIcon from '../../images/feat1/Nav_home_icon.svg';
 import boardIcon from '../../images/feat1/Nav_board_icon.svg';
 import scheduleIcon from '../../images/feat1/Nav_schedule_icon.svg';
 import { useNavigate } from 'react-router';
+import { useTokenStore } from '../../store/token/useTokenStore';
 
 function Navbar() {
   const navigate = useNavigate();
+  const { data } = useTokenStore();
   return (
     <S.NavbarLayout>
       <S.NavbarBox>
@@ -16,7 +18,11 @@ function Navbar() {
         <img src={boardIcon} alt="" onClick={() => navigate('/board')} />
         <img src={homeIcon} alt="" onClick={() => navigate('/home')} />
         <img src={scrapIcon} alt="" onClick={() => navigate('/mypage/1')} />
-        <img src={myIcon} alt="" onClick={() => navigate('/mypage/1')} />
+        <img
+          src={myIcon}
+          alt=""
+          onClick={() => navigate('/mypage/' + data?.userId)}
+        />
       </S.NavbarBox>
     </S.NavbarLayout>
   );

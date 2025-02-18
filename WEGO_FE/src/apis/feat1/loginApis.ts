@@ -89,3 +89,15 @@ export const userDeleteApi = async () => {
     return -1;
   }
 };
+
+export const getUserInfoApi = async () => {
+  try {
+    const apiRes = await authInstance.get('/users/info');
+    console.log(apiRes);
+    return apiRes.data.result;
+  } catch (error) {
+    console.error('회원 정보 조회 실패:', error);
+    return -1;
+  }
+};
+
