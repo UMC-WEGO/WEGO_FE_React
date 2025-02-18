@@ -31,13 +31,9 @@ export const Header = styled.header`
   align-items: center;
   height: 20px;
   width: 100%;
-  justify-content: space-between;
-  position: relative;
+  justify-content: center;
 
   h1 {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
     letter-spacing: -0.32px;
     font-size: 20px;
     font-weight: 600;
@@ -46,26 +42,6 @@ export const Header = styled.header`
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-  }
-
-  .group-img {
-    display: flex;
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
-
-  .alarm-img {
-    display: flex;
-    cursor: pointer;
-    position: absolute;
-    right: 32px;
-    width: 6px;
-    height: 6px;
-    top: 0px;
   }
 `;
 

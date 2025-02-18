@@ -1,6 +1,4 @@
 import * as S from './MyPage.style';
-import Group from '../../../images/feat5/Group.svg';
-import Alarm from '../../../images/feat5/alarm.svg';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -45,6 +43,7 @@ function MyPage() {
       </S.Container>
     );
   }
+
   // 경로 이동
   const handleNavigate = (path: string) => {
     if (data) {
@@ -79,8 +78,6 @@ function MyPage() {
     <S.Container>
       <S.Header>
         <h1>마이페이지</h1>
-        <img src={Group} alt="Group" className="group-img" />
-        <img src={Alarm} alt="Alarm" className="alarm-img" />
       </S.Header>
 
       <S.ProfileContainer>
