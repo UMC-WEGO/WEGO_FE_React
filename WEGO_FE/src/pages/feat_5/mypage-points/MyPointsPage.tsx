@@ -1,14 +1,27 @@
 import * as S from './MyPointsPage.style';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
-import { users } from '../../../mocks/feat5/UserData';
+// import { users } from '../../../mocks/feat5/UserData';
 import { allPoints } from '../../../mocks/feat5/PointsData';
+import { userinfoApis } from '../../../apis/feat5/userinfoApis';
+import Loading from '../../../components/feat5/Loading';
+import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPointsPage() {
   const navigate = useNavigate();
-  const { userId } = useParams();
-  const user = users.find(user => user.userId === userId);
-  const points = user ? user.points : '0';
+
+  // API
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['userData'],
+    queryFn: userinfoApis,
+  });
+
+  // 로딩, 에러 처리
+  if (isLoading) return <Loading />;
+  if (error instanceof Error) return <ErrorMessage error={error} />;
+
+  console.log('API 받은 데이터', data);
 
   return (
     <S.Container>
@@ -22,7 +35,7 @@ function MyPointsPage() {
 
         <S.PointContent>
           <h1>보유 포인트</h1>
-          <h2>{points}P</h2>
+          <h2>{data.point}P</h2>
           <h3>구매 시 1일 내로 가입한 이메일로 발송해 드려요.</h3>
         </S.PointContent>
 

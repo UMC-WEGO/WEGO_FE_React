@@ -72,41 +72,6 @@ function MyPostsPage() {
     }
   };
 
-  // 내가 쓴 글 날짜(시간) 계산
-  const CalculateCreatedAt = (createdAt: string) => {
-    const createdDate = new Date(createdAt);
-    const now = new Date();
-
-    // 당일(방금 전, n시간 전)
-    const isToday =
-      createdDate.getFullYear() === now.getFullYear() &&
-      createdDate.getMonth() === now.getMonth() &&
-      createdDate.getDate() === now.getDate();
-
-    // 어제
-    const isYesterday =
-      createdDate.getFullYear() === now.getFullYear() &&
-      createdDate.getMonth() === now.getMonth() &&
-      createdDate.getDate() === now.getDate() - 1;
-
-    if (isToday) {
-      const diffInHours = Math.floor(
-        (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60),
-      );
-      return diffInHours > 0 ? `${diffInHours}시간 전` : '방금 전';
-    } else if (isYesterday) {
-      return '어제';
-    } else {
-      // 그 외는 날짜로 표시(MM.DD)
-      return `${(createdDate.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}.${createdDate
-        .getDate()
-        .toString()
-        .padStart(2, '0')}`;
-    }
-  };
-
   return (
     <S.Container>
       <S.Header>
@@ -123,10 +88,14 @@ function MyPostsPage() {
               <PostList // PostList 컴포넌트 사용
                 posts={[
                   {
-                    id: String(post.postId),
-                    category: String(post.categoryId), // 카테고리 id가 아닌 문자열로 나와야 함
-                    time: CalculateCreatedAt(post.createdAt),
-                    location: `${post.localId}`, // 현재 지역 id인데, 지역 이름으로 바꾸어야 함
+                    id: post.postId,
+                    category_name: post.categoryName,
+                    created_at: post.updatedAt,
+                    location_name: `${post.locationName}`,
+                    total_comment: post.commentCount || 0, // Make sure to include all required fields
+                    total_like: post.likeCount || 0,
+                    total_scrap: post.scrapCount || 0,
+                    // other fields needed for PostList
                     ...post,
                   },
                 ]}
