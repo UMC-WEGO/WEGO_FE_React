@@ -3,7 +3,7 @@ import styled from "styled-components";
 import trash_bin_img from "../../images/feat2/trash_binpng.png";
 import BlueTag from "./BlueTag";
 import Bottomsheet from "./BottomSheet";
-import DltAlertCard from "./DltAlertCard";
+import DltAlertCard from "./Alerts/DltAlertCard";
 
 const PlanedCardBox = styled.div`
   border: 1px solid rgba(234, 234, 234, 1);
@@ -76,6 +76,7 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
   const dayDiff = (startDate.getTime() - nowDate.getTime()) / (1000 * 60 * 60 * 24)   // 날짜 사이 시간차
   const D_Days = Math.ceil(dayDiff)       // 실수 -> 정수 변환
 
+  // 삭제 버튼 눌렀을 때 알람창
   const [isShowMessage, setIsShowMessage] = useState(false);
   const downMessage = () => {
     setIsShowMessage(false)

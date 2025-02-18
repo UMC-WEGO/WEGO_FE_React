@@ -32,6 +32,7 @@ import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
 // import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
 import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
+import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
 
 const NoPopularPost = styled.div`
   display: flex;
@@ -141,22 +142,18 @@ function TravelSelectPage() {
       }
     };
 
-    // console.log("선택된 조건 확인 : ", 
-    //   location,
-    //   adult_participants,
-    //   child_participants,
-    //   vehicle,
-    //   duration,
-    //   startDate,
-    //   endDate
-    // )
-
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
       setTimeout(() => {
         setIsLoading(false);
       }, 4000)
     }, [])
+
+    // 여기로 갈래요 버튼 눌렀을 때 알림창
+    const [isShowMessage, setIsShowMessage] = useState(false);
+    const downMessage = () => {
+      setIsShowMessage(false)
+    }
 
   return(
     <>
@@ -213,14 +210,17 @@ function TravelSelectPage() {
             </S.PostArea>
           </S.PostContainer>
 
+          {isShowMessage && (
+            <SaveAlertCard message="여행지를 확정하시겠습니까?" downMessage={downMessage} SavePlan={() => postTravel()}/>
+          )}
           <S.SubmitBtnContainer>
             {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3)}
               disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
-              // onClick={postTravel}
-              onClick={() => postTravel()}
+              // onClick={() => postTravel()}
+              onClick={() => {setIsShowMessage(true)}}
             >
               여기로 갈래요
             </S.SelectionComplete>
