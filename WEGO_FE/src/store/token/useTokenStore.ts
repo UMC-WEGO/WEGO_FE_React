@@ -11,6 +11,7 @@ type TTokenData = {
   loginApiReqData: TLoginApiReqData;
   accessToken: string;
   refreshToken: string;
+  userId?: number | null;
 };
 
 const initVal: TTokenData = {
@@ -20,6 +21,7 @@ const initVal: TTokenData = {
   },
   accessToken: '',
   refreshToken: '',
+  userId: null,
 };
 
 type TTokenStore = {
