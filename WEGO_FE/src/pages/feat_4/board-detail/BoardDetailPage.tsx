@@ -23,6 +23,7 @@ export type TCommentData = {
   comment_content: string;
   comment_created_at: string;
   user_id: number;
+  comment_id: number;
 };
 
 export type TPostInfo = {
@@ -80,7 +81,6 @@ const timeAgoFormat = (dateString: string) => {
 function BoardDetailPage() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>(); // URL에서 id를 가져와
-  const numericPostId = postId ? parseInt(postId) : 0;
   const { isLoading, error, data: post } = usePostDetail(Number(postId));
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
@@ -243,7 +243,7 @@ function BoardDetailPage() {
         <CommentList_chanmin
           comments={post.post.comments}
           onDeleteComment={deleteComment}
-          postId={numericPostId}
+          postId={post.post.post_info.id}
         />
       </S.Scroll>
 

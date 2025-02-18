@@ -54,7 +54,9 @@ const CommentList_chanmin: React.FC<CommentListProps> = ({
   };
 
   const handleProfileButtonClick = (authorId: number) => {
-    navigate(`/board/author/profile/${authorId}`);
+    navigate(`/board/author/profile/${authorId}`, {
+      state: { authorId },
+    });
   };
 
   return (
@@ -82,7 +84,9 @@ const CommentList_chanmin: React.FC<CommentListProps> = ({
                   <h6>{timeAgoFormat(comment.comment_created_at)}</h6>
                 </div>
                 <button
-                  onClick={() => handleDeleteComment(postId, comment.user_id)}
+                  onClick={() =>
+                    handleDeleteComment(postId, comment.comment_id)
+                  }
                 >
                   <FaTimes size="16" />
                 </button>
