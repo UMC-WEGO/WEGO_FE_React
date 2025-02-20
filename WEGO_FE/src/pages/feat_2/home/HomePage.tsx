@@ -1,7 +1,6 @@
 ///home/
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { useParams } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
 import { useLocation } from 'react-router';
 import * as S from "./HomePage.style"
@@ -23,7 +22,6 @@ import ModalMessage from '../../../components/feat2/Modal';
 
 import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import StartPage from '../home-start/StartPage';
-import { get } from 'react-hook-form';
 
 // 
 // 
@@ -254,9 +252,10 @@ function HomePage() {
     console.log("버튼 활성 상태 : ", randomBtnStatus);
   },[timeAway, departureLocation])
 
-  // useEffect(() => {
-  //   console.log("버튼 활성 상태 : ", randomBtnStatus);
-  // }, [randomBtnStatus]);
+  const [isShowMessage, setIsShowMessage] = useState(false);
+  const downMessage = () => {
+    setIsShowMessage(false)
+  }
 
   return(
     <>
