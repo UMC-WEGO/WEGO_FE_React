@@ -122,7 +122,7 @@ function TravelSelectPage() {
         // });
 
 
-        const requestData =           {
+        const requestData = {
             location,
             adult_participants,
             child_participants,
@@ -134,7 +134,7 @@ function TravelSelectPage() {
 
         const res = await authInstance.post(`http://13.124.213.122:3000/home/save-trip`, requestData)
         
-        console.log(res);
+        console.log("저장 결과 : ", res);
         
     
         // 서버 응답 메시지를 저장
@@ -238,7 +238,8 @@ function TravelSelectPage() {
               // onClick={() => postTravel()}
               onClick={() => {
                 if(selectedIndex !== null){
-                  setIsShowMessage(true)
+                  // setIsShowMessage(true)
+                  postTravel()
                 }
                 else{
                   setIsShowNoteMessage(true)
