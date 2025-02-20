@@ -16,6 +16,7 @@ export const Header = styled.header`
   width: 100%;
   height: 20px;
   margin-bottom: 20px;
+  margin-left: 6px;
   position: relative;
 
   h1 {
@@ -41,7 +42,7 @@ export const Header = styled.header`
   }
 
   .arrow-btn {
-    left: 20px;
+    left: 14px;
   }
 
   .arrow-img {
