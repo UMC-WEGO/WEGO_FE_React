@@ -37,25 +37,10 @@ const ContentBox_mission = styled.div`
   width: 380px;
   height: 143px;
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
   gap: 10px;
   margin: 20px 0px;
   overflow-x: auto; /* 가로 스크롤 가능하도록 설정 */
   scrollbar-width: thin;
-
-  &::-webkit-scrollbar {
-    height: 8px; /* 스크롤바 높이 설정 */
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #888; /* 스크롤바의 색상 설정 */
-    border-radius: 4px; /* 스크롤바의 모서리 둥글게 설정 */
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background-color: #555; /* 스크롤바에 마우스 오버 시 색상 변경 */
-  }
 `;
 
 const ContentBox_noMission = styled.div`
