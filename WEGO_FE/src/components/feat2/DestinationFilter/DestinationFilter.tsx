@@ -15,8 +15,6 @@ import SelectDeparture from "./SelectDeparture";
 
 // 아이콘 가져오기
 import { location, Item_time, Item_transport } from "../../../mocks/feat2/TestData_Filter";
-import { CgCalendar } from "react-icons/cg";
-import { FaPeopleGroup } from "react-icons/fa6";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`
@@ -28,6 +26,9 @@ const FilterBox = styled.div`
   align-items: center;
 
   border: 1px solid rgba(234, 234, 234, 1);
+  border-radius: 5px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+
   background-color: #fff;
 `
 
