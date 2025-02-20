@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './RegisterMission.style';
+import AlertModal from '../../../pages/feat_3/modal/AlertModal';
 
-const RegisterMission = () => {
+const RegisterMission = ({ onOpenModal }) => {
   return (
     <S.Container>
       <S.TextWrap>
@@ -17,7 +18,7 @@ const RegisterMission = () => {
           </S.Text>
         </S.TextWrap>
       </S.TextWrap>
-      <S.UploadButton>등록하기</S.UploadButton>
+      <S.UploadButton onClick={onOpenModal}>등록하기</S.UploadButton>
     </S.Container>
   );
 };

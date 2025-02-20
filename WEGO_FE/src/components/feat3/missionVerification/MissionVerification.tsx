@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './MissionVerification.style';
 
 const MissionVerification = () => {
+  const [inputValue, setInputValue] = useState('');
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInputValue(event.target.value);
+  };
+
   return (
     <S.Container>
       <S.Text fontSize="18px" fontWeight="600">
@@ -17,12 +23,20 @@ const MissionVerification = () => {
               (필수)
             </S.Text>
           </S.TextWrap>
-          <S.Text fontSize="10px" fontWeight="400">
+          <S.Text
+            fontSize="10px"
+            fontWeight="400"
+            isOver={inputValue.length >= 10}
+          >
             10자 이상
           </S.Text>
         </S.TitleWrap>
 
-        <S.Textinput placeholder="다른 유저들에게 나의 즉흥 미션 수행기를 공유하세요."></S.Textinput>
+        <S.Textinput
+          placeholder="다른 유저들에게 나의 즉흥 미션 수행기를 공유하세요."
+          value={inputValue}
+          onChange={handleInputChange}
+        />
       </S.ReviewBox>
     </S.Container>
   );

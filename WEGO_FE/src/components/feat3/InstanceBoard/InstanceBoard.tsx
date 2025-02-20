@@ -9,7 +9,7 @@ const InstanceBoard = () => {
     <S.Container>
       <S.TitleBoxWrap>
         <S.Title>즉흥 게시판</S.Title>
-        <S.MoreInfor>
+        <S.MoreInfor to={'/board'}>
           더보기
           <img src="/src/images/feat3/RightArrow_gray.svg" alt="" />
         </S.MoreInfor>

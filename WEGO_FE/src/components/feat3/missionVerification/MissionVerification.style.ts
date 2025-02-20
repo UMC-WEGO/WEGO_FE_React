@@ -15,7 +15,7 @@ const Text = styled.p`
   font-size: ${props => props.fontSize || '18px'};
   line-height: 21px;
   letter-spacing: -0.32px;
-  color: ${props => props.color || 'black'};
+  color: ${props => (props.isOver ? 'blue' : props.color || 'black')};
 `;
 
 const TitleWrap = styled.div`
@@ -40,7 +40,7 @@ const TextWrap = styled.div`
   flex-direction: row;
 `;
 
-const Textinput = styled.input`
+const Textinput = styled.textarea`
   width: 100%;
   height: 100%;
   padding: 10px;
