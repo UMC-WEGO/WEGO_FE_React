@@ -18,22 +18,13 @@ import PostList from "../../../components/feat2/Post/PostList";
 // import PostList from "../../../components/feat4/PostList";
 import ModalMessage from "../../../components/feat2/Modal";
 
-// 
-// 
-//
-
-import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
-
-//
-// 
-//
-
 // 임시데이터 가져오기
 // import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
 import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
 import NoteAlertCard from "../../../components/feat2/Alerts/NoteAlertCard";
+import { authInstance } from "../../../apis/axiosInstance";
 
 const NoPopularPost = styled.div`
   display: flex;
@@ -77,12 +68,14 @@ function TravelSelectPage() {
 
   useEffect(() => {
     const getInstantPost = async() => {
-      const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
-        headers: {
-          Authorization: `${TOKEN}`,
-          Accept: `application/josn`
-        }
-      })
+      // const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
+      //   headers: {
+      //     Authorization: `${TOKEN}`,
+      //     Accept: `application/josn`
+      //   }
+      // })
+
+      const responseGet = await authInstance.get(`http://13.124.213.122:3000/community/popular-posts`)
       
       // 카테고리가 "즉흥 자랑"인 게시물만 저장
       const filteredPosts = responseGet.data.filter((post: { category_name: string }) => post.category_name === "즉흥 자랑");
@@ -112,22 +105,36 @@ function TravelSelectPage() {
   // POST TO SERVER
     const postTravel = async() => {
       try {
-        const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
-          location,
-          adult_participants,
-          child_participants,
-          vehicle,
-          duration,
-          startDate,
-          endDate
-        },{
-          headers: {
-            Authorization: `${TOKEN}`,
-            Accept: `application/json`,
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log(res);
+        // const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
+        //   location,
+        //   adult_participants,
+        //   child_participants,
+        //   vehicle,
+        //   duration,
+        //   startDate,
+        //   endDate
+        // },{
+        //   headers: {
+        //     Authorization: `${TOKEN}`,
+        //     Accept: `application/json`,
+        //     'Content-Type': 'application/json',
+        //   },
+        // });
+
+
+        const requestData = {
+            location,
+            adult_participants,
+            child_participants,
+            vehicle,
+            duration,
+            startDate,
+            endDate            
+          }
+
+        const res = await authInstance.post(`http://13.124.213.122:3000/home/save-trip`, requestData)
+        
+        console.log("저장 결과 : ", res);
         
     
         // 서버 응답 메시지를 저장
@@ -139,7 +146,7 @@ function TravelSelectPage() {
           }
         });
       } catch (err) {
-        // console.log("Error on Post (travel)!", err);
+        console.log("Error on Post 여행지 저장", err);
       }
     };
 
@@ -231,7 +238,8 @@ function TravelSelectPage() {
               // onClick={() => postTravel()}
               onClick={() => {
                 if(selectedIndex !== null){
-                  setIsShowMessage(true)
+                  // setIsShowMessage(true)
+                  postTravel()
                 }
                 else{
                   setIsShowNoteMessage(true)

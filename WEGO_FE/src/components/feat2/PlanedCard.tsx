@@ -9,6 +9,7 @@ const PlanedCardBox = styled.div`
   border: 1px solid rgba(234, 234, 234, 1);
   border-radius: 15px;
   margin-bottom: 9px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 
   height: 108px;
 
@@ -98,11 +99,11 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
             <PlanedCard_row2>
               <BlueTag TagContent={`
                 ${startDate.getFullYear().toString()}.
-                ${startDate.getMonth().toString()}.
+                ${(startDate.getMonth() + 1).toString()}.
                 ${startDate.getDate().toString()}
                 ~
                 ${endDate.getFullYear().toString()}.
-                ${endDate.getMonth().toString()}.
+                ${(endDate.getMonth() + 1).toString()}.
                 ${endDate.getDate().toString()}`
                 }/>
               <BlueTag TagContent={`${props.adult_participants + props.child_participants}명`}/>

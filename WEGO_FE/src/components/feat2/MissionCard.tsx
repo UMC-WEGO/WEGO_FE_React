@@ -101,7 +101,7 @@ const MissionContent = styled.div`
 //
 //
 
-import { TOKEN } from '../../mocks/feat2/TOKEN_Temporary_file';
+import { authInstance } from '../../apis/axiosInstance';
 
 //
 //
@@ -136,14 +136,20 @@ const PopularMissionCard = ({ props }: MissionProps) => {
   };
 
   const SavePopularMisson = async (MissionId: any) => {
-    const responseSaveMission = await axios.post(
+    // const responseSaveMission = await axios.post(
+    //   `http://13.124.213.122:3000/home/savePopularMission/${MissionId}`,
+    //   {},
+    //   {
+    //     headers: {
+    //       Authorization: `${TOKEN}`
+    //     }
+    //   }
+    // );
+
+    // const response = await authInstance.post(`http://13.124.213.122:3000/home`, requestData)
+    const responseSaveMission = await authInstance.post(
       `http://13.124.213.122:3000/home/savePopularMission/${MissionId}`,
       {},
-      {
-        headers: {
-          Authorization: `${TOKEN}`,
-        },
-      },
     );
 
     console.log(responseSaveMission);

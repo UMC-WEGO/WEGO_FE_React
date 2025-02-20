@@ -77,9 +77,9 @@ const BottomSheetBtn = styled.button`
 // 
 // 
 
-import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import { PiArrowLeftBold } from "react-icons/pi";
 import { CgSearch } from "react-icons/cg";
+import { authInstance } from "../../../apis/axiosInstance";
 
 // 
 // 
@@ -98,12 +98,16 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
 
   useEffect(() => {
     const getRecentLocation = async() => {
-      const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search`, {
-        headers: {
-          Authorization: `${TOKEN}`,
-          Accept: `application/josn`
-        }
-      })
+      // const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search`, {
+      //   headers: {
+      //     Authorization: `${TOKEN}`,
+      //     Accept: `application/josn`
+      //   }
+      // })
+
+      // const response = await authInstance.get(`http://13.124.213.122:3000/home`, requestData)
+      const responseRecentLocation = await authInstance.get(`http://13.124.213.122:3000/community/posts/local-search`)
+
       setRecentLocation(responseRecentLocation.data)
     }
     getRecentLocation();
@@ -115,11 +119,13 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
   return (
     <SearchCard>
       {/* 뒤로가기 및 검색바 */}
-      <SearchHeader>
-        <PiArrowLeftBold/>
+      <SearchHeader style={{width: '16px;'}}>
+        <div>
+          <PiArrowLeftBold/>
+        </div>
         <div>
           <BottomSheetBtn onClick={toggleSearchBottom}>
-            <span>출발지를 선택하세요</span>
+            <span style={{color: 'rgba(165, 165, 165, 1)'}}>출발지를 선택하세요</span>
             {/* <span><img src={search_icn}/></span> */}
             <CgSearch/>
           </BottomSheetBtn>

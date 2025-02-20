@@ -20,8 +20,8 @@ import ModalMessage from '../../../components/feat2/Modal';
 //
 //
 
-import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import StartPage from '../home-start/StartPage';
+import { authInstance } from '../../../apis/axiosInstance';
 
 //
 //
@@ -79,15 +79,17 @@ function HomePage() {
   useEffect(() => {
     const getUpcomingTrip = async () => {
       try {
-        const responseTravel: AxiosResponse<any> = await axios.get(
+        // const responseTravel = await axios.get(`http://13.124.213.122:3000/home/upcoming-trips`, {
+        //   headers: {
+        //     Authorization: `${TOKEN}`,
+        //     Accept: `application/json`
+        //   }
+        // })
+
+        const responseTravel = await authInstance.get(
           `http://13.124.213.122:3000/home/upcoming-trips`,
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-              Accept: `application/json`,
-            },
-          },
         );
+
         setUpcomingTravelList(responseTravel.data.result);
         setUpcomingTravelMessage(responseTravel.data.message);
         setLoadingTravel(false);
@@ -101,7 +103,7 @@ function HomePage() {
           setIsShowModal(true);
         }
       } catch (error) {
-        setErrorTravel('Error fetching data');
+        setErrorTravel(' --- --- --- Error On 다가오는 여행 조회회');
         setLoadingTravel(false);
       }
     };
@@ -113,15 +115,16 @@ function HomePage() {
   // --- --- --- 다가오는 일정 삭제 --- --- ---
   const deleteUpcomingTravel = async (tripId: number) => {
     try {
-      const responseDeleteTravel = await axios.delete(
+      // const responseDeleteTravel = await axios.delete(`http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,{
+      //   headers: {
+      //     Authorization: `${TOKEN}`,
+      //     Accept: `application/json`,
+      //     'Content-Type': 'application/json',
+      //   }
+      // })
+
+      const responseDeleteTravel = await authInstance.get(
         `http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,
-        {
-          headers: {
-            Authorization: `${TOKEN}`,
-            Accept: `application/json`,
-            'Content-Type': 'application/json',
-          },
-        },
       );
 
       // console.log("삭제 성공 여부 : ", responseDeleteTravel);
@@ -130,7 +133,7 @@ function HomePage() {
         prevPlanList.filter(plan => plan.tripId !== tripId),
       );
     } catch (error) {
-      // console.log(error);
+      console.log(' --- --- --- Error On 일정 삭제');
     }
   };
 
@@ -142,20 +145,23 @@ function HomePage() {
   useEffect(() => {
     const getPopularPost = async () => {
       try {
-        const responseGet = await axios.get(
+        // const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
+        //   headers: {
+        //     Authorization: `${TOKEN}`,
+        //     Accept: `application/josn`
+        //   }
+        // })
+
+        const responseGet = await authInstance.get(
           `http://13.124.213.122:3000/community/popular-posts`,
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-              Accept: `application/josn`,
-            },
-          },
         );
+
         setPopularPostList(responseGet.data);
         setLoadingPost(false);
 
         console.log('인기 게시물 조회 결과 : ', responseGet);
       } catch (error) {
+        console.log('Error On 인기 게시물 조회');
         setErrorPost('Error on importing posts');
       }
     };
@@ -168,17 +174,23 @@ function HomePage() {
 
   useEffect(() => {
     const getPopularMission = async () => {
-      const responseMission = await axios.get(
-        `http://13.124.213.122:3000/home/popular-missions`,
-        {
-          headers: {
-            Authorization: `${TOKEN}`,
-            Accept: `application/josn`,
-          },
-        },
-      );
-      setPopularMissionList(responseMission.data.result.missions);
-      console.log('인기 미션 조회 결과 : ', responseMission);
+      try {
+        // const responseMission = await axios.get(`http://13.124.213.122:3000/home/popular-missions`, {
+        //   headers: {
+        //     Authorization: `${TOKEN}`,
+        //     Accept: `application/josn`
+        //   }
+        // })
+
+        const responseMission = await authInstance.get(
+          `http://13.124.213.122:3000/home/popular-missions`,
+        );
+
+        setPopularMissionList(responseMission.data.result.missions);
+        console.log('인기 미션 조회 결과 : ', responseMission);
+      } catch (error) {
+        console.log('Error On 인기 미션 조회');
+      }
     };
     getPopularMission();
   }, []);
@@ -229,24 +241,38 @@ function HomePage() {
     const getRandomDestinations = async () => {
       try {
         // console.log("API 호출됨")
-        const response = await axios.post(
-          'http://13.124.213.122:3000/home',
-          {
-            departure,
-            participants,
-            vehicle,
-            duration,
-            departureDate,
-            arrivalDate,
-          },
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-              Accept: `application/json`,
-              'Content-Type': 'application/json',
-            },
-          },
+        // const response = await axios.post('http://13.124.213.122:3000/home',
+        //   {
+        //     departure,
+        //     participants,
+        //     vehicle,
+        //     duration,
+        //     departureDate,
+        //     arrivalDate
+        //   },
+        //   {
+        //     headers: {
+        //       Authorization: `${TOKEN}`,
+        //       Accept: `application/json`,
+        //       'Content-Type': 'application/json',
+        //     }
+        //   }
+        // );
+
+        const requestData = {
+          departure,
+          participants,
+          vehicle,
+          duration,
+          departureDate,
+          arrivalDate,
+        };
+
+        const response = await authInstance.post(
+          `http://13.124.213.122:3000/home`,
+          requestData,
         );
+
         setRandomDestination(response.data.result);
         console.log('여행지 조회 결과 : ', response);
 
@@ -257,6 +283,7 @@ function HomePage() {
         }
       } catch (error) {
         setRandomBtnStatus(false);
+        console.log(' --- --- --- Error On 랜덤 여행지 추천 POST');
       }
     };
 

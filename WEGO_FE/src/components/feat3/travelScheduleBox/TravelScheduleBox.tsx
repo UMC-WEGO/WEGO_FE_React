@@ -1,11 +1,17 @@
 import React from 'react';
 import * as S from './TravelScheduleBox.style';
 import TravelTag from '../travelTag/TravelTag';
+import { useNavigate } from 'react-router';
 
-const TravelScheduleBox = ({ title, dday, tags }) => {
+const TravelScheduleBox = ({ title, dday, tags, tripId }) => {
+  const navigate = useNavigate();
+  const onClickContainer = () => {
+    navigate('/schedule/not-started/' + tripId);
+  };
+
   return (
     <>
-      <S.ContainerBox>
+      <S.ContainerBox onClick={onClickContainer}>
         <S.InnerWrapBox>
           <S.TitleWrap>
             <S.TravelTitle>
