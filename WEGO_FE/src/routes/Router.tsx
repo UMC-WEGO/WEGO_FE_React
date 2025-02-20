@@ -1,5 +1,6 @@
 import AppLayout from '../layout/AppLayout';
 import HomeScedulePage from '../pages/feat_3/schedule-home/HomeScedulePage';
+import PrevSchedulePage from '../pages/feat_3/schedule-prev/PrevSchedulePage';
 import {
   BoardPage,
   BoardAuthorProfilePage,
@@ -80,7 +81,7 @@ const Router = [
         element: <CurrentSchedulePage />,
       },
       { path: '/schedule/end/:scheduleId', element: <EndSchedulePage /> },
-      { path: '/schedule/prev', element: <니가만들페이지컴포넌트 /> },
+      { path: '/schedule/prev', element: <PrevSchedulePage /> },
 
       // 게시판 관련 라우팅
       { path: '/board', element: <BoardPage /> },
