@@ -6,11 +6,16 @@ import homeIcon from '../../images/feat1/Nav_home_icon.svg';
 import boardIcon from '../../images/feat1/Nav_board_icon.svg';
 import scheduleIcon from '../../images/feat1/Nav_schedule_icon.svg';
 import { useNavigate } from 'react-router';
-import { useTokenStore } from '../../store/token/useTokenStore';
+import { userinfoApis } from '../../apis/feat5/userinfoApis';
+import { useQuery } from '@tanstack/react-query';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { data } = useTokenStore();
+  const { data } = useQuery({
+    queryKey: ['userData'],
+    queryFn: userinfoApis,
+  });
+
   return (
     <S.NavbarLayout>
       <S.NavbarBox>
@@ -21,7 +26,7 @@ function Navbar() {
         <img
           src={myIcon}
           alt=""
-          onClick={() => navigate('/mypage/' + data?.userId)}
+          onClick={() => navigate('/mypage/' + data?.user_id)}
         />
       </S.NavbarBox>
     </S.NavbarLayout>
