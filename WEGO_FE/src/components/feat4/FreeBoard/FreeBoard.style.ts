@@ -25,8 +25,9 @@ export const CategoryButton = styled.button<CategoryButtonProps>`
 `;
 
 export const PostListContainer = styled.div`
-  max-height: 500px; /* 높이 설정 */
+  max-height: 485px; /* 높이 설정 */
   overflow-y: auto;
+  padding-bottom: 70px;
 
   ::-webkit-scrollbar {
     width: 8px;

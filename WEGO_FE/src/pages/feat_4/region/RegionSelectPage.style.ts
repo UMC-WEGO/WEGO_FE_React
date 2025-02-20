@@ -52,10 +52,21 @@ export const Content = styled.div`
 export const Select = styled.div`
   div {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+
+    span {
+      font-size: 12px;
+      margin: 5px 0 15px;
+      color: #aaa;
+    }
   }
 
   h3 {
@@ -67,7 +78,7 @@ export const Select = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 25px;
+    margin: 5px 12px 25px 0;
 
     height: 30px;
     padding: 10px 13px;

@@ -2,10 +2,16 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
 
   margin-top: 59px;
+`;
+
+export const ViewContainer = styled.div`
+  width: 100%;
+  height: 100%;
 `;
 
 export const Header = styled.div`
@@ -58,7 +64,7 @@ export const TabSwitcher = styled.div`
 
 export const WriteButton = styled.button`
   position: absolute;
-  top: 691px;
+  top: 630px;
   left: 50%;
   transform: translateX(-50%);
 

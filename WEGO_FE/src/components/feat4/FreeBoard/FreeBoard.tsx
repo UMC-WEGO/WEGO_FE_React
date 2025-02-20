@@ -1,11 +1,10 @@
 import * as S from './FreeBoard.style';
 import { useState, useEffect } from 'react';
 import PostList from '../PostList';
-// import { allPosts } from '../../../mocks/board/postData';
 import { getAllPostsApi } from '../../../apis/feat4/postApi';
 
 type Post = {
-  id: number;
+  post_id: number;
   picture_url: string | null;
   category_name: string;
   title: string;
@@ -42,13 +41,6 @@ function FreeBoard() {
   const handleCategoryChange = (category: string) => {
     setSelectedCategory(category);
   };
-
-  // 카테고리 별로 필터링
-  // const filteredPosts = allPosts.filter(
-  //   post => post.category === selectedCategory,
-  // );
-
-  console.log(posts);
 
   const filteredPosts =
     selectedCategory === '전체'

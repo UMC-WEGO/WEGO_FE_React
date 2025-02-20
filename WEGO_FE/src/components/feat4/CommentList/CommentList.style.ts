@@ -14,15 +14,13 @@ export const CommentBox = styled.div`
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-  }
-
-  div {
-    display: flex;
+    cursor: pointer;
   }
 
   svg {
     width: 40px;
     margin-right: 10px;
+    cursor: pointer;
   }
 `;
 
@@ -35,6 +33,13 @@ export const Comment = styled.div`
     gap: 7px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 300px;
+
+    div {
+      display: flex;
+      justify-content: flex-start;
+    }
   }
 
   h5 {
@@ -52,5 +57,10 @@ export const Comment = styled.div`
   p {
     font-size: 13px;
     color: #000;
+  }
+
+  svg {
+    width: 10px;
+    color: #8a8a8a;
   }
 `;

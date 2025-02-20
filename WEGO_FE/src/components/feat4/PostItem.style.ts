@@ -13,7 +13,6 @@ export const ImageWrapper = styled.div`
   img {
     width: 95px;
     height: 95px;
-    margin-right: 13px;
     border-radius: 5px;
     object-fit: cover;
   }
@@ -39,7 +38,7 @@ export const BookmarkIcon = styled.div`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  width: 258px;
+  width: 240px;
 
   span {
     font-size: 12px;

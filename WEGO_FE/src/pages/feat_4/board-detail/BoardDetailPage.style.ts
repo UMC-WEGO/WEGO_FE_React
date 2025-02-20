@@ -19,7 +19,7 @@ export const CommentHr = styled.hr`
 
 export const Scroll = styled.div`
   flex-grow: 1;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding-bottom: 60px;
 `;
 
@@ -50,7 +50,7 @@ export const Content = styled.div`
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     margin: 5px 0;
   }
@@ -94,9 +94,9 @@ export const Profile = styled.div`
     }
 
     p {
+      display: flex;
       font-size: 12px;
       color: #696969;
-      display: flex;
     }
   }
 `;

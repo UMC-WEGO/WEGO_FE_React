@@ -1,29 +1,32 @@
-import * as S from './BoardWritePage.style';
+import * as S from '../board-write/BoardWritePage.style';
 import { LuDot, LuMapPin } from 'react-icons/lu';
 import { FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import { useNavigate, useLocation } from 'react-router';
 import { useState, useEffect } from 'react';
 import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
 import Modal from '../../../components/feat4/Modal/Modal';
-import { createPostApi, uploadImgApi } from '../../../apis/feat4/postApi';
+import { updatePostApi } from '../../../apis/feat4/postApi';
 
-function BoardWritePage() {
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false); // 취소 모달 상태
-  const [selectedTopic, setSelectedTopic] = useState('전체'); // 선택된 주제
-  const [title, setTitle] = useState(''); // 제목 상태
-  const [content, setContent] = useState(''); // 내용 상태
-  const [uploadedImages, setUploadedImages] = useState<File[]>([]); // 업로드된 이미지 상태
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-
-  const [isRegionRequired, setIsRegionRequired] = useState(false); // 지역 필수 여부
-  const [isPhotoRequired, setIsPhotoRequired] = useState(false); // 사진 필수 여부
-
+function BoardEditPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedRegion, setSelectedRegion] = useState(
     location.state?.selectedRegion || { id: null, name: '지역 선택' },
   );
+
+  const editPostData = location.state?.editPostData || null;
+  console.log(editPostData);
+  const [editPostId, setEditPostId] = useState(location.state?.postId);
+
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false); // 취소 모달 상태
+  const [selectedTopic, setSelectedTopic] = useState('전체'); // 선택된 주제
+  const [title, setTitle] = useState(editPostData?.title || '');
+  const [content, setContent] = useState(editPostData?.content || '');
+  const [uploadedImages, setUploadedImages] = useState<File[]>([]); // 업로드된 이미지 상태
+
+  const [isRegionRequired, setIsRegionRequired] = useState(false); // 지역 필수 여부
+  const [isPhotoRequired, setIsPhotoRequired] = useState(false); // 사진 필수 여부
 
   useEffect(() => {
     if (location.state?.selectedRegion) {
@@ -67,6 +70,7 @@ function BoardWritePage() {
       setSelectedTopic(parsedData.selectedTopic);
       setTitle(parsedData.title);
       setContent(parsedData.content);
+      setEditPostId(parsedData.editPostId || null);
 
       if (parsedData.uploadedImages) {
         const restoredImages = parsedData.uploadedImages.map((image: File) => {
@@ -157,17 +161,18 @@ function BoardWritePage() {
       local_id: selectedRegion.id, // 지역 ID
       title,
       content,
-      picture_url: imageUrls, // 업로드된 이미지의 URL (구현 필요)
+      picture_url: [], // 업로드된 이미지의 URL (구현 필요)
     };
 
-    const result = await createPostApi(postData);
-
-    if (result) {
-      console.log('폼 제출 성공!');
-      navigate('/board');
-      localStorage.removeItem('boardWriteData');
-    } else {
-      console.log('게시글 작성 실패. 다시 시도해주세요.');
+    if (postData) {
+      const result = await updatePostApi(editPostId, postData);
+      if (result) {
+        console.log('게시글 수정 성공!');
+        navigate(`/board/detail/${editPostId}`);
+        localStorage.removeItem('boardWriteData');
+      } else {
+        console.log('게시글 작성 실패. 다시 시도해주세요.');
+      }
     }
   };
 
@@ -181,7 +186,7 @@ function BoardWritePage() {
   // 지역 선택 페이지 이동
   const handleRegionClick = (
     e: React.MouseEvent<HTMLDivElement>,
-    isEditMode = false,
+    isEditMode = true,
   ) => {
     e.preventDefault();
 
@@ -193,6 +198,7 @@ function BoardWritePage() {
         content,
         uploadedImages,
         isEditMode,
+        editPostId,
       }),
     );
 
@@ -200,20 +206,12 @@ function BoardWritePage() {
   };
 
   // 이미지 업로드 핸들러
-  const handleImageChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    if (event.target.files) {
-      const files = Array.from(event.target.files).slice(0, 5); // 최대 5개 선택 가능
-      setUploadedImages([...files]);
-
-      console.log(files);
-
-      const response = await uploadImgApi(files);
-      if (response?.picture_urls) {
-        console.log('📌 서버 응답 받은 이미지 URL:', response.picture_urls);
-        setImageUrls(response.picture_urls);
-      }
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files) {
+      const newImages = Array.from(files);
+      const allImages = [...uploadedImages, ...newImages].slice(0, 5); // 최대 5장
+      setUploadedImages(allImages);
     }
   };
 
@@ -234,7 +232,7 @@ function BoardWritePage() {
           onClick={handleComplete}
           disabled={!isCompleteEnabled}
         >
-          완료
+          수정완료
         </S.CompleteButton>
       </S.Header>
 
@@ -300,9 +298,9 @@ function BoardWritePage() {
             <p>{uploadedImages.length}/5</p>
           </S.UploadBox>
 
-          {imageUrls.map((url, index) => (
+          {uploadedImages.slice(0, 5).map((image: File, index: number) => (
             <S.UploadBox key={index} $isPhotoRequired={isPhotoRequired}>
-              <img src={url} alt={`uploaded ${index}`} />
+              <img src={URL.createObjectURL(image)} alt={`uploaded ${index}`} />
             </S.UploadBox>
           ))}
         </S.ScrollContainer>
@@ -314,4 +312,4 @@ function BoardWritePage() {
   );
 }
 
-export default BoardWritePage;
+export default BoardEditPage;
