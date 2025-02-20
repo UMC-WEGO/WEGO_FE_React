@@ -7,7 +7,6 @@ import HeaderBatteryBar from '../../../components/feat3/HeaderBatteryBar';
 const HomeScedulePage = () => {
   return (
     <S.Container>
-      <HeaderBatteryBar />
       <S.ExportIconWrap>
         <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
       </S.ExportIconWrap>

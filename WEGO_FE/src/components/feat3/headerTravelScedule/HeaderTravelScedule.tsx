@@ -20,6 +20,7 @@ const HeaderTravelScedule = () => {
         />
       </S.TitleBoxWrap>
       <S.message>안내메세지 혹은 간단한 인사말</S.message>
+      <S.Line />
     </S.Container>
   );
 };
