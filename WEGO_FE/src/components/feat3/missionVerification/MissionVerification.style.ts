@@ -58,7 +58,6 @@ const ImgUpload = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  gap: 5px;
 `;
 
 export {
