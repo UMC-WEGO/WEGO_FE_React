@@ -72,13 +72,16 @@ const PostCard = ({
         {/* 이미지 영역 */}
         {/* <Mission_Img src={img_url}/> */}
         <S.ImageWrapper>
-          <img 
-            src={img_url} 
-            style={{width: '95px', height: '95px', objectFit: 'contain'}}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = WEGO_Logo; // 로고 이미지를 src로 설정
-          }}/>
+          {img_url !== null ? 
+            <img
+              src={img_url} 
+              style={{width: '95px', height: '95px', objectFit: 'cover', marginRight: '20px'}}
+            /> : 
+            <div style={{width: '95px', height: '95px', objectFit: 'cover'}}>
+              이미지 오류
+            </div>}
+          {/* <img 
+            /> */}
           <S.BookmarkIcon>
             <PiBookmarkSimpleBold />
           </S.BookmarkIcon>
