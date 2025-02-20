@@ -13,7 +13,7 @@ const TitleBoxWrap = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 0px 16px;
+  /* padding: 0px 16px; */
   gap: 10px;
 `;
 
@@ -43,7 +43,7 @@ const MissionContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 16px;
+  /* padding: 16px; */
   gap: 18px;
 `;
 
