@@ -60,7 +60,7 @@ export const deletePostApi = async (post_id: number) => {
 // 전체 게시글 조회
 export const getAllPostsApi = async (cursor: number) => {
   try {
-    const apiRes = await defaultInstance.get('/community/impromptu-posts', {
+    const apiRes = await authInstance.get('/community/impromptu-posts', {
       params: { cursor },
     });
     console.log('전체 게시글 조회 성공:', apiRes.data);
@@ -74,7 +74,7 @@ export const getAllPostsApi = async (cursor: number) => {
 // 인기 게시글 조회
 export const getPopularPostsApi = async () => {
   try {
-    const apiRes = await defaultInstance.get('/community/popular-posts');
+    const apiRes = await authInstance.get('/community/popular-posts');
     console.log('인기 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -299,7 +299,13 @@ export const uploadImgApi = async (picture_url: File[]) => {
   console.log([...formData.entries()]);
 
   try {
-    const apiRes = await authInstance.post('/community/upload-image', formData);
+    const apiRes = await authInstance.post(
+      '/community/upload-image',
+      formData,
+      {
+        transformRequest: [data => data],
+      },
+    );
     console.log('이미지 업로드 요청 데이터:', formData);
     console.log('이미지 업로드 성공:', apiRes.data);
     return apiRes.data;

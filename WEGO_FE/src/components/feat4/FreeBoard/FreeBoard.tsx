@@ -14,6 +14,8 @@ type Post = {
   total_comment: number;
   total_like: number;
   total_scrap: number;
+  liked: boolean;
+  scraped: boolean;
 };
 
 function FreeBoard() {
@@ -31,7 +33,7 @@ function FreeBoard() {
     const fetchPosts = async () => {
       const data = await getAllPostsApi(100); // 첫 페이지 100개 가져오기
       if (data) {
-        setPosts(data); // 받아온 게시글 저장
+        setPosts(data.posts); // 받아온 게시글 저장
       }
     };
 

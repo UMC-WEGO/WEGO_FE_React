@@ -95,7 +95,7 @@ function BoardDetailPage() {
   } = usePostActions(Number(postId));
 
   const [activeIcons, setActiveIcons] = useState({
-    like: false,
+    like: post ? post.liked : false,
     comment: false,
     scrap: post ? post.scraped : false,
   });
@@ -155,7 +155,6 @@ function BoardDetailPage() {
 
     const success = await deletePostApi(Number(postId));
     if (success) {
-      alert('게시글이 삭제되었습니다.');
       navigate('/board');
     } else {
       alert('게시글 삭제에 실패했습니다.');
@@ -247,6 +246,7 @@ function BoardDetailPage() {
           <span onClick={() => handleClick('like')}>
             <PiThumbsUpBold
               className={`icon ${activeIcons.like ? 'active' : ''}`}
+              style={{ color: activeIcons.like ? '#669cff' : 'inherit' }}
             />
             <p>공감 {post.post.post_info.total_like || 0}</p>
           </span>
@@ -259,6 +259,7 @@ function BoardDetailPage() {
           <span onClick={() => handleClick('scrap')}>
             <PiBookmarkSimpleBold
               className={`icon ${activeIcons.scrap ? 'active' : ''}`}
+              style={{ color: activeIcons.scrap ? '#669cff' : 'inherit' }}
             />
             <p>스크랩 {post.post.post_info.total_scrap || 0}</p>
           </span>
