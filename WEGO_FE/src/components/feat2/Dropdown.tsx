@@ -4,8 +4,9 @@ import { useState } from "react";
 const IconImg = styled.img`
     width: 14px;
     height: 15px;
+    objectFit: 'cover',
 
-    margin-right: 17px;
+    margin-right: 20px;
 `
 
 const DropdownContainer = styled.div`
@@ -83,7 +84,7 @@ const Dropdown = ({
         {/* 드롭다운 헤터 (보이는 부분) */}
         <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
           <IconImg src={iconStream} />
-          <SelectedDisplay>{value}</SelectedDisplay>    {/* value: 기본값, selectedOption: 선택한 값 */}           
+          <SelectedDisplay style={{marginLeft: '20px'}}>{value}</SelectedDisplay>    {/* value: 기본값, selectedOption: 선택한 값 */}           
           <div>{isOpenFlag ? "▲" : "▼"}</div>
         </DropdownHeader>
 
@@ -96,7 +97,10 @@ const Dropdown = ({
                 onClick={() => selectOption(item.label)}
               >
                 <IconImg src={item.icon} />
-                {item.label}
+                <div style={{marginLeft: '20px'}}>
+                  {item.label}
+                </div>
+                
               </DropdownListItem>
             ))}
           </DropdownList>

@@ -26,9 +26,6 @@ const FilterBox = styled.div`
   align-items: center;
 
   border: 1px solid rgba(234, 234, 234, 1);
-  border-radius: 5px;
-  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-
   background-color: #fff;
 `
 
