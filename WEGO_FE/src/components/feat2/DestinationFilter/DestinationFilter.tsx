@@ -15,8 +15,6 @@ import SelectDeparture from "./SelectDeparture";
 
 // 아이콘 가져오기
 import { location, Item_time, Item_transport } from "../../../mocks/feat2/TestData_Filter";
-import { CgCalendar } from "react-icons/cg";
-import { FaPeopleGroup } from "react-icons/fa6";
 
 // 여행 조건 선택하는 부분
 const FilterBox = styled.div`

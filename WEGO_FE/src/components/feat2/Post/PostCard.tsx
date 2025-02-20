@@ -77,7 +77,16 @@ const PostCard = ({
               src={img_url} 
               style={{width: '95px', height: '95px', objectFit: 'cover', marginRight: '20px'}}
             /> : 
-            <div style={{width: '95px', height: '95px', objectFit: 'cover'}}>
+            <div style={{
+              width: '95px', 
+              height: '95px', 
+              objectFit: 'cover',
+              backgroundColor: '#f0f0f0',
+              marginRight: '20px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center'
+              }}>
               이미지 오류
             </div>}
           {/* <img 
