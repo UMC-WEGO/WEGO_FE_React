@@ -50,6 +50,13 @@ width: 134px;
 padding: 11px;
 `
 
+export const OneBtnBox = styled.button`
+border: 1px solid gray;
+width: 274px;
+
+padding: 11px;
+`
+
 export const YesText = styled.div`
   color: rgba(10, 122, 255, 1);
   font-weight: 500px;

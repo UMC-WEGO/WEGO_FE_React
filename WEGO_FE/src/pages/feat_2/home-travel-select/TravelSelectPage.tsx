@@ -33,6 +33,7 @@ import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
 import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
+import NoteAlertCard from "../../../components/feat2/Alerts/NoteAlertCard";
 
 const NoPopularPost = styled.div`
   display: flex;
@@ -155,6 +156,11 @@ function TravelSelectPage() {
       setIsShowMessage(false)
     }
 
+    const [isShowNoteMessage, setIsShowNoteMessage] = useState(false);
+    const downNoteMessage = () => {
+      setIsShowNoteMessage(false)
+    }
+
   return(
     <>
     {isLoading ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
@@ -213,14 +219,24 @@ function TravelSelectPage() {
           {isShowMessage && (
             <SaveAlertCard message="여행지를 확정하시겠습니까?" downMessage={downMessage} SavePlan={() => postTravel()}/>
           )}
+          {isShowNoteMessage && (
+            <NoteAlertCard message="여행지를 선택해 주세요" downMessage={downNoteMessage}/>
+          )}
           <S.SubmitBtnContainer>
             {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3)}
-              disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
+              // disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
               // onClick={() => postTravel()}
-              onClick={() => {setIsShowMessage(true)}}
+              onClick={() => {
+                if(selectedIndex !== null){
+                  setIsShowMessage(true)
+                }
+                else{
+                  setIsShowNoteMessage(true)
+                }
+              }}
             >
               여기로 갈래요
             </S.SelectionComplete>
