@@ -23,7 +23,6 @@ const SavedMission = () => {
         <img src="/src/images/feat3/iconoir_plus-circle-solid.svg" alt="" />
         미션을 추가하세요!
       </S.ContentBox_noMission> */}
-      {/* <S.Line /> */}
     </S.Container>
   );
 };

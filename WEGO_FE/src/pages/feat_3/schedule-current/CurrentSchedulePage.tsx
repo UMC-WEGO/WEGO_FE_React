@@ -6,6 +6,7 @@ import SavedMission from '../../../components/feat3/saved-mission/SavedMission';
 import MissionVerification from '../../../components/feat3/missionVerification/MissionVerification';
 import RegisterMission from '../../../components/feat3/registerMission/RegisterMission';
 import AlertModal from '../modal/AlertModal';
+import SectionGrayLine from '../../../components/feat3/SectionGrayLine';
 
 function CurrentSchedulePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,9 @@ function CurrentSchedulePage() {
       </S.TopSection>
       <S.MainSection>
         <InstanceBoard />
+        <SectionGrayLine />
         <SavedMission />
+        <SectionGrayLine />
         <MissionVerification />
       </S.MainSection>
       <RegisterMission onOpenModal={handleModalOpen} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as S from './MissionVerification.style';
+import MissionCard from './MissionCard';
 
 const MissionVerification = () => {
   const [inputValue, setInputValue] = useState('');
@@ -38,10 +39,24 @@ const MissionVerification = () => {
           onChange={handleInputChange}
         />
       </S.ReviewBox>
+      <S.ReviewBox>
+        <S.TitleWrap>
+          <S.TextWrap>
+            <S.Text fontSize="14px" fontWeight="500">
+              사진 첨부
+            </S.Text>
+            <S.Text fontSize="10px" fontWeight="500" color="#0059FF">
+              (필수)
+            </S.Text>
+          </S.TextWrap>
+        </S.TitleWrap>
+        <S.ImgUpload>
+          <MissionCard img={1} />
+          <MissionCard />
+        </S.ImgUpload>
+      </S.ReviewBox>
     </S.Container>
   );
 };
 
 export default MissionVerification;
-// 미션인증 1. 내용입력 2. 사진첨부
-//     -> 삼항 연산자 써서 savedmission밑에 Line 상태관리
