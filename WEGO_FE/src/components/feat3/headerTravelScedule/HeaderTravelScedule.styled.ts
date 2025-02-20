@@ -25,14 +25,21 @@ const TitleBoxWrap = styled.div`
 `;
 
 const message = styled.div`
-  width: 418px;
-  height: 0px;
+  width: 420px;
+  height: 36px;
+  line-height: 13px;
   border-top: 1px solid #26262633;
-  padding: 10px 10px 10px 40px;
-  position: absolute;
-  bottom: 13px;
+  margin-top: 10px;
+  padding: 10px 30px;
   font-size: 13px;
   color: white;
 `;
 
-export { Container, Header, TitleBoxWrap, message };
+const Line = styled.div`
+  width: 430px;
+  height: 10px;
+  background-color: #eaeaea;
+  border: none;
+`;
+
+export { Container, Header, TitleBoxWrap, message, Line };

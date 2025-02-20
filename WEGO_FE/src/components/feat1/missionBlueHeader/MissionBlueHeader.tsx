@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './MissionBlueHeader.style';
 import TravelScheduleBox from '../../feat3/travelScheduleBox/TravelScheduleBox';
 import TravelTitleBox from '../../feat3/travelTitleBox/TravelTitleBox';
+import AlertModal from '../../../pages/feat_3/modal/AlertModal';
 
-function MissionBlueHeader() {
+function MissionBlueHeader({ onOpenModal }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <S.Container>
       <S.Header>
-        <img src="/src/images/feat3/LeftArrow_white.svg" alt="왼쪽화살표" />
+        <img
+          src="/src/images/feat3/LeftArrow_white.svg"
+          alt="왼쪽화살표"
+          onClick={onOpenModal}
+        />
+        {isModalOpen ? <AlertModal onClose={handleCloseModal} /> : null}
         <img src="/src/images/feat3/ExportIcon_white.svg" alt="내보내기" />
       </S.Header>
       <S.TitleBoxWrap>

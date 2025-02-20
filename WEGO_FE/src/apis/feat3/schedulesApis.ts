@@ -1,9 +1,11 @@
 import { authInstance } from "../axiosInstance";
 
 // 여행 일정 목록 조회
-export const getTripSchedulesApi = async () => {
+export const getTripSchedulesApi = async (userId: number) => {
   try {
-    const apiRes = await authInstance.get('/schedule/trip-schedules');
+    const apiRes = await authInstance.get(
+      '/schedule/trip-schedules?userId=' + userId,
+    );
     console.log('여행 일정 목록 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
