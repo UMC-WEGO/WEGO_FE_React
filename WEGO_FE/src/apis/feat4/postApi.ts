@@ -299,7 +299,13 @@ export const uploadImgApi = async (picture_url: File[]) => {
   console.log([...formData.entries()]);
 
   try {
-    const apiRes = await authInstance.post('/community/upload-image', formData);
+    const apiRes = await authInstance.post(
+      '/community/upload-image',
+      formData,
+      {
+        transformRequest: [data => data],
+      },
+    );
     console.log('이미지 업로드 요청 데이터:', formData);
     console.log('이미지 업로드 성공:', apiRes.data);
     return apiRes.data;

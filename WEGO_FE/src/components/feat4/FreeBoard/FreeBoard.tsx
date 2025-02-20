@@ -14,6 +14,8 @@ type Post = {
   total_comment: number;
   total_like: number;
   total_scrap: number;
+  liked: boolean;
+  scraped: boolean;
 };
 
 function FreeBoard() {
