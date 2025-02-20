@@ -74,7 +74,7 @@ export const getAllPostsApi = async (cursor: number) => {
 // 인기 게시글 조회
 export const getPopularPostsApi = async () => {
   try {
-    const apiRes = await defaultInstance.get('/community/popular-posts');
+    const apiRes = await authInstance.get('/community/popular-posts');
     console.log('인기 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
