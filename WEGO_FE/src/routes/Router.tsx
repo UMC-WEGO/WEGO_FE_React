@@ -80,6 +80,7 @@ const Router = [
         element: <CurrentSchedulePage />,
       },
       { path: '/schedule/end/:scheduleId', element: <EndSchedulePage /> },
+      { path: '/schedule/prev', element: <니가만들페이지컴포넌트 /> },
 
       // 게시판 관련 라우팅
       { path: '/board', element: <BoardPage /> },
