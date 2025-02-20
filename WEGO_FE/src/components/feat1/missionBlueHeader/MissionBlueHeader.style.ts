@@ -15,6 +15,9 @@ const Header = styled.div`
   justify-content: space-between;
   padding: 0 20px;
   width: 100%;
+  img {
+    cursor: pointer;
+  }
 `;
 
 const TitleBoxWrap = styled.div`

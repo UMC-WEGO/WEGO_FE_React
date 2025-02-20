@@ -33,6 +33,9 @@ const EditButton = styled.text`
   text-underline-position: from-font;
   text-decoration-skip-ink: auto;
   color: #ffffff99;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const TravelTagWrap = styled.div`
