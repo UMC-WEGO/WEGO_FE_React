@@ -63,14 +63,6 @@ type UpcomingTravelType = {
 }
 
 function HomePage() {
-  const user_Id = useParams();     // 사용자 ID 받아오기
-  const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
-  
-  // console.log(userId); // ':'가 제거된 userId 출력
-  
-  
-  // console.log("사용자 ID : ", userId);
-
 // --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
@@ -284,7 +276,6 @@ function HomePage() {
           <S.SelectorContainer>
             <DestinationFilter 
               // 필터에 들어가는 값값
-              userId={String(userId)}
               departureDate={departureDate}
               arrivalDate={arrivalDate}
               numAdult={numAdult}
@@ -309,7 +300,7 @@ function HomePage() {
               isActivated = {randomBtnStatus}
               disabled={!randomBtnStatus}
               onClick={() => { 
-                navigate(`/home/travel-select/:${userId}`, {
+                navigate(`/home/travel-select`, {
                   state: {
                     randomDestinations,
                     departureDate,

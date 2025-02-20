@@ -15,6 +15,7 @@ import PostCard from "../../../components/feat2/Post/PostCard";
 import PlaningCard from "../../../components/feat2/PlaningCard";
 import DestinationBtn from "../../../components/feat2/DestinationBtn";
 import PostList from "../../../components/feat2/Post/PostList";
+// import PostList from "../../../components/feat4/PostList";
 import ModalMessage from "../../../components/feat2/Modal";
 
 // 
@@ -22,11 +23,17 @@ import ModalMessage from "../../../components/feat2/Modal";
 //
 
 import { TOKEN } from "../../../mocks/feat2/TOKEN_Temporary_file";
-import ToolTip from "../../../components/feat2/ToolTip";
 
 //
 // 
 //
+
+// 임시데이터 가져오기
+// import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
+import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
+import { AxiosRequestConfig, AxiosResponse } from "axios";
+import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
+
 const NoPopularPost = styled.div`
   display: flex;
   align-items: flex-start;
@@ -37,9 +44,6 @@ const NoPopularPost = styled.div`
 `
 
 function TravelSelectPage() {
-  const user_Id = useParams();     // 사용자 ID 받아오기
-  const userId = user_Id && user_Id.userId ? user_Id.userId.replace(':', '') : ''; // ':'를 제거한 userId, undefined 체크
-
   // 홈에서 정보 가져오기기
   const uselocation = useLocation();
   const { randomDestinations, departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
@@ -122,13 +126,13 @@ function TravelSelectPage() {
             'Content-Type': 'application/json',
           },
         });
-        // console.log(res.data.message);
+        console.log(res);
         
     
         // 서버 응답 메시지를 저장
         setFixedTravelResponse(res.data.message);
         
-        navigate(`/home/:${userId}`, {
+        navigate(`/home`, {
           state: {
             fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
           }
@@ -138,22 +142,18 @@ function TravelSelectPage() {
       }
     };
 
-    // console.log("선택된 조건 확인 : ", 
-    //   location,
-    //   adult_participants,
-    //   child_participants,
-    //   vehicle,
-    //   duration,
-    //   startDate,
-    //   endDate
-    // )
-
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
       setTimeout(() => {
         setIsLoading(false);
       }, 4000)
     }, [])
+
+    // 여기로 갈래요 버튼 눌렀을 때 알림창
+    const [isShowMessage, setIsShowMessage] = useState(false);
+    const downMessage = () => {
+      setIsShowMessage(false)
+    }
 
   return(
     <>
@@ -163,7 +163,7 @@ function TravelSelectPage() {
       <S.AppContainer>
         <S.ScrollArea>    
           <S.ToolBarContainer>
-            <Link to={`/home/${userId}`}>
+            <Link to={`/home`}>
               <img src={back_arrow_img}/>
             </Link>
             <img src={share_img}/>
@@ -177,11 +177,6 @@ function TravelSelectPage() {
               transport={vehicle}
             />
           </S.PlanContainer>
-
-          <ToolTip
-            content="12월 전년 대비 여행객 방문 변화율을 참고해 보세요"
-            tip="팁"
-          />
 
           <S.DestinationContainer>
             {/* 추천 여행지 나열 */}
@@ -215,14 +210,17 @@ function TravelSelectPage() {
             </S.PostArea>
           </S.PostContainer>
 
+          {isShowMessage && (
+            <SaveAlertCard message="여행지를 확정하시겠습니까?" downMessage={downMessage} SavePlan={() => postTravel()}/>
+          )}
           <S.SubmitBtnContainer>
             {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3)}
               disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
-              // onClick={postTravel}
-              onClick={() => postTravel()}
+              // onClick={() => postTravel()}
+              onClick={() => {setIsShowMessage(true)}}
             >
               여기로 갈래요
             </S.SelectionComplete>

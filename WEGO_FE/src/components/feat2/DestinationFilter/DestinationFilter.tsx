@@ -68,8 +68,6 @@ const DateStyle = styled.div<{sameYear: boolean}>`
 `
 
 interface DestinationFilterProps {
-  userId: string;
-
   numAdult: number;
   numChild: number;
   transport: string;
@@ -89,8 +87,6 @@ interface DestinationFilterProps {
 }
 
 const DestinationFilter = ({
-  userId,
-
   // 인원수
   numAdult,
   numChild,
@@ -115,13 +111,6 @@ const DestinationFilter = ({
   arrivalDate,
   setArrivalDate,
 }: DestinationFilterProps) => {
-  // --- --- --- 최근 여행지 조회 --- --- ---
-  // const [recentLocation, setRecentLocation] = useState([]);
-  // const getRecentLocation = async() => {
-  //   try {
-  //     const response = await axios.post()
-  //   }
-  // }
 
   // 바텀시트 활성화 상태 관리
   const [isDateBottomActive, setIsDateBottomActive] = useState(false);
@@ -208,7 +197,10 @@ const DestinationFilter = ({
             <div>
               <BottomSheetBtn onClick={ toggleDepartureBottom }>{departureLocation}</BottomSheetBtn>
               <Bottomsheet isOpen={isDepartureBottomActive} onClose={ toggleDepartureBottom } height="100vh - 42px">
-                <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation} location={location} userId={userId}/>
+                <SelectDeparture departureLocation={departureLocation} setDepartureLocation={setDepartureLocation} location={location}/>
+                {/* <div>
+                  선택창
+                </div> */}
               </Bottomsheet>
             </div>
           </Label>
