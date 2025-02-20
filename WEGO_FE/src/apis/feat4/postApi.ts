@@ -60,7 +60,7 @@ export const deletePostApi = async (post_id: number) => {
 // 전체 게시글 조회
 export const getAllPostsApi = async (cursor: number) => {
   try {
-    const apiRes = await defaultInstance.get('/community/impromptu-posts', {
+    const apiRes = await authInstance.get('/community/impromptu-posts', {
       params: { cursor },
     });
     console.log('전체 게시글 조회 성공:', apiRes.data);

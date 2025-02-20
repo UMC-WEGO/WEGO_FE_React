@@ -155,7 +155,6 @@ function BoardDetailPage() {
 
     const success = await deletePostApi(Number(postId));
     if (success) {
-      alert('게시글이 삭제되었습니다.');
       navigate('/board');
     } else {
       alert('게시글 삭제에 실패했습니다.');
