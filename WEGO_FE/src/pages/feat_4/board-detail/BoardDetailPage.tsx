@@ -210,7 +210,10 @@ function BoardDetailPage() {
           <p> # {post.post.post_info.category_name}</p>
           <S.Profile>
             <img
-              src="https://buly.kr/CsipNnM"
+              src={
+                post.post.post_info.post_author_profile ||
+                'https://buly.kr/CsipNnM'
+              }
               alt="Profile"
               onClick={() =>
                 handleProfileButtonClick(post.post.post_info.viewer_id)
@@ -228,7 +231,15 @@ function BoardDetailPage() {
             </div>
           </S.Profile>
           <h1>{post.post.post_info.title}</h1>
-          <img src="https://buly.kr/AaoydRw" alt="Post Image" />
+          <img
+            src={
+              post.post.post_info.picture_urls &&
+              post.post.post_info.picture_urls.length > 0
+                ? post.post.post_info.picture_urls[0] // 이미지 여러 장 나오게 수정
+                : 'https://buly.kr/AaoydRw'
+            }
+            alt="Post Image"
+          />
           <h6>{post.post.post_info.content}</h6>
         </S.Content>
         <hr />

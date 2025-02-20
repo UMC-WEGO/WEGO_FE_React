@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from 'react-router';
 import { useState, useEffect } from 'react';
 import TopicModal from '../../../components/feat4/TopicModal/TopicModal';
 import Modal from '../../../components/feat4/Modal/Modal';
-import { createPostApi } from '../../../apis/feat4/postApi';
+import { createPostApi, uploadImgApi } from '../../../apis/feat4/postApi';
 
 function BoardWritePage() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
@@ -14,6 +14,7 @@ function BoardWritePage() {
   const [title, setTitle] = useState(''); // 제목 상태
   const [content, setContent] = useState(''); // 내용 상태
   const [uploadedImages, setUploadedImages] = useState<File[]>([]); // 업로드된 이미지 상태
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   const [isRegionRequired, setIsRegionRequired] = useState(false); // 지역 필수 여부
   const [isPhotoRequired, setIsPhotoRequired] = useState(false); // 사진 필수 여부
@@ -156,7 +157,7 @@ function BoardWritePage() {
       local_id: selectedRegion.id, // 지역 ID
       title,
       content,
-      picture_url: [], // 업로드된 이미지의 URL (구현 필요)
+      picture_url: imageUrls, // 업로드된 이미지의 URL (구현 필요)
     };
 
     const result = await createPostApi(postData);
@@ -199,12 +200,20 @@ function BoardWritePage() {
   };
 
   // 이미지 업로드 핸들러
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files) {
-      const newImages = Array.from(files);
-      const allImages = [...uploadedImages, ...newImages].slice(0, 5); // 최대 5장
-      setUploadedImages(allImages);
+  const handleImageChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (event.target.files) {
+      const files = Array.from(event.target.files).slice(0, 5); // 최대 5개 선택 가능
+      setUploadedImages([...files]);
+
+      console.log(files);
+
+      const response = await uploadImgApi(files);
+      if (response?.picture_urls) {
+        console.log('📌 서버 응답 받은 이미지 URL:', response.picture_urls);
+        setImageUrls(response.picture_urls);
+      }
     }
   };
 
@@ -291,9 +300,9 @@ function BoardWritePage() {
             <p>{uploadedImages.length}/5</p>
           </S.UploadBox>
 
-          {uploadedImages.slice(0, 5).map((image: File, index: number) => (
+          {imageUrls.map((url, index) => (
             <S.UploadBox key={index} $isPhotoRequired={isPhotoRequired}>
-              <img src={URL.createObjectURL(image)} alt={`uploaded ${index}`} />
+              <img src={url} alt={`uploaded ${index}`} />
             </S.UploadBox>
           ))}
         </S.ScrollContainer>
