@@ -14,18 +14,6 @@ interface PostForm {
   total_like: number;
   total_scrap: number;
   popularity_score: string;
-
-//   category_name: "현지 정보"
-//   content: "순천 안온해변에서 어쩌고"
-//   created_at: "2025-02-17T04:23:20.000Z"
-//   location_name: "군산"
-//   picture_url: null
-//   popularity_score:"19.5"
-// - post_id: 93
-//   title: "이런건 어떤가요"
-// - total_comment: 5
-// - total_like: 1
-// - total_scrap: 1
 }
 
 interface PostListForm {
