@@ -1,7 +1,7 @@
 import * as S from './MyPostsPage.style';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import Arrow from '../../../images/feat5/Arrow.svg';
 import PostButton from '../../../images/feat5/Post_button.svg';
 import PostList from '../../../components/feat4/PostList';
@@ -17,6 +17,8 @@ import ErrorMessage from '../../../components/feat5/ErrorMessage';
 
 function MyPostsPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState<number | null>(null);
 
@@ -28,16 +30,24 @@ function MyPostsPage() {
 
   // API (내가 쓴 글 삭제)
   const deleteMutation = useMutation({
-    mutationFn: (post_id: number) => deletepostsApis(post_id),
-    onSuccess: (_, post_id) => {
-      console.log('내가 쓴 글 삭제 성공');
-      setUserPosts(prevPosts =>
-        prevPosts.filter(post => post.postId !== post_id),
+    mutationFn: deletepostsApis,
+    onSuccess: async (_, postId) => {
+      queryClient.setQueryData(
+        ['userPosts'],
+        (oldData: UserPostsData | undefined) => ({
+          ...oldData,
+          posts: oldData?.posts?.filter(post => post.postId !== postId) || [],
+        }),
       );
+
       handleCloseModal();
+
+      await queryClient.invalidateQueries({
+        queryKey: ['userPosts'],
+      });
     },
     onError: error => {
-      console.error('내가 쓴 글 삭제 실패:', error);
+      console.error('삭제 실패:', error);
     },
   });
 
