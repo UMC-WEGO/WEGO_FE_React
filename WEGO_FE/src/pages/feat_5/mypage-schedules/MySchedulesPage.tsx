@@ -15,10 +15,12 @@ import {
 } from '../../../types/feat5/UserSchedulesData';
 import Loading from '../../../components/feat5/Loading';
 import ErrorMessage from '../../../components/feat5/ErrorMessage';
+import { useQueryClient } from '@tanstack/react-query';
 
 function MySchedulesPage() {
   const navigate = useNavigate();
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const queryClient = useQueryClient();
 
   // API (지난 여행 조회)
   const { data, isLoading, error } = useQuery<UserSchedulesData, Error>({
@@ -35,10 +37,14 @@ function MySchedulesPage() {
   // API (지난 여행 삭제)
   const deleteMutation = useMutation({
     mutationFn: deleteschedulesApis,
-    onSuccess: (_, tripId) => {
+    onSuccess: async (_, tripId) => {
       setSchedules(prevSchedules =>
         prevSchedules.filter(schedule => schedule.tripId !== tripId),
       );
+
+      await queryClient.invalidateQueries({
+        queryKey: ['userSchedules'],
+      });
     },
     onError: error => {
       console.error('삭제 실패', error);

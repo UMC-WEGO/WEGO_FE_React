@@ -54,6 +54,7 @@ function ScheduleCard({
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [isCompletedMission, setIsCompletedMission] = useState(false);
 
   // 여행 포인트 (각 미션의 포인트 합)
   const totalPoints = schedule.missions.reduce(
@@ -108,6 +109,7 @@ function ScheduleCard({
     localStorage.setItem(`completed-${schedule.tripId}`, 'true'); //
     setIsModalVisible(false);
     onMissionComplete(schedule.tripId);
+    setIsCompletedMission(true);
     navigate(`/schedule`);
   };
 
@@ -198,7 +200,14 @@ function ScheduleCard({
       {/* 포인트 적립 시, user의 point 값 올라야 함 */}
       {/* 인증 미션이 하나도 없는 경우, 미션 단 없이 글과 버튼만 보이게 */}
       <S.MissionContainer>
-        {schedule.missions && schedule.missions.length > 0 ? (
+        {schedule.missions.length === 0 ||
+        !schedule.missions.some(
+          mission => mission.receivedMission.status === true,
+        ) ? (
+          <S.NoMissionContainer>
+            <p>아직 인증한 미션이 없어요🥲</p>
+          </S.NoMissionContainer>
+        ) : (
           <>
             <S.MissionTextContainer>
               <S.PointsContainer>
@@ -265,17 +274,10 @@ function ScheduleCard({
               </S.MissionImages>
             </S.MissionSection>
           </>
-        ) : (
-          !isCompleted &&
-          !isInReview && (
-            <S.NoMissionContainer>
-              <p>아직 인증한 미션이 없어요🥲</p>
-            </S.NoMissionContainer>
-          )
         )}
 
         <S.ButtonContainer>
-          {!isCompleted && !isInReview && (
+          {!(isCompletedMission || isInReview) && (
             <>
               <S.CompleteButton onClick={handleCompleteMission}>
                 완료
