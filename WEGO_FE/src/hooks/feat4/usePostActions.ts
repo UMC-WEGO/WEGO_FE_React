@@ -1,13 +1,22 @@
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 // import { createCommentApi, deleteCommentApi } from '../../apis/feat4/chanApis';
-import { createCommentApi,deleteCommentApi,deleteScrapApi,getPostByIdApi, likePostApi, scrapPostApi, unlikePostApi } from '../../apis/feat4/postApi';
+import {
+  createCommentApi,
+  deleteCommentApi,
+  deleteScrapApi,
+  getPostByIdApi,
+  likePostApi,
+  scrapPostApi,
+  unlikePostApi,
+} from '../../apis/feat4/postApi';
 import { TPostDetailResData } from '../../pages/feat_4/board-detail/BoardDetailPage';
 
 export const usePostDetail = (postId: number) => {
   return useQuery<TPostDetailResData, Error>({
     queryKey: ['post', postId], // ✅ 올바른 queryKey 사용
-    queryFn: () => getPostByIdApi(postId), 
-    staleTime: 1000 * 60 * 5, // 5분 캐시 유지
+    queryFn: () => getPostByIdApi(postId),
+    staleTime: 1000 * 10, // 1분 캐시 유지
+    refetchOnWindowFocus: true, // 창 포커스 시 데이터 다시 가져와
   });
 };
 
@@ -16,10 +25,8 @@ export const usePostActions = (postId: number) => {
 
   // ✅ 댓글 추가 mutation
   const createCommentMutation = useMutation({
-    mutationFn: (newComment: {
-      post_id: number;
-      content: string;
-    }) => createCommentApi(newComment.post_id, newComment.content),
+    mutationFn: (newComment: { post_id: number; content: string }) =>
+      createCommentApi(newComment.post_id, newComment.content),
 
     onMutate: async newComment => {
       await queryClient.cancelQueries(['post', postId]); // 기존 쿼리 중단
@@ -74,18 +81,17 @@ export const usePostActions = (postId: number) => {
   });
 
   const postLikeMutation = useMutation({
-    mutationFn: (likeData: { postId:number}) =>
-      likePostApi(likeData.postId),
+    mutationFn: (likeData: { postId: number }) => likePostApi(likeData.postId),
 
     onMutate: async likeStat => {
       await queryClient.cancelQueries(['post', postId]); // 기존 쿼리 중단
       const prevPostData = queryClient.getQueryData(['post', postId]); // 이전 데이터 저장
 
-      console.log(prevPostData)
+      console.log(prevPostData);
       queryClient.setQueryData(['post', postId], old => ({
         ...old,
         post_info: old?.post_info
-          ? {...old.post_info, like_counts: likeStat.post.like_counts+1}
+          ? { ...old.post_info, like_counts: likeStat.post.like_counts + 1 }
           : old.post_info,
       }));
 
@@ -99,10 +105,10 @@ export const usePostActions = (postId: number) => {
     onSettled: () => {
       queryClient.invalidateQueries(['post', postId]); // ✅ 최종 데이터 갱신
     },
-  })
+  });
 
   const postUnlikeMutation = useMutation({
-    mutationFn: (likeData: { postId:number}) =>
+    mutationFn: (likeData: { postId: number }) =>
       unlikePostApi(likeData.postId),
 
     onMutate: async likeStat => {
@@ -112,7 +118,7 @@ export const usePostActions = (postId: number) => {
       queryClient.setQueryData(['post', postId], old => ({
         ...old,
         post_info: old?.post_info
-          ? {...old.post_info, like_counts: likeStat.like_counts-1}
+          ? { ...old.post_info, like_counts: likeStat.like_counts - 1 }
           : old.post_info,
       }));
 
@@ -126,10 +132,10 @@ export const usePostActions = (postId: number) => {
     onSettled: () => {
       queryClient.invalidateQueries(['post', postId]); // ✅ 최종 데이터 갱신
     },
-  })
+  });
 
   const postScrapMutation = useMutation({
-    mutationFn: (scrapData: { postId:number}) =>
+    mutationFn: (scrapData: { postId: number }) =>
       scrapPostApi(scrapData.postId),
 
     onMutate: async scrapData => {
@@ -139,7 +145,7 @@ export const usePostActions = (postId: number) => {
       queryClient.setQueryData(['post', postId], old => ({
         ...old,
         post_info: old?.post_info
-          ? {...old.post_info, like_counts: scrapData.total_scrap+1}
+          ? { ...old.post_info, like_counts: scrapData.total_scrap + 1 }
           : old.post_info,
       }));
 
@@ -153,10 +159,10 @@ export const usePostActions = (postId: number) => {
     onSettled: () => {
       queryClient.invalidateQueries(['post', postId]); // ✅ 최종 데이터 갱신
     },
-  })
+  });
 
   const postUnscrapMutation = useMutation({
-    mutationFn: (scrapData: { postId:number}) =>
+    mutationFn: (scrapData: { postId: number }) =>
       deleteScrapApi(scrapData.postId),
 
     onMutate: async scrapData => {
@@ -166,7 +172,10 @@ export const usePostActions = (postId: number) => {
       queryClient.setQueryData(['post', postId], old => ({
         ...old,
         post_info: old?.post_info
-          ? {...old.post_info, like_counts: scrapData.total_scrap > 1 ? -1 : 0}
+          ? {
+              ...old.post_info,
+              like_counts: scrapData.total_scrap > 1 ? -1 : 0,
+            }
           : old.post_info,
       }));
 
@@ -180,7 +189,7 @@ export const usePostActions = (postId: number) => {
     onSettled: () => {
       queryClient.invalidateQueries(['post', postId]); // ✅ 최종 데이터 갱신
     },
-  })
+  });
 
   return {
     addComment: createCommentMutation.mutate,
@@ -191,10 +200,10 @@ export const usePostActions = (postId: number) => {
     unscrapPost: postUnscrapMutation.mutate,
     isAdding: createCommentMutation.isPending,
     isDeleting: deleteCommentMutation.isPending,
-    isLiking : postLikeMutation.isPending,
+    isLiking: postLikeMutation.isPending,
     isUnliking: postUnlikeMutation.isPending,
     isScrapping: postScrapMutation.isPending,
-    isUnScrapping: postUnscrapMutation.isPending
+    isUnScrapping: postUnscrapMutation.isPending,
   };
 };
 

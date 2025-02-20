@@ -1,25 +1,21 @@
 import * as S from './BoardDetailPage.style';
 import { TbArrowLeft, TbShare2, TbDotsVertical } from 'react-icons/tb';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { allPosts } from '../../../mocks/board/postData';
+import { useState } from 'react';
+import { deletePostApi } from '../../../apis/feat4/postApi';
 import {
   PiChatTextBold,
   PiThumbsUpBold,
   PiBookmarkSimpleBold,
 } from 'react-icons/pi';
 import { LuDot } from 'react-icons/lu';
-import CommentList from '../../../components/feat4/CommentList/CommentList';
-import CommentInput from '../../../components/feat4/CommentInput/CommentInput';
 import CommentInput_chanmin from '../../../components/feat4/CommentInput/CommentInput_chanmin';
 import CommentList_chanmin from '../../../components/feat4/CommentList/CommentList_chanmin';
-import usePostComments, {
+import {
   usePostActions,
   usePostDetail,
 } from '../../../hooks/feat4/usePostActions';
-import { tokenRefreshApi } from '../../../apis/feat1/loginApis';
-import { useTokenStore } from '../../../store/token/useTokenStore';
-import { authInstance } from '../../../apis/axiosInstance';
+import EditModal from '../../../components/feat4/EditModal/EditModal';
 
 export type TCommentData = {
   comment_author_name: string;
@@ -27,9 +23,11 @@ export type TCommentData = {
   comment_content: string;
   comment_created_at: string;
   user_id: number;
+  comment_id: number;
 };
 
-type TPostInfo = {
+export type TPostInfo = {
+  viewer_id: number;
   category_name: string;
   content: string;
   created_at: string;
@@ -54,12 +52,38 @@ export type TPostDetailResData = {
   scraped: boolean;
 };
 
+const formatDate = (isoString: string) => {
+  const date = new Date(isoString);
+  const year = date.getFullYear().toString().slice(2);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
+// 상대 시간 변환 함수
+const timeAgoFormat = (dateString: string) => {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffSec = Math.floor(diffMs / 1000);
+  const diffMin = Math.floor(diffSec / 60);
+  const diffHour = Math.floor(diffMin / 60);
+  const diffDay = Math.floor(diffHour / 24);
+
+  if (diffDay > 0) return `${diffDay}일 전`;
+  if (diffHour > 0) return `${diffHour}시간 전`;
+  if (diffMin > 0) return `${diffMin}분 전`;
+  return '방금 전';
+};
+
 function BoardDetailPage() {
   const navigate = useNavigate();
   const { postId } = useParams<{ postId: string }>(); // URL에서 id를 가져와
-  // const post = allPosts.find(post => post.id === postId); // id로 게시글 찾아
   const { isLoading, error, data: post } = usePostDetail(Number(postId));
-  const { data: tokens } = useTokenStore();
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태
 
   const {
     addComment,
@@ -70,18 +94,22 @@ function BoardDetailPage() {
     unscrapPost,
   } = usePostActions(Number(postId));
 
-  const [activeIcons, setActiveIcons] = useState<{
-    like: boolean;
-    comment: boolean;
-    scrap: boolean;
-  }>({
-    like: post ? post.liked : false,
+  const [activeIcons, setActiveIcons] = useState({
+    like: false,
     comment: false,
     scrap: post ? post.scraped : false,
   });
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
+
   const handleBack = () => {
-    navigate(-1); // 이전 페이지
+    navigate('/board'); // 이전 페이지
   };
 
   const handleClick = (icon: 'like' | 'comment' | 'scrap') => {
@@ -122,10 +150,37 @@ function BoardDetailPage() {
     }
   };
 
-  // 게시글 존재하는지 확인
-  if (!post) {
-    return <div>게시글을 찾을 수 없습니다.</div>;
-  }
+  const handleDelete = async () => {
+    if (!postId) return;
+
+    const success = await deletePostApi(Number(postId));
+    if (success) {
+      alert('게시글이 삭제되었습니다.');
+      navigate('/board');
+    } else {
+      alert('게시글 삭제에 실패했습니다.');
+    }
+  };
+
+  const handleEditClick = () => {
+    if (!postId) return;
+    console.log(post);
+    navigate('/board/edit', {
+      state: { editPostData: post?.post.post_info, postId: postId }, // 기존 게시글 데이터
+    });
+  };
+
+  const handleProfileButtonClick = (authorId: number) => {
+    navigate(`/board/author/profile/${authorId}`, {
+      state: { authorId },
+    });
+  };
+
+  // 로딩
+  if (isLoading) return <div>게시글 불러오는 중</div>;
+
+  // 에러
+  if (error || !post) return <div>게시글을 찾을 수 없습니다.</div>;
 
   return (
     <S.Container>
@@ -138,27 +193,54 @@ function BoardDetailPage() {
             <span>
               <TbShare2 />
             </span>
-            <span>
+            <span onClick={handleModalOpen}>
               <TbDotsVertical />
             </span>
           </div>
         </S.Header>
+
+        <EditModal
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          onDelete={handleDelete}
+          onEdit={handleEditClick}
+        />
+
         <S.Content>
-          <p> # {post.category}</p>
+          <p> # {post.post.post_info.category_name}</p>
           <S.Profile>
-            <img src="https://buly.kr/CsipNnM" alt="Profile" />
+            <img
+              src={
+                post.post.post_info.post_author_profile ||
+                'https://buly.kr/CsipNnM'
+              }
+              alt="Profile"
+              onClick={() =>
+                handleProfileButtonClick(post.post.post_info.viewer_id)
+              }
+            />
             <div>
-              <span>위고 닉네임</span>
+              <span>{post.post.post_info.post_author_nickname}</span>
               <p>
-                {post.timestamp}
+                {formatDate(post.post.post_info.created_at)}
                 <LuDot />
-                {post.time}
+                {timeAgoFormat(post.post.post_info.created_at)}
+                <LuDot />
+                {post.post.post_info.location_name}
               </p>
             </div>
           </S.Profile>
-          <h1>{post.title}</h1>
-          <img src="https://buly.kr/AaoydRw" alt="Post Image" />
-          <h6>{post.content}</h6>
+          <h1>{post.post.post_info.title}</h1>
+          <img
+            src={
+              post.post.post_info.picture_urls &&
+              post.post.post_info.picture_urls.length > 0
+                ? post.post.post_info.picture_urls[0] // 이미지 여러 장 나오게 수정
+                : 'https://buly.kr/AaoydRw'
+            }
+            alt="Post Image"
+          />
+          <h6>{post.post.post_info.content}</h6>
         </S.Content>
         <hr />
         <S.Response>
@@ -182,7 +264,11 @@ function BoardDetailPage() {
           </span>
         </S.Response>
         <S.CommentHr />
-        <CommentList_chanmin comments={post.post.comments} />
+        <CommentList_chanmin
+          comments={post.post.comments}
+          onDeleteComment={deleteComment}
+          postId={post.post.post_info.id}
+        />
       </S.Scroll>
 
       <S.InputBox>

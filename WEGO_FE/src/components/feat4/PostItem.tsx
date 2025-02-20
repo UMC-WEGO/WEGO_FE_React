@@ -55,41 +55,43 @@ const PostItem: React.FC<PostItemProps> = ({
         {rank}
       </S.Rank>
     )}
-    <S.ImageWrapper>
-      <img
-        src="https://i.pinimg.com/474x/b2/d8/6a/b2d86a1904b96e80e950042df2cd2d6e.jpg"
-        alt="Post Image"
-      />
-      <S.BookmarkIcon>
-        <PiBookmarkSimpleBold />
-      </S.BookmarkIcon>
-    </S.ImageWrapper>
-    <S.Content>
-      <span># {category}</span>
-      <h3>{title}</h3>
-      <h4>{content}</h4>
-      <S.PostInfo>
-        <h5>
-          {location}
-          <LuDot />
-          {timeAgoFormat(time)}
-        </h5>
-        <h6>
-          <div>
-            <PiThumbsUpBold />
-            {total_like}
-          </div>
-          <div>
-            <PiChatTextBold />
-            {total_comment}
-          </div>
-          <div>
-            <PiBookmarkSimpleBold />
-            {total_scrap}
-          </div>
-        </h6>
-      </S.PostInfo>
-    </S.Content>
+    <div style={{ display: 'flex', gap: '10px' }}>
+      <S.ImageWrapper>
+        <img
+          src="https://i.pinimg.com/474x/b2/d8/6a/b2d86a1904b96e80e950042df2cd2d6e.jpg"
+          alt="Post Image"
+        />
+        <S.BookmarkIcon>
+          <PiBookmarkSimpleBold />
+        </S.BookmarkIcon>
+      </S.ImageWrapper>
+      <S.Content>
+        <span># {category}</span>
+        <h3>{title}</h3>
+        <h4>{content}</h4>
+        <S.PostInfo>
+          <h5>
+            {location}
+            <LuDot />
+            {timeAgoFormat(time)}
+          </h5>
+          <h6>
+            <div>
+              <PiThumbsUpBold />
+              {total_like}
+            </div>
+            <div>
+              <PiChatTextBold />
+              {total_comment}
+            </div>
+            <div>
+              <PiBookmarkSimpleBold />
+              {total_scrap}
+            </div>
+          </h6>
+        </S.PostInfo>
+      </S.Content>
+    </div>
   </S.PostContainer>
 );
 

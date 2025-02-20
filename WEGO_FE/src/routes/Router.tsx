@@ -33,6 +33,7 @@ import {
   ScheduleMissionsVerificaionStatusPage,
   PasswordFindPage,
   PasswordChangePage,
+  BoardEditPage,
 } from '../pages/index';
 
 const Router = [
@@ -84,6 +85,7 @@ const Router = [
       // 게시판 관련 라우팅
       { path: '/board', element: <BoardPage /> },
       { path: '/board/write', element: <BoardWritePage /> },
+      { path: 'board/edit', element: <BoardEditPage /> },
       { path: '/board/detail/:postId', element: <BoardDetailPage /> },
       {
         path: '/board/author/profile/:authorId',

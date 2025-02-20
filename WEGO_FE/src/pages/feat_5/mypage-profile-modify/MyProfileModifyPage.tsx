@@ -10,6 +10,7 @@ import {
   userinfoApis,
   userprofilemodifyApis,
 } from '../../../apis/feat5/userinfoApis';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 function MyProfileModifyPage() {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ function MyProfileModifyPage() {
   const [error, setError] = useState<{ username: string; useremail: string }>({
     username: '',
     useremail: '',
+  });
+  const queryClient = useQueryClient();
+  const { refetch } = useQuery({
+    queryKey: ['userData'],
+    queryFn: userinfoApis,
   });
 
   useEffect(() => {
@@ -83,6 +89,7 @@ function MyProfileModifyPage() {
       }
 
       await userprofilemodifyApis(formData);
+      refetch();
       navigate(`/mypage/${userId}`);
     } catch (error) {
       console.error('프로필 수정 실패', error);

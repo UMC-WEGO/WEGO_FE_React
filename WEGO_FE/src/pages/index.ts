@@ -39,3 +39,6 @@ export { default as MyPrivacyPage } from './feat_5/mypage-privacy/MyPrivacyPage'
 // 30 + 1개 페이지 라우팅 ( 25.01.20 페이지 추가 => 비밀번호 찾기 및 변경 페이지  )
 export { default as PasswordFindPage } from '../pages/feat_1/password-find/PasswordFindPage';
 export { default as PasswordChangePage } from '../pages/feat_1/password-change/PasswordChangePage';
+
+// 31 + 1개 페이지 라우팅 ( 25.02.12 페이지 추가 => 게시글 수정 페이지  )
+export { default as BoardEditPage } from '../pages/feat_4/board-edit/BoardEditPage';

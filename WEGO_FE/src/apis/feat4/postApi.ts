@@ -34,6 +34,7 @@ export const updatePostApi = async (
       `/community/posts/modify/${post_id}`,
       updateData,
     );
+    console.log(updateData);
     console.log('게시글 수정 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -62,7 +63,6 @@ export const getAllPostsApi = async (cursor: number) => {
     const apiRes = await defaultInstance.get('/community/impromptu-posts', {
       params: { cursor },
     });
-
     console.log('전체 게시글 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -215,9 +215,11 @@ export const getScrapsByCategoryApi = async (category_id: number) => {
 };
 
 // 게시글 작성자 프로필 조회
-export const getUserProfileApi = async () => {
+export const getUserProfileApi = async (user_id: number) => {
   try {
-    const apiRes = await defaultInstance.get(`/community/users/profile`);
+    const apiRes = await defaultInstance.get(
+      `/community/users/${user_id}/profile`,
+    );
     console.log('게시글 작성자 프로필 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
@@ -269,6 +271,54 @@ export const getTopPostsApi = async () => {
     return apiRes.data;
   } catch (error) {
     console.error('전체 상위 2개 게시글 조회 실패:', error);
+    return null;
+  }
+};
+
+// 최근 출발 지역 조회
+export const getRecentLocalApi = async () => {
+  try {
+    const apiRes = await authInstance.get(`/community/posts/local-search`);
+    console.log('최근 출발 지역 조회 성공:', apiRes.data);
+    return apiRes.data;
+  } catch (error) {
+    console.error('최근 출발 지역 조회 실패:', error);
+    return null;
+  }
+};
+
+// 게시글 이미지 업로드
+export const uploadImgApi = async (picture_url: File[]) => {
+  console.log(picture_url);
+
+  const formData = new FormData();
+  picture_url.forEach((file, index) => {
+    formData.append('picture_url', file);
+    console.log(`파일 추가됨: ${index + 1}`, file); // ✅ 추가된 파일 로그
+  });
+  console.log([...formData.entries()]);
+
+  try {
+    const apiRes = await authInstance.post('/community/upload-image', formData);
+    console.log('이미지 업로드 요청 데이터:', formData);
+    console.log('이미지 업로드 성공:', apiRes.data);
+    return apiRes.data;
+  } catch (error) {
+    console.error('이미지 업로드 실패:', error);
+    return null;
+  }
+};
+
+// 게시글 이미지 삭제
+export const deleteImgApi = async (imgData: { picture_url: string[] }) => {
+  try {
+    const apiRes = await authInstance.delete('/community/delete-image', {
+      data: imgData,
+    });
+    console.log('이미지 삭제 성공:', apiRes.data);
+    return apiRes.data;
+  } catch (error) {
+    console.error('이미지 삭제 실패:', error);
     return null;
   }
 };
