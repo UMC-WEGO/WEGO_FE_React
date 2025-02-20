@@ -25,10 +25,11 @@ const NavbarBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  gap: 20px;
+  gap: 40px;
   img {
     width: 50px;
     height: 50px;
+    cursor: pointer;
   }
 `;
 
