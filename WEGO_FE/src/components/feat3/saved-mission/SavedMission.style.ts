@@ -24,7 +24,7 @@ const Title = styled.p`
   text-align: left;
 `;
 
-const MoreInfor = styled.a`
+const MoreInfor = styled.p`
   display: flex;
   flex-direction: row;
   width: fit-content;
@@ -54,6 +54,21 @@ const ContentBox_noMission = styled.div`
   margin: 20px 0px;
 `;
 
+const ButtonWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const VerifyMissionButton = styled.button`
+  width: 345px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #d9d9d9;
+  font-family: Pretendard;
+  font-weight: 600;
+  font-size: 16px;
+`;
+
 export {
   Container,
   TitleBoxWrap,
@@ -61,4 +76,6 @@ export {
   MoreInfor,
   ContentBox_noMission,
   ContentBox_mission,
+  VerifyMissionButton,
+  ButtonWrap,
 };
