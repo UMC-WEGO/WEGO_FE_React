@@ -121,10 +121,8 @@ function TravelSelectPage() {
         //   },
         // });
 
-        // const res = await authInstance.get(`http://13.124.213.122:3000/community/popular-posts`)
 
-        const res = await authInstance.get(`http://13.124.213.122:3000/home/save-trip`, 
-          {
+        const requestData =           {
             location,
             adult_participants,
             child_participants,
@@ -133,7 +131,8 @@ function TravelSelectPage() {
             startDate,
             endDate            
           }
-        )
+
+        const res = await authInstance.post(`http://13.124.213.122:3000/home/save-trip`, requestData)
         
         console.log(res);
         
