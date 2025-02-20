@@ -81,7 +81,6 @@ const Router = [
         element: <CurrentSchedulePage />,
       },
       { path: '/schedule/end/:scheduleId', element: <EndSchedulePage /> },
-      { path: '/schedule/prev', element: <PrevSchedulePage /> },
 
       // 게시판 관련 라우팅
       { path: '/board', element: <BoardPage /> },
