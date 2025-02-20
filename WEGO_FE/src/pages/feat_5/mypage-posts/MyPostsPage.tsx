@@ -88,14 +88,13 @@ function MyPostsPage() {
               <PostList // PostList 컴포넌트 사용
                 posts={[
                   {
-                    id: post.postId,
+                    post_id: post.postId,
                     category_name: post.categoryName,
                     created_at: post.updatedAt,
                     location_name: `${post.locationName}`,
-                    total_comment: post.commentCount || 0, // Make sure to include all required fields
+                    total_comment: post.commentCount || 0,
                     total_like: post.likeCount || 0,
                     total_scrap: post.scrapCount || 0,
-                    // other fields needed for PostList
                     ...post,
                   },
                 ]}
