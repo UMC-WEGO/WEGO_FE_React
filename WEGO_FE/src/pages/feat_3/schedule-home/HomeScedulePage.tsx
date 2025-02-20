@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as S from './HomeScedulePage.styled';
 import Navbar from '../../../components/navbar/Navbar';
 import TravelScheduleBox from '../../../components/feat3/travelScheduleBox/TravelScheduleBox';
 import HeaderBatteryBar from '../../../components/feat3/HeaderBatteryBar';
 import { getTripSchedulesApi } from '../../../apis/feat3/schedulesApis';
 import { useTokenStore } from '../../../store/token/useTokenStore';
+import { location } from '../../../mocks/feat2/TestData_Filter';
 
 const HomeScedulePage = () => {
+  const [mySchedules, setMySchedules] = useState([]);
   const { data } = useTokenStore();
 
   const getMySchedules = async () => {
     console.log(data);
     const apiRes = await getTripSchedulesApi(data.userId);
-    console.log(apiRes);
+    setMySchedules(apiRes.data);
   };
 
   useEffect(() => {
@@ -28,27 +30,22 @@ const HomeScedulePage = () => {
         <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
       </S.TitleWrap>
 
-      {[{}, {}].map(item => (
-        <TravelScheduleBox
-          title={item.title}
-          dday={Math.floor(
-            (new Date(item.travel_time).getTime() - new Date().getTime()) /
-              (1000 * 60 * 60 * 24),
-          )}
-          tags={['2024.11.26~11.27', `${item.people}명`, `${item.vehicle}`]}
-          tripId={item.id}
-        />
-      ))}
-      {/* <TravelScheduleBox
-        title="충주 여행"
-        dday="d-5"
-        tags={['2024.11.26~11.27', '7명', '자가용']}
-      />
-      <TravelScheduleBox
-        title="경주 여행"
-        dday="dday"
-        tags={['2024.11.21~11.22', '2명', '버스']}
-      /> */}
+      {mySchedules &&
+        mySchedules.map(item => (
+          <TravelScheduleBox
+            title={item.location}
+            dday={`D+${Math.floor(
+              (new Date().getTime() - new Date(item.startDate).getTime()) /
+                (1000 * 60 * 60 * 24),
+            )}`}
+            tags={[
+              `${item.startDate.split('T')[0]} ~ ${item.endDate.split('T')[0].split('-').slice(1).join('-')}`,
+              `${item.adult_participants + item.child_participants}명`,
+              `${item.vehicle}`,
+            ]}
+            tripId={item.id}
+          />
+        ))}
       <S.LastTravelContainer>
         <S.LastTravelInnerBox>
           <S.TitleText isTitle={false}>지난 여행</S.TitleText>
