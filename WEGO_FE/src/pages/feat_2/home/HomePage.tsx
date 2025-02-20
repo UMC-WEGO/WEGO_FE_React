@@ -20,7 +20,6 @@ import ModalMessage from '../../../components/feat2/Modal';
 // 
 // 
 
-import { TOKEN } from '../../../mocks/feat2/TOKEN_Temporary_file';
 import StartPage from '../home-start/StartPage';
 import { authInstance } from '../../../apis/axiosInstance';
 
@@ -230,23 +229,35 @@ function HomePage() {
     const getRandomDestinations = async() => {
       try{
         // console.log("API 호출됨")
-        const response = await axios.post('http://13.124.213.122:3000/home',
-          {
-            departure,
-            participants,
-            vehicle,
-            duration,
-            departureDate,
-            arrivalDate
-          },
-          {
-            headers: {
-              Authorization: `${TOKEN}`,
-              Accept: `application/json`,
-              'Content-Type': 'application/json',
-            }
-          }
-        );    
+        // const response = await axios.post('http://13.124.213.122:3000/home',
+        //   {
+        //     departure,
+        //     participants,
+        //     vehicle,
+        //     duration,
+        //     departureDate,
+        //     arrivalDate
+        //   },
+        //   {
+        //     headers: {
+        //       Authorization: `${TOKEN}`,
+        //       Accept: `application/json`,
+        //       'Content-Type': 'application/json',
+        //     }
+        //   }
+        // );
+
+        const requestData = {
+          departure,
+          participants,
+          vehicle,
+          duration,
+          departureDate,
+          arrivalDate          
+        }
+
+        const response = await authInstance.post(`http://13.124.213.122:3000/home`, requestData)
+
         setRandomDestination(response.data.result)
         console.log("여행지 조회 결과 : ", response)
 
@@ -259,6 +270,7 @@ function HomePage() {
         
       } catch (error) {
         setRandomBtnStatus(false)
+        console.log(' --- --- --- Error On 랜덤 여행지 추천 POST')
       }
     }
 
