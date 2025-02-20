@@ -11,7 +11,9 @@ const SaveAlertCard = ({ message, downMessage, SavePlan }: {message: string, dow
           취소
         </S.BtnBox>
         <S.BtnBox onClick={() => {SavePlan(); downMessage()}}>
-          확인
+          <S.YesText>
+            확인
+          </S.YesText>
         </S.BtnBox>        
       </div>
     </S.CardBox>

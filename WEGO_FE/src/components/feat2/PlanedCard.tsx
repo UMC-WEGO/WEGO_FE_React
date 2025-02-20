@@ -86,7 +86,7 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
     return(
       <>
         {isShowMessage && (
-          <DltAlertCard message="확인 메시지" downMessage={downMessage} deletePlan={() => onClickDelete(props.tripId)}/>
+          <DltAlertCard message="여행 일정을 삭제하시겠습니까?" downMessage={downMessage} deletePlan={() => onClickDelete(props.tripId)}/>
         )}
         <PlanedCardBox>
           <PlanedCardHug>
