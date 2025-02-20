@@ -69,19 +69,11 @@ const ContentBox_noMission = styled.div`
   margin: 20px 0px;
 `;
 
-const Line = styled.div`
-  width: 420px;
-  height: 1px;
-  background-color: #eaeaea;
-  border: none;
-`;
-
 export {
   Container,
   TitleBoxWrap,
   Title,
   MoreInfor,
   ContentBox_noMission,
-  Line,
   ContentBox_mission,
 };

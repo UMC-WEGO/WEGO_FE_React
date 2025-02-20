@@ -35,11 +35,4 @@ const message = styled.div`
   color: white;
 `;
 
-const Line = styled.div`
-  width: 430px;
-  height: 10px;
-  background-color: #eaeaea;
-  border: none;
-`;
-
-export { Container, Header, TitleBoxWrap, message, Line };
+export { Container, Header, TitleBoxWrap, message };
