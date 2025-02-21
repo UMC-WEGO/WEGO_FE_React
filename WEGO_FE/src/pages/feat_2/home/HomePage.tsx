@@ -3,29 +3,29 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import axios, { AxiosResponse } from 'axios';
 import { useLocation } from 'react-router';
-import * as S from "./HomePage.style"
+import * as S from './HomePage.style';
 import styled from 'styled-components';
 
-import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
+import logoImg from '../../../images/feat1/logo.svg';
 
 import PlanedCard from '../../../components/feat2/PlanedCard';
 import PopularMissionCard from '../../../components/feat2/MissionCard';
 import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
-import Navbar from '../../../components/navbar/Navbar'
-import PostList from '../../../components/feat2/Post/PostList';
-// import PostList from '../../../components/feat4/PostList';
+import Navbar from '../../../components/navbar/Navbar';
+// import PostList from '../../../components/feat2/Post/PostList';
+import PostList from '../../../components/feat4/PostList';
 import ModalMessage from '../../../components/feat2/Modal';
 
-// 
-// 
-// 
+//
+//
+//
 
 import StartPage from '../home-start/StartPage';
 import { authInstance } from '../../../apis/axiosInstance';
 
-// 
-// 
-// 
+//
+//
+//
 
 const NoPlanedTravel = styled.div`
   border: 1px solid rgba(165, 165, 165, 1);
@@ -38,7 +38,7 @@ const NoPlanedTravel = styled.div`
   height: 108px;
 
   display: flex;
-`
+`;
 
 const NoPopularPost = styled.div`
   display: flex;
@@ -47,10 +47,10 @@ const NoPopularPost = styled.div`
 
   justify-content: center;
   align-items: center;
-`
+`;
 
 type UpcomingTravelType = {
-  tripId : number;
+  tripId: number;
   location: string;
   adult_participants: number;
   child_participants: number;
@@ -58,14 +58,16 @@ type UpcomingTravelType = {
   duration: string;
   departureDate: string;
   arrivalDate: string;
-}
+};
 
 function HomePage() {
-// --- --- --- 다가오는 여행 조회 --- --- ---
-  const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
+  // --- --- --- 다가오는 여행 조회 --- --- ---
+  const [upcomingTravelList, setUpcomingTravelList] = useState<
+    UpcomingTravelType[]
+  >([]);
   const [loadingTravel, setLoadingTravel] = useState(true);
   const [errorTravel, setErrorTravel] = useState<string | null>(null);
-  const [upcomingTravelMessage, setUpcomingTravelMessage] = useState("");
+  const [upcomingTravelMessage, setUpcomingTravelMessage] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   // const [showModalMessage, setShowModalMessage] = useState(false);
 
@@ -75,7 +77,7 @@ function HomePage() {
   // }
 
   useEffect(() => {
-    const getUpcomingTrip = async() => {
+    const getUpcomingTrip = async () => {
       try {
         // const responseTravel = await axios.get(`http://13.124.213.122:3000/home/upcoming-trips`, {
         //   headers: {
@@ -84,32 +86,34 @@ function HomePage() {
         //   }
         // })
 
-        const responseTravel = await authInstance.get(`http://13.124.213.122:3000/home/upcoming-trips`)
+        const responseTravel = await authInstance.get(
+          `http://13.124.213.122:3000/home/upcoming-trips`,
+        );
 
         setUpcomingTravelList(responseTravel.data.result);
         setUpcomingTravelMessage(responseTravel.data.message);
         setLoadingTravel(false);
 
-        console.log("다가오는 여행 조회 결과 : ", responseTravel)
+        console.log('다가오는 여행 조회 결과 : ', responseTravel);
 
-        if(responseTravel.data.message == "다가오는 여행이 없습니다."){
+        if (responseTravel.data.message == '다가오는 여행이 없습니다.') {
           // setShowModalMessage(true);
           // <ModalMessage message={responseTravel.data.message}/>
           setUpcomingTravelMessage(responseTravel.data.message);
           setIsShowModal(true);
         }
-      } catch(error) {
+      } catch (error) {
         setErrorTravel(' --- --- --- Error On 다가오는 여행 조회회');
         setLoadingTravel(false);
       }
-    }
+    };
     getUpcomingTrip();
-  }, [])
+  }, []);
 
   // console.log(upcomingTravelList, upcomingTravelMessage);
-  
-// --- --- --- 다가오는 일정 삭제 --- --- ---
-  const deleteUpcomingTravel = async(tripId: number) => {
+
+  // --- --- --- 다가오는 일정 삭제 --- --- ---
+  const deleteUpcomingTravel = async (tripId: number) => {
     try {
       // const responseDeleteTravel = await axios.delete(`http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,{
       //   headers: {
@@ -119,15 +123,19 @@ function HomePage() {
       //   }
       // })
 
-      const responseDeleteTravel = await authInstance.get(`http://13.124.213.122:3000/home/upcoming-trips/${tripId}`)
+      const responseDeleteTravel = await authInstance.get(
+        `http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,
+      );
 
       // console.log("삭제 성공 여부 : ", responseDeleteTravel);
 
-      setUpcomingTravelList((prevPlanList) => prevPlanList.filter((plan) => plan.tripId !== tripId))
+      setUpcomingTravelList(prevPlanList =>
+        prevPlanList.filter(plan => plan.tripId !== tripId),
+      );
     } catch (error) {
-      console.log(" --- --- --- Error On 일정 삭제")
+      console.log(' --- --- --- Error On 일정 삭제');
     }
-  }
+  };
 
   // --- --- --- 인기 게시물 조회 --- --- ---
   const [popularPostList, setPopularPostList] = useState([]);
@@ -135,7 +143,7 @@ function HomePage() {
   const [errorPost, setErrorPost] = useState<string | null>(null);
 
   useEffect(() => {
-    const getPopularPost = async() => {
+    const getPopularPost = async () => {
       try {
         // const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
         //   headers: {
@@ -144,27 +152,29 @@ function HomePage() {
         //   }
         // })
 
-        const responseGet = await authInstance.get(`http://13.124.213.122:3000/community/popular-posts`)
+        const responseGet = await authInstance.get(
+          `http://13.124.213.122:3000/community/popular-posts`,
+        );
 
         setPopularPostList(responseGet.data);
         setLoadingPost(false);
 
-        console.log("인기 게시물 조회 결과 : ", responseGet);
-      }  catch(error) {
-        console.log('Error On 인기 게시물 조회')
-        setErrorPost('Error on importing posts')
+        console.log('인기 게시물 조회 결과 : ', responseGet);
+      } catch (error) {
+        console.log('Error On 인기 게시물 조회');
+        setErrorPost('Error on importing posts');
       }
-    }
-      
+    };
+
     getPopularPost();
-  }, [])
+  }, []);
 
   // --- --- --- 인기 미션 조회 --- --- ---
   const [popularMissionList, setPopularMissionList] = useState([]);
 
   useEffect(() => {
-    const getPopularMission = async() => {
-      try{
+    const getPopularMission = async () => {
+      try {
         // const responseMission = await axios.get(`http://13.124.213.122:3000/home/popular-missions`, {
         //   headers: {
         //     Authorization: `${TOKEN}`,
@@ -172,20 +182,22 @@ function HomePage() {
         //   }
         // })
 
-        const responseMission = await authInstance.get(`http://13.124.213.122:3000/home/popular-missions`)
+        const responseMission = await authInstance.get(
+          `http://13.124.213.122:3000/home/popular-missions`,
+        );
 
-        setPopularMissionList(responseMission.data.result.missions)
-        console.log("인기 미션 조회 결과 : ",responseMission)        
+        setPopularMissionList(responseMission.data.result.missions);
+        console.log('인기 미션 조회 결과 : ', responseMission);
       } catch (error) {
-        console.log('Error On 인기 미션 조회')
+        console.log('Error On 인기 미션 조회');
       }
-    }    
+    };
     getPopularMission();
-  }, [])
+  }, []);
 
   // --- --- --- 일정 선택 페이지에서 메시지 받아오기
   const location = useLocation();
-  const fixedTravelResponse = location.state?.fixedTravelResponse;  // 전달된 응답 메시지 가져오기
+  const fixedTravelResponse = location.state?.fixedTravelResponse; // 전달된 응답 메시지 가져오기
   const [isShowSaveModal, setIsShowSaveModal] = useState<boolean>(false);
 
   // useEffect(() => {
@@ -195,19 +207,19 @@ function HomePage() {
   // }, [fixedTravelResponse]);
 
   // 필터 값
-  const [numAdult, setNumAdult] = useState(0);              // 성인 인원수
-  const [numChild, setNumChild] = useState(0);              // 아동 인원수
-  const [transport, setTransport] = useState("이동 수단");  // 이동 수단
-  const [timeAway, setTimeAway] = useState("시간대")        // 이동 시간
-  const [departureLocation, setDepartureLocation] = useState("출발지 선택");   // 출발 지역
-  const [departureDate, setDepartureDate] = useState(new Date());              // 출발 날짜
-  const [arrivalDate, setArrivalDate] = useState(new Date());                  // 도착 날짜짜
+  const [numAdult, setNumAdult] = useState(0); // 성인 인원수
+  const [numChild, setNumChild] = useState(0); // 아동 인원수
+  const [transport, setTransport] = useState('이동 수단'); // 이동 수단
+  const [timeAway, setTimeAway] = useState('시간대'); // 이동 시간
+  const [departureLocation, setDepartureLocation] = useState('출발지 선택'); // 출발 지역
+  const [departureDate, setDepartureDate] = useState(new Date()); // 출발 날짜
+  const [arrivalDate, setArrivalDate] = useState(new Date()); // 도착 날짜짜
 
   // 선택한 조건 여행선택페이지로 전송하기 위한 함수
   const navigate = useNavigate();
 
   // 수정사항이 발생할 경우 추천 여행지 조회
-  const [randomBtnStatus, setRandomBtnStatus] = useState(false)    // '랜덤 돌리기' 버튼 활성화 상태
+  const [randomBtnStatus, setRandomBtnStatus] = useState(false); // '랜덤 돌리기' 버튼 활성화 상태
   const [randomDestinations, setRandomDestination] = useState([]);
 
   // 요청에 맞게 데이터 적절히 변형
@@ -215,7 +227,7 @@ function HomePage() {
   const participants: number = numAdult + numChild;
   const vehicle: string = transport;
   let duration: string = '1';
-  if(timeAway == '1시간 이내'){
+  if (timeAway == '1시간 이내') {
     duration = '1';
   } else if (timeAway == '1시간 ~ 2시간') {
     duration = '1-2';
@@ -226,8 +238,8 @@ function HomePage() {
   }
 
   useEffect(() => {
-    const getRandomDestinations = async() => {
-      try{
+    const getRandomDestinations = async () => {
+      try {
         // console.log("API 호출됨")
         // const response = await axios.post('http://13.124.213.122:3000/home',
         //   {
@@ -253,155 +265,179 @@ function HomePage() {
           vehicle,
           duration,
           departureDate,
-          arrivalDate          
-        }
+          arrivalDate,
+        };
 
-        const response = await authInstance.post(`http://13.124.213.122:3000/home`, requestData)
+        const response = await authInstance.post(
+          `http://13.124.213.122:3000/home`,
+          requestData,
+        );
 
-        setRandomDestination(response.data.result)
-        console.log("여행지 조회 결과 : ", response)
+        setRandomDestination(response.data.result);
+        console.log('여행지 조회 결과 : ', response);
 
-        if(response.status == 200){
-          setRandomBtnStatus(true)
+        if (response.status == 200) {
+          setRandomBtnStatus(true);
+        } else {
+          setRandomBtnStatus(false);
         }
-        else{
-          setRandomBtnStatus(false)
-        }
-        
       } catch (error) {
-        setRandomBtnStatus(false)
-        console.log(' --- --- --- Error On 랜덤 여행지 추천 POST')
+        setRandomBtnStatus(false);
+        console.log(' --- --- --- Error On 랜덤 여행지 추천 POST');
       }
+    };
+
+    if (
+      numAdult + numChild != 0 &&
+      transport != '이동 수단' &&
+      (departureDate && arrivalDate) != new Date() &&
+      (timeAway != '시간대' || departureLocation != '출발지 선택')
+    ) {
+      getRandomDestinations();
     }
 
-    if(((numAdult + numChild !=0) && transport != "이동 수단" && (departureDate && arrivalDate) != new Date()) && (timeAway != "시간대" || departureLocation != "출발지 선택")){
-      getRandomDestinations()
-    }
-
-    console.log("버튼 활성 상태 : ", randomBtnStatus);
-  },[timeAway, departureLocation])
+    console.log('버튼 활성 상태 : ', randomBtnStatus);
+  }, [timeAway, departureLocation]);
 
   const [isShowMessage, setIsShowMessage] = useState(false);
   const downMessage = () => {
-    setIsShowMessage(false)
-  }
+    setIsShowMessage(false);
+  };
 
-  return(
+  return (
     <>
       {loadingTravel && loadingPost ? (
-        <StartPage/>
-      ):(
-      <S.AppContainer>
-        <S.ScrollArea>
-          {/* 로고 영역 */}
-          <S.LogoContainer><img src={WEGO_Logo}/></S.LogoContainer>
+        <StartPage />
+      ) : (
+        <S.AppContainer>
+          <S.ScrollArea>
+            {/* 로고 영역 */}
+            <S.LogoContainer>
+              <img src={logoImg} />
+            </S.LogoContainer>
 
-          {/* <button onClick={() => deleteUpcomingTravel(7)}>
+            {/* <button onClick={() => deleteUpcomingTravel(7)}>
             // 정상 작동 확인 완료 
             임시 삭제 버튼
           </button> */}
 
-          <S.SelectorContainer>
-            <DestinationFilter 
-              // 필터에 들어가는 값값
-              departureDate={departureDate}
-              arrivalDate={arrivalDate}
-              numAdult={numAdult}
-              numChild={numChild}
-              transport={transport}
-              timeAway={timeAway}
-              departureLocation={departureLocation}
-
-              // 필터 값 관리리
-              setDepartureDate={setDepartureDate}
-              setArrivalDate={setArrivalDate}
-              setNumAdult={setNumAdult}
-              setNumChild={setNumChild}
-              setTransport={setTransport}
-              setTimeAway={setTimeAway}
-              setDepartureLocation={setDepartureLocation}
-              // location={location}
-            />
-          </S.SelectorContainer>
+            <S.SelectorContainer>
+              <DestinationFilter
+                // 필터에 들어가는 값값
+                departureDate={departureDate}
+                arrivalDate={arrivalDate}
+                numAdult={numAdult}
+                numChild={numChild}
+                transport={transport}
+                timeAway={timeAway}
+                departureLocation={departureLocation}
+                // 필터 값 관리리
+                setDepartureDate={setDepartureDate}
+                setArrivalDate={setArrivalDate}
+                setNumAdult={setNumAdult}
+                setNumChild={setNumChild}
+                setTransport={setTransport}
+                setTimeAway={setTimeAway}
+                setDepartureLocation={setDepartureLocation}
+                // location={location}
+              />
+            </S.SelectorContainer>
             <S.RandomBtnContainer>
-            <S.RandomBtn
-              isActivated = {randomBtnStatus}
-              disabled={!randomBtnStatus}
-              onClick={() => { 
-                navigate(`/home/travel-select`, {
-                  state: {
-                    randomDestinations,
-                    departureDate,
-                    arrivalDate,
-                    numAdult,
-                    numChild,
-                    transport,
-                    timeAway,
-                    departureLocation
-                  }
-                })
-              }}
-            >랜덤 돌리기
-          </S.RandomBtn>
-          </S.RandomBtnContainer>
+              <S.RandomBtn
+                isActivated={randomBtnStatus}
+                disabled={!randomBtnStatus}
+                onClick={() => {
+                  navigate(`/home/travel-select`, {
+                    state: {
+                      randomDestinations,
+                      departureDate,
+                      arrivalDate,
+                      numAdult,
+                      numChild,
+                      transport,
+                      timeAway,
+                      departureLocation,
+                    },
+                  });
+                }}
+              >
+                랜덤 돌리기
+              </S.RandomBtn>
+            </S.RandomBtnContainer>
 
-          <S.PlanedContainer>          
-            <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
-            {/* 일정 출력 */}
-            {upcomingTravelList.length > 0 ? (
-              upcomingTravelList.map((plan) => (
-                <PlanedCard key={plan.tripId} props={plan} onClickDelete={deleteUpcomingTravel}/>
-              ))
-            ):(
-              <NoPlanedTravel> 저장된 일정이 없습니다. </NoPlanedTravel>
-            )}  
-            
-            {/* {upcomingTravelList.map((plan, flag) => (
+            <S.PlanedContainer>
+              <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
+              {/* 일정 출력 */}
+              {upcomingTravelList.length > 0 ? (
+                upcomingTravelList.map(plan => (
+                  <PlanedCard
+                    key={plan.tripId}
+                    props={plan}
+                    onClickDelete={deleteUpcomingTravel}
+                  />
+                ))
+              ) : (
+                <NoPlanedTravel> 저장된 일정이 없습니다. </NoPlanedTravel>
+              )}
+
+              {/* {upcomingTravelList.map((plan, flag) => (
               <PlanedCard key={flag} props={plan} onClickDelete={() => handleDelete(flag)}/>
             ))} */}
-          </S.PlanedContainer>
+            </S.PlanedContainer>
 
-          <S.PopularPostContainer>
-            {/* 인기 개시물 헤더더 */}
-            <S.ContainerTitle>
-              <div>인기 게시물</div>
-              <S.MoreBtn onClick={() => {navigate('/board')}}>더보기 {">"}</S.MoreBtn>
-            </S.ContainerTitle>
+            <S.PopularPostContainer>
+              {/* 인기 개시물 헤더 */}
+              <S.ContainerTitle>
+                <div>인기 게시물</div>
+                <S.MoreBtn
+                  onClick={() => {
+                    navigate('/board');
+                  }}
+                >
+                  더보기 {'>'}
+                </S.MoreBtn>
+              </S.ContainerTitle>
 
-            {/* 개시물 나열 */}
-            <S.PopularPostArea>
-              {/* <PostList
+              {/* 개시물 나열 */}
+              <S.PopularPostArea>
+                {/* <PostList
                 posts={popularPostList}
               /> */}
-              {popularPostList.length > 0 ? (
-                <PostList posts={popularPostList} showRanking={true}/>
+                {popularPostList.length > 0 ? (
+                  <PostList
+                    posts={popularPostList.slice(0, 3)}
+                    showRank={true}
+                  />
+                ) : (
+                  <NoPopularPost>인기 게시물이 없습니다.</NoPopularPost>
+                )}
+                {/* <PostList posts={popularPostList} showRanking={false}/> */}
+              </S.PopularPostArea>
+            </S.PopularPostContainer>
+
+            <S.PopularMissionContainer>
+              <S.ContainerTitle>인기 미션</S.ContainerTitle>
+              {popularMissionList.length > 0 ? (
+                <PopularMissionCard props={popularMissionList} /> // API에서 받은 미션 데이터를 props로 전달
               ) : (
-                <NoPopularPost>인기 게시물이 없습니다.</NoPopularPost>
+                <S.NoMission>인기 미션이 없습니다.</S.NoMission>
               )}
-              {/* <PostList posts={popularPostList} showRanking={false}/> */}
-            </S.PopularPostArea>
-          </S.PopularPostContainer>
+            </S.PopularMissionContainer>
+          </S.ScrollArea>
 
-          <S.PopularMissionContainer>
-            <S.ContainerTitle>인기 미션</S.ContainerTitle>
-            {popularMissionList.length > 0 ? (
-              <PopularMissionCard props={popularMissionList} />  // API에서 받은 미션 데이터를 props로 전달
-            ) : (
-              <S.NoMission>인기 미션이 없습니다.</S.NoMission>
-            )}
-          </S.PopularMissionContainer>
-        </S.ScrollArea>
-
-        {isShowModal && (
-            <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />
+          {isShowModal && (
+            <ModalMessage
+              message={fixedTravelResponse}
+              onClose={() => setIsShowModal(false)}
+            />
           )}
-        <S.NavbarArea>
-          <Navbar/>
-        </S.NavbarArea>
-      </S.AppContainer>
+          <S.NavbarArea>
+            <Navbar />
+          </S.NavbarArea>
+        </S.AppContainer>
       )}
     </>
-  )
+  );
 }
 
 export default HomePage;

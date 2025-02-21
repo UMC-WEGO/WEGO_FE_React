@@ -14,6 +14,8 @@ type Post = {
   total_comment: number;
   total_like: number;
   total_scrap: number;
+  liked: boolean;
+  scraped: boolean;
 };
 
 function PopularBoard() {
@@ -24,7 +26,7 @@ function PopularBoard() {
       const data = await getPopularPostsApi();
       console.log(data);
       if (data) {
-        setPosts(data); // 받아온 게시글 저장
+        setPosts(data.popular_posts); // 받아온 게시글 저장
       }
     };
 

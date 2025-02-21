@@ -119,11 +119,13 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
   return (
     <SearchCard>
       {/* 뒤로가기 및 검색바 */}
-      <SearchHeader>
-        <PiArrowLeftBold/>
+      <SearchHeader style={{width: '16px;'}}>
+        <div>
+          <PiArrowLeftBold/>
+        </div>
         <div>
           <BottomSheetBtn onClick={toggleSearchBottom}>
-            <span>출발지를 선택하세요</span>
+            <span style={{color: 'rgba(165, 165, 165, 1)'}}>출발지를 선택하세요</span>
             {/* <span><img src={search_icn}/></span> */}
             <CgSearch/>
           </BottomSheetBtn>

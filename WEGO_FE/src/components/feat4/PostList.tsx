@@ -9,6 +9,7 @@ const StyledLink = styled(Link)`
 
 interface Post {
   post_id: number;
+  picture_url: string | null;
   category_name: string;
   title: string;
   content: string;
@@ -17,6 +18,8 @@ interface Post {
   total_comment: number;
   total_like: number;
   total_scrap: number;
+  liked: boolean;
+  scraped: boolean;
 }
 
 interface PostListProps {
@@ -24,7 +27,10 @@ interface PostListProps {
   showRank?: boolean | undefined; // 순위 표시 여부 (인기 게시판)
 }
 
-const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (
+const PostList: React.FC<PostListProps> = ({
+  posts = [],
+  showRank = false,
+}) => (
   <div>
     {posts.map((post, index) => {
       return (
@@ -40,6 +46,9 @@ const PostList: React.FC<PostListProps> = ({ posts, showRank = false }) => (
             total_comment={post.total_comment}
             total_like={post.total_like}
             total_scrap={post.total_scrap}
+            picture_url={post.picture_url}
+            liked={post.liked}
+            scraped={post.scraped}
           />
         </StyledLink>
       );

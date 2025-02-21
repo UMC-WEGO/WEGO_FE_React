@@ -34,6 +34,9 @@ interface PostItemProps {
   total_comment: number;
   total_scrap: number;
   showRank?: boolean;
+  picture_url: string | null;
+  liked: boolean;
+  scraped: boolean;
 }
 
 const PostItem: React.FC<PostItemProps> = ({
@@ -47,6 +50,9 @@ const PostItem: React.FC<PostItemProps> = ({
   total_comment,
   total_scrap,
   showRank,
+  picture_url,
+  liked,
+  scraped,
 }) => (
   <S.PostContainer>
     {showRank && (
@@ -57,12 +63,11 @@ const PostItem: React.FC<PostItemProps> = ({
     )}
     <div style={{ display: 'flex', gap: '10px' }}>
       <S.ImageWrapper>
-        <img
-          src="https://i.pinimg.com/474x/b2/d8/6a/b2d86a1904b96e80e950042df2cd2d6e.jpg"
-          alt="Post Image"
-        />
+        <img src={picture_url || 'https://buly.kr/CsipNnM'} alt="Post Image" />
         <S.BookmarkIcon>
-          <PiBookmarkSimpleBold />
+          <PiBookmarkSimpleBold
+            style={{ color: scraped ? '#0059ff' : 'inherit' }}
+          />
         </S.BookmarkIcon>
       </S.ImageWrapper>
       <S.Content>
@@ -77,7 +82,9 @@ const PostItem: React.FC<PostItemProps> = ({
           </h5>
           <h6>
             <div>
-              <PiThumbsUpBold />
+              <PiThumbsUpBold
+                style={{ color: liked ? '#0059ff' : 'inherit' }}
+              />
               {total_like}
             </div>
             <div>
@@ -85,7 +92,9 @@ const PostItem: React.FC<PostItemProps> = ({
               {total_comment}
             </div>
             <div>
-              <PiBookmarkSimpleBold />
+              <PiBookmarkSimpleBold
+                style={{ color: scraped ? '#0059ff' : 'inherit' }}
+              />
               {total_scrap}
             </div>
           </h6>

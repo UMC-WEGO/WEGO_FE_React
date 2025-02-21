@@ -161,7 +161,8 @@ function BoardEditPage() {
       local_id: selectedRegion.id, // 지역 ID
       title,
       content,
-      picture_url: [], // 업로드된 이미지의 URL (구현 필요)
+      deleted_pictures: [],
+      updated_pictures: uploadedImages, // 업로드된 이미지의 URL (구현 필요)
     };
 
     if (postData) {
