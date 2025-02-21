@@ -52,4 +52,20 @@ const Textinput = styled.textarea`
   align-items: flex-start;
 `;
 
-export { Container, Text, TitleWrap, ReviewBox, TextWrap, Textinput };
+const ImgUpload = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`;
+
+export {
+  Container,
+  Text,
+  TitleWrap,
+  ReviewBox,
+  TextWrap,
+  Textinput,
+  ImgUpload,
+};

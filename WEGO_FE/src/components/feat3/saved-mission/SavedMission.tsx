@@ -19,11 +19,15 @@ const SavedMission = () => {
         <SavedMissionCard />
         <SavedMissionCard />
       </S.ContentBox_mission>
+      <S.ButtonWrap>
+        <S.VerifyMissionButton>미션 인증하기</S.VerifyMissionButton>
+      </S.ButtonWrap>
+
+      {/* 여행 전 미션 추가해야 할 때 */}
       {/* <S.ContentBox_noMission>
         <img src="/src/images/feat3/iconoir_plus-circle-solid.svg" alt="" />
         미션을 추가하세요!
       </S.ContentBox_noMission> */}
-      {/* <S.Line /> */}
     </S.Container>
   );
 };

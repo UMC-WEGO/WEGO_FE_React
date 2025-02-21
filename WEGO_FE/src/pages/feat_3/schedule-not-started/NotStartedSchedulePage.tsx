@@ -5,6 +5,7 @@ import SavedMission from '../../../components/feat3/saved-mission/SavedMission';
 import RecommendMission from '../../../components/feat3/recommendMission/RecommendMission';
 import Navbar from '../../../components/navbar/Navbar';
 import MissionBlueHeader from '../../../components/feat1/missionBlueHeader/MissionBlueHeader';
+import SectionGrayLine from '../../../components/feat3/SectionGrayLine';
 
 function NotStartedSchedulePage() {
   return (
@@ -14,7 +15,9 @@ function NotStartedSchedulePage() {
       </S.TopSection>
       <S.MainSection>
         <InstanceBoard />
+        <SectionGrayLine />
         <SavedMission />
+        <SectionGrayLine />
         <RecommendMission />
       </S.MainSection>
       <Navbar />

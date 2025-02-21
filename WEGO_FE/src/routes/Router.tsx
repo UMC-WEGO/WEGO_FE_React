@@ -1,5 +1,6 @@
 import AppLayout from '../layout/AppLayout';
 import HomeScedulePage from '../pages/feat_3/schedule-home/HomeScedulePage';
+import PrevSchedulePage from '../pages/feat_3/schedule-prev/PrevSchedulePage';
 import {
   BoardPage,
   BoardAuthorProfilePage,

@@ -4,6 +4,8 @@ import MissionBlueHeader from '../../../components/feat1/missionBlueHeader/Missi
 import SavedMission from '../../../components/feat3/saved-mission/SavedMission';
 import MissionVerification from '../../../components/feat3/missionVerification/MissionVerification';
 import RegisterMission from '../../../components/feat3/registerMission/RegisterMission';
+import SectionGrayLine from '../../../components/feat3/SectionGrayLine';
+import Navbar from '../../../components/navbar/Navbar';
 
 // 일정 여행 보여주는 시작 화면
 function EndSchedulePage() {
@@ -14,9 +16,11 @@ function EndSchedulePage() {
       </S.TopSection>
       <S.MainSection>
         <SavedMission />
-        <MissionVerification />
+        {/* <SectionGrayLine />
+        <MissionVerification /> */}
       </S.MainSection>
-      <RegisterMission />
+      {/* <RegisterMission /> */}
+      <Navbar />
     </S.Container>
   );
 }
