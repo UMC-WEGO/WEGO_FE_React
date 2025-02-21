@@ -1,8 +1,20 @@
 import React, { useState } from 'react';
 import * as S from './RegisterMission.style';
 import AlertModal from '../../../pages/feat_3/modal/AlertModal';
+import { postVerifyMissionApi } from '../../../apis/feat3/schedulesApis';
+import { useParams } from 'react-router';
+import { useVerifyMissionStore } from '../../../store/schedule/useVerifyMissionStore';
 
 const RegisterMission = ({ onOpenModal }) => {
+  const { scheduleId } = useParams();
+  const { data } = useVerifyMissionStore();
+  const postVerifyMission = async () => {
+    const apiRes = await postVerifyMissionApi(
+      Number(scheduleId),
+      data.verifyMissionId,
+    );
+    console.log(apiRes);
+  };
   return (
     <S.Container>
       <S.TextWrap>
@@ -18,7 +30,14 @@ const RegisterMission = ({ onOpenModal }) => {
           </S.Text>
         </S.TextWrap>
       </S.TextWrap>
-      <S.UploadButton onClick={onOpenModal}>등록하기</S.UploadButton>
+      <S.UploadButton
+        onClick={() => {
+          onOpenModal();
+          postVerifyMission();
+        }}
+      >
+        등록하기
+      </S.UploadButton>
     </S.Container>
   );
 };

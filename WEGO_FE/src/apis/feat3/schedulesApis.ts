@@ -111,11 +111,12 @@ export const getMissionsApi = async (tripId:number) => {
 // 저장된 미션 인증
 export const postVerifyMissionApi = async (tripId:number, missionId:number) => {
   try {
-    const apiRes = await authInstance.get('/schedule/trip-schedules/' + tripId + '/missions/' + missionId + '/auth' );
+    const apiRes = await authInstance.post('/schedule/trip-schedules/' + tripId + '/missions/' + missionId + '/auth' );
     console.log('저장된 미션 인증 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
     console.error('저장된 미션 인증 실패:', error);
+    alert('미션 인증 실패! 다시 시도하세요');
     return null;
   }
 };
