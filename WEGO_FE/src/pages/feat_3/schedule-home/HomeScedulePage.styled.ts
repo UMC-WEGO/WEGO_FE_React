@@ -7,7 +7,13 @@ const Container = styled.div`
   justify-content: start;
   align-items: center;
   margin: 10px 0px;
+  margin-top: 59px;
   gap: 15px;
+`;
+
+const Content = styled.div`
+  flex-grow: 1;
+  overflow-y: scroll;
 `;
 
 const ExportIconWrap = styled.div`
@@ -57,4 +63,5 @@ export {
   TitleText,
   LastTravelContainer,
   LastTravelInnerBox,
+  Content,
 };

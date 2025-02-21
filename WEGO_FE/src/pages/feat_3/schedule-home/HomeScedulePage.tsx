@@ -34,12 +34,13 @@ const HomeScedulePage = () => {
 
   return (
     <S.Container>
-      <S.ExportIconWrap>
-        <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
-      </S.ExportIconWrap>
-      <S.TitleWrap>
-        <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
-      </S.TitleWrap>
+      <S.Content>
+        <S.ExportIconWrap>
+          <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
+        </S.ExportIconWrap>
+        <S.TitleWrap>
+          <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
+        </S.TitleWrap>
 
       {mySchedules &&
         mySchedules.map(
@@ -69,6 +70,7 @@ const HomeScedulePage = () => {
           <img src="/src/images/feat3/RightArrow.svg" alt="왼쪽화살표" />
         </S.LastTravelInnerBox>
       </S.LastTravelContainer>
+
 
       <Navbar />
     </S.Container>
