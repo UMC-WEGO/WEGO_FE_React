@@ -22,7 +22,7 @@ const Header = styled.div`
 
 const TitleBoxWrap = styled.div`
   display: flex;
-  width: 212px;
+  width: 235px;
   height: fit-content;
   margin: 30px;
   gap: 18px;

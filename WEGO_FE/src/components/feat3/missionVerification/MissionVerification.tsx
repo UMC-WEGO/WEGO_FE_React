@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
 import * as S from './MissionVerification.style';
 import MissionCard from './MissionCard';
+import { useParams } from 'react-router';
+import { postVerifyMissionApi } from '../../../apis/feat3/schedulesApis';
+import { useVerifyMissionStore } from '../../../store/schedule/useVerifyMissionStore';
 
-const MissionVerification = () => {
+const MissionVerification = ({ missionId }) => {
   const [inputValue, setInputValue] = useState('');
+  const { setData } = useVerifyMissionStore();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(event.target.value);
+    setData({
+      description: event.target.value,
+    });
   };
+
+  const { scheduleId } = useParams();
 
   return (
     <S.Container>
       <S.Text fontSize="18px" fontWeight="600">
-        골목길 미션
+        {missionId}
       </S.Text>
       <S.ReviewBox>
         <S.TitleWrap>

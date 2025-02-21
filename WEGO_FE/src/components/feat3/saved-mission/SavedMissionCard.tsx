@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useVerifyMissionStore } from '../../../store/schedule/useVerifyMissionStore';
 
 const MissionImageWrap = styled.div`
   width: 100%;
@@ -44,15 +45,19 @@ const MissionItemBox = styled.div`
   flex-direction: column;
   gap: 12px;
 `;
-const SavedMissionCard = () => {
+const SavedMissionCard = ({ mission }) => {
+  const { data, setData } = useVerifyMissionStore();
+
   return (
-    <MissionCardContainer>
+    <MissionCardContainer
+      onClick={() => setData({ verifyMissionId: mission.missionId })}
+    >
       <MissionItemBox>
         <MissionImageWrap>
           <MissionItem src="/src/images/feat3/image_9.png" alt="미션사진" />
           <IconWrapper src="/src/images/feat3/X.svg" />
         </MissionImageWrap>
-        <MissionTitle>골목길 미션</MissionTitle>
+        <MissionTitle>{mission.missionId}</MissionTitle>
       </MissionItemBox>
     </MissionCardContainer>
   );

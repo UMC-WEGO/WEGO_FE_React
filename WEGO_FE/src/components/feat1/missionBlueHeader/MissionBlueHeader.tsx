@@ -3,7 +3,10 @@ import * as S from './MissionBlueHeader.style';
 import TravelScheduleBox from '../../feat3/travelScheduleBox/TravelScheduleBox';
 import TravelTitleBox from '../../feat3/travelTitleBox/TravelTitleBox';
 import AlertModal from '../../../pages/feat_3/modal/AlertModal';
+
 import { useNavigate } from 'react-router';
+import { useScheduleStore } from '../../../store/schedule/useScheduleStore';
+
 
 function MissionBlueHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,9 +16,13 @@ function MissionBlueHeader() {
     setIsModalOpen(false);
   };
 
+
   const handleBackPage = () => {
     navigate(-1);
   };
+
+  const { data } = useScheduleStore();
+
 
   return (
     <S.Container>
@@ -30,9 +37,18 @@ function MissionBlueHeader() {
       </S.Header>
       <S.TitleBoxWrap>
         <TravelTitleBox
-          title="충주 여행"
-          dday="D-5"
-          tags={['2024.11.26~11.27', '7명', '자가용']}
+          title={data.location}
+          dday={`D-${Math.abs(
+            Math.floor(
+              (new Date(data.startDate).getTime() - new Date().getTime()) /
+                (1000 * 60 * 60 * 24),
+            ),
+          )}`}
+          tags={[
+            `${data.startDate.split('T')[0]} ~ ${data.endDate.split('T')[0].split('-').slice(1).join('-')}`,
+            `${data.adult_participants + data.child_participants}명`,
+            `${data.vehicle}`,
+          ]}
         />
       </S.TitleBoxWrap>
       <S.message>안내메세지 혹은 간단한 인사말</S.message>

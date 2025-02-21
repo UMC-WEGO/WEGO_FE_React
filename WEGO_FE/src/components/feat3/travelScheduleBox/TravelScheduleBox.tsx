@@ -6,7 +6,12 @@ import { useNavigate } from 'react-router';
 const TravelScheduleBox = ({ title, dday, tags, tripId }) => {
   const navigate = useNavigate();
   const onClickContainer = () => {
-    navigate('/schedule/not-started/' + tripId);
+    console.log(12313123, dday);
+    if (dday != 'D-0') {
+      navigate('/schedule/not-started/' + tripId);
+    } else {
+      navigate('/schedule/current/' + tripId);
+    }
   };
 
   return (
