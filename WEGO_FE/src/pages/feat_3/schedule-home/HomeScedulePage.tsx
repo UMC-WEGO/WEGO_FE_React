@@ -42,7 +42,7 @@ const HomeScedulePage = () => {
           <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
         </S.TitleWrap>
 
-        {mySchedules &&
+        {mySchedules.length > 0 &&
           mySchedules.map(
             item =>
               new Date(item.startDate).getTime() >= new Date().getTime() && (
