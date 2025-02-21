@@ -32,6 +32,9 @@ const axiosAuthApi = (url: string) => {
   console.log('access', accessToken);
   instance.interceptors.request.use(
     config => {
+      const { data, setData } = useTokenStore.getState();
+      const { accessToken, refreshToken } = data;
+
       // zustand의 액세스 토큰을 불러와서 사용
       config.headers['Content-Type'] = 'application/json';
       config.headers['Authorization'] = `${accessToken}`;
@@ -57,6 +60,10 @@ const axiosAuthApi = (url: string) => {
       if (error.response?.status === 401 && isTokenExpired(accessToken)) {
         // isTokenExpired() - 토큰 만료 여부를 확인하는 함수
         // tokenRefresh() - 토큰을 갱신해주는 함수
+
+        const { data, setData } = useTokenStore.getState();
+        const { accessToken, refreshToken } = data;
+
         await tokenRefreshApi({
           refreshToken: refreshToken,
         });

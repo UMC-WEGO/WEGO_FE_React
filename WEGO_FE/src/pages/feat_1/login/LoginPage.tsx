@@ -50,7 +50,9 @@ function LoginPage() {
     setData({
       userId: apiRes.user_id,
     });
-    navigate('/home');
+    setTimeout(() => {
+      navigate('/home');
+    }, 2000);
   };
 
   return (
