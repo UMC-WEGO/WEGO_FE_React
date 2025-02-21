@@ -9,6 +9,7 @@ const PlanedCardBox = styled.div`
   border: 1px solid rgba(234, 234, 234, 1);
   border-radius: 15px;
   margin-bottom: 9px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
 
   height: 108px;
 

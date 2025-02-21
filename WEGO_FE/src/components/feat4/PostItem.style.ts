@@ -99,7 +99,7 @@ export const PostInfo = styled.div`
     }
 
     svg {
-      color: #bbb;
+      color: #696969;
     }
   }
 `;
