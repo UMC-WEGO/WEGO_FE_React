@@ -100,11 +100,11 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
               <BlueTag TagContent={`
                 ${startDate.getFullYear().toString()}.
                 ${(startDate.getMonth() + 1).toString()}.
-                ${startDate.getDate().toString()}
+                ${(startDate.getDate() - 1).toString()}
                 ~
                 ${endDate.getFullYear().toString()}.
                 ${(endDate.getMonth() + 1).toString()}.
-                ${endDate.getDate().toString()}`
+                ${(endDate.getDate() - 1).toString()}`
                 }/>
               <BlueTag TagContent={`${props.adult_participants + props.child_participants}명`}/>
               <BlueTag TagContent={props.vehicle}/>
