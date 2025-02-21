@@ -39,7 +39,7 @@ const MissionCardContainer = styled.div`
   gap: 13px;
 `;
 const MissionItemBox = styled.div`
-  width: 100%;
+  width: 155px;
   display: flex;
   flex-direction: column;
   gap: 12px;

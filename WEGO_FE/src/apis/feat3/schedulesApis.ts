@@ -15,9 +15,11 @@ export const getTripSchedulesApi = async (userId: number) => {
 };
 
 // 지난 여행 일정 목록 조회
-export const getPastTripSchedulesApi = async () => {
+export const getPastTripSchedulesApi = async (userId: number) => {
   try {
-    const apiRes = await authInstance.get('/schedule/past-trips');
+    const apiRes = await authInstance.get(
+      '/schedule/past-trips?userId=' + userId,
+    );
     console.log('지난 여행 일정 목록 조회 성공:', apiRes.data);
     return apiRes.data;
   } catch (error) {
