@@ -23,37 +23,38 @@ const HomeScedulePage = () => {
 
   return (
     <S.Container>
-      <S.ExportIconWrap>
-        <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
-      </S.ExportIconWrap>
-      <S.TitleWrap>
-        <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
-      </S.TitleWrap>
+      <S.Content>
+        <S.ExportIconWrap>
+          <img src="/src/images/feat3/ExportIcon.svg" alt="추출하기 아이콘" />
+        </S.ExportIconWrap>
+        <S.TitleWrap>
+          <S.TitleText isTitle={true}>예정된 여행</S.TitleText>
+        </S.TitleWrap>
 
-      {mySchedules &&
-        mySchedules.map(item => (
-          <TravelScheduleBox
-            title={item.location}
-            dday={`D+${Math.floor(
-              (new Date().getTime() - new Date(item.startDate).getTime()) /
-                (1000 * 60 * 60 * 24),
-            )}`}
-            tags={[
-              `${item.startDate.split('T')[0]} ~ ${item.endDate.split('T')[0].split('-').slice(1).join('-')}`,
-              `${item.adult_participants + item.child_participants}명`,
-              `${item.vehicle}`,
-            ]}
-            tripId={item.id}
-          />
-        ))}
-      <S.LastTravelContainer>
-        <S.LastTravelInnerBox>
-          <S.TitleText isTitle={false}>지난 여행</S.TitleText>
-          <img src="/src/images/feat3/RightArrow.svg" alt="왼쪽화살표" />
-        </S.LastTravelInnerBox>
-      </S.LastTravelContainer>
-
-      {/* <Navbar /> */}
+        {mySchedules &&
+          mySchedules.map(item => (
+            <TravelScheduleBox
+              title={item.location}
+              dday={`D+${Math.floor(
+                (new Date().getTime() - new Date(item.startDate).getTime()) /
+                  (1000 * 60 * 60 * 24),
+              )}`}
+              tags={[
+                `${item.startDate.split('T')[0]} ~ ${item.endDate.split('T')[0].split('-').slice(1).join('-')}`,
+                `${item.adult_participants + item.child_participants}명`,
+                `${item.vehicle}`,
+              ]}
+              tripId={item.id}
+            />
+          ))}
+        <S.LastTravelContainer>
+          <S.LastTravelInnerBox>
+            <S.TitleText isTitle={false}>지난 여행</S.TitleText>
+            <img src="/src/images/feat3/RightArrow.svg" alt="왼쪽화살표" />
+          </S.LastTravelInnerBox>
+        </S.LastTravelContainer>
+      </S.Content>
+      <Navbar />
     </S.Container>
   );
 };

@@ -3,12 +3,18 @@ import * as S from './MissionBlueHeader.style';
 import TravelScheduleBox from '../../feat3/travelScheduleBox/TravelScheduleBox';
 import TravelTitleBox from '../../feat3/travelTitleBox/TravelTitleBox';
 import AlertModal from '../../../pages/feat_3/modal/AlertModal';
+import { useNavigate } from 'react-router';
 
-function MissionBlueHeader({ onOpenModal }) {
+function MissionBlueHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  const handleBackPage = () => {
+    navigate(-1);
   };
 
   return (
@@ -17,7 +23,7 @@ function MissionBlueHeader({ onOpenModal }) {
         <img
           src="/src/images/feat3/LeftArrow_white.svg"
           alt="왼쪽화살표"
-          onClick={onOpenModal}
+          onClick={handleBackPage}
         />
         {isModalOpen ? <AlertModal onClose={handleCloseModal} /> : null}
         <img src="/src/images/feat3/ExportIcon_white.svg" alt="내보내기" />

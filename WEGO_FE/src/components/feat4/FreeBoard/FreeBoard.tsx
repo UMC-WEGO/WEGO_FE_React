@@ -31,7 +31,7 @@ function FreeBoard() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const data = await getAllPostsApi(100); // 첫 페이지 100개 가져오기
+      const data = await getAllPostsApi(300); // 첫 페이지 100개 가져오기
       if (data) {
         setPosts(data.posts); // 받아온 게시글 저장
       }
