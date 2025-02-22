@@ -3,8 +3,6 @@ import * as S from './StartPage.Style'
 import Start_img from "../../../images/feat2/WEGO_Start.png"
 import Logo_img from "../../../images/feat2/WEGO_Logo_rev.png"
 
-
-
 function StartPage () {
   return(
     <>

@@ -5,31 +5,32 @@ import { useLocation } from 'react-router';
 import { authInstance } from '../../../apis/axiosInstance';
 
 import * as S from './HomePage.style';
-import logoImg from '../../../images/feat1/logo.svg';
-import PlanedCard from '../../../components/feat2/PlanedCard';
-import PopularMissionCard from '../../../components/feat2/MissionCard';
-import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
+import StartPage from '../home-start/StartPage';
 import Navbar from '../../../components/navbar/Navbar';
 import PostList from '../../../components/feat4/PostList';
 import ModalMessage from '../../../components/feat2/Modal';
-import StartPage from '../home-start/StartPage';
+import PlanedCard from '../../../components/feat2/PlanedCard';
+import PopularMissionCard from '../../../components/feat2/MissionCard';
+import DestinationFilter from '../../../components/feat2/DestinationFilter/DestinationFilter';
 
-type UpcomingTravelType = {
-  tripId: number;
-  location: string;
-  adult_participants: number;
-  child_participants: number;
-  vehicle: string;
-  duration: string;
-  departureDate: string;
-  arrivalDate: string;
-};
+import logoImg from '../../../images/feat1/logo.svg';
 
 function HomePage() {
   // 여행 저장 완료 메시지
   const [isShowModal, setIsShowModal] = useState(false);
 
-  // --- --- --- 다가오는 여행 조회 --- --- ---
+  type UpcomingTravelType = {
+    tripId: number;
+    location: string;
+    adult_participants: number;
+    child_participants: number;
+    vehicle: string;
+    duration: string;
+    departureDate: string;
+    arrivalDate: string;
+  };
+
+// --- --- --- 다가오는 여행 조회 --- --- ---
   const [upcomingTravelList, setUpcomingTravelList] = useState<UpcomingTravelType[]>([]);
   const [loadingUpComingTravel, setLoadingUpComingTravel] = useState(true);
   const [errorTravel, setErrorTravel] = useState(false);
@@ -57,11 +58,11 @@ function HomePage() {
     getUpcomingTrip();
   }, []);
 
-  // --- --- --- 다가오는 여행 삭제 --- --- ---
+// --- --- --- 다가오는 여행 삭제 --- --- ---
   const [loadingDeleteTravel, setLoadingDeleteTravel] = useState(true);
   const [errorDeleteTravel, setErrorDeleteTravel] = useState(false)
 
-  const deleteUpcomingTravel = async (tripId: number) => {
+  const deleteUpcomingTrip = async (tripId: number) => {
     try {
       const responseDeleteTravel = await authInstance.get(
         `http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,
@@ -80,7 +81,7 @@ function HomePage() {
     }
   };
 
-  // --- --- --- 인기 게시물 조회 --- --- ---
+// --- --- --- 인기 게시물 조회 --- --- ---
   const [popularPostList, setPopularPostList] = useState([]);
   const [loadingPost, setLoadingPost] = useState(true);
   const [errorPost, setErrorPost] = useState(false);
@@ -105,7 +106,7 @@ function HomePage() {
     getPopularPost();
   }, []);
 
-  // --- --- --- 인기 미션 조회 --- --- ---
+// --- --- --- 인기 미션 조회 --- --- ---
   const [popularMissionList, setPopularMissionList] = useState([]);
   const [loadingPopularMission, setLoadingPopularMission] = useState(true);
   const [errorPopularMission, setErrorPopularMission] = useState(false);
@@ -129,7 +130,7 @@ function HomePage() {
     getPopularMission();
   }, []);
 
-  // --- --- --- 추천 여행지 조회 --- --- ---
+// --- --- --- 추천 여행지 조회 --- --- ---
   // 여행지 필터 값
   const [numAdult, setNumAdult] = useState(0);                               // 성인 인원수
   const [numChild, setNumChild] = useState(0);                               // 아동 인원수
@@ -186,11 +187,10 @@ function HomePage() {
         console.log('여행지 조회 결과 : ', response);
 
         // 추천 여행지가 없으면 '랜덤 돌리기'버튼 비활성화
-        if (response.status == 200) {
-          setRandomBtnStatus(true);
-        } else {
-          setRandomBtnStatus(false);
-        }
+        (response.status == 200) 
+          ? setRandomBtnStatus(true)
+          : setRandomBtnStatus(false)
+
       } catch (error) {
         setLoadingDestination(false);
         setErrorDestination(true);
@@ -223,19 +223,21 @@ function HomePage() {
 
   return (
     <>
-      {(loadingUpComingTravel || loadingPost || loadingPopularMission) ? (
+      {/* 로딩 상태에 따라 로딩창 띄우기 */}
+      {(loadingUpComingTravel || loadingPost || loadingPopularMission || true) ? (
         <StartPage />
       ) : (
         <S.AppContainer>
           <S.ScrollArea>
-            {/* 로고 영역 */}
+{/* --- --- --- 로고 영역 --- --- --- */}
             <S.LogoContainer>
               <img src={logoImg} />
             </S.LogoContainer>
 
+{/* --- --- --- 필터 영역 --- --- --- */}
             <S.SelectorContainer>
               <DestinationFilter
-                // 필터에 들어가는 값값
+                // 필터에 들어가는 값 연동
                 departureDate={departureDate}
                 arrivalDate={arrivalDate}
                 numAdult={numAdult}
@@ -243,7 +245,8 @@ function HomePage() {
                 transport={transport}
                 timeAway={timeAway}
                 departureLocation={departureLocation}
-                // 필터 값 관리리
+
+                // 필터 값 상태 연동
                 setDepartureDate={setDepartureDate}
                 setArrivalDate={setArrivalDate}
                 setNumAdult={setNumAdult}
@@ -251,13 +254,14 @@ function HomePage() {
                 setTransport={setTransport}
                 setTimeAway={setTimeAway}
                 setDepartureLocation={setDepartureLocation}
-                // location={location}
               />
             </S.SelectorContainer>
+
+{/* --- --- --- 랜덤 돌리기 버튼 영역 --- --- --- */}
             <S.RandomBtnContainer>
               <S.RandomBtn
                 isActivated={randomBtnStatus}
-                disabled={!randomBtnStatus}
+                disabled={!randomBtnStatus}           // 버튼 활성 상태 적용
                 onClick={() => {
                   navigate(`/home/travel-select`, {
                     state: {
@@ -277,6 +281,7 @@ function HomePage() {
               </S.RandomBtn>
             </S.RandomBtnContainer>
 
+{/* --- --- --- 다가오는 여행 영역 --- --- --- */}
             <S.PlanedContainer>
               <S.ContainerTitle>다가오는 여행</S.ContainerTitle>
               {/* 일정 출력 */}
@@ -285,7 +290,7 @@ function HomePage() {
                   <PlanedCard
                     key={plan.tripId}
                     props={plan}
-                    onClickDelete={deleteUpcomingTravel}
+                    onClickDelete={deleteUpcomingTrip}
                   />
                 ))
               ) : (
@@ -293,10 +298,13 @@ function HomePage() {
               )}
             </S.PlanedContainer>
 
+{/* --- --- --- 인기 게시물 영역 --- --- --- */}
             <S.PopularPostContainer>
               {/* 인기 개시물 헤더 */}
               <S.ContainerTitle>
                 <div>인기 게시물</div>
+
+                {/* 게시판 이동 버튼 */}
                 <S.MoreBtn
                   onClick={() => {
                     navigate('/board');
@@ -319,6 +327,7 @@ function HomePage() {
               </S.PopularPostArea>
             </S.PopularPostContainer>
 
+{/* --- --- --- 인기 미션 영역 --- --- --- */}
             <S.PopularMissionContainer>
               <S.ContainerTitle>인기 미션</S.ContainerTitle>
               {popularMissionList.length > 0 ? (
@@ -329,12 +338,15 @@ function HomePage() {
             </S.PopularMissionContainer>
           </S.ScrollArea>
 
+{/* --- --- --- 모달 메시지(여행 일정 저장 확인 메시지) 보여지는 영역 --- --- --- */}
           {isShowModal && (
             <ModalMessage
               message={fixedTravelResponse}
               onClose={() => setIsShowModal(false)}
             />
           )}
+
+{/* --- --- --- 네비바 영역 --- --- --- */}
           <S.NavbarArea>
             <Navbar />
           </S.NavbarArea>
