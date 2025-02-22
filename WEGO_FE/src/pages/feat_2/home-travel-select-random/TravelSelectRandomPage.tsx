@@ -1,12 +1,9 @@
 //home/travel-select/random
-import styled from "styled-components";
 import { Link } from "react-router";
 import { FadeLoader } from "react-spinners";
 import * as S from "./TravelSelectRandomPage.style"
-import { useParams } from "react-router";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
-
 
 
 function TravelSelectRandomPage() {
