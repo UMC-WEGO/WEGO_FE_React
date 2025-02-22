@@ -58,6 +58,9 @@ function HomePage() {
   }, []);
 
   // --- --- --- 다가오는 여행 삭제 --- --- ---
+  const [loadingDeleteTravel, setLoadingDeleteTravel] = useState(true);
+  const [errorDeleteTravel, setErrorDeleteTravel] = useState(false)
+
   const deleteUpcomingTravel = async (tripId: number) => {
     try {
       const responseDeleteTravel = await authInstance.get(
@@ -65,12 +68,15 @@ function HomePage() {
       );
 
       console.log("삭제 성공 여부 : ", responseDeleteTravel);
+      setLoadingDeleteTravel(false);
 
+      // 홈화면 리스트에서 여행 삭제
       setUpcomingTravelList(prevPlanList =>
         prevPlanList.filter(plan => plan.tripId !== tripId),
       );
     } catch (error) {
       console.log('오류 : 다가오는 여행 삭제');
+      setErrorDeleteTravel(true);
     }
   };
 
