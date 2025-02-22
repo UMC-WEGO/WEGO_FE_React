@@ -107,6 +107,8 @@ function HomePage() {
 
   // --- --- --- 인기 미션 조회 --- --- ---
   const [popularMissionList, setPopularMissionList] = useState([]);
+  const [loadingPopularMission, setLoadingPopularMission] = useState(true);
+  const [errorPopularMission, setErrorPopularMission] = useState(false);
 
   useEffect(() => {
     const getPopularMission = async () => {
@@ -114,34 +116,35 @@ function HomePage() {
         const responseMission = await authInstance.get(
           `http://13.124.213.122:3000/home/popular-missions`,
         );
+        console.log('인기 미션 조회 결과 : ', responseMission);        
 
         setPopularMissionList(responseMission.data.result.missions);
-        console.log('인기 미션 조회 결과 : ', responseMission);
+        setLoadingPopularMission(false);
       } catch (error) {
         console.log('Error On 인기 미션 조회');
+        setLoadingPopularMission(false);
+        setErrorPopularMission(true);
       }
     };
     getPopularMission();
   }, []);
 
-  // --- --- --- 추천 여행지 받아오기 --- --- ---
-  const location = useLocation();
-  const fixedTravelResponse = location.state?.fixedTravelResponse; // 전달된 응답 메시지 가져오기
-  // 필터 값
-  const [numAdult, setNumAdult] = useState(0); // 성인 인원수
-  const [numChild, setNumChild] = useState(0); // 아동 인원수
-  const [transport, setTransport] = useState('이동 수단'); // 이동 수단
-  const [timeAway, setTimeAway] = useState('시간대'); // 이동 시간
+  // --- --- --- 추천 여행지 조회 --- --- ---
+  // 여행지 필터 값
+  const [numAdult, setNumAdult] = useState(0);                               // 성인 인원수
+  const [numChild, setNumChild] = useState(0);                               // 아동 인원수
+  const [transport, setTransport] = useState('이동 수단');                   // 이동 수단
+  const [timeAway, setTimeAway] = useState('시간대');                        // 이동 시간
   const [departureLocation, setDepartureLocation] = useState('출발지 선택'); // 출발 지역
-  const [departureDate, setDepartureDate] = useState(new Date()); // 출발 날짜
-  const [arrivalDate, setArrivalDate] = useState(new Date()); // 도착 날짜짜
+  const [departureDate, setDepartureDate] = useState(new Date());            // 출발 날짜
+  const [arrivalDate, setArrivalDate] = useState(new Date());                // 도착 날짜
+
+  // 필터에 값이 들어가면 추천 여행지 조회
+  const [randomBtnStatus, setRandomBtnStatus] = useState(false);      // '랜덤 돌리기' 버튼 활성화 상태
+  const [randomDestinations, setRandomDestination] = useState([]);  
 
   // 선택한 조건 여행선택페이지로 전송하기 위한 함수
   const navigate = useNavigate();
-
-  // 수정사항이 발생할 경우 추천 여행지 조회
-  const [randomBtnStatus, setRandomBtnStatus] = useState(false); // '랜덤 돌리기' 버튼 활성화 상태
-  const [randomDestinations, setRandomDestination] = useState([]);
 
   // 요청에 맞게 데이터 적절히 변형
   const departure: string = departureLocation;
@@ -158,6 +161,10 @@ function HomePage() {
     duration = '3+';
   }
 
+  const [loadingDestination, setLoadingDestination] = useState(true);
+  const [errorDestination, setErrorDestination] = useState(false);
+
+  // 추천 여행지 조회 (필터 값 서버로 전송)
   useEffect(() => {
     const getRandomDestinations = async () => {
       try {
@@ -174,26 +181,30 @@ function HomePage() {
           `http://13.124.213.122:3000/home`,
           requestData,
         );
-
-        setRandomDestination(response.data.result);
+        setLoadingDestination(false);                          // 로딩 종료
+        setRandomDestination(response.data.result);            // 랜덤 여행지 저장
         console.log('여행지 조회 결과 : ', response);
 
+        // 추천 여행지가 없으면 '랜덤 돌리기'버튼 비활성화
         if (response.status == 200) {
           setRandomBtnStatus(true);
         } else {
           setRandomBtnStatus(false);
         }
       } catch (error) {
-        setRandomBtnStatus(false);
-        console.log(' --- --- --- Error On 랜덤 여행지 추천 POST');
+        setLoadingDestination(false);
+        setErrorDestination(true);
+        setRandomBtnStatus(false);    // '랜덤 돌리기' 비활성화
+        console.log('오류 : 랜덤 여행지 추천 요청');
       }
     };
 
+    // 필터값 선택된 후 조회
     if (
-      numAdult + numChild != 0 &&
+      numAdult + numChild >= 0 &&
       transport != '이동 수단' &&
       (departureDate && arrivalDate) != new Date() &&
-      (timeAway != '시간대' || departureLocation != '출발지 선택')
+      (timeAway != '시간대' || departureLocation != '출발지 선택')      // 시간대나 출발지가 바뀔 때 
     ) {
       getRandomDestinations();
     }
@@ -206,9 +217,13 @@ function HomePage() {
     setIsShowMessage(false);
   };
 
+  // 전달된 응답 메시지 가져오기
+  const location = useLocation();
+  const fixedTravelResponse = location.state?.fixedTravelResponse;
+
   return (
     <>
-      {(loadingUpComingTravel && loadingPost) ? (
+      {(loadingUpComingTravel || loadingPost || loadingPopularMission) ? (
         <StartPage />
       ) : (
         <S.AppContainer>
