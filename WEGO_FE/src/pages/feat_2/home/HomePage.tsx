@@ -83,7 +83,7 @@ function HomePage() {
   // --- --- --- 인기 게시물 조회 --- --- ---
   const [popularPostList, setPopularPostList] = useState([]);
   const [loadingPost, setLoadingPost] = useState(true);
-  const [errorPost, setErrorPost] = useState<string | null>(null);
+  const [errorPost, setErrorPost] = useState(false);
 
   useEffect(() => {
     const getPopularPost = async () => {
@@ -97,8 +97,8 @@ function HomePage() {
 
         console.log('인기 게시물 조회 결과 : ', responseGet);
       } catch (error) {
-        console.log('Error On 인기 게시물 조회');
-        setErrorPost('Error on importing posts');
+        console.log('오류 : 인기 게시물 조회');
+        setErrorPost(true);
       }
     };
 
