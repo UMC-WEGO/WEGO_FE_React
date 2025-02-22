@@ -2,44 +2,24 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { Link } from "react-router";
-import axios from "axios";
-import * as S from "./TravelSelectPage.style"
-import styled from "styled-components";
-import { useParams } from "react-router";
 
+import * as S from "./TravelSelectPage.style"
 import Loading from "../home-travel-select-random/TravelSelectRandomPage";
+import { authInstance } from "../../../apis/axiosInstance";
+import ModalMessage from "../../../components/feat2/Modal";
+import PostList from "../../../components/feat2/Post/PostList";
+import PlaningCard from "../../../components/feat2/PlaningCard";
+import DestinationBtn from "../../../components/feat2/DestinationBtn";
+import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
+import NoteAlertCard from "../../../components/feat2/Alerts/NoteAlertCard";
 
 import back_arrow_img from "../../../images/feat2/Back_Arrow.png"
 import share_img from "../../../images/feat2/share_icon.png"
-import PostCard from "../../../components/feat2/Post/PostCard";
-import PlaningCard from "../../../components/feat2/PlaningCard";
-import DestinationBtn from "../../../components/feat2/DestinationBtn";
-import PostList from "../../../components/feat2/Post/PostList";
-// import PostList from "../../../components/feat4/PostList";
-import ModalMessage from "../../../components/feat2/Modal";
-
-// 임시데이터 가져오기
-// import { recommended_destinations } from "../../../mocks/feat2/TestData_DestinationBtn";
-import { PopularPostData } from "../../../mocks/feat2/TestData_PopularPost";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
-import SaveAlertCard from "../../../components/feat2/Alerts/SaveAlert";
-import NoteAlertCard from "../../../components/feat2/Alerts/NoteAlertCard";
-import { authInstance } from "../../../apis/axiosInstance";
-
-const NoPopularPost = styled.div`
-  display: flex;
-  align-items: flex-start;
-  padding: 16px;
-
-  justify-content: center;
-  align-items: center;
-`
 
 function TravelSelectPage() {
-  // 홈에서 정보 가져오기기
+  // 홈에서 여행지 조건 가져오기
   const uselocation = useLocation();
   const { randomDestinations, departureDate, arrivalDate, numAdult, numChild, transport, timeAway, departureLocation } = uselocation.state || {};
-  console.log("홈에서 받아온 랜덤 여행지 : ",randomDestinations);
 
   // 적절하게 값 변환
   const departure: string = departureLocation;
@@ -59,40 +39,41 @@ function TravelSelectPage() {
   const startDate: string = departureDate.toISOString().split('T')[0];   // 'T'를 기준으로 나눠서 앞쪽(날짜 부분)을 저장
   const endDate: string = arrivalDate.toISOString().split('T')[0];
 
-  // console.log("출발 : ",startDate);
-
-  // --- --- --- 즉흥 게시물 조회 --- --- ---
+// --- --- --- 즉흥 게시물 조회 --- --- ---
   const [instantPostList, setInstantPostList] = useState([]);
   const [loadingInstantPost, setLoadingInstantPost] = useState(true);
-  const [errorInstantPost, setErrorInstantPost] = useState<string | null>(null);
+  const [errorInstantPost, setErrorInstantPost] = useState(false);
 
   useEffect(() => {
     const getInstantPost = async() => {
-      // const responseGet = await axios.get(`http://13.124.213.122:3000/community/popular-posts`, {
-      //   headers: {
-      //     Authorization: `${TOKEN}`,
-      //     Accept: `application/josn`
-      //   }
-      // })
+      try{
+        const responseGet = await authInstance.get(`http://13.124.213.122:3000/community/popular-posts`)
+        
+        // 카테고리가 "즉흥 자랑"인 게시물만 저장
+        const filteredPosts = responseGet.data.filter((post: { category_name: string }) => post.category_name === "즉흥 자랑");
 
-      const responseGet = await authInstance.get(`http://13.124.213.122:3000/community/popular-posts`)
-      
-      // 카테고리가 "즉흥 자랑"인 게시물만 저장
-      const filteredPosts = responseGet.data.filter((post: { category_name: string }) => post.category_name === "즉흥 자랑");
+        setInstantPostList(filteredPosts);
+        setLoadingInstantPost(false);
 
-      setInstantPostList(filteredPosts);
-      setLoadingInstantPost(false);
+        console.log("필터링 게시물 결과", filteredPosts);        
+      } catch (error) {
+        setErrorInstantPost(true);
+        setLoadingInstantPost(false);
 
-      console.log("필터링 게시물 결과", filteredPosts);
+        console.log('오류 : 즉흥 게시물 조회');
+      }
     }
     getInstantPost();
   }, [])
 
-  // --- --- --- 여행 일정 등록 --- --- ---
+// --- --- --- 여행 일정 등록 --- --- ---
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [locationData, setLocationData] = useState({location: "", region: "", growthRate: ""});
   const [fixedTravelResponse, setFixedTravelResponse] = useState("");
   const [isShowModal, setIsShowModal] = useState(false);
+
+  const [loadingPlan, setLoadingPlan] = useState(true);
+  const [errorPlan, setErrorPlan] = useState(false);
 
   // 데이터 적절히 변환
   const { location, region, growthRate } = locationData;
@@ -105,23 +86,6 @@ function TravelSelectPage() {
   // POST TO SERVER
     const postTravel = async() => {
       try {
-        // const res = await axios.post(`http://13.124.213.122:3000/home/save-trip`, {
-        //   location,
-        //   adult_participants,
-        //   child_participants,
-        //   vehicle,
-        //   duration,
-        //   startDate,
-        //   endDate
-        // },{
-        //   headers: {
-        //     Authorization: `${TOKEN}`,
-        //     Accept: `application/json`,
-        //     'Content-Type': 'application/json',
-        //   },
-        // });
-
-
         const requestData = {
             location,
             adult_participants,
@@ -132,56 +96,63 @@ function TravelSelectPage() {
             endDate            
           }
 
-        const res = await authInstance.post(`http://13.124.213.122:3000/home/save-trip`, requestData)
+        const responseSaveTrip = await authInstance.post(`http://13.124.213.122:3000/home/save-trip`, requestData)
         
-        console.log("저장 결과 : ", res);
+        console.log("저장 결과 : ", responseSaveTrip);
+        setLoadingPlan(false);
         
-    
-        // 서버 응답 메시지를 저장
-        setFixedTravelResponse(res.data.message);
+        // 서버 응답 메시지를 저장 - 홈 화면에서 모달로 출력력
+        setFixedTravelResponse(responseSaveTrip.data.message);
         
         navigate(`/home`, {
           state: {
-            fixedTravelResponse: res.data.message,  // 전달할 응답 메시지
+            fixedTravelResponse: responseSaveTrip.data.message,  // 전달할 응답 메시지
           }
         });
       } catch (err) {
         console.log("Error on Post 여행지 저장", err);
+        setLoadingPlan(false);
+        setErrorPlan(true);
       }
     };
 
-    const [isLoading, setIsLoading] = useState(true);
-    useEffect(() => {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 4000)
-    }, [])
+// --- --- --- 강제 로딩 시간 설정 --- --- ---
+  const loadingTime = 4000;   // 최소 4초 로딩시간
 
-    // 여기로 갈래요 버튼 눌렀을 때 알림창
-    const [isShowMessage, setIsShowMessage] = useState(false);
-    const downMessage = () => {
-      setIsShowMessage(false)
-    }
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, loadingTime)
+  }, [])
 
-    const [isShowNoteMessage, setIsShowNoteMessage] = useState(false);
-    const downNoteMessage = () => {
-      setIsShowNoteMessage(false)
-    }
+// --- --- --- 여기로 갈래요 버튼 눌렀을 때 알림창 --- --- ---
+  const [isShowMessage, setIsShowMessage] = useState(false);
+  const downMessage = () => {
+    setIsShowMessage(false)
+  }
+
+  const [isShowNoteMessage, setIsShowNoteMessage] = useState(false);
+  const downNoteMessage = () => {
+    setIsShowNoteMessage(false)
+  }
 
   return(
     <>
-    {isLoading ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
+    {(isLoading || loadingInstantPost) ? (              // 추천 여행지 로딩 중일 때 로딩페이지 출력
       <Loading/>
     ) : (
       <S.AppContainer>
-        <S.ScrollArea>    
+        <S.ScrollArea>
+{/* --- --- --- 최상단 툴바 --- --- --- */}
           <S.ToolBarContainer>
             <Link to={`/home`}>
               <img src={back_arrow_img}/>
             </Link>
             <img src={share_img}/>
           </S.ToolBarContainer>
-          
+
+{/* --- --- --- "여행지를 선정하세요" 영역 --- --- --- */}
           <S.PlanContainer>
             <PlaningCard 
               departureDate={startDate}
@@ -191,6 +162,7 @@ function TravelSelectPage() {
             />
           </S.PlanContainer>
 
+{/* --- --- --- 추천 여행지 버튼 영역 --- --- --- */}
           <S.DestinationContainer>
             {/* 추천 여행지 나열 */}
             {randomDestinations.map((destinationData: any, index: any) => (
@@ -203,6 +175,7 @@ function TravelSelectPage() {
             ))}
           </S.DestinationContainer>
 
+{/* --- --- --- 즉흥 게시판 영역 --- --- --- */}
           <S.PostContainer>
             <S.Title>
               <div>즉흥 게시판</div>
@@ -216,29 +189,27 @@ function TravelSelectPage() {
               {instantPostList.length > 0 ? (
                 <PostList posts={instantPostList} limit={2} showRanking={false}/>
               ) : (
-                <NoPopularPost>즉흥 게시물이 없습니다.</NoPopularPost>
+                <S.NoPopularPost>즉흥 게시물이 없습니다.</S.NoPopularPost>
               )}
-
-              {/* <PostList posts={PopularPostData} showRanking={false} limit={2}/> */}
             </S.PostArea>
           </S.PostContainer>
 
+{/* --- --- --- 확인 메시지 출력 --- --- ---*/}
           {isShowMessage && (
             <SaveAlertCard message="여행지를 확정하시겠습니까?" downMessage={downMessage} SavePlan={() => postTravel()}/>
           )}
           {isShowNoteMessage && (
             <NoteAlertCard message="여행지를 선택해 주세요" downMessage={downNoteMessage}/>
           )}
+
+{/* --- --- --- "여기로 갈래요" 버튼 영역 --- --- --- */}
           <S.SubmitBtnContainer>
             {isShowModal && <ModalMessage message={fixedTravelResponse} onClose={() => setIsShowModal(false)} />}
             <S.SelectionComplete
               // 선택된 버튼의 인덱스가 없거나 범위에 있지 않으면 제출 버튼 비활성화
               isDestinationSelected={selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3)}
-              // disabled={!(selectedIndex !== null && (0 <= selectedIndex && selectedIndex < 3))}
-              // onClick={() => postTravel()}
               onClick={() => {
                 if(selectedIndex !== null){
-                  // setIsShowMessage(true)
                   postTravel()
                 }
                 else{
@@ -249,6 +220,7 @@ function TravelSelectPage() {
               여기로 갈래요
             </S.SelectionComplete>
           </S.SubmitBtnContainer>
+
         </S.ScrollArea>
       </S.AppContainer>
      )}

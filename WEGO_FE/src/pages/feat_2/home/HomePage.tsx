@@ -224,7 +224,7 @@ function HomePage() {
   return (
     <>
       {/* 로딩 상태에 따라 로딩창 띄우기 */}
-      {(loadingUpComingTravel || loadingPost || loadingPopularMission || true) ? (
+      {(loadingUpComingTravel || loadingPost || loadingPopularMission) ? (
         <StartPage />
       ) : (
         <S.AppContainer>

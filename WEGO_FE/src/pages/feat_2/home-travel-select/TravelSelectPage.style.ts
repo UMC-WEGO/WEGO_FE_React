@@ -104,3 +104,12 @@ export const SelectionComplete = styled.button<{ isDestinationSelected: boolean 
   
   border-radius: 5px;
 `
+
+export const NoPopularPost = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+
+  justify-content: center;
+  align-items: center;
+`
