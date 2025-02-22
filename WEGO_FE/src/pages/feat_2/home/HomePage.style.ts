@@ -1,5 +1,27 @@
 import styled from 'styled-components';
 
+export const NoPopularPost = styled.div`
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+
+  justify-content: center;
+  align-items: center;
+`;
+
+export const NoPlanedTravel = styled.div`
+  border: 1px solid rgba(165, 165, 165, 1);
+  border-radius: 15px;
+  margin-bottom: 9px;
+
+  justify-content: center;
+  align-items: center;
+
+  height: 108px;
+
+  display: flex;
+`;
+
 export const NoMission = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
@@ -39,7 +61,7 @@ export const NavbarArea = styled.div`
   margin-top: auto;
 
   width: 100%;
-  height: 230px;
+  height: 150px;
 `;
 
 // --- --- ---
