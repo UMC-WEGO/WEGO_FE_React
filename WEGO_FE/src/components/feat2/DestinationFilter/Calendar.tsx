@@ -1,54 +1,4 @@
-import styled from "styled-components";
-import { useState } from "react";
-
-const StyedCalendar = styled.div`
-  margin: 20px;
-`
-
-const WeekBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-
-  margin: 11px 0 11px 0;
-  padding: 8px 12px 8px 12px;
-`
-
-const MonthDisplay = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  border-bottom: 1px solid rgba(234, 234, 234, 1);
-  padding: 16px 12px 16px 12px;
-
-  font-size: 20px;
-  font-weight: 600;
-`
-
-const CalendarBox = styled.div`
-  display: grid;
-  grid-template-row: repeat(6, 1fr);      // 6주
-  grid-template-columns: repeat(7, 1fr);  // 7일
-  gap: 10px;
-
-  padding: 4px 12px 4px 12px;
-`
-
-const DayBtn = styled.button<{ isSelected:boolean }>`
-  text-align: center;
-
-  padding: 10px;
-  background-color: ${({ isSelected }: { isSelected?: boolean }) => isSelected ? "lightblue" : "white"};
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f0f0f0;
-  }
-`
+import * as S from './FilterStyle'
 
 // 현재 날짜
 const NOW = new Date();
@@ -89,11 +39,11 @@ interface HeadProps {
 const CalendarHead = ({year, month, onPrevMonth, onNextMonth}: HeadProps) => {
   return (
     <>
-      <MonthDisplay>
+      <S.MonthDisplay>
         <button onClick={onPrevMonth}>{"<-"}</button>
         <div>{year}.{String(month + 1).padStart(2, "0")}</div>
         <button onClick={onNextMonth}>{"->"}</button>
-      </MonthDisplay>
+      </S.MonthDisplay>
     </>
   )
 }
@@ -111,17 +61,17 @@ const CalendarBody = ({ nowMonthCalendar, departureDate, arrivalDate, onChangeDe
   return (
     <>
       {/* 요일 보여주는 줄 */}
-      <WeekBox>
+      <S.WeekBox>
         {weekDay.map((weekDay, index) => (
           <div key={index}>{weekDay}</div>
         ))}
-      </WeekBox>
+      </S.WeekBox>
 
       {/* 달력 보여주는 부분 */}
-      <CalendarBox>
+      <S.CalendarBox>
         {nowMonthCalendar.map((week, index) => 
           week.map((date) => (
-            <DayBtn 
+            <S.DayBtn 
               key={date.toISOString()} 
               isSelected={
                 date.toDateString() === departureDate.toDateString() ||
@@ -135,10 +85,10 @@ const CalendarBody = ({ nowMonthCalendar, departureDate, arrivalDate, onChangeDe
                 }
               }}>
               {date.getDate()}
-            </DayBtn>
+            </S.DayBtn>
           ))
         )}
-      </CalendarBox>    
+      </S.CalendarBox>    
     </>
   )
 }
@@ -171,7 +121,7 @@ const Calendar = ({ departureDate, arrivalDate, setDepartureDate, setArrivalDate
   }
 
   return (
-    <StyedCalendar>
+    <S.StyedCalendar>
       <CalendarHead
         year={departureDate.getFullYear()}
         month={departureDate.getMonth()}
@@ -185,7 +135,7 @@ const Calendar = ({ departureDate, arrivalDate, setDepartureDate, setArrivalDate
         onChangeDeparture={setDepartureDate}
         onChangeArrival={setArrivalDate}
       />
-    </StyedCalendar>
+    </S.StyedCalendar>
   )
 }
 

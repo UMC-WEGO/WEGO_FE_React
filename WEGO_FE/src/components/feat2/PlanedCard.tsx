@@ -2,7 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import trash_bin_img from "../../images/feat2/trash_binpng.png";
 import BlueTag from "./BlueTag";
-import Bottomsheet from "./BottomSheet";
 import DltAlertCard from "./Alerts/DltAlertCard";
 
 const PlanedCardBox = styled.div`
@@ -45,15 +44,6 @@ const DeleteBtn = styled.button`
 `
 
 type PlanedCardType = {
-  // "tripId": 1,
-  // "location": "부산",
-  // "adult_participants": 5,
-  // "child_participants": 2,
-  // "vehicle": "자가용",
-  // "duration": "2-3",
-  // "startDate": "2025-01-30",
-  // "endDate": "2025-01-31"
-
   tripId : number;
   location: string;
   adult_participants: number;

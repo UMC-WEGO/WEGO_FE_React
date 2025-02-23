@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const BackgroundOverlay = styled.div`
   position: fixed;
   width: 420px;
-  height: 768px;
+  height: 90%;
   right: 0;
   left: 0;
   top: 0;

@@ -1,70 +1,14 @@
-import styled from 'styled-components';
 import { useState } from 'react';
+import * as S from './FilterStyle'
 
-import { FaRegCalendar, FaCar, FaPeopleGroup } from 'react-icons/fa6';
-import { LuAlarmClock, LuMapPin } from 'react-icons/lu';
+import Calendar from './Calendar';
+import CrewSelector from './CrewSelector';
+import SelectDeparture from './SelectDeparture';
 import Dropdown from '../Dropdown';
 import Bottomsheet from '../BottomSheet';
-import CrewSelector from './CrewSelector';
-import Calendar from './Calendar';
-import SelectDeparture from './SelectDeparture';
-
-// 아이콘 가져오기
-import {
-  location,
-  Item_time,
-  Item_transport,
-} from '../../../mocks/feat2/TestData_Filter';
-
-// 여행 조건 선택하는 부분
-const FilterBox = styled.div`
-  width: 363px;
-  height: auto;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  border: 1px solid rgba(234, 234, 234, 1);
-  background-color: #fff;
-`;
-
-const SelectorRow = styled.div`
-  flex: 1;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  width: 309px;
-  padding-left: 8px;
-  padding-right: 8px;
-
-  border-bottom: 1px solid #ddd;
-`;
-
-const Label = styled.label`
-  flex: 1;
-  height: 20px;
-  align-items: center;
-
-  display: flex;
-`;
-
-const IconImg = styled.span`
-  width: 14px;
-  height: 15px;
-
-  padding-right: 25px;
-`;
-
-const BottomSheetBtn = styled.button`
-  background-color: white;
-`;
-
-const DateStyle = styled.div<{ sameYear: boolean }>`
-  font-size: ${props => (props.sameYear ? '12px' : '10px')};
-`;
+import { location, Item_time, Item_transport } from '../../../mocks/feat2/TestData_Filter';
+import { FaRegCalendar, FaCar, FaPeopleGroup } from 'react-icons/fa6';
+import { LuAlarmClock, LuMapPin } from 'react-icons/lu';
 
 interface DestinationFilterProps {
   numAdult: number;
@@ -128,18 +72,21 @@ const DestinationFilter = ({
 
   return (
     <>
-      <FilterBox>
-        {/* 첫번째 열 : 날짜 & 인원수 */}
-        <SelectorRow>
-          {/* 날짜 */}
+      <S.FilterBox>
+{/* --- --- --- 첫번째 열 : 날짜 & 인원수 --- --- --- */}
+        <S.SelectorRow>
+          {/* --- --- --- 날짜 --- --- --- */}
           <div>
-            <Label>
-              <IconImg>
+            <S.Label>
+              {/* 아이콘 영역 */}
+              <S.IconImg>
                 <FaRegCalendar />
-              </IconImg>
+              </S.IconImg>
+
+              {/* 바텀시트 & 선택한 날짜 */}
               <div>
-                <BottomSheetBtn onClick={toggleDateBottom}>
-                  <DateStyle
+                <S.BottomSheetBtn onClick={toggleDateBottom}>
+                  <S.DateStyle
                     sameYear={
                       departureDate.getFullYear() === arrivalDate.getFullYear()
                     }
@@ -149,19 +96,19 @@ const DestinationFilter = ({
                     {String(departureDate.getMonth() + 1).padStart(2, '0')}.
                     {String(departureDate.getDate()).padStart(2, '0')}
                     {' ~ '}
+                    {/* 출발 도착 연도가 같으면 도착 연도 생략 */}
                     {departureDate.getFullYear() !==
                       arrivalDate.getFullYear() &&
-                      `${arrivalDate.getFullYear()}`}
-                    . {/* 출발 도착 연도가 같으면 도착 연도 생략 */}
+                      `${arrivalDate.getFullYear()}.`}
                     {String(arrivalDate.getMonth() + 1).padStart(2, '0')}.
                     {String(arrivalDate.getDate()).padStart(2, '0')}
-                  </DateStyle>
-                </BottomSheetBtn>
+                  </S.DateStyle>
+                </S.BottomSheetBtn>
 
                 <Bottomsheet
                   isOpen={isDateBottomActive}
                   onClose={toggleDateBottom}
-                  height="67vh"
+                  height="60vh"
                 >
                   {/* 바텀시트에 달력 출력 */}
                   <Calendar
@@ -172,25 +119,29 @@ const DestinationFilter = ({
                   />
                 </Bottomsheet>
               </div>
-            </Label>
+            </S.Label>
           </div>
 
           <div>
-            {/* 인원수 */}
-            <Label>
-              <IconImg>
+            {/* --- --- --- 인원수 --- --- --- */}
+            <S.Label>
+              {/* 아이콘 영역 */}
+              <S.IconImg>
                 <FaPeopleGroup />
-              </IconImg>
+              </S.IconImg>
+
+              {/* 바텀시트 & 선택한 인원수 */}
               <div>
-                <BottomSheetBtn onClick={togglePeopleBottom}>
+                <S.BottomSheetBtn onClick={togglePeopleBottom}>
                   {numAdult === 0 && numChild === 0
-                    ? '인원수'
+                    ? '인원수                  '
                     : `성인 ${numAdult}명 아동 ${numChild}명`}
-                </BottomSheetBtn>
+                </S.BottomSheetBtn>
+                
                 <Bottomsheet
                   isOpen={isPeopleBottomActive}
                   onClose={togglePeopleBottom}
-                  height="41vh"
+                  height="35vh"
                 >
                   <CrewSelector
                     numAdult={numAdult}
@@ -200,48 +151,48 @@ const DestinationFilter = ({
                   />
                 </Bottomsheet>
               </div>
-            </Label>
+            </S.Label>
           </div>
-        </SelectorRow>
+        </S.SelectorRow>
 
-        {/* 두번째 열 : 교통수단 */}
-        <SelectorRow>
-          <Label>
-            <IconImg>
+{/* --- --- --- 두번째 열 : 교통수단 --- --- --- */}
+        <S.SelectorRow>
+          <S.Label>
+            <S.IconImg>
               <FaCar />
-            </IconImg>
+            </S.IconImg>
             <Dropdown
               value={transport}
               setValue={setTransport}
               option={Item_transport}
             />
-          </Label>
-        </SelectorRow>
+          </S.Label>
+        </S.SelectorRow>
 
-        {/* 세번째 열 : 시간대 */}
-        <SelectorRow>
-          <IconImg>
+{/* --- --- --- 세번째 열 : 시간대 --- --- --- */}
+        <S.SelectorRow>
+          <S.IconImg>
             <LuAlarmClock />
-          </IconImg>
-          <Label>
+          </S.IconImg>
+          <S.Label>
             <Dropdown
               value={timeAway}
               setValue={setTimeAway}
               option={Item_time}
             />
-          </Label>
-        </SelectorRow>
+          </S.Label>
+        </S.SelectorRow>
 
-        {/* 네번째 열 : 출발지 */}
-        <SelectorRow>
-          <Label>
-            <IconImg>
+{/* --- --- --- 네번째 열 : 출발지 --- --- --- */}
+        <S.SelectorRow>
+          <S.Label>
+            <S.IconImg>
               <LuMapPin />
-            </IconImg>
+            </S.IconImg>
             <div>
-              <BottomSheetBtn onClick={toggleDepartureBottom}>
+              <S.BottomSheetBtn onClick={toggleDepartureBottom}>
                 {departureLocation}
-              </BottomSheetBtn>
+              </S.BottomSheetBtn>
               <Bottomsheet
                 isOpen={isDepartureBottomActive}
                 onClose={toggleDepartureBottom}
@@ -252,14 +203,11 @@ const DestinationFilter = ({
                   setDepartureLocation={setDepartureLocation}
                   location={location}
                 />
-                {/* <div>
-                  선택창
-                </div> */}
               </Bottomsheet>
             </div>
-          </Label>
-        </SelectorRow>
-      </FilterBox>
+          </S.Label>
+        </S.SelectorRow>
+      </S.FilterBox>
     </>
   );
 };

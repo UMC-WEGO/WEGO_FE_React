@@ -1,90 +1,12 @@
-import styled, { isStyledComponent } from "styled-components";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import * as S from './FilterStyle'
 
 import Bottomsheet from "../BottomSheet";
 import SearchDeparture from "./SearchDeparture";
-// import search_icn from "../../../images/feat2/search_icon.png"
-
-const SearchCard = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const SearchHeader = styled.div`
-  border-bottom: 1px solid rgba(234, 234, 234, 1);
-  padding: 15px;
-
-  display: flex;
-  justify-content: space-between;
-`
-
-const NotionRow = styled.div`
-  color: rgba(0, 89, 255, 1);
-
-  padding: 15px;
-`
-
-const SearchRow = styled.div`
-  padding: 15px;
-  margin-bottom: 10px;
-
-  display: flex;
-  flex-direction: column;
-`
-
-const LabelBox = styled.div`
-  display: flex;
-  gap: 10px;
-
-  margin-top: 8px;
-  overflow-x: auto;
-  white-space: nowrap;
-  scrollbar-width: none;    //스크롤바 지우기
-`
-
-const Element = styled.button<{ isSelected: boolean }>`
-  border-radius: 13px;  
-  padding: 7px 14px 7px 14px;
-
-  font-size: 12px;
-  font-weight: 600;
-
-  // 선택된 경우 색상 변경
-  background-color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 0.1)" : "rgba(246, 246, 246, 1)")};
-  color: ${({ isSelected }) => (isSelected ? "rgba(0, 89, 255, 1)" : "black")};
-`
-
-const LocationTitle = styled.div`
-  font-size: 15px;
-  font-weight: 600;
-`
-
-const BottomSheetBtn = styled.button`
-  display: flex;
-  padding-left: 30%;
-  justify-content: space-between;
-
-  background-color: white;
-  width: 370px;
-`
-
-// const Icon = styled.div`
-
-// `
-
-// 
-// 
-// 
 
 import { PiArrowLeftBold } from "react-icons/pi";
 import { CgSearch } from "react-icons/cg";
 import { authInstance } from "../../../apis/axiosInstance";
-
-// 
-// 
-//
-
 
 interface SelectedDepartureProps {
   departureLocation: string;
@@ -98,14 +20,6 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
 
   useEffect(() => {
     const getRecentLocation = async() => {
-      // const responseRecentLocation = await axios.get(`http://13.124.213.122:3000/community/posts/local-search`, {
-      //   headers: {
-      //     Authorization: `${TOKEN}`,
-      //     Accept: `application/josn`
-      //   }
-      // })
-
-      // const response = await authInstance.get(`http://13.124.213.122:3000/home`, requestData)
       const responseRecentLocation = await authInstance.get(`http://13.124.213.122:3000/community/posts/local-search`)
 
       setRecentLocation(responseRecentLocation.data)
@@ -117,28 +31,28 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
   const toggleSearchBottom = () => { setIsSearchActive(!isSearchBottomActive); }
 
   return (
-    <SearchCard>
+    <S.SearchCard>
       {/* 뒤로가기 및 검색바 */}
-      <SearchHeader style={{width: '16px;'}}>
+      <S.SearchHeader style={{width: '16px;'}}>
         <div>
           <PiArrowLeftBold/>
         </div>
         <div>
-          <BottomSheetBtn onClick={toggleSearchBottom}>
+          <S.BottomSheetBtn onClick={toggleSearchBottom}>
             <span style={{color: 'rgba(165, 165, 165, 1)'}}>출발지를 선택하세요</span>
             {/* <span><img src={search_icn}/></span> */}
             <CgSearch/>
-          </BottomSheetBtn>
+          </S.BottomSheetBtn>
           <Bottomsheet isOpen={ isSearchBottomActive } onClose={ toggleSearchBottom } height="100%">
             <SearchDeparture location={location} setDepartureLocation={setDepartureLocation} departureLocation={departureLocation}/>
           </Bottomsheet>
         </div>
-      </SearchHeader>
+      </S.SearchHeader>
 
       {/* 안내 */}
-      <NotionRow>
+      <S.NotionRow>
         현재 위치가 아닌, 도시의 중심부를 기준으로 잡아요
-      </NotionRow>
+      </S.NotionRow>
 
       {/* 지역 선택 */}
       {/* 최근지역 */}
@@ -163,22 +77,22 @@ const SelectDeparture = ({ departureLocation, setDepartureLocation, location}: S
     
       {/* 지역 전체 */}
       {location.map((location) => (
-        <SearchRow key={location.name}>
-          <LocationTitle>{location.name}</LocationTitle>
-          <LabelBox>
+        <S.SearchRow key={location.name}>
+          <S.LocationTitle>{location.name}</S.LocationTitle>
+          <S.LabelBox>
             {location.elements.map((element) => (
-              <Element 
+              <S.LocationElement 
                 key={element}
                 onClick={() => setDepartureLocation(element)}
                 isSelected = { departureLocation === element }
               >
                 {element}
-              </Element>
+              </S.LocationElement>
             ))}
-          </LabelBox>
-        </SearchRow>
+          </S.LabelBox>
+        </S.SearchRow>
       ))}
-    </SearchCard>
+    </S.SearchCard>
   )
 }
 
