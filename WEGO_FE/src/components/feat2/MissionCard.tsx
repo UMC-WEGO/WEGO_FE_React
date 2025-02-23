@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import axios from 'axios';
+import { authInstance } from '../../apis/axiosInstance';
 
 import chevron from '../../images/feat2/chevron-forward-outline.png';
-
-// 미션 내용 카드
 
 const PopularMissionCardBox = styled.div`
   border: 1px solid #ddd;
@@ -97,16 +95,6 @@ const MissionContent = styled.div`
   margin-top: 20px;
 `;
 
-//
-//
-//
-
-import { authInstance } from '../../apis/axiosInstance';
-
-//
-//
-//
-
 interface MissionProps {
   props: {
     missionId: number;
@@ -123,30 +111,22 @@ const PopularMissionCard = ({ props }: MissionProps) => {
   const [nowMissionIndex, setNowMissionIndex] = useState(0);
   const nowShowMission = props[nowMissionIndex];
 
+  // 다음 미션
   const changeNextMission = () => {
     if (nowMissionIndex < props.length - 1) {
       setNowMissionIndex(nowMissionIndex + 1);
     }
   };
 
+  // 이전 미션
   const changePrevMission = () => {
     if (nowMissionIndex > 0) {
       setNowMissionIndex(nowMissionIndex - 1);
     }
   };
 
+  // 미션 저장 요청
   const SavePopularMisson = async (MissionId: any) => {
-    // const responseSaveMission = await axios.post(
-    //   `http://13.124.213.122:3000/home/savePopularMission/${MissionId}`,
-    //   {},
-    //   {
-    //     headers: {
-    //       Authorization: `${TOKEN}`
-    //     }
-    //   }
-    // );
-
-    // const response = await authInstance.post(`http://13.124.213.122:3000/home`, requestData)
     const responseSaveMission = await authInstance.post(
       `http://13.124.213.122:3000/home/savePopularMission/${MissionId}`,
       {},
@@ -158,10 +138,11 @@ const PopularMissionCard = ({ props }: MissionProps) => {
   return (
     <>
       <PopularMissionCardBox>
+        {/* 미션 지역 */}
         <PopularMissionRow1>
-          {/* <div>{nowShowMission.destination}</div> */}
         </PopularMissionRow1>
 
+        {/* 이미지 & 다음/이전 버튼 */}
         <PopularMissionRow2>
           <PrevMission onClick={changePrevMission}>
             <Icon src={chevron} />
@@ -172,11 +153,13 @@ const PopularMissionCard = ({ props }: MissionProps) => {
           </NextMission>
         </PopularMissionRow2>
 
+        {/* 제목 & 내용 */}
         <PopularMissionRow3>
           <MissionTitle>{nowShowMission.title}</MissionTitle>
           <MissionContent>{nowShowMission.content}</MissionContent>
         </PopularMissionRow3>
 
+        {/* 미션 저장 버튼 */}
         <PopularMissionRow4>
           <MissionSaveBtn
             onClick={() => SavePopularMisson(nowShowMission.missionId)}

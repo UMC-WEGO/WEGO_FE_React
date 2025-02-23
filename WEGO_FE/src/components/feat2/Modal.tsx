@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 
 // 애니메이션 정의

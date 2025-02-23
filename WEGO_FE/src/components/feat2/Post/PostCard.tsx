@@ -1,18 +1,8 @@
 // src/components/feat4/PostItem.tsx 를 변형
 import * as S from '../../feat4/PostItem.style';
-import styled from 'styled-components';
 
-import WEGO_Logo from '../../../images/feat2/WEGO_Logo.jpg';
 import { PiChatTextBold, PiThumbsUpBold, PiBookmarkSimpleBold } from "react-icons/pi";
 import { FaCrown } from 'react-icons/fa6';
-
-const Mission_Img = styled.img`
-  height: 95px;
-  width: 95px;
-  padding-right: 12px;
-`
-
-// 게시물 카드
 
 interface PostDataForm {
   img_url: string;
@@ -41,8 +31,8 @@ const PostCard = ({
   comments_num,
   scripts_num
 }: PostDataForm) => {
-  const postedDate = new Date(timestamp);
-  const nowDate = new Date();
+  const postedDate = new Date(timestamp);      // 게시된 날짜
+  const nowDate = new Date();                  // 지금 날짜
 
   const timeDiff = nowDate.getTime() - postedDate.getTime();
 
@@ -53,6 +43,7 @@ const PostCard = ({
   const monDiff = dayDiff / 30;
   const yearDiff = monDiff / 12;
 
+  // 시간을 정수형으로 변경
   const intSecDiff = Math.floor(secDiff);  // 또는 Math.round(), parseInt() 등 사용 가능
   const intMinDiff = Math.floor(minDiff);
   const intHourDiff = Math.floor(hourDiff);
@@ -70,7 +61,6 @@ const PostCard = ({
         )}
 
         {/* 이미지 영역 */}
-        {/* <Mission_Img src={img_url}/> */}
         <S.ImageWrapper>
           {img_url !== null ? 
             <img
@@ -107,7 +97,7 @@ const PostCard = ({
             <h5>
               {location}
               {
-                yearDiff >= 1 ? ` ${intSecDiff}년전` : 
+                yearDiff >= 1 ? ` ${intYearDiff}년전` : 
                 monDiff >= 1 ? ` ${intMonDiff}달전` : 
                 dayDiff >= 1 ? ` ${intDayDiff}일전` :
                 hourDiff >= 1 ? ` ${intHourDiff}시간전` : 

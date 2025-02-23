@@ -2,9 +2,6 @@ import styled from "styled-components";
 
 import car_img from "../../images/feat2/car_icon.png";
 import BlueTag from "./BlueTag";
-import { string } from "yup";
-// 홈 화면에서 여행 조건을 선택하는 부분입니다
-// 날짜, 인원, 이동수단, 이동시간, 여행지역 선택
 
 const PlaningCardBox = styled.div`
   width: 363px;
@@ -69,27 +66,27 @@ const PlaningCard = ({ departureDate, arrivalDate, departureLocation, transport 
   const Ar_month = String(ArDate.getMonth() + 1).padStart(2, '0');
   const Ar_day = String(ArDate.getDate()).padStart(2, '0');
 
-    return(
-        <>
-            <PlaningCardBox>
-              <PlaningCardRow1>여행지를 선정하세요</PlaningCardRow1>
-              <PlaningCardRow2>
-              {/* {departureDate} ~ {arrivalDate} */}
-                {Dp_year}.{Dp_month}.{Dp_day} 
-                ~ 
-                {Ar_year}.{Ar_month}.{Ar_day}
-              </PlaningCardRow2>
-              <PlaningCardRow3>
-                <div>출발지</div>
-                <BlueTag TagContent={departureLocation}/>
-              </PlaningCardRow3>
-              <PlaningCardRow4>
-                <div>이동수단</div>
-                <img src={car_img}/>
-              </PlaningCardRow4>
-            </PlaningCardBox>
-        </>
-    )
+  return(
+    <>
+      <PlaningCardBox>
+        <PlaningCardRow1>여행지를 선정하세요</PlaningCardRow1>
+        <PlaningCardRow2>
+        {/* {departureDate} ~ {arrivalDate} */}
+          {Dp_year}.{Dp_month}.{Dp_day} 
+          ~ 
+          {Ar_year}.{Ar_month}.{Ar_day}
+        </PlaningCardRow2>
+        <PlaningCardRow3>
+          <div>출발지</div>
+          <BlueTag TagContent={departureLocation}/>
+        </PlaningCardRow3>
+        <PlaningCardRow4>
+          <div>이동수단</div>
+           <img src={car_img}/>
+        </PlaningCardRow4>
+      </PlaningCardBox>
+    </>
+  )
 }
 
 export default PlaningCard;
