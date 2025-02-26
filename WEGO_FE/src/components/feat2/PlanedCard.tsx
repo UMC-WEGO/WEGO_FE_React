@@ -72,19 +72,21 @@ const PlanedCard = ({ props, onClickDelete }: PlanedCardProps) => {
   const downMessage = () => {
     setIsShowMessage(false)
   }
-
-  console.log("props : ", props)
+  console.log(props.tripId)
     return(
       <>
         {isShowMessage && (
-          <DltAlertCard message="여행 일정을 삭제하시겠습니까?" downMessage={downMessage} deletePlan={() => onClickDelete(props.tripId)}/>
+          <DltAlertCard 
+            message="여행 일정을 삭제하시겠습니까?" 
+            downMessage={downMessage} 
+            deletePlan={() => {onClickDelete(props.tripId)}}
+          />
         )}
         <PlanedCardBox>
           <PlanedCardHug>
             <PlanedCard_row1>
               <div>{props.location} 여행, D-{`${D_Days === 0 ? "Day" : D_Days}`}</div>
-              {/* <DeleteBtn onClick={() => {setIsShowMessage(true); onClickDelete(props.tripId)}}><img src={trash_bin_img}/></DeleteBtn> */}
-              <DeleteBtn onClick={() => {setIsShowMessage(true); }}><img src={trash_bin_img}/></DeleteBtn>
+              <DeleteBtn onClick={() => onClickDelete(props.tripId)}><img src={trash_bin_img}/></DeleteBtn>
               </PlanedCard_row1>
             <PlanedCard_row2>
               <BlueTag TagContent={`
