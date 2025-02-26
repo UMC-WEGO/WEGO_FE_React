@@ -64,7 +64,7 @@ function HomePage() {
 
   const deleteUpcomingTrip = async (tripId: number) => {
     try {
-      const responseDeleteTravel = await authInstance.get(
+      const responseDeleteTravel = await authInstance.delete(
         `http://13.124.213.122:3000/home/upcoming-trips/${tripId}`,
       );
 
