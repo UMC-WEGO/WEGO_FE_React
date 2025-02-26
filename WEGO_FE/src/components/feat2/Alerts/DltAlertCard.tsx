@@ -9,6 +9,8 @@ const DltAlertCard = ({
   downMessage: () => void;
   deletePlan: () => void;
 }) => {
+  console.log(deletePlan())
+
   return (
     <S.BackgroundOverlay>
       <S.CardBox>
