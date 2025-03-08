@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Icon } from '../feat4/AlertItem/AlertItem.style';
+
+const IconImg = styled.div`
+  width: 14px;
+  height: 15px;
+
+  margin-right: 17px;
+`
 
 const DropdownContainer = styled.div`
   width: 100%;
@@ -47,12 +55,14 @@ interface DropdownProps {
   setValue?: any;
   option: { label: string; icon: string }[];
   setTransport?: any;
+  iconStream?: JSX.Element;
 }
 
 const Dropdown = ({
-  value, // dropdown 기본값
+  value,    // dropdown 기본값
   setValue, // 부모 상태 수정하도록
-  option, // dropdown 선택 요소 리스트
+  option,   // dropdown 선택 요소 리스트
+  iconStream// icon 이미지 경로
 }: DropdownProps) => {
   const [isOpenFlag, setIsOpenFlag] = useState(false); // dropdown 클릭여부 확인
 
@@ -67,8 +77,13 @@ const Dropdown = ({
     <DropdownContainer>
       {/* 드롭다운 헤터 (보이는 부분) */}
       <DropdownHeader isOpen={isOpenFlag} onClick={toggleDropdown}>
-        <SelectedDisplay>{value}</SelectedDisplay>{' '}
+        {/* <SelectedDisplay>{value}</SelectedDisplay>{' '} */}
         {/* value: 기본값, selectedOption: 선택한 값 */}
+        {/* <IconImg src={iconStream}/> */}
+        <IconImg>
+          {iconStream}
+        </IconImg>
+        <SelectedDisplay>{value}</SelectedDisplay>
         <div>{isOpenFlag ? '▲' : '▼'}</div>
       </DropdownHeader>
 
@@ -80,6 +95,10 @@ const Dropdown = ({
               key={index}
               onClick={() => selectOption(item.label)}
             >
+              {/* <IconImg src={iconStream}/> */}
+              <IconImg>
+                {iconStream}
+              </IconImg>
               {item.label}
             </DropdownListItem>
           ))}

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useState } from 'react';
 
-import { FaRegCalendar, FaCar, FaPeopleGroup } from 'react-icons/fa6';
+import { FaRegCalendar, FaCar, FaPeopleGroup, FaClock } from 'react-icons/fa6';
 import { LuAlarmClock, LuMapPin } from 'react-icons/lu';
 import Dropdown from '../Dropdown';
 import Bottomsheet from '../BottomSheet';
@@ -115,6 +115,10 @@ const DestinationFilter = ({
   const [isPeopleBottomActive, setIsPeopleBottomActive] = useState(false);
   const [isDepartureBottomActive, setIsDepartureBottomActive] = useState(false);
 
+  // 아이콘 설정
+  const car_icon = <FaCar/>
+  const clock_icon = <LuAlarmClock />
+
   // 바텀시트 활성 상태 변경
   const toggleDateBottom = () => {
     setIsDateBottomActive(!isDateBottomActive);
@@ -207,27 +211,28 @@ const DestinationFilter = ({
         {/* 두번째 열 : 교통수단 */}
         <SelectorRow>
           <Label>
-            <IconImg>
+            {/* <IconImg>
               <FaCar />
-            </IconImg>
-            <Dropdown
-              value={transport}
-              setValue={setTransport}
-              option={Item_transport}
-            />
+            </IconImg> */}
+            <Dropdown 
+              value={transport} 
+              setValue={setTransport} 
+              option={Item_transport} 
+              iconStream={car_icon}/>
           </Label>
         </SelectorRow>
 
         {/* 세번째 열 : 시간대 */}
         <SelectorRow>
-          <IconImg>
+          {/* <IconImg>
             <LuAlarmClock />
-          </IconImg>
+          </IconImg> */}
           <Label>
             <Dropdown
               value={timeAway}
               setValue={setTimeAway}
               option={Item_time}
+              iconStream={clock_icon}
             />
           </Label>
         </SelectorRow>
