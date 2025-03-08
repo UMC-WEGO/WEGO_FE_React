@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import car_img from "../../images/feat2/car_icon.png";
 import BlueTag from "./BlueTag";
+import { FaCar } from "react-icons/fa6";
 
 const PlaningCardBox = styled.div`
   width: 363px;
@@ -82,7 +83,8 @@ const PlaningCard = ({ departureDate, arrivalDate, departureLocation, transport 
         </PlaningCardRow3>
         <PlaningCardRow4>
           <div>이동수단</div>
-           <img src={car_img}/>
+           {/* <img src={car_img}/> */}
+           <FaCar/>
         </PlaningCardRow4>
       </PlaningCardBox>
     </>
